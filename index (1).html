@@ -8,6 +8,42 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // Disable automatic browser scroll restoration on refresh/load
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+  window.addEventListener('beforeunload', () => {
+    window.scrollTo(0, 0);
+  });
+
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter Tight', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+          serif: ['Fraunces', 'Georgia', 'serif'],
+          mono: ['JetBrains Mono', 'monospace'],
+        },
+        fontSize: {
+          'xxs': '10px',
+          'xs': '11px',
+          'sm': '13px',
+          'base': '15px',
+          'lg': '18px',
+          'xl': '21px',
+          '2xl': '25px',
+          '3xl': '30px',
+          '4xl': '38px',
+          '5xl': '46px',
+          '6xl': '58px',
+          '7xl': '72px',
+        }
+      }
+    }
+  }
+</script>
 <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -33,32 +69,34 @@
     --c-coral: #FB7185; --c-coral-tint: #FFE4E6; --c-coral-deep: #9F1239;
   }
   *, *::before, *::after { box-sizing: border-box; }
-  html, body { background: var(--paper); color: var(--ink); font-family: 'Inter Tight', sans-serif; font-size: 15px; line-height: 1.55; margin: 0; -webkit-font-smoothing: antialiased; letter-spacing: -0.005em; }
+  html, body { background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.55; margin: 0; -webkit-font-smoothing: antialiased; letter-spacing: -0.005em; overflow-x: clip; }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--mute-4); border-radius: 99px; }
-
-  .font-serif { font-family: 'Fraunces', Georgia, serif; }
-  .font-mono { font-family: 'JetBrains Mono', monospace; }
-  .h-display { font-family: 'Fraunces', serif; font-weight: 300; letter-spacing: -0.025em; line-height: 0.96; font-variation-settings: 'opsz' 144, 'SOFT' 50; }
+  html, body, button, input, select, textarea, .font-sans { font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important; }
+  .font-serif, .num-display { font-family: 'Fraunces', Georgia, serif !important; }
+  .font-mono, .eyebrow, .pill, .chip, .dept-chip { font-family: 'JetBrains Mono', monospace !important; }
+  .h-display { font-family: 'Fraunces', Georgia, serif !important; font-weight: 300; letter-spacing: -0.025em; line-height: 0.96; font-variation-settings: 'opsz' 144, 'SOFT' 50; }
   .h-display em { font-style: italic; font-weight: 300; font-variation-settings: 'opsz' 144, 'SOFT' 100; }
   .gradient-text { background: linear-gradient(95deg, var(--accent) 0%, var(--c-fuchsia) 50%, var(--c-amber) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: var(--mute-1); }
   .eyebrow-white { color: rgba(255,255,255,0.7); }
 
-  .btn { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; padding: 11px 20px; border-radius: 999px; cursor: pointer; transition: all 0.2s cubic-bezier(0.16,1,0.3,1); border: 1px solid transparent; white-space: nowrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; padding: 10px 18px; border-radius: 4px; cursor: pointer; transition: all 0.15s ease-in-out; border: 1px solid transparent; white-space: nowrap; }
   .btn-primary { background: var(--ink); color: white; }
-  .btn-primary:hover { background: var(--ink-3); transform: translateY(-1px); box-shadow: 0 8px 20px -8px rgba(10,10,10,0.4); }
+  .btn-primary:hover { background: var(--ink-3); }
   .btn-accent { background: var(--accent); color: white; }
-  .btn-accent:hover { background: var(--accent-dim); transform: translateY(-1px); box-shadow: 0 8px 20px -8px rgba(255,63,108,0.5); }
-  .btn-gradient { background: linear-gradient(95deg, var(--accent), var(--c-fuchsia)); color: white; }
-  .btn-gradient:hover { transform: translateY(-1px); box-shadow: 0 8px 24px -6px rgba(217,70,239,0.5); }
+  .btn-accent:hover { background: var(--accent-dim); }
+  .btn-gradient { background: var(--accent); color: white; }
+  .btn-gradient:hover { background: var(--accent-dim); }
   .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
-  .btn-ghost:hover { background: white; border-color: var(--line-3); }
-  .btn-ghost-light { background: rgba(255,255,255,0.06); color: white; border-color: var(--line-white-2); backdrop-filter: blur(10px); }
-  .btn-ghost-light:hover { background: rgba(255,255,255,0.12); }
-  .btn-sm { padding: 7px 14px; font-size: 13px; }
-  .btn-xs { padding: 5px 11px; font-size: 12px; }
+  .btn-ghost:hover { background: var(--paper); border-color: var(--line-3); }
+  .btn-ghost-light { background: transparent; color: white; border-color: rgba(255,255,255,0.25); }
+  .btn-ghost-light:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+  .btn-white { background: white; color: var(--ink); }
+  .btn-white:hover { background: rgba(255,255,255,0.9); }
+  .btn-sm { padding: 6px 12px; font-size: 13px; }
+  .btn-xs { padding: 4px 8px; font-size: 12px; }
   .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
   .card { background: white; border: 1px solid var(--line); border-radius: 12px; transition: all 0.2s ease; }
@@ -619,12 +657,10 @@ function Nav({ view, setView, user, onLogin, onLogout, userTeam }) {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center justify-between gap-4 bg-white/95 border-b border-[color:var(--line-2)] px-6 lg:px-10 py-3 shadow-sm" style={{backdropFilter:'blur(20px)'}}>
 
-          <div className="flex items-center gap-2.5 flex-shrink-0">
+          <div className="flex items-center gap-3 flex-shrink-0">
             <img src="https://assets.myntassets.com/assets/images/2026/MARCH/16/gsGQkvMo_2a60944801ac4ed6a49bf2b65c883b10.png" alt="Myntra" className="h-[28px] w-auto object-contain" />
-            <div style={{lineHeight:1.2}}>
-              <div className="text-[8px] text-[color:var(--ink-2)]">TECH</div>
-              <div className="text-[8px] text-[color:var(--ink-2)]">WEEK</div>
-            </div>
+            <div className="w-[1px] h-5 bg-[color:var(--line-2)]"></div>
+            <img src="Loader images/Tech Week Logo.png" alt="Tech Week" className="h-[22px] w-auto object-contain" />
           </div>
 
           <div className="flex items-center gap-0.5">
@@ -671,11 +707,10 @@ function Nav({ view, setView, user, onLogin, onLogout, userTeam }) {
               </svg>
             </button>
             
-            <div className="flex flex-col items-center">
-              <img src="https://assets.myntassets.com/assets/images/2026/MARCH/16/gsGQkvMo_2a60944801ac4ed6a49bf2b65c883b10.png" alt="Myntra" className="h-[20px] w-auto object-contain mb-1" />
-              <div style={{lineHeight:1.2, textAlign:'center'}}>
-                <div className="text-[7px] text-[color:var(--ink-2)]">TECH WEEK</div>
-              </div>
+            <div className="flex items-center gap-2">
+              <img src="https://assets.myntassets.com/assets/images/2026/MARCH/16/gsGQkvMo_2a60944801ac4ed6a49bf2b65c883b10.png" alt="Myntra" className="h-[18px] w-auto object-contain" />
+              <div className="w-[1px] h-4 bg-[color:var(--line-2)]"></div>
+              <img src="Loader images/Tech Week Logo.png" alt="Tech Week" className="h-[16px] w-auto object-contain" />
             </div>
 
             <div className="w-[32px] flex items-center justify-end pointer-events-auto">
@@ -783,10 +818,8 @@ function LoginModal({ open, onClose, onLogin, toast, quizzes, setQuizzes, quizRe
     <Modal open={open} onClose={handleClose} title="My Account" size="lg">
       <div className="flex flex-col md:flex-row -m-6 min-h-[500px]">
         {/* Left Banner */}
-        <div className="hidden md:flex md:w-2/5 relative overflow-hidden flex-col justify-between p-8 text-white">
-          <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0" src="Desktop 2026.05.19 - 18.38.38.mp4" />
-          <div className="absolute inset-0 z-0" style={{background: 'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8))'}}></div>
-          <div className="absolute inset-0 z-0 bg-[color:var(--ink)] opacity-30 mix-blend-multiply"></div>
+        <div className="hidden md:flex md:w-2/5 relative overflow-hidden flex-col justify-between p-8 text-white"
+          style={{ background: 'linear-gradient(135deg, #09090b 0%, #160e26 50%, #2f0735 100%)' }}>
           
           <div className="relative z-10">
             <p className="text-[10px] text-white/70 tracking-[0.2em] uppercase font-[800] mb-3">Tech Week 2026</p>
@@ -859,15 +892,15 @@ function LoginModal({ open, onClose, onLogin, toast, quizzes, setQuizzes, quizRe
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                        <button onClick={()=>{setSig(s=>({...s,roleGroup:'participant'})); setSignupStep(2);}} 
                          className="flex flex-col items-center text-center p-6 border border-[color:var(--line-2)] hover:border-[color:var(--accent)] hover:bg-[#f8f8ff] hover:shadow-md rounded-[3px] transition-all bg-white group">
-                          <div className="text-[36px] mb-4 group-hover:-translate-y-2 transition-transform">🚀</div>
-                          <p className="text-[15px] font-[800] text-[color:var(--ink)] mb-2">Participant</p>
-                          <p className="text-[12px] text-[color:var(--mute-2)] px-2 font-medium">I want to build, ship, and compete.</p>
+                            <FluentEmoji char="🚀" className="w-12 h-12 mb-4 group-hover:-translate-y-2 transition-transform" />
+                            <p className="text-[15px] font-[800] text-[color:var(--ink)] mb-2">Participant</p>
+                            <p className="text-[12px] text-[color:var(--mute-2)] px-2 font-medium">I want to build, ship, and compete.</p>
                        </button>
                        <button onClick={()=>{setSig(s=>({...s,roleGroup:'coordinator'})); setSignupStep(2);}} 
                          className="flex flex-col items-center text-center p-6 border border-[color:var(--line-2)] hover:border-[color:var(--c-amber)] hover:bg-[#fffbeb] hover:shadow-md rounded-[3px] transition-all bg-white group">
-                          <div className="text-[36px] mb-4 group-hover:-translate-y-2 transition-transform">⚖️</div>
-                          <p className="text-[15px] font-[800] text-[color:var(--ink)] mb-2">Coordinator / Mentor</p>
-                          <p className="text-[12px] text-[color:var(--mute-2)] px-2 font-medium">I want to judge, mentor, or organize.</p>
+                            <FluentEmoji char="⚖️" className="w-12 h-12 mb-4 group-hover:-translate-y-2 transition-transform" />
+                            <p className="text-[15px] font-[800] text-[color:var(--ink)] mb-2">Coordinator / Mentor</p>
+                            <p className="text-[12px] text-[color:var(--mute-2)] px-2 font-medium">I want to judge, mentor, or organize.</p>
                        </button>
                     </div>
                   </div>
@@ -977,6 +1010,62 @@ function LoginModal({ open, onClose, onLogin, toast, quizzes, setQuizzes, quizRe
 /* ══════════════════════════════
    HOME
 ══════════════════════════════ */
+
+const FLUENT_EMOJI_MAP = {
+  '👈': 'Backhand%20index%20pointing%20left/3D/Default/backhand_index_pointing_left_3d_default.png',
+  '🧠': 'Brain/3D/brain_3d.png',
+  '🚀': 'Rocket/3D/rocket_3d.png',
+  '⚖️': 'Balance%20scale/3D/balance_scale_3d.png',
+  '⚖': 'Balance%20scale/3D/balance_scale_3d.png',
+  '👩‍💻': 'Woman%20technologist/3D/Default/woman_technologist_3d_default.png',
+  '📦': 'Package/3D/package_3d.png',
+  '🎨': 'Artist%20palette/3D/artist_palette_3d.png',
+  '⚙️': 'Gear/3D/gear_3d.png',
+  '⚙': 'Gear/3D/gear_3d.png',
+  '📊': 'Bar%20chart/3D/bar_chart_3d.png',
+  '🔧': 'Wrench/3D/wrench_3d.png',
+  '👑': 'Crown/3D/crown_3d.png',
+  '🤖': 'Robot/3D/robot_3d.png',
+  '😭': 'Loudly%20crying%20face/3D/loudly_crying_face_3d.png',
+  '💀': 'Skull/3D/skull_3d.png',
+  '☕': 'Hot%20beverage/3D/hot_beverage_3d.png',
+  '🔥': 'Fire/3D/fire_3d.png',
+  '😂': 'Face%20with%20tears%20of%20joy/3D/face_with_tears_of_joy_3d.png',
+  '👾': 'Alien%20monster/3D/alien_monster_3d.png',
+  '🏆': 'Trophy/3D/trophy_3d.png',
+  '⚡': 'High%20voltage/3D/high_voltage_3d.png',
+  '✍️': 'Writing%20hand/3D/Default/writing_hand_3d_default.png',
+  '✍': 'Writing%20hand/3D/Default/writing_hand_3d_default.png',
+  '🥈': '2nd%20place%20medal/3D/2nd_place_medal_3d.png',
+  '🏅': 'Sports%20medal/3D/sports_medal_3d.png',
+  '👏': 'Clapping%20hands/3D/Default/clapping_hands_3d_default.png',
+  '🎁': 'Wrapped%20gift/3D/wrapped_gift_3d.png',
+  '👥': 'Busts%20in%20silhouette/3D/busts_in_silhouette_3d.png',
+  '📊 Overview': 'Bar%20chart/3D/bar_chart_3d.png',
+  '⚖ Judging': 'Balance%20scale/3D/balance_scale_3d.png',
+  '✎ Home Content': 'Pencil/3D/pencil_3d.png',
+  '✎': 'Pencil/3D/pencil_3d.png',
+  '✏': 'Pencil/3D/pencil_3d.png'
+};
+
+function FluentEmoji({ char, className = '', style = {}, fallbackStyle = {} }) {
+  if (!char) return null;
+  const cleanChar = char.replace(/\uFE0F/g, '');
+  const mapped = FLUENT_EMOJI_MAP[char] || FLUENT_EMOJI_MAP[cleanChar];
+  if (mapped) {
+    const hasCustomSize = style.width || style.height || /\b(w-|h-)/.test(className);
+    const defaultSize = hasCustomSize ? {} : { width: '1.2em', height: '1.2em' };
+    return (
+      <img 
+        src={`https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/${mapped}`} 
+        className={className} 
+        style={{ display: 'inline-block', verticalAlign: 'middle', ...defaultSize, ...style }} 
+        alt={char}
+      />
+    );
+  }
+  return <span className={className} style={{ ...fallbackStyle, ...style }}>{char}</span>;
+}
 
 function SectionLabel({ children }) {
   return (
@@ -1159,13 +1248,14 @@ function MemeWall({ memes = MEMES }) {
             <img src={m.image} alt={m.title} onError={e=>{e.currentTarget.style.display='none';}}
               className="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.03]" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(255,255,255,0.22),transparent_28%),linear-gradient(135deg,rgba(0,0,0,0.05),rgba(0,0,0,0.28))]" />
-            <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-[22px] backdrop-blur-sm">
-              {m.emoji}
+            <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-white/20 border border-white/30 flex items-center justify-center backdrop-blur-sm">
+              <FluentEmoji char={m.emoji} className="w-6 h-6" fallbackStyle={{ fontSize: '22px' }} />
             </div>
             <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/75 via-black/20 to-transparent">
               <div className="flex items-center justify-between gap-3">
                 <span className="inline-flex items-center gap-1.5 bg-white text-[color:var(--ink)] px-2.5 py-1 rounded-full text-[10px] font-[900] uppercase tracking-[0.1em]">
-                  <span>{m.emoji}</span>{m.tag}
+                  <FluentEmoji char={m.emoji} className="w-3 h-3 flex-shrink-0" fallbackStyle={{ fontSize: '10px' }} />
+                  <span>{m.tag}</span>
                 </span>
                 <span className="text-[10px] text-white/80 font-[800]">{m.author}</span>
               </div>
@@ -1179,7 +1269,7 @@ function MemeWall({ memes = MEMES }) {
             {EMOJIS.map(({k,e,label})=>(
               <button key={k} title={label} onClick={()=>react(m.id,k)}
                 className="flex items-center gap-1.5 px-2.5 py-1 bg-[color:var(--paper)] border border-[color:var(--line-2)] rounded-full text-[12px] hover:border-[color:var(--accent)] hover:bg-[#eeeeff] btn transition-all">
-                <span>{e}</span>
+                <FluentEmoji char={e} className="w-4 h-4 flex-shrink-0" fallbackStyle={{ fontSize: '12px' }} />
                 <span className="text-[color:var(--mute-2)] font-[800]">{reactions[m.id][k]}</span>
               </button>
             ))}
@@ -1266,43 +1356,184 @@ function QuizGame({ quizzes, user, onFinish }) {
 
 function HowItWorksSection() {
   const HIGHLIGHTS = [
-    { n:'01', color:'var(--accent)', title:'Hacker meets Hustler.', body:'No team qualifies on engineering alone. Every team carries a Hustler — Business, Product, or Operations — who owns the metric. GMV, conversion, returns. Real numbers. Real ownership.' },
-    { n:'02', color:'var(--c-purple)', title:'Two departments. Minimum.', body:'The Grand Prize is reserved for teams spanning at least two departments. Backend with Product. SRE with Business. Design with Warehouse Ops. The point is friction, then breakthrough.' },
-    { n:'03', color:'var(--c-amber)', title:'No meetings. No deploys.', body:'For the two days of the build phase, SLT has approved a company-wide pause. No meetings except hackathon. No production deploys except P0 incidents. The org leans in.' },
-    { n:'04', color:'var(--c-cyan)', title:'Problems from the frontline.', body:'Business and Customer Support teams post problem statements weekly into the Idea Bazaar. The people closest to the customer surface the pain. Teams pick, remix, or pitch their own.' },
-    { n:'05', color:'var(--c-fuchsia)', title:'Two to five. No more.', body:'Minimum two members. Maximum five. At least one Hacker, at least one Hustler. Above two members, at least one different department. The composition is the constraint.' },
+    { 
+      n:'01', 
+      title:'Build with a Hustler, or don\'t build at all.', 
+      body:'No team qualifies on engineering alone. Every team carries a Hustler — Business, Product, or Operations — who owns the metric. GMV, conversion, returns. Real numbers. Real ownership.',
+      colorBg: 'bg-[#e11d48]', // Solid Rose
+      badgeBg: 'bg-white/20',
+      badgeText: 'text-white'
+    },
+    { 
+      n:'02', 
+      title:'Cross the department line.', 
+      body:'The Grand Prize is reserved for teams spanning at least two departments. Backend with Product. SRE with Business. Design with Warehouse Ops. The point is friction, then breakthrough.',
+      colorBg: 'bg-[#7c3aed]', // Solid Violet
+      badgeBg: 'bg-white/20',
+      badgeText: 'text-white'
+    },
+    { 
+      n:'03', 
+      title:'48 hours. Zero distractions.', 
+      body:'For the two days of the build phase, SLT has approved a company-wide pause. No meetings except hackathon. No production deploys except P0 incidents. The org leans in.',
+      colorBg: 'bg-[#d97706]', // Solid Amber
+      badgeBg: 'bg-white/20',
+      badgeText: 'text-white'
+    },
+    { 
+      n:'04', 
+      title:'Real problems. Real customers.', 
+      body:'Business and Customer Support teams post problem statements weekly into the Idea Bazaar. The people closest to the customer surface the pain. Teams pick, remix, or pitch their own.',
+      colorBg: 'bg-[#0d9488]', // Solid Teal
+      badgeBg: 'bg-white/20',
+      badgeText: 'text-white'
+    },
+    { 
+      n:'05', 
+      title:'Small squads. Big impact.', 
+      body:'Minimum two members. Maximum five. At least one Hacker, at least one Hustler. Above two members, at least one different department. The composition is the constraint.',
+      colorBg: 'bg-[#db2777]', // Solid Fuchsia
+      badgeBg: 'bg-white/20',
+      badgeText: 'text-white'
+    },
   ];
 
+  const containerRef = React.useRef(null);
+  const [scrollProgress, setScrollProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const start = rect.top + window.scrollY;
+      const end = rect.bottom + window.scrollY - window.innerHeight;
+      const current = window.scrollY;
+      
+      let progress = (current - start) / (end - start);
+      progress = Math.max(0, Math.min(1, progress));
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
+  const finalRotations = [-2.5, 2, -1.5, 3.5, -0.5];
+
   return (
-    <div className="py-20 px-6 lg:px-10 max-w-[1280px] mx-auto">
-      <div className="grid lg:grid-cols-12 gap-10 mb-20">
-        <div className="lg:col-span-5">
-          <p className="text-[11px] text-[color:var(--mute-3)] tracking-[0.22em] uppercase font-[700] mb-4">What's different this year</p>
-          <h2 className="h-display text-5xl md:text-6xl lg:text-7xl mt-6 text-[color:var(--ink)]" style={{lineHeight: 1.15}}>
-            Five rules that<br/>change <em className="gradient-text">everything.</em>
-          </h2>
-        </div>
-        <div className="lg:col-span-6 lg:col-start-7 flex items-end">
-          <p className="text-lg leading-relaxed text-[color:var(--mute-1)]">
-            We rebuilt TechWeek around what makes hackathons actually ship. Cross-functional teams. Real business owners. Real production. Real money. The constraints are the point.
-          </p>
-        </div>
-      </div>
-      <div className="border-t border-[color:var(--line-2)]">
-        {HIGHLIGHTS.map(h => (
-          <div key={h.n} className="grid lg:grid-cols-12 gap-6 lg:gap-10 py-10 lg:py-14 border-b items-start border-[color:var(--line-2)]">
-            <div className="lg:col-span-2 flex items-start gap-3">
-              <div className="w-1 h-12 rounded-full" style={{background: h.color}}></div>
-              <span className="font-serif text-5xl" style={{fontStyle:'italic', fontWeight:300, color: h.color, lineHeight:1}}>{h.n}</span>
+    <div ref={containerRef} className="relative w-full bg-white" style={{ height: '320vh' }}>
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            {/* Left Column: Heading */}
+            <div className="col-span-1 lg:col-span-4 flex flex-col justify-center text-center lg:text-left">
+              <p className="text-[11px] text-[color:var(--mute-3)] tracking-[0.22em] uppercase font-[700] mb-2">
+                What's different this year
+              </p>
+              <div className="relative inline-block mb-3">
+                <h2 className="h-display text-3xl md:text-5xl text-[color:var(--ink)] leading-tight tracking-tight">
+                  Five rules that change <em className="gradient-text">everything.</em>
+                </h2>
+                {/* Speech Bubble */}
+                <div className="absolute -top-16 md:-top-[72px] right-4 lg:-right-4 bg-white border border-[color:var(--line-2)] px-3 py-2 rounded-[20px] shadow-sm flex items-center gap-2 select-none pointer-events-none">
+                  <img src="https://em-content.zobj.net/source/microsoft-teams/400/robot_1f916.png" alt="🤖" className="w-11 h-11" />
+                  <div className="absolute bottom-[-6px] left-[20px] w-2.5 h-2.5 bg-white border-r border-b border-[color:var(--line-2)] rotate-45"></div>
+                </div>
+              </div>
             </div>
-            <div className="lg:col-span-4">
-              <h3 className="font-serif text-3xl lg:text-4xl text-[color:var(--ink)]" style={{fontWeight:400, letterSpacing:'-0.02em', lineHeight:1.15}}>{h.title}</h3>
+
+            {/* Center Column: Card stack */}
+            <div className="col-span-1 lg:col-span-4 relative w-full flex items-center justify-center h-[380px] sm:h-[430px] my-4 lg:my-0">
+              {HIGHLIGHTS.map((h, i) => {
+                let progress = 0;
+                if (i > 0) {
+                  const startRange = (i - 1) / 4;
+                  const endRange = i / 4;
+                  if (scrollProgress <= startRange) {
+                    progress = 0;
+                  } else if (scrollProgress >= endRange) {
+                    progress = 1;
+                  } else {
+                    progress = (scrollProgress - startRange) / (endRange - startRange);
+                  }
+                } else {
+                  progress = 1; // Card 1 is always stacked
+                }
+
+                // Transform animation math
+                const ty = (1 - progress) * 600; // Slide from bottom
+                const rot = progress * finalRotations[i] + (1 - progress) * (finalRotations[i] + 12);
+                
+                // Scale and depth math based on coverage
+                let scale = 1.0;
+                let offsetY = 0;
+                for (let j = i + 1; j < 5; j++) {
+                  let jProgress = 0;
+                  const jStart = (j - 1) / 4;
+                  const jEnd = j / 4;
+                  if (scrollProgress > jStart) {
+                    jProgress = Math.min(1, (scrollProgress - jStart) / (jEnd - jStart));
+                  }
+                  scale -= jProgress * 0.025; // Scale down by 2.5% per stacked card
+                  offsetY -= jProgress * 12;   // Push up slightly to expose bottom borders
+                }
+
+                const cardStyle = {
+                  transform: `translate3d(0, ${ty + offsetY}px, 0) rotate(${rot}deg) scale(${scale})`,
+                  zIndex: i + 10,
+                  position: 'absolute',
+                  willChange: 'transform',
+                  transition: progress === 0 || progress === 1 ? 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)' : 'none',
+                  backgroundColor: CARD_FILLS[i]
+                };
+
+                return (
+                  <div key={h.n} style={cardStyle}
+                    className="w-[260px] h-[350px] sm:w-[300px] sm:h-[400px] flex-shrink-0 border-0 rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] overflow-hidden select-none">
+                    <div className="flex flex-col justify-between h-full p-8 text-[color:var(--ink)] text-left">
+                      {/* Header */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] uppercase tracking-[0.2em] font-[800] text-[color:var(--ink)] opacity-60">
+                          Rule {h.n}
+                        </span>
+                        <span className="font-mono text-[10px] opacity-40">0{i+1} / 05</span>
+                      </div>
+
+                      {/* Middle: Title */}
+                      <div className="my-auto">
+                        <h3 className="h-display text-[26px] sm:text-[32px] tracking-[-0.03em] leading-[1.1] text-[color:var(--ink)]">
+                          {h.title}
+                        </h3>
+                      </div>
+
+                      {/* Bottom: Description */}
+                      <div>
+                        <p className="text-[12px] sm:text-[13px] leading-relaxed text-[color:var(--mute-1)] font-medium">
+                          {h.body}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            <div className="lg:col-span-6">
-              <p className="text-lg leading-relaxed text-[color:var(--mute-1)]">{h.body}</p>
+
+            {/* Right Column: Description */}
+            <div className="col-span-1 lg:col-span-4 flex flex-col justify-center text-center lg:text-left lg:pl-4">
+              <p className="text-[13px] sm:text-[14px] leading-relaxed text-[color:var(--mute-1)] font-medium">
+                We rebuilt TechWeek around what makes hackathons actually ship. Cross-functional teams. Real business owners. Real production. Real money. The constraints are the point.
+              </p>
             </div>
+
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
@@ -1325,7 +1556,7 @@ function CurrentWinnersWidget({ winners = CURRENT_WINNERS }) {
           <div key={w.id} className="relative rounded-[3px] flex flex-col overflow-hidden transition-all hover:-translate-y-1 bg-[color:var(--paper-2)] border border-[color:var(--line-2)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
             <div className="p-6 flex flex-col gap-4 flex-1">
               <div className="flex items-start justify-between gap-2">
-                <span className="text-[32px]">{w.icon}</span>
+                <FluentEmoji char={w.icon} className="w-9 h-9" fallbackStyle={{ fontSize: '32px' }} />
                 <span className="inline-flex items-center px-2.5 py-1 rounded-[3px] text-[10px] font-[800] uppercase tracking-wide text-[color:var(--mute-1)] bg-white border border-[color:var(--line-2)]">
                   {w.challenge}
                 </span>
@@ -1372,18 +1603,18 @@ function CountdownTimer({ targetDate }) {
   }, [targetDate]);
 
   return (
-    <div className="inline-block text-left border-t border-[rgba(255,255,255,0.15)] pt-6 mt-4 w-full max-w-[400px]">
-      <div className="text-[10px] text-[rgba(255,255,255,0.6)] tracking-[0.2em] uppercase font-[800] mb-6">Grand Finale Begins In</div>
-      <div className="flex items-center justify-between">
+    <div className="inline-block text-left border-t border-[rgba(255,255,255,0.12)] pt-4 mt-2 w-full max-w-[280px]">
+      <div className="text-[9px] text-[rgba(255,255,255,0.5)] tracking-[0.22em] uppercase font-[800] mb-3">Grand Finale Begins In</div>
+      <div className="flex items-center justify-between gap-4">
         {[
           { label: 'Days', value: timeLeft.days },
           { label: 'Hours', value: timeLeft.hours },
           { label: 'Min', value: timeLeft.minutes },
           { label: 'Sec', value: timeLeft.seconds }
         ].map(t => (
-          <div key={t.label} className="flex flex-col gap-3">
-            <span className="h-display text-4xl lg:text-6xl text-white tracking-tight leading-none" style={{fontWeight: 400}}>{t.value}</span>
-            <span className="text-[9px] text-[rgba(255,255,255,0.5)] tracking-[0.15em] uppercase font-mono font-bold">{t.label}</span>
+          <div key={t.label} className="flex flex-col gap-1 items-start">
+            <span className="h-display text-2xl sm:text-3xl text-white tracking-tight leading-none" style={{fontWeight: 400}}>{t.value}</span>
+            <span className="text-[8px] text-[rgba(255,255,255,0.4)] tracking-[0.12em] uppercase font-mono font-bold">{t.label}</span>
           </div>
         ))}
       </div>
@@ -1391,49 +1622,95 @@ function CountdownTimer({ targetDate }) {
   );
 }
 
-function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+','Participants'],['3','Rounds'],['₹2L+','Prize pool'],['5','Themes']] }) {
+function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+','Participants'],['3','Rounds'],['₹2L+','Prize pool'],['5','Themes']], setView }) {
   const [judgeRound, setJudgeRound] = useState(0);
+  const [scorecardPage, setScorecardPage] = useState(1);
+
+  const sortedTeams = [...teams].sort((a,b)=>{
+    const sa = (a.scores?.r1||0)+(a.scores?.r2||0)+(a.scores?.r3||0);
+    const sb = (b.scores?.r1||0)+(b.scores?.r2||0)+(b.scores?.r3||0);
+    return sb-sa;
+  });
+  const itemsPerPage = 5;
+  const totalPages = Math.max(1, Math.ceil(sortedTeams.length / itemsPerPage));
+  const currentPage = Math.min(scorecardPage, totalPages);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, sortedTeams.length);
+  const paginatedTeams = sortedTeams.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="divide-y divide-[color:var(--line)]">
+    <div className="relative">
 
       {/* ── HERO ── */}
-      <section className="relative overflow-hidden" style={{background:'var(--ink)', color:'white', width:'100vw', marginLeft:'calc(-50vw + 50%)'}}>
+      <section className="sticky top-0 overflow-hidden z-10 h-screen min-h-[680px] flex flex-col items-center justify-center" style={{background:'var(--ink)', color:'white', width:'100vw', marginLeft:'calc(-50vw + 50%)'}}>
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-screen" src="Desktop 2026.05.19 - 18.38.38.mp4" />
         <div className="absolute inset-0 dot-grid opacity-60" />
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-10 pt-20 lg:pt-28 pb-24 lg:pb-32 relative z-10">
-          <div className="flex items-center gap-3 mb-12 flex-wrap fade-up" style={{animationDelay:'0.05s'}}>
+        
+        <div className="max-w-[800px] mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+          
+          {/* Eyebrow badge */}
+          <div className="flex items-center gap-3 mb-8 flex-wrap justify-center fade-up animate-fade-in" style={{animationDelay:'0.05s'}}>
             <span className="eyebrow eyebrow-white">Myntra Tech Week</span>
-            <span className="w-1 h-1 rounded-full" style={{background:'rgba(255,255,255,0.3)'}}></span>
-            <span className="eyebrow eyebrow-white">Edition Six · 2026</span>
-            <span className="ml-auto pill pill-ghost-light"><span className="dot" style={{color:'var(--accent)'}}></span>Registration open</span>
+            <span className="w-1 h-1 rounded-full bg-white/30"></span>
+            <span className="eyebrow eyebrow-white text-[color:var(--accent)]">Edition Six · 2026</span>
+            <span className="pill pill-ghost-light ml-2">
+              <span className="dot" style={{color:'var(--accent)'}}></span>
+              Registration open
+            </span>
           </div>
-          <h1 className="h-display text-white mb-10 fade-up" style={{animationDelay:'0.15s', fontSize:'clamp(56px, 10vw, 156px)'}}>
-            Build the future<br/>of fashion <em className="gradient-text">commerce.</em><br/>
-            <span style={{color:'rgba(255,255,255,0.45)'}}>In fourteen days.</span>
+
+          {/* Main Title (Reduced size and centered) */}
+          <h1 className="text-center font-sans font-[900] text-white uppercase tracking-tighter leading-[0.9] fade-up mb-8 w-full" style={{ fontSize: 'clamp(36px, 6.5vw, 76px)', animationDelay:'0.15s' }}>
+            Build the future of<br/>
+            <span className="inline-flex items-center gap-2 flex-wrap justify-center">
+              <em className="gradient-text font-serif normal-case tracking-normal" style={{ fontSize: '0.8em' }}>fashion</em>
+              <div className="inline-flex items-center justify-center w-[1.48em] h-[0.72em] rounded-full overflow-hidden border border-white/20 align-middle bg-black relative"><video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-80" src="Desktop 2026.05.19 - 18.38.38.mp4" /></div>
+              commerce
+            </span>
           </h1>
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-end fade-up" style={{animationDelay:'0.3s'}}>
-            <div className="lg:col-span-7">
-              <p className="text-lg lg:text-xl leading-relaxed max-w-xl" style={{color:'rgba(255,255,255,0.78)'}}>
-                A cross-functional hackathon for engineers, designers, product, business, and operations. Pick a real problem from the frontline. Build it. Pitch it Shark Tank-style. Ship it within two weeks. Get rewarded.
-              </p>
-              <div className="flex items-center gap-3 mt-10 flex-wrap">
-                <button onClick={()=>setView('register')} className="btn btn-gradient">Register your team
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-                <button onClick={()=>setView('ideas')} className="btn btn-ghost-light">Browse Idea Bazaar</button>
-                <button onClick={()=>setView('funzone')} className="btn btn-ghost-light">Fun Zone 👾</button>
-              </div>
-            </div>
-            <div className="hidden lg:flex lg:col-span-5 justify-end">
-              <CountdownTimer targetDate="2026-07-17T09:00:00" />
-            </div>
+
+          {/* Centered Minimal Subtext */}
+          <p className="text-base sm:text-lg leading-relaxed max-w-xl text-white/70 mb-10 fade-up" style={{animationDelay:'0.25s'}}>
+            A cross-functional hackathon for engineers, designers, product, and operations. Pick a real problem from the frontline. Build it. Pitch it Shark Tank-style. Ship it in 14 days.
+          </p>
+
+          {/* Center-aligned CTA buttons */}
+          <div className="flex items-center justify-center gap-4 flex-wrap mb-14 fade-up" style={{animationDelay:'0.3s'}}>
+            <button onClick={()=>setView('register')} className="btn btn-white group">Register your team
+              <svg className="transform transition-transform group-hover:translate-x-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <button onClick={()=>setView('ideabazaar')} className="btn btn-ghost-light">Browse Idea Bazaar</button>
+            <button onClick={()=>setView('funzone')} className="btn btn-ghost-light">Fun Zone</button>
           </div>
+
+          {/* Centered Countdown Timer */}
+          <div className="fade-up w-full flex justify-center" style={{animationDelay:'0.35s'}}>
+            <CountdownTimer targetDate="2026-07-17T09:00:00" />
+          </div>
+
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-0 right-0 z-10 flex flex-col items-center justify-center gap-2 opacity-50 hover:opacity-100 transition-opacity cursor-pointer animate-bounce"
+             onClick={() => {
+               window.scrollTo({
+                 top: window.innerHeight,
+                 behavior: 'smooth'
+               });
+             }}>
+          <span className="text-[9px] font-mono tracking-[0.25em] indent-[0.25em] uppercase font-bold text-white/60">Scroll to Explore</span>
+          <svg className="w-4 h-4 text-white/70" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
         </div>
       </section>
 
-        {/* Stats strip */}
-        <section className="border-b border-[color:var(--line)] bg-white">
+      {/* Scrollable Content Wrapper (Full-bleed white curtain) */}
+      <div className="relative z-20 bg-white shadow-[0_-8px_30px_rgba(0,0,0,0.08)]" style={{width:'100vw', marginLeft:'calc(-50vw + 50%)'}}>
+        {/* Centered content block, matching main alignment */}
+        <div className="max-w-[1400px] mx-auto px-8 bg-white divide-y divide-[color:var(--line)]">
+          {/* Stats strip */}
+          <section className="border-b border-[color:var(--line)] bg-white">
           <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
             <div className="grid grid-cols-3 lg:grid-cols-6 gap-y-10 py-12">
               {[
@@ -1447,45 +1724,24 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
                 <div key={s.label} className={`px-2 lg:px-4 ${i !== 5 ? 'lg:border-r' : ''} border-[color:var(--line)]`}>
                   <div className="w-7 h-[2px] rounded-full mb-4" style={{background: s.color}}></div>
                   <div className="h-display text-4xl lg:text-5xl" style={{fontWeight:300, letterSpacing:'-0.04em'}}>{s.value}</div>
-                  <div className="font-mono text-[9px] uppercase tracking-widest mt-3 text-[color:var(--mute-1)]">{s.label}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-widest mt-3 text-[color:var(--mute-1)]">{s.label}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-      {/* ── WHAT'S TECHWEEK ── */}
-      <div className="py-20 px-6 lg:px-10 max-w-[1280px] mx-auto overflow-hidden">
-        <p className="text-[11px] text-[color:var(--mute-3)] tracking-[0.22em] uppercase font-[700] mb-8">5 days · Jul 13–17 · Myntra HQ</p>
-        <div className="grid lg:grid-cols-12 gap-10">
-          <div className="lg:col-span-5">
-            <h2 className="h-display text-5xl md:text-6xl lg:text-7xl text-[color:var(--ink)]" style={{lineHeight: 1.15}}>
-              Partner up.<br/>Ship ideas.<br/><em className="gradient-text">Win big.</em>
-            </h2>
-            <p className="text-[16px] text-[color:var(--mute-2)] mt-10 max-w-sm leading-relaxed">
-              Myntra's internal hackathon — find your partner, build something bold, and present to the leadership.
-            </p>
-          </div>
-          {/* Stacked overlapping pills */}
-          <div className="lg:col-span-7 relative h-[280px] md:h-[400px]">
-            {[
-              {label:'Partner Up',  bg:'#DAF0C4', style:{top:'5%',   left:'5%',  transform:'rotate(-8deg)'}},
-              {label:'Idea Board',  bg:'#E8D0F5', style:{top:'15%',  left:'55%', transform:'rotate(5deg)'}},
-              {label:'Win ₹2L+',   bg:'#F5E4C4', style:{top:'45%',  left:'25%', transform:'rotate(-4deg)'}},
-              {label:'Marketplace', bg:'#C4DEF5', style:{top:'55%',  left:'75%', transform:'rotate(7deg)'}},
-              {label:'Ship It',    bg:'#F5C4C4', style:{top:'80%',  left:'45%', transform:'rotate(-6deg)'}},
-            ].map((p,i)=>(
-              <span key={i} className="absolute inline-flex items-center px-5 py-2.5 md:px-8 md:py-4 md:text-[20px] text-[color:var(--ink-2)] text-[14px] font-[800] tracking-tight shadow-lg border border-[color:var(--ink-2)]/10 whitespace-nowrap"
-                style={{...p.style, background:p.bg, borderRadius:'999px'}}>
-                {p.label}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
 
-      {/* ── 0. HOW IT WORKS ── */}
-      <HowItWorksSection />
+      {/* ── 0. HOW IT WORKS (Full-bleed for sticky scroll) ── */}
+      <div className="relative z-20 bg-white" style={{width:'100vw', marginLeft:'calc(-50vw + 50%)'}}>
+        <HowItWorksSection />
+      </div>
+
+      {/* Re-open Scrollable Content Wrapper */}
+      <div className="relative z-20 bg-white" style={{width:'100vw', marginLeft:'calc(-50vw + 50%)'}}>
+        <div className="max-w-[1400px] mx-auto px-8 bg-white divide-y divide-[color:var(--line)]">
 
       {/* ── 1. CURRENT WINNERS ── */}
       <CurrentWinnersWidget winners={winners} />
@@ -1496,20 +1752,36 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
       {/* ── 2. EVENT DATES ── */}
       <div className="py-12 px-10">
         <SectionLabel>Event Dates</SectionLabel>
-        <div className="space-y-1">
-          {SCHEDULE.map((s,i)=>(
-            <div key={i} className={`flex items-center gap-4 px-4 py-4 rounded-none ${s.status==='live'?'bg-[#eeeeff]':'hover:bg-[color:var(--paper)]'} transition-colors group`}>
-              <span className={`w-12 text-center text-[10px] font-bold py-1.5 rounded-[3px] flex-shrink-0 ${s.status==='live'?'bg-[color:var(--accent)] text-white':'bg-[color:var(--paper-2)] text-[color:var(--mute-2)]'}`}>{s.phase}</span>
-              <span className="flex-1 text-[14px] text-[color:var(--ink)] font-medium">{s.label}</span>
-              {s.status==='live' && (
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--accent)] live-dot flex-shrink-0" />
-                  <span className="text-[11px] text-[color:var(--accent)] font-semibold">Live now</span>
+        <div className="bg-white border border-[color:var(--line-2)] rounded-[12px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+          <div className="divide-y divide-[color:var(--line-2)]/60">
+            {SCHEDULE.map((s,i)=>{
+              const isLive = s.status === 'live';
+              return (
+                <div key={i} className={`flex items-center justify-between gap-4 px-5 py-4 ${isLive ? 'bg-[color:var(--accent-tint)]/25' : 'hover:bg-[color:var(--paper)]/50'} transition-all duration-200 group`}>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className={`px-2 py-0.5 border text-[10px] font-bold font-mono uppercase tracking-wider rounded-[4px] flex-shrink-0 ${isLive ? 'border-[color:var(--accent)]/30 text-[color:var(--accent)] bg-[color:var(--accent-tint)]/65' : 'border-[color:var(--line-2)]/60 text-[color:var(--mute-1)] bg-[color:var(--paper-2)]/40'}`}>
+                      {s.phase}
+                    </span>
+                    <span className={`text-[14px] font-semibold truncate ${isLive ? 'text-[color:var(--accent-deep)] font-[800]' : 'text-[color:var(--ink)]'}`}>
+                      {s.label}
+                    </span>
+                    {isLive && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[color:var(--accent)] text-white text-[10px] font-[700] uppercase tracking-[0.12em] rounded-[4px] flex-shrink-0">
+                        <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                        Live Now
+                      </span>
+                    )}
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[color:var(--mute-1)] bg-[color:var(--paper)] border border-[color:var(--line-2)]/60 px-2.5 py-1 rounded-[6px] shadow-[0_1px_2px_rgba(0,0,0,0.02)] font-mono flex-shrink-0">
+                    <svg className="w-3.5 h-3.5 text-[color:var(--mute-2)]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                    </svg>
+                    {s.start} — {s.end}
+                  </span>
                 </div>
-              )}
-              <span className="text-[12px] text-[color:var(--mute-3)] font-medium flex-shrink-0 tabular-nums">{s.start} — {s.end}</span>
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -1517,39 +1789,83 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
       <div className="py-12 px-10">
         <SectionLabel>Prizes & Rewards</SectionLabel>
 
-        {/* 50K Live Implementation Callout */}
-        <div className="mb-6 rounded-none overflow-hidden border border-[#fbbf24] bg-gradient-to-r from-[#fffbeb] to-[#fff7ed] p-5 flex flex-col sm:flex-row sm:items-center gap-4">
-          <div className="flex-shrink-0 w-14 h-14 rounded-none bg-[#f59e0b] flex items-center justify-center text-[28px] shadow-sm">
-            ⚡
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap mb-0.5">
-              <p className="text-[15px] font-[800] text-[color:var(--ink)] tracking-tight">Bonus Prize — Live Implementation</p>
-              <span className="text-[10px] font-[700] uppercase tracking-[0.12em] bg-[#f59e0b] text-white px-2 py-0.5 rounded-full">Limited Offer</span>
-            </div>
-            <p className="text-[12px] text-[#78716c] leading-relaxed">Ship your winning idea to production within <strong className="text-[#92400e]">2 weeks</strong> of the finale and win an additional cash prize. This is on top of your competition winnings.</p>
-          </div>
-          <div className="flex-shrink-0 text-right sm:text-right">
-            <p className="text-[32px] font-[900] text-[color:var(--c-amber)] tracking-tight leading-none">₹50K</p>
-            <p className="text-[10px] text-[#a8a29e] font-medium mt-0.5">extra prize</p>
-          </div>
-        </div>
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[1px] bg-[color:var(--line-2)] rounded-[3px] overflow-hidden">
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {REWARDS.map((r,i)=>(
-            <div key={i} className={`rounded-none p-5 border ${i===0?'border-[#c4b5fd] bg-[#eeeeff]':'bg-[color:var(--paper)] border-[#efefef]'}`}>
-              <p className="text-[10px] text-[color:var(--mute-3)] uppercase tracking-[0.1em] mb-1.5 font-semibold">{r.rank}</p>
-              <p className={`text-[30px] font-[800] tracking-tight ${i===0?'text-[color:var(--accent)]':'text-[color:var(--ink)]'}`}>₹{r.prize}</p>
-              <ul className="mt-3 space-y-1.5">
-                {r.perks.map((pk,j)=>(
-                  <li key={j} className="text-[12px] text-[color:var(--mute-1)] flex items-start gap-2">
-                    <span className={`mt-1 flex-shrink-0 w-1 h-1 rounded-full ${i===0?'bg-[color:var(--accent)]':'bg-[color:var(--mute-4)]'}`} />
-                    {pk}
-                  </li>
-                ))}
-              </ul>
+          {/* ── LEFT: Bonus Prize — Tall Card ── */}
+          <div className="lg:col-span-5 lg:row-span-2 bg-[color:var(--ink)] p-8 sm:p-10 flex flex-col justify-between min-h-[340px]">
+            <div>
+              <div className="flex items-center gap-2.5 mb-8">
+                <span className="text-[10px] font-[700] uppercase tracking-[0.16em] bg-[#f59e0b] text-white px-2 py-[3px] rounded-[3px]">Limited Offer</span>
+                <span className="text-[10px] font-[700] uppercase tracking-[0.16em] text-white/25 font-mono">Bonus</span>
+              </div>
+              <p className="text-white/30 text-[10px] font-mono uppercase tracking-[0.25em] mb-3">Ship to Production</p>
+              <h3 className="h-display text-white text-[28px] sm:text-[36px] leading-[1.05] mb-5">
+                Live Implementation<br/><span className="text-[#f59e0b]">Prize</span>
+              </h3>
+              <p className="text-white/40 text-[12px] leading-relaxed max-w-[260px]">
+                Ship your winning idea to production within <strong className="text-white/60">2 weeks</strong> of the finale and win an additional cash prize.
+              </p>
             </div>
-          ))}
+            <div className="mt-10">
+              <p className="h-display text-[56px] sm:text-[72px] text-white tracking-tighter leading-none">
+                ₹50<span className="text-[#f59e0b]">K</span>
+              </p>
+              <p className="text-[10px] text-white/20 font-mono uppercase tracking-[0.2em] mt-2">Extra Prize Money</p>
+            </div>
+          </div>
+
+          {/* ── 1st Place ── */}
+          <div className="lg:col-span-4 bg-white p-7 flex flex-col justify-between">
+            <span className="text-[10px] font-[700] uppercase tracking-[0.16em] text-[color:var(--mute-3)] mb-5 block">{REWARDS[0].rank}</span>
+            <div>
+              <p className="h-display text-[48px] text-[color:var(--ink)] tracking-tighter leading-none">
+                ₹1<span className="text-[0.5em] text-[color:var(--mute-3)] font-mono ml-1">Lakh</span>
+              </p>
+              <p className="text-[12px] text-[color:var(--mute-2)] mt-4 leading-relaxed">{REWARDS[0].perks.join(' · ')}</p>
+            </div>
+          </div>
+
+          {/* ── 2nd Place ── */}
+          <div className="lg:col-span-3 bg-white p-7 flex flex-col justify-between">
+            <span className="text-[10px] font-[700] uppercase tracking-[0.16em] text-[color:var(--mute-3)] mb-5 block">{REWARDS[1].rank}</span>
+            <div>
+              <p className="h-display text-[48px] text-[color:var(--ink)] tracking-tighter leading-none">
+                ₹60<span className="text-[0.5em] text-[color:var(--mute-3)] font-mono ml-1">K</span>
+              </p>
+              <p className="text-[12px] text-[color:var(--mute-2)] mt-4 leading-relaxed">{REWARDS[1].perks.join(' · ')}</p>
+            </div>
+          </div>
+
+          {/* ── 3rd Place (wide) ── */}
+          <div className="lg:col-span-7 bg-white p-7 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+              <span className="text-[10px] font-[700] uppercase tracking-[0.16em] text-[color:var(--mute-3)] mb-5 block">{REWARDS[2].rank}</span>
+              <p className="h-display text-[48px] text-[color:var(--ink)] tracking-tighter leading-none">
+                ₹30<span className="text-[0.5em] text-[color:var(--mute-3)] font-mono ml-1">K</span>
+              </p>
+            </div>
+            <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed max-w-[240px]">{REWARDS[2].perks.join(' · ')}</p>
+          </div>
+
+          {/* ── Best UI/UX ── */}
+          <div className="lg:col-span-6 bg-white p-7 flex items-center justify-between gap-4">
+            <div>
+              <span className="text-[10px] font-[700] uppercase tracking-[0.16em] text-[color:var(--mute-3)] block mb-2">{REWARDS[3].rank}</span>
+              <p className="h-display text-[36px] text-[color:var(--ink)] tracking-tighter leading-none">₹{REWARDS[3].prize}</p>
+            </div>
+            <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed max-w-[180px] text-right hidden sm:block">{REWARDS[3].perks.join(' · ')}</p>
+          </div>
+
+          {/* ── Most Innovative ── */}
+          <div className="lg:col-span-6 bg-white p-7 flex items-center justify-between gap-4">
+            <div>
+              <span className="text-[10px] font-[700] uppercase tracking-[0.16em] text-[color:var(--mute-3)] block mb-2">{REWARDS[4].rank}</span>
+              <p className="h-display text-[36px] text-[color:var(--ink)] tracking-tighter leading-none">₹{REWARDS[4].prize}</p>
+            </div>
+            <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed max-w-[180px] text-right hidden sm:block">{REWARDS[4].perks.join(' · ')}</p>
+          </div>
+
         </div>
       </div>
 
@@ -1570,19 +1886,16 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
               </tr>
             </thead>
             <tbody>
-              {[...teams].sort((a,b)=>{
-                const sa = (a.scores?.r1||0)+(a.scores?.r2||0)+(a.scores?.r3||0);
-                const sb = (b.scores?.r1||0)+(b.scores?.r2||0)+(b.scores?.r3||0);
-                return sb-sa;
-              }).map((t,idx)=>{
+              {paginatedTeams.map((t,idx)=>{
+                const globalIdx = startIndex + idx;
                 const s = t.scores||{};
                 const total = (s.r1||0)+(s.r2||0)+(s.r3||0);
                 const tc = THEME_COLOR[t.theme]||{bg:'#f9f9fa',border:'#efefef',text:'#71717a'};
                 return (
-                  <tr key={t.id} className={`border-b border-[#f7f7f8] hover:bg-[color:var(--paper)] transition-colors ${idx===0?'bg-[#fffbf5]':''}`}>
+                  <tr key={t.id} className={`border-b border-[#f7f7f8] hover:bg-[color:var(--paper)] transition-colors ${globalIdx===0?'bg-[#fffbf5]':''}`}>
                     <td className="py-3.5 px-4">
-                      <span className={`text-[12px] font-bold ${idx===0?'text-[color:var(--accent)]':idx===1?'text-[color:var(--mute-2)]':idx===2?'text-[#a16207]':'text-[color:var(--mute-4)]'}`}>
-                        {idx===0?'🥇':idx===1?'🥈':idx===2?'🥉':`#${idx+1}`}
+                      <span className={`text-[12px] font-bold ${globalIdx===0?'text-[color:var(--accent)]':globalIdx===1?'text-[color:var(--mute-2)]':globalIdx===2?'text-[#a16207]':'text-[color:var(--mute-4)]'}`}>
+                        {globalIdx===0?'🥇':globalIdx===1?'🥈':globalIdx===2?'🥉':`#${globalIdx+1}`}
                       </span>
                     </td>
                     <td className="py-3.5 px-4">
@@ -1603,7 +1916,7 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
                       </td>
                     ))}
                     <td className="py-3.5 px-4 text-center">
-                      <span className={`text-[14px] font-[800] ${idx===0?'text-[color:var(--accent)]':'text-[color:var(--ink)]'}`}>{total||'—'}</span>
+                      <span className={`text-[14px] font-[800] ${globalIdx===0?'text-[color:var(--accent)]':'text-[color:var(--ink)]'}`}>{total||'—'}</span>
                     </td>
                   </tr>
                 );
@@ -1611,7 +1924,57 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
             </tbody>
           </table>
         </div>
-        <p className="text-[11px] text-[#c4c4c8] mt-4">R2 and R3 scores pending. Live updates during evaluation rounds.</p>
+
+        {/* Pagination Controls */}
+        {sortedTeams.length > itemsPerPage && (
+          <div className="flex items-center justify-between pt-6 border-t border-[color:var(--line)] flex-wrap gap-4 mt-4">
+            <p className="text-[12px] font-medium text-[color:var(--mute-3)]">
+              Showing {startIndex + 1}–{endIndex} of {sortedTeams.length} teams
+            </p>
+            <div className="flex gap-1.5 items-center">
+              <button 
+                onClick={() => setScorecardPage(p => Math.max(1, p - 1))} 
+                disabled={currentPage === 1}
+                className={`px-3 py-1.5 text-[12px] font-[800] btn border rounded-[3px] transition-colors ${
+                  currentPage === 1 
+                    ? 'border-[color:var(--line)] text-[color:var(--mute-4)] cursor-not-allowed' 
+                    : 'border-[color:var(--line-2)] text-[color:var(--mute-2)] hover:bg-[color:var(--paper-2)] hover:text-[color:var(--ink)]'
+                }`}
+              >
+                ‹ Prev
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => {
+                const p = i + 1;
+                return (
+                  <button 
+                    key={p} 
+                    onClick={() => setScorecardPage(p)}
+                    className={`w-8 h-8 text-[12px] font-[800] btn rounded-[3px] transition-all ${
+                      p === currentPage 
+                        ? 'bg-[color:var(--ink)] text-white shadow-sm' 
+                        : 'border border-[color:var(--line-2)] text-[color:var(--mute-2)] hover:bg-[color:var(--paper-2)] hover:text-[color:var(--ink)]'
+                    }`}
+                  >
+                    {p}
+                  </button>
+                );
+              })}
+              <button 
+                onClick={() => setScorecardPage(p => Math.min(totalPages, p + 1))} 
+                disabled={currentPage === totalPages}
+                className={`px-3 py-1.5 text-[12px] font-[800] btn border rounded-[3px] transition-colors ${
+                  currentPage === totalPages 
+                    ? 'border-[color:var(--line)] text-[color:var(--mute-4)] cursor-not-allowed' 
+                    : 'border-[color:var(--line-2)] text-[color:var(--mute-2)] hover:bg-[color:var(--paper-2)] hover:text-[color:var(--ink)]'
+                }`}
+              >
+                Next ›
+              </button>
+            </div>
+          </div>
+        )}
+
+        <p className="text-[12px] text-[#c4c4c8] mt-4">R2 and R3 scores pending. Live updates during evaluation rounds.</p>
       </div>
 
       {/* ── PAST EDITIONS ── */}
@@ -1621,82 +1984,31 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
 
           {/* Nov 2025 */}
           <div className="overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-4 bg-[color:var(--paper)] border-b border-[color:var(--line-2)]">
+            <div className="flex items-center justify-between px-5 py-4 bg-[color:var(--paper)] border-b border-[color:var(--line-2)] rounded-[4px]">
               <div>
                 <p className="text-[14px] font-[700] text-[color:var(--ink)]">Tech Week · Nov 2025</p>
                 <p className="text-[12px] text-[color:var(--accent)] font-semibold mt-0.5">"InnovAIte to Lead"</p>
               </div>
-              <Tag label="Most Recent" variant="orange" small />
+              <Tag label="Last Year Winners" variant="orange" small />
             </div>
-            <div className="divide-y divide-[color:var(--paper-2)]">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6">
               {[
                 { badge:'🏆', award:'Winning Team',  team:'Vit-On Catalog',    project:'StyleMatch — Explore different outfit styles before you buy', members:'Chinmay Nanda, Sukhneer Singh, Kedar Vaidya, Tipu Ali Khan & Apoorva Ira' },
                 { badge:'🥈', award:'Runner-Up',     team:'CacheMeIfYouCan',   project:'Smart caching layer for fashion discovery personalisation',   members:'Azeem, Himanshu, Manas, Satish & Pooshkar' },
               ].map((w,i)=>(
-                <div key={i} className="flex items-start gap-4 px-5 py-4">
-                  <span className="text-[24px] flex-shrink-0 mt-0.5">{w.badge}</span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <span className="text-[10px] font-semibold text-[color:var(--mute-3)] uppercase tracking-[0.08em]">{w.award}</span>
+                <div key={i} className="flex flex-col justify-between p-6 bg-[color:var(--paper)] border border-[color:var(--line-2)] hover:border-[color:var(--accent)] transition-all group relative rounded-[4px] shadow-sm hover:shadow-md">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-[10px] font-[800] text-[color:var(--mute-3)] uppercase tracking-[0.12em]">{w.award}</span>
+                      <span className="text-2xl filter drop-shadow-sm select-none">{w.badge}</span>
                     </div>
-                    <p className="text-[14px] font-[700] text-[color:var(--ink)]">{w.team}</p>
-                    <p className="text-[12px] text-[color:var(--accent)] font-medium mt-0.5">{w.project}</p>
-                    <p className="text-[11px] text-[color:var(--mute-3)] mt-1.5">👥 {w.members}</p>
+                    <p className="text-[16px] font-[800] text-[color:var(--ink)] tracking-tight group-hover:text-[color:var(--accent)] transition-colors">{w.team}</p>
+                    <p className="text-[13px] text-[color:var(--ink-2)] font-medium mt-1 leading-snug">{w.project}</p>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* March 2025 */}
-          <div className="overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-4 bg-[color:var(--paper)] border-b border-[color:var(--line-2)]">
-              <div>
-                <p className="text-[14px] font-[700] text-[color:var(--ink)]">Tech Week · March 2025</p>
-                <p className="text-[12px] text-[color:var(--mute-2)] font-medium mt-0.5">"Innovate. Elevate. Grow."</p>
-              </div>
-            </div>
-            <div className="divide-y divide-[color:var(--paper-2)]">
-              {[
-                { badge:'🏅', award:'Best GenAI Hack',          team:'चौटी चौक',      project:'Customer Delight — GenAI-powered shopper support automation', members:'Shivam, Sahil, Gaurav, Vishi, Sangeet & Himani' },
-                { badge:'🏅', award:'Tech Productivity Champion',team:'Team Mavericks', project:'Employee Productivity — AI tools for internal ops teams',       members:'Shashank, Prakhar & Sunanda' },
-                { badge:'👏', award:'Audience Choice Award',     team:'Team Mavericks', project:'Fan favourite, voted by all hackathon participants',              members:'Shashank, Prakhar & Sunanda' },
-              ].map((w,i)=>(
-                <div key={i} className="flex items-start gap-4 px-5 py-4">
-                  <span className="text-[24px] flex-shrink-0 mt-0.5">{w.badge}</span>
-                  <div className="flex-1 min-w-0">
-                    <span className="text-[10px] font-semibold text-[color:var(--mute-3)] uppercase tracking-[0.08em]">{w.award}</span>
-                    <p className="text-[14px] font-[700] text-[color:var(--ink)] mt-0.5">{w.team}</p>
-                    <p className="text-[12px] text-[color:var(--accent)] font-medium mt-0.5">{w.project}</p>
-                    <p className="text-[11px] text-[color:var(--mute-3)] mt-1.5">👥 {w.members}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Feb 2022 */}
-          <div className="overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-4 bg-[color:var(--paper)] border-b border-[color:var(--line-2)]">
-              <div>
-                <p className="text-[14px] font-[700] text-[color:var(--ink)]">Tech Week · Feb 2022</p>
-                <p className="text-[12px] text-[color:var(--mute-2)] font-medium mt-0.5">The original edition</p>
-              </div>
-            </div>
-            <div className="divide-y divide-[color:var(--paper-2)]">
-              {[
-                { badge:'🏆', award:'Winning Team',       team:'RukegaNai',          project:'Seamless checkout experience — zero-friction purchase flow',     members:'V Yugandhar, Rishikesh Misai, Abhinav Dangi & Sanjay Ash' },
-                { badge:'🥈', award:'Runner-Up',          team:'Style Shots',         project:'AI-powered lookbook generator from product catalogue images',    members:'Mohak Kumar Sukhwani & Jayant Priyadarshi' },
-                { badge:'🎁', award:'Out of the Box Award',team:'Piertetum Locomotor', project:'Gamified loyalty system for Myntra power users',                members:'Sadbhavana Manohar Babar, Sandeep Narayan P & Tanya Soni' },
-                { badge:'👏', award:'Audience Choice',    team:'You Are On Mute',     project:'Real-time live shopping co-browsing with voice reactions',       members:'Prashant Sadanand Chiplunkar, Bhavin Mehta, Ashwini Prasad Warang & Nikhil Surinder Ratti' },
-              ].map((w,i)=>(
-                <div key={i} className="flex items-start gap-4 px-5 py-4">
-                  <span className="text-[24px] flex-shrink-0 mt-0.5">{w.badge}</span>
-                  <div className="flex-1 min-w-0">
-                    <span className="text-[10px] font-semibold text-[color:var(--mute-3)] uppercase tracking-[0.08em]">{w.award}</span>
-                    <p className="text-[14px] font-[700] text-[color:var(--ink)] mt-0.5">{w.team}</p>
-                    <p className="text-[12px] text-[color:var(--accent)] font-medium mt-0.5">{w.project}</p>
-                    <p className="text-[11px] text-[color:var(--mute-3)] mt-1.5">👥 {w.members}</p>
+                  <div className="mt-6 pt-4 border-t border-[color:var(--line-2)] flex items-start gap-2 text-[11px] text-[color:var(--mute-2)]">
+                    <span className="flex-shrink-0 mt-0.5 opacity-70">👥</span>
+                    <span className="leading-relaxed">{w.members}</span>
                   </div>
                 </div>
               ))}
@@ -1706,6 +2018,9 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
         </div>
       </div>
 
+        {/* End Centered content block and Scrollable Content Wrapper */}
+        </div>
+      </div>
     </div>
   );
 }
@@ -2103,17 +2418,17 @@ function RegisterView({ user, setTeams, toast, onLoginOpen, userTeam, pubResults
                 <div onClick={() => sf('teamMode', 'create')} className={`cursor-pointer rounded-[8px] p-6 border-2 transition-all ${form.teamMode==='create' ? 'border-blue-500 bg-blue-50' : 'border-[color:var(--line-2)] hover:border-[color:var(--line)] bg-white'}`}>
                   <div className="w-6 h-1 bg-green-500 mb-4 rounded-full"></div>
                   <h3 className="text-[14px] font-bold text-[color:var(--ink)] mb-1">Create new team</h3>
-                  <p className="text-[11px] text-[color:var(--mute-2)] leading-relaxed">Start fresh. Invite teammates after registration.</p>
+                  <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">Start fresh. Invite teammates after registration.</p>
                 </div>
                 <div onClick={() => sf('teamMode', 'join')} className={`cursor-pointer rounded-[8px] p-6 border-2 transition-all ${form.teamMode==='join' ? 'border-blue-500 bg-blue-50' : 'border-[color:var(--line-2)] hover:border-[color:var(--line)] bg-white'}`}>
                   <div className="w-6 h-1 bg-blue-500 mb-4 rounded-full"></div>
                   <h3 className="text-[14px] font-bold text-[color:var(--ink)] mb-1">Join existing</h3>
-                  <p className="text-[11px] text-[color:var(--mute-2)] leading-relaxed">Browse open teams looking for your skillset.</p>
+                  <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">Browse open teams looking for your skillset.</p>
                 </div>
                 <div onClick={() => sf('teamMode', 'find')} className={`cursor-pointer rounded-[8px] p-6 border-2 transition-all ${form.teamMode==='find' ? 'border-blue-500 bg-blue-50' : 'border-[color:var(--line-2)] hover:border-[color:var(--line)] bg-white'}`}>
                   <div className="w-6 h-1 bg-purple-500 mb-4 rounded-full"></div>
                   <h3 className="text-[14px] font-bold text-[color:var(--ink)] mb-1">Find me a team</h3>
-                  <p className="text-[11px] text-[color:var(--mute-2)] leading-relaxed">Get matched via the Blind-Date Mixer.</p>
+                  <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">Get matched via the Blind-Date Mixer.</p>
                 </div>
               </div>
               
@@ -3199,7 +3514,8 @@ function AddContentComposer({ quizzes, setQuizzes, memes, setMemes, toast }) {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 inset-x-0 p-4">
                     <span className="inline-flex items-center gap-1.5 bg-white text-[color:var(--ink)] px-2.5 py-1 rounded-full text-[10px] font-[900] uppercase tracking-[0.1em]">
-                      {memeDraft.emoji || '😂'} {memeDraft.tag || 'Team Moment'}
+                      <FluentEmoji char={memeDraft.emoji || '😂'} className="w-3 h-3 flex-shrink-0" fallbackStyle={{ fontSize: '10px' }} />
+                      <span>{memeDraft.tag || 'Team Moment'}</span>
                     </span>
                     <p className="text-white text-[17px] font-[900] tracking-tight leading-tight mt-3">{memeDraft.title || 'Preview title'}</p>
                   </div>
@@ -3501,7 +3817,7 @@ function CalendarView() {
         </p>
       </div>
 
-      <div className="bg-white border border-[color:var(--line-2)] rounded-[3px] shadow-sm mb-12">
+      <div className="bg-white border border-[color:var(--line-2)] rounded-[12px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)] mb-12">
         <div className="px-5 pt-4 pb-3 border-b border-[color:var(--line-2)] flex items-center justify-between">
           <p className="text-[11px] text-[color:var(--mute-3)] uppercase tracking-[0.14em] font-[800]">Phase Timeline</p>
           <span className="inline-flex items-center gap-1.5 text-[10px] font-[800] text-[#16a34a] uppercase tracking-wide">
@@ -3512,16 +3828,15 @@ function CalendarView() {
             Registration Live
           </span>
         </div>
-        <div className="flex overflow-x-auto hide-scrollbar rounded-b-[3px]">
+        <div className="flex overflow-x-auto hide-scrollbar rounded-b-[12px]">
           {SCHEDULE.map((s, i) => {
             const isLive = s.status === 'live';
-            const fills = ['#f0fdf4','#fdf4ff','#fffbeb','#eff6ff','#fef2f2'];
             return (
               <div key={s.phase} className="flex items-stretch flex-shrink-0" style={{minWidth:'160px', flex:'1'}}>
                 <div className="flex-1 flex flex-col px-5 py-4 border-r border-[color:var(--line-2)] last:border-r-0"
-                  style={{background: isLive ? '#18181b' : fills[i]}}>
+                  style={{background: isLive ? 'var(--ink)' : 'rgba(10,10,10,0.015)'}}>
                   <div className="flex items-start justify-between mb-4">
-                    <span className={`text-[10px] font-[800] uppercase tracking-[0.15em] px-2 py-0.5 rounded-[3px] border ${isLive ? 'border-white/20 text-white bg-white/10' : 'border-[color:var(--ink-2)]/15 text-[color:var(--ink-2)] bg-white/40'}`}>
+                    <span className={`text-[10px] font-bold font-mono uppercase tracking-wider px-2 py-0.5 rounded-[4px] border ${isLive ? 'border-white/20 text-white bg-white/10' : 'border-[color:var(--line-2)]/40 text-[color:var(--mute-1)] bg-white/60'}`}>
                       {s.phase}
                     </span>
                     {isLive && (
@@ -3543,13 +3858,13 @@ function CalendarView() {
       <div className="relative border-l-2 border-[color:var(--line-2)] ml-4 md:ml-[140px] py-2 space-y-8">
         {TIMELINE.map((item, i) => {
           const typeColors = {
-            'Milestone': 'bg-[color:var(--accent)] border-[color:var(--accent)] text-white',
-            'Session': 'bg-white border-[color:var(--line-2)] text-[color:var(--mute-1)]',
-            'Deadline': 'bg-[#fef2f2] border-[#fca5a5] text-[#dc2626]',
-            'Round': 'bg-[#eff6ff] border-[#bfdbfe] text-[#2563eb]',
-            'Announcement': 'bg-[#f0fdf4] border-[#bbf7d0] text-[#16a34a]',
-            'Pause': 'bg-[#fdf4ff] border-[#f5d0fe] text-[#c026d3]',
-            'Finale': 'bg-[#fffbeb] border-[#fde68a] text-[color:var(--c-amber)]',
+            'Milestone': 'bg-[color:var(--accent-tint)] border-[color:var(--accent-dim)]/20 text-[color:var(--accent)]',
+            'Session': 'bg-[color:var(--paper-2)] border-[color:var(--line-2)] text-[color:var(--mute-1)]',
+            'Deadline': 'bg-[#fef2f2] border-[#fca5a5]/30 text-[#dc2626]',
+            'Round': 'bg-[#eff6ff] border-[#bfdbfe]/30 text-[#2563eb]',
+            'Announcement': 'bg-[#f0fdf4] border-[#bbf7d0]/30 text-[#16a34a]',
+            'Pause': 'bg-[#fdf4ff] border-[#f5d0fe]/30 text-[#c026d3]',
+            'Finale': 'bg-[#fffbeb] border-[#fde68a]/30 text-[color:var(--c-amber-deep)]',
           };
           const style = typeColors[item.type] || typeColors['Session'];
           
@@ -3572,16 +3887,16 @@ function CalendarView() {
               </div>
 
               <div className="md:hidden mb-2.5">
-                <span className={`text-[12px] font-[800] px-2.5 py-1 rounded-[3px] uppercase tracking-wide ${item.isLive?'bg-[#eeeeff] text-[color:var(--accent)]':'bg-[color:var(--paper-2)] text-[color:var(--mute-2)]'}`}>
+                <span className={`text-[11px] font-bold font-mono tracking-wide px-2.5 py-1 rounded-[4px] border ${item.isLive?'bg-[color:var(--accent-tint)] text-[color:var(--accent)] border-[color:var(--accent)]/10':'bg-[color:var(--paper-2)] text-[color:var(--mute-2)] border-[color:var(--line-2)]/40'}`}>
                   {item.date} · {item.day}
                 </span>
               </div>
 
-              <div className={`p-5 rounded-[3px] border hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all bg-white flex flex-col sm:flex-row sm:items-start justify-between gap-4 ${item.isLive?'border-[color:var(--accent)] shadow-sm':'border-[color:var(--line-2)]'}`}>
+              <div className={`p-5 rounded-[12px] border hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all bg-white flex flex-col sm:flex-row sm:items-start justify-between gap-4 ${item.isLive?'border-[color:var(--accent)] shadow-sm':'border-[color:var(--line-2)]/60'}`}>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                     <p className={`text-[17px] font-[800] leading-tight ${item.isLive?'text-[color:var(--accent)]':'text-[color:var(--ink)]'}`}>{item.title}</p>
-                    {item.isLive && <span className="px-2 py-0.5 bg-[color:var(--accent)] text-white text-[9px] font-[800] uppercase tracking-[0.15em] rounded-[3px]">
+                    {item.isLive && <span className="px-2 py-0.5 bg-[color:var(--accent)] text-white text-[9px] font-[800] uppercase tracking-[0.15em] rounded-[4px]">
                       <span className="inline-block w-1.5 h-1.5 bg-white rounded-full mr-1 animate-pulse"></span>
                       Live Now
                     </span>}
@@ -3589,8 +3904,13 @@ function CalendarView() {
                   {item.desc && <p className="text-[13.5px] text-[color:var(--mute-2)] leading-relaxed font-medium">{item.desc}</p>}
                 </div>
                 <div className="flex flex-col items-start sm:items-end flex-shrink-0 gap-2">
-                  <span className={`px-2.5 py-1 border text-[10px] font-[800] uppercase tracking-wider rounded-[3px] ${style}`}>{item.type}</span>
-                  <span className="text-[12px] font-[800] text-[color:var(--mute-1)] bg-[color:var(--paper)] border border-[color:var(--line-2)] px-2.5 py-1 rounded-[3px]">🕒 {item.time}</span>
+                  <span className={`px-2.5 py-1 border text-[10px] font-bold font-mono uppercase tracking-wider rounded-[4px] ${style}`}>{item.type}</span>
+                  <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[color:var(--mute-1)] bg-[color:var(--paper)] border border-[color:var(--line-2)]/60 px-2.5 py-1 rounded-[6px] shadow-[0_1px_2px_rgba(0,0,0,0.02)] font-mono">
+                    <svg className="w-3.5 h-3.5 text-[color:var(--mute-2)]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {item.time}
+                  </span>
                 </div>
               </div>
             </div>
@@ -3715,10 +4035,13 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
 
       {/* Section switcher */}
       <div className="grid grid-cols-4 border border-[color:var(--line-2)] overflow-hidden">
-        {[['overview','📊 Overview'],['judging','⚖ Judging'],['content','✎ Home Content'],['management','◈ Management']].map(([id,l])=>(
+        {[['overview','📊','Overview'],['judging','⚖','Judging'],['content','✎','Home Content'],['management','◈','Management']].map(([id,icon,label])=>(
           <button key={id} onClick={()=>switchSection(id)}
             className={`py-3.5 text-[11px] font-[700] uppercase tracking-[0.1em] btn transition-colors border-r border-[color:var(--line-2)] last:border-r-0 ${section===id?'bg-[color:var(--ink-2)] text-white':'bg-white text-[color:var(--mute-2)] hover:bg-[color:var(--paper)]'}`}>
-            {l}
+            <span className="flex items-center justify-center gap-1.5 w-full">
+              <FluentEmoji char={icon} className="w-3.5 h-3.5 flex-shrink-0" fallbackStyle={{ fontSize: '11px' }} />
+              <span>{label}</span>
+            </span>
           </button>
         ))}
       </div>
@@ -4773,7 +5096,94 @@ function Gate({ title, msg, warn=false }) {
    APP
 ══════════════════════════════ */
 
+function LoadingScreen({ onComplete }) {
+  const LOADER_IMAGES = [
+    "Loader images/In_this_same_Art_Style,_202605181036 1.png",
+    "Loader images/In_this_same_Art_Style,_202605181038 1.png",
+    "Loader images/In_this_same_Art_Style,_202605181039 1.png",
+    "Loader images/In_this_same_Art_Style,_202605181040 1.png",
+    "Loader images/In_this_same_Art_Style,_202605181042 1.png",
+    "Loader images/In_this_same_Art_Style,_202605181043 1.png",
+    "Loader images/In_this_same_Art_Style,_202605181045 1.png"
+  ];
+
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [fadeAway, setFadeAway] = React.useState(false);
+
+  React.useEffect(() => {
+    // Lock scrolling on page load
+    document.body.style.overflow = 'hidden';
+
+    // Preload images to avoid flickering
+    LOADER_IMAGES.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => {
+        if (prev < LOADER_IMAGES.length - 1) {
+          return prev + 1;
+        } else {
+          clearInterval(interval);
+          setFadeAway(true);
+          setTimeout(() => {
+            onComplete();
+          }, 800); // match transition duration
+          return prev;
+        }
+      });
+    }, 500); // 0.5s intervals
+
+    return () => {
+      clearInterval(interval);
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  return (
+    <div 
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#0A0A0A] transition-all duration-[800ms] ease-in-out ${
+        fadeAway ? 'opacity-0 pointer-events-none scale-105' : 'opacity-100'
+      }`}
+    >
+      <div className="flex flex-col items-center gap-6 select-none animate-fade-in">
+        {/* Main Typographic Wordmark */}
+        <h1 className="text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tighter text-white flex items-center justify-center gap-4 sm:gap-6 flex-wrap">
+          <span className={`inline-block transition-transform duration-[800ms] ease-in-out ${
+            fadeAway ? '-translate-x-12 sm:-translate-x-20 md:-translate-x-28' : 'translate-x-0'
+          }`}>Tech</span>
+          
+          {/* Changing Image Frame */}
+          <div className="relative w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 flex-shrink-0">
+            {LOADER_IMAGES.map((src, i) => (
+              <img
+                key={src}
+                src={src}
+                alt="TechWeek Loading"
+                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${
+                  i === currentIndex ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
+            ))}
+          </div>
+          
+          <span className={`gradient-text inline-block transition-transform duration-[800ms] ease-in-out ${
+            fadeAway ? 'translate-x-12 sm:translate-x-20 md:translate-x-28' : 'translate-x-0'
+          }`}>Week</span>
+        </h1>
+        
+        {/* Animated Loading Text */}
+        <p className="text-[11px] font-mono text-white/40 tracking-[0.25em] uppercase animate-pulse mt-4">
+          Initializing TechWeek '26...
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function App() {
+  const [loading, setLoading]   = useState(true);
   const [view, setView]         = useState('home');
   const [user, setUser]         = useState(null);
   const [loginOpen, setLogin]   = useState(false);
@@ -4800,6 +5210,8 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      {loading && <LoadingScreen onComplete={() => { setLoading(false); window.scrollTo(0, 0); }} />}
+
       <Nav view={view} setView={setView} user={user}
         onLogin={()=>setLogin(true)}
         onLogout={()=>{setUser(null); toast('Signed out.','info');}}
@@ -4807,7 +5219,7 @@ function App() {
       />
 
       <main className={`max-w-[1400px] mx-auto px-8 pb-16 ${view === 'home' ? '' : 'pt-[88px]'}`}>
-        {view==='home'        && <HomeView teams={teams} winners={winners} homeStats={homeStats} />}
+        {view==='home'        && <HomeView teams={teams} winners={winners} homeStats={homeStats} setView={setView} />}
         {view==='register'    && <RegisterView    user={user} setTeams={setTeams} toast={toast} onLoginOpen={()=>setLogin(true)} userTeam={userTeam} pubResults={pubResults} />}
         {view==='teams'       && <MarketplaceView user={user} teams={teams} joinRequests={joinReqs} setJoinRequests={setJoinReqs} ideas={ideas} setIdeas={setIdeas} toast={toast} mode="partners" setView={setView} onLoginOpen={()=>setLogin(true)} />}
         {view==='ideabazaar'  && <MarketplaceView user={user} teams={teams} joinRequests={joinReqs} setJoinRequests={setJoinReqs} ideas={ideas} setIdeas={setIdeas} toast={toast} mode="ideas" setView={setView} onLoginOpen={()=>setLogin(true)} />}

@@ -1,6 +1,6 @@
 import os
 
-with open("index (1).html", "r", encoding="utf-8") as f:
+with open("index.html", "r", encoding="utf-8") as f:
     code = f.read()
 
 # 1. Update the state variables definition
@@ -91,7 +91,7 @@ new_table_code = """                                    <button
                                     </button>"""
 code = code.replace(old_table_code, new_table_code)
 
-with open("index (1).html", "w", encoding="utf-8") as f:
+with open("index.html", "w", encoding="utf-8") as f:
     f.write(code)
 
 print("Updated scoring system with 6 criteria!")

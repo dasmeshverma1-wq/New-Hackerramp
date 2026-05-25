@@ -1,5 +1,5 @@
 const fs = require('fs');
-let text = fs.readFileSync('c:/Daksh/tra 2/Tech Week/index (1).html', 'utf8');
+let text = fs.readFileSync('index.html', 'utf8');
 
 const newCode = `function CalendarView() {
   const TIMELINE = [
@@ -92,7 +92,7 @@ if (endIdx === -1) endIdx = text.indexOf('/* ═══════════�
 
 if (startIdx !== -1 && endIdx !== -1) {
   text = text.substring(0, startIdx) + newCode + '\n\n' + text.substring(endIdx);
-  fs.writeFileSync('c:/Daksh/tra 2/Tech Week/index (1).html', text);
+  fs.writeFileSync('index.html', text);
   console.log('Successfully replaced CalendarView');
 } else {
   console.log('Could not find CalendarView block. startIdx:', startIdx, 'endIdx:', endIdx);

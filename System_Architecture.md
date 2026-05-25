@@ -18,7 +18,7 @@ This application is built as a **Single-Page Application (SPA) contained within 
 ## 2. Workspace File Layout
 
 ```
-├── index (1).html                  # Main React SPA web app (322KB)
+├── index.html                  # Main React SPA web app (322KB)
 ├── hackerramp_final Updated Design.html  # Alternative redesigned template (142KB)
 ├── Design.md                       # Design tokens, typography & style guide
 ├── User_Flow.md                    # Interaction flows & screen mappings
@@ -30,12 +30,12 @@ This application is built as a **Single-Page Application (SPA) contained within 
 ```
 
 > [!IMPORTANT]
-> **Active Target File**: `index (1).html` is the primary executable web application. All program scripts (like `update_roles.py`, `update_scoring.py`, etc.) target this file directly. 
+> **Active Target File**: `index.html` is the primary executable web application. All program scripts (like `update_roles.py`, `update_scoring.py`, etc.) target this file directly. 
 > `hackerramp_final Updated Design.html` is an alternative mockup template that holds a separate visual design and should not receive backend or functional code edits unless requested.
 
 ### Programmatic Python Updates (`update_*.py`)
 Because the main HTML files are large (up to 320KB, containing 4900+ lines), replacing the entire file directly via LLMs can lead to context constraints, latency, or formatting truncation. 
-Previous iterations use small, isolated python scripts to execute search-and-replace updates on `index (1).html`.
+Previous iterations use small, isolated python scripts to execute search-and-replace updates on `index.html`.
 
 *   **Example (`update_search.py`)**: Loads the file, searches for target raw HTML strings, replaces them with new React components, and saves the file back.
 *   **Recommendation for other AI Tools**: If you need to make extensive changes, write a similar Python script to perform target replacements rather than trying to output the entire 4900-line index file at once.
@@ -84,7 +84,7 @@ Scores are calculated out of 100 points, derived from weighted criteria matching
 
 Since the application uses CDN imports for React, Babel, and Tailwind, it runs entirely client-side without any compilation steps:
 
-*   **Direct Browser Access**: You can open `index (1).html` directly in any web browser (`file:///` protocol) to preview it.
+*   **Direct Browser Access**: You can open `index.html` directly in any web browser (`file:///` protocol) to preview it.
 *   **Local HTTP Server**: For features relying on cookie paths or relative asset structures, spin up a local server:
     *   **Python**: `python -m http.server 8000`
     *   **Node.js**: `npx serve` or `npm install -g serve && serve`

@@ -1,6 +1,6 @@
 import os
 
-with open("index (1).html", "r", encoding="utf-8") as f:
+with open("index.html", "r", encoding="utf-8") as f:
     code = f.read()
 
 # 1. Update App
@@ -250,7 +250,7 @@ new_market_btn = """                <button key="create-team" onClick={()=>{ if(
 code = code.replace(old_market_btn, new_market_btn)
 
 
-with open("index (1).html", "w", encoding="utf-8") as f:
+with open("index.html", "w", encoding="utf-8") as f:
     f.write(code)
 
 print("Updated my team and login buttons!")

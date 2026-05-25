@@ -1,6 +1,6 @@
 import re
 
-with open('index (1).html', 'r', encoding='utf-8') as f:
+with open('index.html', 'r', encoding='utf-8') as f:
     text = f.read()
 
 timer_code = """
@@ -51,5 +51,5 @@ function CountdownTimer({ targetDate }) {
 
 text = re.sub(r'function HomeView', timer_code + '\nfunction HomeView', text, count=1)
 
-with open('index (1).html', 'w', encoding='utf-8') as f:
+with open('index.html', 'w', encoding='utf-8') as f:
     f.write(text)

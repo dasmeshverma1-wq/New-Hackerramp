@@ -1,6 +1,6 @@
 import re
 
-with open('index (1).html', 'r', encoding='utf-8') as f:
+with open('index.html', 'r', encoding='utf-8') as f:
     text = f.read()
 
 # 1. Add state variables
@@ -99,7 +99,7 @@ if old_block_match:
     
     text = text.replace(old_block, new_block)
     
-    with open('index (1).html', 'w', encoding='utf-8') as f:
+    with open('index.html', 'w', encoding='utf-8') as f:
         f.write(text)
     print("Successfully replaced.")
 else:

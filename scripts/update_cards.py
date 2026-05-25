@@ -1,6 +1,6 @@
 import os
 
-with open("index (1).html", "r", encoding="utf-8") as f:
+with open("index.html", "r", encoding="utf-8") as f:
     code = f.read()
 
 # 1. Add flex-1 to the top container
@@ -34,7 +34,7 @@ new_tags = """                      <div className="flex flex-wrap gap-1.5 mt-1"
 
 code = code.replace(old_tags, new_tags)
 
-with open("index (1).html", "w", encoding="utf-8") as f:
+with open("index.html", "w", encoding="utf-8") as f:
     f.write(code)
 
 print("Updated team card layout!")

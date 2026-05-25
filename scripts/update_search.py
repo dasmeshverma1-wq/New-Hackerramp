@@ -1,6 +1,6 @@
 import os
 
-with open("index (1).html", "r", encoding="utf-8") as f:
+with open("index.html", "r", encoding="utf-8") as f:
     code = f.read()
 
 component_code = """function AnimatedSearchInput({ value, onChange, onClear, type = 'teams' }) {
@@ -96,7 +96,7 @@ new_ideas_filter = """            {/* Search */}
 
 code = code.replace(old_ideas_filter, new_ideas_filter)
 
-with open("index (1).html", "w", encoding="utf-8") as f:
+with open("index.html", "w", encoding="utf-8") as f:
     f.write(code)
 
 print("Updated search bar!")

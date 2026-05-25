@@ -1,6 +1,6 @@
 import re
 
-with open('index (1).html', 'r', encoding='utf-8') as f:
+with open('index.html', 'r', encoding='utf-8') as f:
     text = f.read()
 
 # 1. Update RegSteps labels
@@ -81,5 +81,5 @@ text = text.replace('{/* STEP 3 — REVIEW & SUBMIT */}\n          {step===3 && 
 # Back button in Review (step 4) needs to go to step 3, not step 2
 text = text.replace("<button onClick={()=>setStep(2)}\n                  className=\"px-5 py-2.5 border", "<button onClick={()=>setStep(3)}\n                  className=\"px-5 py-2.5 border")
 
-with open('index (1).html', 'w', encoding='utf-8') as f:
+with open('index.html', 'w', encoding='utf-8') as f:
     f.write(text)

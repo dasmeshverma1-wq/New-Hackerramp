@@ -1,6 +1,6 @@
 import os
 
-with open("index (1).html", "r", encoding="utf-8") as f:
+with open("index.html", "r", encoding="utf-8") as f:
     code = f.read()
 
 # 1. Hide the top grid on mobile
@@ -17,7 +17,7 @@ new_bottom_grid = """      <div className="grid grid-cols-2 md:grid-cols-4 gap-3
         <FunZoneStat label="Today's vibe" value="High" caption="Prototype energy" tone="pink" />"""
 code = code.replace(old_bottom_grid, new_bottom_grid)
 
-with open("index (1).html", "w", encoding="utf-8") as f:
+with open("index.html", "w", encoding="utf-8") as f:
     f.write(code)
 
 print("Updated fun zone mobile UI!")

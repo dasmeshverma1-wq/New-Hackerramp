@@ -1,6 +1,6 @@
 # AI Vibe-Coding Migration Guide: Single-File HTML to React + TypeScript
 
-This guide provides step-by-step instructions and copy-paste AI prompts (optimized for Cursor, Claude, or Copilot) to convert the single-file **Myntra Tech Week 2026** codebase (`index (1).html`) into a modern, modular **React + TypeScript + Vite** project.
+This guide provides step-by-step instructions and copy-paste AI prompts (optimized for Cursor, Claude, or Copilot) to convert the single-file **Myntra Tech Week 2026** codebase (`index.html`) into a modern, modular **React + TypeScript + Vite** project.
 
 ---
 
@@ -72,7 +72,7 @@ Create a file 'src/types.ts' containing all TypeScript interfaces for:
       --ink: #0A0A0A; --ink-2: #1A1A1A;
       --paper: #FAFAF7; --paper-2: #F2EFE7;
       --accent: #FF3F6C;
-      /* Add other CSS custom properties from index (1).html */
+      /* Add other CSS custom properties from index.html */
     }
 
     @keyframes fade-up {
@@ -132,7 +132,7 @@ export const SESSIONS: Session[] = [...];
 
 ### Vibe-Coding Prompt 3: UI Atoms Migration
 ```text
-Build React TypeScript components for 'Button.tsx', 'Input.tsx', 'Tag.tsx', and 'Modal.tsx' using the definitions in 'index (1).html'. Ensure:
+Build React TypeScript components for 'Button.tsx', 'Input.tsx', 'Tag.tsx', and 'Modal.tsx' using the definitions in 'index.html'. Ensure:
 - The props are fully typed.
 - Component designs match the HSL variable styling system (Ink & Paper colors).
 - Tailwinds class conversions are handled cleanly.

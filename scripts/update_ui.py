@@ -1,6 +1,6 @@
 import os
 
-with open("index (1).html", "r", encoding="utf-8") as f:
+with open("index.html", "r", encoding="utf-8") as f:
     code = f.read()
 
 # 1. Update Fun Zone UI
@@ -170,7 +170,7 @@ new_nav_end = """        </div>
 
 code = code.replace(old_nav_end, new_nav_end)
 
-with open("index (1).html", "w", encoding="utf-8") as f:
+with open("index.html", "w", encoding="utf-8") as f:
     f.write(code)
 
 print("Updated fun zone UI and mobile nav!")

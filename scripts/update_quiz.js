@@ -1,5 +1,5 @@
 const fs = require('fs');
-let text = fs.readFileSync('c:/Daksh/tra 2/Tech Week/index (1).html', 'utf8');
+let text = fs.readFileSync('index.html', 'utf8');
 
 // 1. AdminView signature
 text = text.replace(
@@ -130,5 +130,5 @@ text = text.replace(
   `toast={toast} quizzes={quizzes} setQuizzes={setQuizzes} quizResults={quizResults} />}`
 );
 
-fs.writeFileSync('c:/Daksh/tra 2/Tech Week/index (1).html', text);
-console.log('Successfully updated index (1).html for Quiz / FunZone.');
+fs.writeFileSync('index.html', text);
+console.log('Successfully updated index.html for Quiz / FunZone.');

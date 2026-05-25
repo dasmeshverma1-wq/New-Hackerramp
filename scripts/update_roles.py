@@ -1,6 +1,6 @@
 import os
 
-with open("index (1).html", "r", encoding="utf-8") as f:
+with open("index.html", "r", encoding="utf-8") as f:
     code = f.read()
 
 # 1. Update INIT_TEAMS
@@ -75,7 +75,7 @@ new_card_tags = """                      <div className="flex flex-wrap gap-1.5 
 code = code.replace(old_card_tags, new_card_tags)
 
 
-with open("index (1).html", "w", encoding="utf-8") as f:
+with open("index.html", "w", encoding="utf-8") as f:
     f.write(code)
 
 print("Updated role filter successfully!")

@@ -1,6 +1,6 @@
 import os
 
-with open('index (1).html', 'r', encoding='utf-8') as f:
+with open('index.html', 'r', encoding='utf-8') as f:
     text = f.read()
 
 # The old Hero Section
@@ -85,5 +85,5 @@ new_hero = """      {/* ── HERO ── */}
 
 text = text.replace(old_hero, new_hero)
 
-with open('index (1).html', 'w', encoding='utf-8') as f:
+with open('index.html', 'w', encoding='utf-8') as f:
     f.write(text)

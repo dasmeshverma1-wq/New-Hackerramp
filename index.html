@@ -118,6 +118,24 @@
   .nav-inactive { font-size: 13px; font-weight: 500; color: var(--mute-1) !important; background: transparent !important; padding: 6px 14px; border-radius: 999px; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; }
   .nav-inactive:hover { color: var(--ink) !important; background: var(--paper-2) !important; transform: scale(1.02); }
 
+  .tab-line-active {
+    color: var(--accent) !important;
+    border-bottom: 2px solid var(--accent) !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+  }
+  .tab-line-inactive {
+    color: var(--mute-2) !important;
+    border-bottom: 2px solid transparent !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+  }
+  .tab-line-inactive:hover {
+    color: var(--ink) !important;
+    border-bottom: 2px solid var(--line-3) !important;
+    background: transparent !important;
+  }
+
   .input { width: 100%; padding: 12px 14px; border: 1px solid var(--line-2); background: white; border-radius: 10px; font-size: 14px; color: var(--ink); transition: all 0.15s; letter-spacing: -0.005em; }
   .input:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px rgba(10,10,10,0.06); }
   .input::placeholder { color: var(--mute-3); }
@@ -1187,17 +1205,33 @@ const INIT_PROBLEMS = [
 ];
 
 const SESSIONS = [
-  { id:'S001', title:'Generative AI for Fashion Tech',   track:'Gen AI',  status:'upcoming', date:'Jun 2',  time:'10:00 AM', speaker:'Dr. Ananya Krishnan' },
-  { id:'S002', title:'Prompt Engineering Masterclass',   track:'Gen AI',  status:'live',     date:'Jun 16', time:'2:00 PM',  speaker:'Rahul Dev'           },
-  { id:'S003', title:'InfoSec Compliance 101',           track:'InfoSec', status:'upcoming', date:'Jun 5',  time:'11:00 AM', speaker:'Sanjay Gupta'        },
-  { id:'S004', title:'Zero-Trust Architecture Patterns', track:'InfoSec', status:'recorded', date:'May 8',  time:null,       speaker:'Pradeep Nair'        },
-  { id:'S005', title:'SRE Best Practices at Scale',      track:'SRE',     status:'recorded', date:'May 10', time:null,       speaker:'Meera Nair'          },
+  { id:'S001', title:'Generative AI for Fashion Tech',   track:'Gen AI',  status:'upcoming', date:'Jun 2',  time:'10:00 AM', speaker:'Dr. Ananya Krishnan', meetLink: 'https://meet.google.com/ftd-jknx-wos' },
+  { id:'S002', title:'Prompt Engineering Masterclass',   track:'Gen AI',  status:'live',     date:'Jun 16', time:'2:00 PM',  speaker:'Rahul Dev',           meetLink: 'https://meet.google.com/xyz-pdqo-rst' },
+  { id:'S003', title:'InfoSec Compliance 101',           track:'InfoSec', status:'upcoming', date:'Jun 5',  time:'11:00 AM', speaker:'Sanjay Gupta',        meetLink: 'https://meet.google.com/inf-sec-comp' },
+  { id:'S004', title:'Zero-Trust Architecture Patterns', track:'InfoSec', status:'recorded', date:'May 8',  time:null,       speaker:'Pradeep Nair',        meetLink: 'https://meet.google.com/rec-ztap-101' },
+  { id:'S005', title:'SRE Best Practices at Scale',      track:'SRE',     status:'recorded', date:'May 10', time:null,       speaker:'Meera Nair',          meetLink: 'https://meet.google.com/sre-scal-work' },
   { id:'S006', title:'On-Call Culture & Incident Mgmt',  track:'SRE',     status:'upcoming', date:'Jun 8',  time:'3:00 PM',  speaker:'Kavita Iyer'         },
-  { id:'S007', title:'Dockins Deploy Workshop',          track:'Dockins', status:'recorded', date:'May 12', time:null,       speaker:'Aditya Rao'          },
+  { id:'S007', title:'Dockins Deploy Workshop',          track:'Dockins', status:'recorded', date:'May 12', time:null,       speaker:'Aditya Rao',          meetLink: 'https://meet.google.com/dck-dep-work' },
   { id:'S008', title:'Blue-Green & Canary Deployments',  track:'Dockins', status:'upcoming', date:'Jun 10', time:'1:00 PM',  speaker:'Vineet Shah'         },
 ];
 
-const SCHEDULE = [
+let HACKATHON_CALENDAR = [
+  { date:'Jun 16', day:'Monday', title:'Registration opens', desc:'Portal goes live.', time:'09:00', type:'Milestone', isLive:true, meetLink:'https://meet.google.com/reg-kickoff-2026' },
+  { date:'Jul 2', day:'Thursday', title:'Building with Claude & MCP', desc:'Dr. Ananya Krishnan · AI Tools', time:'15:00', type:'Session', meetLink:'https://meet.google.com/ftd-jknx-wos' },
+  { date:'Jul 3', day:'Friday', title:'Cursor for Hackathons', desc:'Rahul Dev · AI Tools', time:'11:00', type:'Session', meetLink:'https://meet.google.com/xyz-pdqo-rst' },
+  { date:'Jul 4', day:'Saturday', title:'InfoSec Approval Fast-Track', desc:'Sanjay Gupta · InfoSec', time:'14:00', type:'Session', meetLink:'https://meet.google.com/inf-sec-comp' },
+  { date:'Jul 6', day:'Monday', title:'Registration closes', desc:'No extensions.', time:'23:59', type:'Deadline' },
+  { date:'Jul 7', day:'Tuesday', title:'Round one — Ideation opens', desc:'Two-page submission', time:'09:00', type:'Round' },
+  { date:'Jul 10', day:'Friday', title:'Round one — Submission closes', desc:'No extensions.', time:'23:59', type:'Deadline' },
+  { date:'Jul 11', day:'Saturday', title:'Round one results', desc:'Top 30 revealed', time:'16:00', type:'Announcement' },
+  { date:'Jul 13', day:'Monday', title:'No-meeting day · Build begins', desc:'SLT approved pause', time:'All day', type:'Pause' },
+  { date:'Jul 14', day:'Tuesday', title:'No-deploy day · Demo prep', desc:'P0 incidents only', time:'All day', type:'Pause' },
+  { date:'Jul 15', day:'Wednesday', title:'Round two — Prototype demos', desc:'Top 5 finalists selected', time:'10:00', type:'Round', meetLink:'https://meet.google.com/r2-proto-demos' },
+  { date:'Jul 16', day:'Thursday', title:'Pitch rehearsals + Jury panel', desc:'', time:'10:00', type:'Round', meetLink:'https://meet.google.com/jury-pitch-prep' },
+  { date:'Jul 17', day:'Friday', title:'Grand Finale — Shark Tank format', desc:'CEO + CTO + Guest Sharks', time:'11:00', type:'Finale', meetLink:'https://meet.google.com/grand-finale-2026' },
+];
+
+let SCHEDULE = [
   { phase:'Reg',  label:'Registration',       start:'Jun 16', end:'Jul 6',  status:'live'     },
   { phase:'R1',   label:'Ideation Submit',    start:'Jul 7',  end:'Jul 10', status:'upcoming' },
   { phase:'R2',   label:'Prototype Demo',     start:'Jul 13', end:'Jul 14', status:'upcoming' },
@@ -1232,7 +1266,7 @@ const PHASES = [
   { id:'R3', label:'Round 3 — Finale',     desc:'5-minute pitch to senior leadership. Winners announced live.',          criteria:[{name:'Product Completeness',w:30},{name:'Scalability Plan',w:25},{name:'Jury Q&A',w:25},{name:'Presentation',w:20}] },
 ];
 
-const REWARDS = [
+let REWARDS = [
   { rank:'1st Place', prize:'1,00,000', perks:['Fast-Track Badge','Direct PM Interview','CEO Recognition Dinner','₹25k Learning Credits'] },
   { rank:'2nd Place', prize:'60,000',   perks:['Innovation Badge','Senior Mentorship Package','Tech Gear Kit'] },
   { rank:'3rd Place', prize:'30,000',   perks:['Performer Badge','₹10k Learning Credits','Swag Kit'] },
@@ -1371,7 +1405,7 @@ const TRACKS = { 'Gen AI':'Generative AI', 'InfoSec':'InfoSec Compliance', 'SRE'
 /* ──────────── ATOMS ──────────── */
 
 const O = '#f97316';   // orange-500
-const initials = n => n.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
+const initials = n => (n || '').split(' ').filter(Boolean).map(x=>x[0]).join('').slice(0,2).toUpperCase();
 
 function Tag({ label, variant='default', small }) {
   const cls = {
@@ -2240,13 +2274,16 @@ function IdeaCarousel({ teams, setView }) {
   );
 }
 
-function AnimatedSearchInput({ value, onChange, onClear, type = 'teams' }) {
-  const [phrases] = useState(type === 'teams' 
-    ? ['Search "AI Agents"...', 'Search "Designer"...', 'Search "React"...', 'Search "Fintech"...']
-    : type === 'sessions'
-    ? ['Search "Incident Mgmt"...', 'Search "SRE Scale"...', 'Search "Prompt Eng"...', 'Search "Deploy"...']
-    : ['Search "Customer Support"...', 'Search "Logistics"...', 'Search "GenAI"...']
-  );
+function AnimatedSearchInput({ value, onChange, onClear, type = 'teams', placeholder = '' }) {
+  const PHRASE_MAP = {
+    teams:       ['Search "AI Agents"...', 'Search "Designer"...', 'Search "React"...', 'Search "Fintech"...'],
+    sessions:    ['Search "Incident Mgmt"...', 'Search "SRE Scale"...', 'Search "Prompt Eng"...', 'Search "Deploy"...'],
+    admin_teams: ['Search "Neural Ninjas"...', 'Search "Gen AI"...', 'Search "Warehouse"...', 'Search "Unassigned"...'],
+    users:       ['Search "arjun.sharma"...', 'Search "Engineering"...', 'Search "Mentor"...', 'Search "Design"...'],
+    progress:    ['Search "Team Alpha"...', 'Search by team name...', 'Search "Pixel Pirates"...'],
+    ideas:       ['Search "Customer Support"...', 'Search "Logistics"...', 'Search "GenAI"...'],
+  };
+  const [phrases] = useState(PHRASE_MAP[type] || PHRASE_MAP['teams']);
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -6037,21 +6074,7 @@ function RichFunZoneView({ quizzes, user, onQuizSubmit, setQuizzes, quizResults=
 ══════════════════════════════ */
 
 function CalendarView() {
-  const TIMELINE = [
-    { date:'Jun 16', day:'Monday', title:'Registration opens', desc:'Portal goes live.', time:'09:00', type:'Milestone', isLive:true },
-    { date:'Jul 2', day:'Thursday', title:'Building with Claude & MCP', desc:'Dr. Ananya Krishnan · AI Tools', time:'15:00', type:'Session' },
-    { date:'Jul 3', day:'Friday', title:'Cursor for Hackathons', desc:'Rahul Dev · AI Tools', time:'11:00', type:'Session' },
-    { date:'Jul 4', day:'Saturday', title:'InfoSec Approval Fast-Track', desc:'Sanjay Gupta · InfoSec', time:'14:00', type:'Session' },
-    { date:'Jul 6', day:'Monday', title:'Registration closes', desc:'No extensions.', time:'23:59', type:'Deadline' },
-    { date:'Jul 7', day:'Tuesday', title:'Round one — Ideation opens', desc:'Two-page submission', time:'09:00', type:'Round' },
-    { date:'Jul 10', day:'Friday', title:'Round one — Submission closes', desc:'No extensions.', time:'23:59', type:'Deadline' },
-    { date:'Jul 11', day:'Saturday', title:'Round one results', desc:'Top 30 revealed', time:'16:00', type:'Announcement' },
-    { date:'Jul 13', day:'Monday', title:'No-meeting day · Build begins', desc:'SLT approved pause', time:'All day', type:'Pause' },
-    { date:'Jul 14', day:'Tuesday', title:'No-deploy day · Demo prep', desc:'P0 incidents only', time:'All day', type:'Pause' },
-    { date:'Jul 15', day:'Wednesday', title:'Round two — Prototype demos', desc:'Top 5 finalists selected', time:'10:00', type:'Round' },
-    { date:'Jul 16', day:'Thursday', title:'Pitch rehearsals + Jury panel', desc:'', time:'10:00', type:'Round' },
-    { date:'Jul 17', day:'Friday', title:'Grand Finale — Shark Tank format', desc:'CEO + CTO + Guest Sharks', time:'11:00', type:'Finale' },
-  ];
+  const TIMELINE = HACKATHON_CALENDAR;
 
   const typeStyles = {
     'Milestone':    { bg: 'bg-[#5c7aff] text-white border-[#5c7aff]/15 shadow-[0_8px_30px_rgba(92,122,255,0.08)]', badge: 'bg-white/10 text-white border-white/15', time: 'bg-white/10 text-white border-white/15' },
@@ -6149,6 +6172,25 @@ function CalendarView() {
                     </span>}
                   </div>
                   {item.desc && <p className="text-[13.5px] leading-relaxed font-semibold opacity-85">{item.desc}</p>}
+                  {item.meetLink && (
+                    <a 
+                      href={item.meetLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className={`mt-3.5 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[11.5px] font-[900] tracking-wide transition-all shadow-sm ${
+                        item.type === 'Finale' 
+                          ? 'bg-[#e2f73c] text-slate-900 hover:bg-[#d0e530]' 
+                          : (item.type === 'Session' || item.type === 'Round' || item.type === 'Announcement')
+                            ? 'bg-black text-white hover:bg-slate-800'
+                            : 'bg-white text-slate-900 border border-slate-200 hover:bg-slate-50'
+                      }`}
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+                      </svg>
+                      Join Live Meet
+                    </a>
+                  )}
                 </div>
                 <div className="flex flex-col items-start sm:items-end flex-shrink-0 gap-2.5">
                   <span className={`px-2.5 py-1 border text-[9px] font-mono font-[900] uppercase tracking-wider rounded-[6px] ${style.badge}`}>{item.type}</span>
@@ -6172,12 +6214,20 @@ function CalendarView() {
    ADMIN
 ══════════════════════════════ */
 
-function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pubResults, setPubResults, ideas, setIdeas, winners, setWinners, homeStats, setHomeStats, toast, quizzes, setQuizzes, quizResults, heroVersion, setHeroVersion }) {
+function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, setProblems, pubResults, setPubResults, ideas, setIdeas, winners, setWinners, homeStats, setHomeStats, toast, quizzes, setQuizzes, quizResults, heroVersion, setHeroVersion }) {
   // Section + sub-tab state
-  const [section, setSection] = useState('overview');
+  const isJury = user?.role === 'jury';
+  const [section, setSection] = useState(isJury ? 'judging' : 'overview');
   const [jTab,    setJTab]    = useState('scoring');
   const [cTab,    setCTab]    = useState('hero');
   const [mTab,    setMTab]    = useState('teams');
+  const [openSections, setOpenSections] = useState({ hero: true, stats: false, winners: false, ideas: false, schedule: false, rewards: false, calendar: false });
+  const [editSched, setEditSched] = useState(false);
+  const [schedLocal, setSchedLocal] = useState([...SCHEDULE]);
+  const [editRew, setEditRew] = useState(false);
+  const [rewLocal, setRewLocal] = useState([...REWARDS]);
+  const [editCal, setEditCal] = useState(false);
+  const [calLocal, setCalLocal] = useState([...HACKATHON_CALENDAR]);
 
   // Judging
   const [scores, setSc]       = useState({});
@@ -6210,6 +6260,15 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
   const [awardQ,      setAwardQ]      = useState('');
   const [progQ,       setProgQ]       = useState('');
   const [progPage,    setProgPage]    = useState(1);
+  const [teamSearchQ, setTeamSearchQ] = useState('');
+  const [teamThemeFilter, setTeamThemeFilter] = useState('All');
+  const [teamMentorFilter, setTeamMentorFilter] = useState('All');
+  const [userSearchQ, setUserSearchQ] = useState('');
+  const [userDeptFilter, setUserDeptFilter] = useState('All');
+  const [userRoleFilter, setUserRoleFilter] = useState('All');
+  const [progFilter, setProgFilter] = useState('All');
+  const [editTeamId, setEditTeamId] = useState(null);
+  const [teamForm, setTeamForm] = useState({ name: '', theme: '', subTheme: '', abstract: '', open: true, maxSize: 2 });
   const [quickCard,   setQuickCard]   = useState(false);
   const JUDGE_PAGE_SIZE = 20;
 
@@ -6218,7 +6277,7 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
   const [np, setNp]     = useState({ title:'', category:'', difficulty:'Medium', desc:'', published:false });
 
   if (!user) return <Gate title="Sign in required" msg="Please sign in to access the Admin panel." />;
-  if (user.role !== 'coordinator') return <Gate title="Access restricted" msg="The Admin panel is only available to Event Coordinators." warn />;
+  if (user.role !== 'coordinator' && user.role !== 'jury') return <Gate title="Access restricted" msg="The Admin panel is available to Event Coordinators and Jury members only." warn />;
   const ROUND_LABELS = { R1:'Round 1 — Ideation', R2:'Round 2 — Prototype', R3:'Round 3 — Finale' };
   const AWARD_OPTS = ['','Top 20','Top 5 Finalist','Winner 🏆','Runner Up 🥈','Best UI/UX 🎨','Most Innovative 💡','Audience Choice ❤️'];
 
@@ -6271,24 +6330,51 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
 
   return (
     <div className="space-y-5">
-      {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-[color:var(--line)]">
+      {/* Sleek single-row dashboard header */}
+      <div className="flex items-center justify-between border-b border-[color:var(--line-2)] pb-4 mb-4 flex-wrap gap-4">
         <div>
-          <h2 className="text-[13px] text-[color:var(--ink)]" style={{lineHeight:1.5}}>Admin Panel</h2>
-          <p className="text-[12px] text-[color:var(--mute-3)] mt-1">Coordinator workspace · {user.name}</p>
+          <span className="text-[10px] font-sans font-[900] uppercase tracking-[0.2em] text-[#FF3F6C]">
+            {isJury ? 'Jury Workspace' : 'Systems Control'}
+          </span>
+          <h2 className="text-[20px] font-[900] text-[color:var(--ink)] tracking-tight">
+            Hello, <span className="font-serif italic text-[#FF3F6C]">{user.name.split(' ')[0]}</span>
+          </h2>
         </div>
-        <Tag label="Coordinator" variant="amber" small />
+
+        {/* Dynamic mini indicators */}
+        <div className="flex items-center gap-6">
+          {!isJury ? (
+            <>
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-widest text-[color:var(--mute-3)]">Teams</p>
+                <p className="text-[16px] font-[900] text-[color:var(--ink)] text-right">{teams.length}</p>
+              </div>
+              <div className="w-px h-6 bg-[color:var(--line-2)]" />
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-widest text-[color:var(--mute-3)]">Pending Ideas</p>
+                <p className="text-[16px] font-[900] text-[#f59e0b] text-right">{(ideas||[]).filter(i=>i.status==='pending').length}</p>
+              </div>
+            </>
+          ) : (
+            <div>
+              <p className="text-[10px] font-mono uppercase tracking-widest text-[color:var(--mute-3)]">Teams to Judge</p>
+              <p className="text-[16px] font-[900] text-[color:var(--ink)] text-right">{teams.length}</p>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Section switcher */}
-      <div className="grid grid-cols-4 border border-[color:var(--line-2)] overflow-hidden">
-        {[['overview','📊','Overview'],['judging','⚖','Judging'],['content','✎','Home Content'],['management','◈','Management']].map(([id,icon,label])=>(
+      {/* Section switcher — premium editorial tabs (jury sees only Overview and Judging) */}
+      <div className="flex border-b border-[color:var(--line-2)] gap-6 mb-4">
+        {(isJury
+          ? [['overview','Overview'],['judging','Judging']]
+          : [['overview','Overview'],['judging','Judging'],['content','Content'],['management','Management']]
+        ).map(([id,label])=>(
           <button key={id} onClick={()=>switchSection(id)}
-            className={`py-3.5 text-[11px] font-[700] uppercase tracking-[0.1em] btn transition-colors border-r border-[color:var(--line-2)] last:border-r-0 ${section===id?'bg-[color:var(--ink-2)] text-white':'bg-white text-[color:var(--mute-2)] hover:bg-[color:var(--paper)]'}`}>
-            <span className="flex items-center justify-center gap-1.5 w-full">
-              <FluentEmoji char={icon} className="w-3.5 h-3.5 flex-shrink-0" fallbackStyle={{ fontSize: '11px' }} />
-              <span>{label}</span>
-            </span>
+            className={`pb-3 text-[13px] font-[800] uppercase tracking-[0.1em] btn transition-all duration-200 border-b-2 ${section===id
+              ? 'border-[#FF3F6C] text-[#FF3F6C]'
+              : 'border-transparent text-[color:var(--mute-2)] hover:text-[color:var(--ink)]'}`}>
+            <span>{label}</span>
           </button>
         ))}
       </div>
@@ -6296,73 +6382,147 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
       {/* ══════════ SECTION: OVERVIEW ══════════ */}
       {section === 'overview' && (
         <div className="space-y-6 fade-up">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white border border-[color:var(--line-2)] p-4 text-center">
-              <p className="text-[11px] text-[color:var(--mute-3)] uppercase tracking-[0.1em] mb-1 font-semibold">Total Open Teams</p>
-              <p className="text-[28px] font-[800] text-[color:var(--ink)]">{teams.filter(t=>t.open).length}</p>
+
+          {/* Stat cards row */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {[
+              { dotColor:'bg-[#3b82f6]', label:'Open Teams',   val: teams.filter(t=>t.open).length,   total: teams.length,  color:'#3b82f6' },
+              { dotColor:'bg-[#f59e0b]', label:'Ideas Total',   val: (ideas||[]).length,                total: null,          color:'#f59e0b' },
+              { dotColor:'bg-[#f97316]', label:'Pending Ideas', val: (ideas||[]).filter(i=>i.status==='pending').length, total: null, color:'#f97316' },
+              { dotColor:'bg-[#22c55e]', label:'Approved',      val: (ideas||[]).filter(i=>i.status==='approved').length, total: null, color:'#22c55e' },
+              { dotColor:'bg-[#8b5cf6]', label:'Mentors',      val: mentors.length,                    total: null,          color:'#8b5cf6' },
+              { dotColor:'bg-[#ec4899]', label:'Scored R1',    val: Object.values(scores).filter(s=>s.R1!=null).length, total: teams.length, color:'#ec4899' },
+            ].map(s => (
+              <div key={s.label} className="bg-white border border-[color:var(--line-2)] rounded-[8px] p-4 flex flex-col gap-1.5 border-l-4" style={{borderLeftColor: s.color}}>
+                <div className="flex items-center gap-1.5">
+                  <span className={`w-1.5 h-1.5 rounded-full ${s.dotColor}`} />
+                  <p className="text-[10px] font-[800] uppercase tracking-[0.1em] text-[color:var(--mute-3)]">{s.label}</p>
+                </div>
+                <p className="text-[22px] font-[900] leading-none text-slate-800">{s.val}{s.total!=null && <span className="text-[13px] font-[500] text-[color:var(--mute-3)]">/{s.total}</span>}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Asymmetric Bento Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {/* Hackathon Lifecycle Tracker (spans 2 cols) */}
+            <div className="lg:col-span-2 bg-white border border-[color:var(--line-2)] rounded-[8px] p-6 flex flex-col justify-between">
+              <div>
+                <p className="text-[10px] font-sans font-[900] uppercase tracking-[0.2em] text-[color:var(--mute-3)] mb-5">Hackathon Lifecycle Tracker</p>
+                <div className="relative border-l-2 border-slate-100 ml-3 pl-6 space-y-6 py-2">
+                  {[
+                    { phase:'Registration Phase', status:'completed', date:'Jun 16 — Jul 6', desc:'Participant registrations and team formations completed successfully.' },
+                    { phase:'Ideation submission (Round 1)', status:'active', date:'Jul 7 — Jul 10', desc:'Teams submitting 2-page brief deck. Approvals and reviews in progress.' },
+                    { phase:'Prototype building & demo (Round 2)', status:'upcoming', date:'Jul 13 — Jul 14', desc:'Live candidate demonstrations of functional codebase to evaluations panel.' },
+                    { phase:'Jury Evaluations & Grand Finale', status:'upcoming', date:'Jul 15 — Jul 17', desc:'Senior directors and CTO evaluations. CEO live pitch presentations.' },
+                  ].map((s) => (
+                    <div key={s.phase} className="relative group">
+                      {/* Timeline dot */}
+                      <span className={`absolute left-[-31px] top-1 w-3 h-3 rounded-full border-2 bg-white transition-all ${
+                        s.status==='completed'?'border-emerald-500 bg-emerald-500':
+                        s.status==='active'?'border-[#FF3F6C] ring-4 ring-[#FF3F6C]/10':
+                        'border-slate-300'
+                      }`} />
+                      
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <p className={`text-[13px] font-[800] ${s.status==='active'?'text-[#FF3F6C]':'text-[color:var(--ink)]'}`}>{s.phase}</p>
+                          {s.status==='active' && <span className="text-[9px] font-sans font-[900] px-2 py-0.5 bg-[#FF3F6C]/10 text-[#FF3F6C] rounded-full uppercase tracking-wider animate-pulse">Active</span>}
+                        </div>
+                        <p className="text-[10px] font-mono text-[color:var(--mute-3)] mt-0.5">{s.date}</p>
+                        <p className="text-[12px] text-[color:var(--mute-2)] mt-1.5 leading-relaxed">{s.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="bg-white border border-[color:var(--line-2)] p-4 text-center">
-              <p className="text-[11px] text-[color:var(--mute-3)] uppercase tracking-[0.1em] mb-1 font-semibold">Ideas Submitted</p>
-              <p className="text-[28px] font-[800] text-[color:var(--ink)]">{ideas?.length||0}</p>
+
+            {/* Standings Leaderboard & Recent Activity (spans 1 col) */}
+            <div className="space-y-6">
+              
+              {/* Standings Leaderboard */}
+              <div className="bg-white border border-[color:var(--line-2)] rounded-[8px] p-6 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <p className="text-[10px] font-sans font-[900] uppercase tracking-[0.2em] text-[color:var(--mute-3)]">Standings Leaderboard</p>
+                    <button onClick={()=>switchSection('judging')} className="text-[10px] text-[#FF3F6C] font-[900] btn hover:underline uppercase tracking-wider">All Logs</button>
+                  </div>
+                  {ranked.length === 0 ? (
+                    <p className="text-[12px] text-[color:var(--mute-4)] py-8 text-center">No team score logs registered.</p>
+                  ) : (
+                    <div className="space-y-3">
+                      {ranked.slice(0, 4).map((t, i) => {
+                        const rankStyles = [
+                          'bg-amber-500 text-white',
+                          'bg-slate-400 text-white',
+                          'bg-amber-700 text-white',
+                          'bg-slate-100 text-slate-600'
+                        ];
+                        const labels = ['1st', '2nd', '3rd', '4th'];
+                        return (
+                          <div key={t.id} className="flex items-center gap-3 p-3 border border-slate-100 rounded-[6px] hover:border-slate-200 transition-colors">
+                            <span className={`text-[9px] font-sans font-[900] px-2 py-0.5 rounded-full ${rankStyles[i]}`}>{labels[i]}</span>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[13px] font-[800] text-[color:var(--ink)] truncate">{t.name}</p>
+                              <p className="text-[10px] text-[color:var(--mute-3)] truncate">{t.theme}</p>
+                            </div>
+                            <span className="text-[14px] font-[900] text-[#FF3F6C]">{avg(t.id)}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Recent Activity */}
+              <div className="bg-white border border-[color:var(--line-2)] rounded-[8px] p-6 flex flex-col justify-between">
+                <div>
+                  <p className="text-[10px] font-sans font-[900] uppercase tracking-[0.2em] text-[color:var(--mute-3)] mb-4">Systems Audit Log</p>
+                  <ul className="space-y-3">
+                    {teams.slice(0,2).map(t=>(
+                      <li key={t.id} className="flex items-start gap-2.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#FF3F6C] mt-1.5 flex-shrink-0" />
+                        <p className="text-[11px] text-[color:var(--mute-1)]"><span className="font-bold text-[color:var(--ink)]">{t.name}</span> registered · {t.members.length} members</p>
+                      </li>
+                    ))}
+                    {(ideas||[]).filter(i=>i.status==='pending').slice(0,2).map(idea=>(
+                      <li key={idea.id} className="flex items-start gap-2.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#f97316] mt-1.5 flex-shrink-0" />
+                        <p className="text-[11px] text-[color:var(--mute-1)]"><span className="font-bold text-[color:var(--ink)]">{idea.title}</span> · awaiting review</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
             </div>
-            <div className="bg-white border border-[color:var(--line-2)] p-4 text-center">
-              <p className="text-[11px] text-[color:var(--mute-3)] uppercase tracking-[0.1em] mb-1 font-semibold">Sessions</p>
-              <p className="text-[28px] font-[800] text-[color:var(--ink)]">{typeof SESSIONS !== 'undefined' ? SESSIONS.length : 0}</p>
-            </div>
-            <div className="bg-white border border-[color:var(--line-2)] p-4 text-center">
-              <p className="text-[11px] text-[color:var(--mute-3)] uppercase tracking-[0.1em] mb-1 font-semibold">R1 Submissions</p>
-              <p className="text-[28px] font-[800] text-[color:var(--ink)]">{Object.values(scores).filter(s=>s.R1!=null).length}</p>
-            </div>
-            <div className="bg-white border border-[color:var(--line-2)] p-4 text-center">
-              <p className="text-[11px] text-[color:var(--mute-3)] uppercase tracking-[0.1em] mb-1 font-semibold">Avg Team Size</p>
-              <p className="text-[28px] font-[800] text-[color:var(--ink)]">{teams.length ? (teams.reduce((acc,t)=>acc+(t.members?.length||0),0)/teams.length).toFixed(1) : 0}</p>
-            </div>
-            <div className="bg-white border border-[color:var(--line-2)] p-4 text-center">
-              <p className="text-[11px] text-[color:var(--mute-3)] uppercase tracking-[0.1em] mb-1 font-semibold">Mentor Coverage</p>
-              <p className="text-[28px] font-[800] text-[color:var(--ink)]">{mentors.length}</p>
-            </div>
-            <div className="bg-white border border-[color:var(--line-2)] p-4 text-center col-span-2">
-              <p className="text-[11px] text-[color:var(--mute-3)] uppercase tracking-[0.1em] mb-1 font-semibold">Quiz Plays Today</p>
-              <p className="text-[28px] font-[800] text-[color:var(--ink)]">42</p>
+
+          </div>
+
+          {/* Quick Actions List (Chevron grid to prevent text wrapping issues) */}
+          <div className="bg-white border border-[color:var(--line-2)] rounded-[8px] p-6">
+            <p className="text-[10px] font-sans font-[900] uppercase tracking-[0.2em] text-[color:var(--mute-3)] mb-4">Quick Systems Shortcuts</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { label:'Review Pending Ideas', sub:'Approve or reject participant submissions in the queue', onClick:()=>{switchSection('management');setMTab('approvals');} },
+                { label:'Jury Scoring Desk', sub:'Access live candidate evaluations and feedback forms', onClick:()=>switchSection('judging') },
+                { label:'Mentor Allocations', sub:'Manage and assign senior coordinators to registered teams', onClick:()=>{switchSection('management');setMTab('teams');} },
+                { label:'Download Scoring Logs', sub:'Export complete evaluation data to CSV spreadsheet format', onClick: dl },
+              ].map(a=>(
+                <button key={a.label} onClick={a.onClick} className="flex items-start justify-between p-4 border border-[color:var(--line-2)] rounded-[8px] hover:border-[#FF3F6C] hover:bg-slate-50 transition-all text-left group btn">
+                  <div className="flex-1 pr-4">
+                    <p className="text-[13px] font-[800] text-[color:var(--ink)] group-hover:text-[#FF3F6C] transition-colors">{a.label}</p>
+                    <p className="text-[11px] text-[color:var(--mute-3)] mt-1 leading-normal">{a.sub}</p>
+                  </div>
+                  <svg className="w-4 h-4 text-slate-400 group-hover:text-[#FF3F6C] group-hover:translate-x-0.5 transition-all mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                </button>
+              ))}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white border border-[color:var(--line-2)] p-5">
-              <h3 className="text-[13px] font-[800] text-[color:var(--ink)] mb-4">Recent Activities</h3>
-              <ul className="space-y-3">
-                <li className="text-[12px] text-[color:var(--mute-1)] border-l-2 border-[color:var(--accent)] pl-3 py-1">
-                  <span className="font-semibold text-[color:var(--ink)]">Team Neural Ninjas</span> registered for the hackathon. <span className="text-[color:var(--mute-3)] text-[10px]">2 mins ago</span>
-                </li>
-                <li className="text-[12px] text-[color:var(--mute-1)] border-l-2 border-[#16a34a] pl-3 py-1">
-                  <span className="font-semibold text-[color:var(--ink)]">Idea IDK002</span> approved by admin. <span className="text-[color:var(--mute-3)] text-[10px]">15 mins ago</span>
-                </li>
-                <li className="text-[12px] text-[color:var(--mute-1)] border-l-2 border-[color:var(--c-amber)] pl-3 py-1">
-                  <span className="font-semibold text-[color:var(--ink)]">Priya Patel</span> joined as a Mentor. <span className="text-[color:var(--mute-3)] text-[10px]">1 hour ago</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white border border-[color:var(--line-2)] p-5">
-              <h3 className="text-[13px] font-[800] text-[color:var(--ink)] mb-4">Quick Actions</h3>
-              <div className="space-y-2">
-                <button className="w-full text-left px-3 py-2 text-[12px] text-[color:var(--mute-1)] hover:text-[color:var(--ink)] bg-[color:var(--paper)] border border-[#efefef] hover:border-[color:var(--mute-4)] rounded-[3px] transition-colors">
-                  ➕ Submit a new idea
-                </button>
-                <button className="w-full text-left px-3 py-2 text-[12px] text-[color:var(--mute-1)] hover:text-[color:var(--ink)] bg-[color:var(--paper)] border border-[#efefef] hover:border-[color:var(--mute-4)] rounded-[3px] transition-colors">
-                  📅 Add event date
-                </button>
-                <button className="w-full text-left px-3 py-2 text-[12px] text-[color:var(--mute-1)] hover:text-[color:var(--ink)] bg-[color:var(--paper)] border border-[#efefef] hover:border-[color:var(--mute-4)] rounded-[3px] transition-colors">
-                  🧠 Create quiz
-                </button>
-                <button className="w-full text-left px-3 py-2 text-[12px] text-[color:var(--mute-1)] hover:text-[color:var(--ink)] bg-[color:var(--paper)] border border-[#efefef] hover:border-[color:var(--mute-4)] rounded-[3px] transition-colors" onClick={dl}>
-                  📥 Export team roster
-                </button>
-                <button className="w-full text-left px-3 py-2 text-[12px] text-[color:var(--mute-1)] hover:text-[color:var(--ink)] bg-[color:var(--paper)] border border-[#efefef] hover:border-[color:var(--mute-4)] rounded-[3px] transition-colors">
-                  📣 Announce a team
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       )}
 
@@ -6475,13 +6635,9 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
           {jTab==='scoring' && (
             <div className="space-y-5 fade-up">
               {/* Search + controls */}
-              <div className="flex items-center gap-3 flex-wrap">
-                <div className="relative flex-1 min-w-[200px]">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--mute-3)] text-[13px]">🔍</span>
-                  <input value={judgeQ} onChange={e=>{setJudgeQ(e.target.value);setJudgePage(1);}}
-                    placeholder="Search teams..."
-                    className="w-full bg-[color:var(--paper)] border border-[color:var(--line-2)] focus:border-[color:var(--accent)] rounded-[3px] pl-8 pr-3 py-2 text-[13px] text-[color:var(--ink)] placeholder-[color:var(--mute-4)] outline-none transition-colors" />
-                  {judgeQ && <button onClick={()=>{setJudgeQ('');setJudgePage(1);}} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[color:var(--mute-3)] hover:text-[color:var(--mute-2)]">×</button>}
+              <div className="flex items-center gap-3 flex-wrap w-full sm:flex-1">
+                <div className="flex-1 min-w-[200px]">
+                  <AnimatedSearchInput value={judgeQ} onChange={e=>{setJudgeQ(e.target.value);setJudgePage(1);}} onClear={()=>{setJudgeQ('');setJudgePage(1);}} type="admin_teams" />
                 </div>
                 <p className="text-[12px] text-[color:var(--mute-3)] flex-shrink-0">
                   {(() => { const f=ranked.filter(t=>!judgeQ||[t.name,t.theme].some(v=>v?.toLowerCase().includes(judgeQ.toLowerCase()))); return `${f.length} of ${ranked.length} teams`; })()}
@@ -6612,12 +6768,8 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-3 mb-4">
                     <p className="text-[11px] text-[color:var(--mute-3)] uppercase tracking-[0.12em] font-semibold">Assign Awards — {ROUND_LABELS[resRound]}</p>
-                    <div className="relative flex-1 max-w-[200px]">
-                      <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[color:var(--mute-3)] text-[12px]">🔍</span>
-                      <input value={awardQ} onChange={e=>setAwardQ(e.target.value)}
-                        placeholder="Search teams..."
-                        className="w-full bg-[color:var(--paper)] border border-[color:var(--line-2)] focus:border-[color:var(--accent)] rounded-[3px] pl-7 pr-3 py-1.5 text-[12px] text-[color:var(--ink)] placeholder-[color:var(--mute-4)] outline-none transition-colors" />
-                      {awardQ && <button onClick={()=>setAwardQ('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-[color:var(--mute-3)] hover:text-[color:var(--mute-2)] text-[13px]">×</button>}
+                    <div className="flex-1 max-w-[200px]">
+                      <AnimatedSearchInput value={awardQ} onChange={e=>setAwardQ(e.target.value)} onClear={()=>setAwardQ('')} type="admin_teams" />
                     </div>
                   </div>
                   {teams.filter(t=>!awardQ||t.name.toLowerCase().includes(awardQ.toLowerCase())||t.theme?.toLowerCase().includes(awardQ.toLowerCase())).map(t=>{
@@ -6671,255 +6823,501 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
 
       {/* ══════════ SECTION: CONTENT ══════════ */}
       {section === 'content' && (
-        <div className="space-y-4 fade-up">
-          <div className="flex gap-1 border-b border-[color:var(--line)]">
-            {[['hero','Hero Section Layout'],['winners','TechWeek Winners'],['ideasarena','Ideas Arena'],['stats','Stats Strip']].map(([id,l])=>(
-              <button key={id} onClick={()=>setCTab(id)}
-                className={`px-4 py-3 text-[13px] btn ${cTab===id?'tab-line-active':'tab-line-inactive'}`}>{l}</button>
-            ))}
+        <div className="space-y-6 fade-up">
+          <div>
+            <h3 className="text-[14px] font-[900] text-[color:var(--ink)] uppercase tracking-[0.1em]">Homepage Content Manager</h3>
+            <p className="text-[12px] text-[color:var(--mute-3)] mt-0.5">Customize different sections of your live hackathon landing page from a vertical stack editor.</p>
           </div>
 
-          {/* Hero Layout Switcher */}
-          {cTab==='hero' && (
-            <div className="space-y-4 fade-up">
-              <div>
-                <h3 className="text-[13px] font-[800] text-[color:var(--ink)] uppercase tracking-[0.05em]">Hero Layout Settings</h3>
-                <p className="text-[12px] text-[color:var(--mute-3)] mt-0.5">Choose which Hero section design is visible to participants on the homepage. Changes apply instantly.</p>
-              </div>
+          <div className="space-y-4">
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                {/* Version A Card */}
-                <div onClick={()=>{setHeroVersion('A'); toast('Hero Section switched to Version A (Immersive Video)','success');}} 
-                  className={`cursor-pointer rounded-xl border p-5 transition-all flex flex-col justify-between ${heroVersion==='A'?'border-[color:var(--accent)] bg-[#fff5f7] shadow-[0_4px_16px_rgba(255,63,108,0.08)]':'border-[color:var(--line-2)] bg-white hover:border-[color:var(--mute-3)]'}`}>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.1em] px-2.5 py-1 bg-black text-white">Version A</span>
-                      {heroVersion==='A' && <span className="pill text-[9px] font-bold text-[color:var(--accent)] border-[color:var(--accent)] bg-white">● ACTIVE LIVE</span>}
-                    </div>
+            {/* 1. Hero Section Layout */}
+            <div className="bg-white border border-[color:var(--line-2)] rounded-[8px] overflow-hidden">
+              <button 
+                onClick={() => setOpenSections(prev => ({ ...prev, hero: !prev.hero }))}
+                className="w-full flex items-center justify-between p-4 bg-[color:var(--paper)] border-b border-[color:var(--line-2)] text-left hover:bg-slate-50 transition-colors">
+                <div className="flex items-center gap-2">
+                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-slate-500">Section 1:</span>
+                  <span className="text-[13px] font-[800] text-slate-800">Hero Layout Settings</span>
+                </div>
+                <span className="text-[11px] font-[800] text-slate-400 uppercase tracking-wider">{openSections.hero ? 'Collapse ▲' : 'Expand ▼'}</span>
+              </button>
+
+              {openSections.hero && (
+                <div className="p-5 space-y-4 fade-up">
+                  <p className="text-[12px] text-[color:var(--mute-3)]">Select which hero section visual theme is displayed to participants on the homepage.</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     
-                    <h4 className="text-[13px] font-[850] text-[color:var(--ink)]">Immersive Video Hero</h4>
-                    <p className="text-[11px] text-[color:var(--mute-2)] leading-relaxed">
-                      Features a full-bleed looping video background with code/terminal matrix elements, centered typography, and a dark minimal aesthetic.
-                    </p>
+                    {/* Version A Card */}
+                    <div onClick={()=>{setHeroVersion('A'); toast('Hero Section switched to Version A (Immersive Video)','success');}} 
+                      className={`cursor-pointer rounded-xl border p-5 transition-all flex flex-col justify-between ${heroVersion==='A'?'border-[#FF3F6C] bg-[#fff5f7] shadow-[0_4px_16px_rgba(255,63,108,0.05)]':'border-[color:var(--line-2)] bg-white hover:border-[color:var(--mute-3)]'}`}>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-0.5 bg-black text-white rounded">Version A</span>
+                          {heroVersion==='A' && <span className="text-[9px] font-bold text-[#FF3F6C] uppercase tracking-widest">● Active Live</span>}
+                        </div>
+                        
+                        <h4 className="text-[13px] font-[800] text-[color:var(--ink)]">Immersive Video Hero</h4>
+                        <p className="text-[11px] text-[color:var(--mute-2)] leading-relaxed">
+                          Features a full-bleed looping video background with code/terminal matrix elements, centered typography, and a dark minimal aesthetic.
+                        </p>
 
-                    {/* Miniature Layout Preview mockup */}
-                    <div className="h-28 rounded-lg bg-[color:var(--ink)] relative overflow-hidden border border-black/10 flex items-center justify-center">
-                      <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-screen" src="videos/Desktop 2026.05.19 - 18.38.38.mp4" />
-                      <div className="absolute inset-0 dot-grid opacity-30" />
-                      <div className="relative z-10 text-center space-y-1 text-[8px] transform scale-90">
-                        <div className="eyebrow eyebrow-white scale-75">Myntra Tech Week</div>
-                        <div className="font-extrabold text-white text-[9px]">BUILD THE FUTURE</div>
-                        <div className="px-2 py-0.5 bg-white text-black font-semibold rounded-[2px] inline-block scale-75">Register</div>
+                        <div className="h-28 rounded-lg bg-[color:var(--ink)] relative overflow-hidden border border-black/10 flex items-center justify-center">
+                          <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-screen" src="videos/Desktop 2026.05.19 - 18.38.38.mp4" />
+                          <div className="absolute inset-0 dot-grid opacity-30" />
+                          <div className="relative z-10 text-center space-y-1 text-[8px] transform scale-90">
+                            <div className="eyebrow eyebrow-white scale-75">Myntra Tech Week</div>
+                            <div className="font-extrabold text-white text-[9px]">BUILD THE FUTURE</div>
+                            <div className="px-2 py-0.5 bg-white text-black font-semibold rounded-[2px] inline-block scale-75">Register</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-5 pt-3 border-t border-[color:var(--line)] flex justify-end">
+                        <span className={`text-[11px] font-bold uppercase tracking-wider ${heroVersion==='A'?'text-[#FF3F6C]':'text-slate-400'}`}>
+                          {heroVersion==='A' ? 'Currently Live' : 'Click to Activate'}
+                        </span>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="mt-5 pt-3 border-t border-[color:var(--line)] flex justify-end">
-                    <button className={`btn btn-xs ${heroVersion==='A'?'btn-accent':'btn-ghost'}`}>
-                      {heroVersion==='A' ? 'Currently Live' : 'Switch to Version A'}
-                    </button>
-                  </div>
-                </div>
+                    {/* Version B Card */}
+                    <div onClick={()=>{setHeroVersion('B'); toast('Hero Section switched to Version B (Shaped Collage)','success');}} 
+                      className={`cursor-pointer rounded-xl border p-5 transition-all flex flex-col justify-between ${heroVersion==='B'?'border-[#FF3F6C] bg-[#fff5f7] shadow-[0_4px_16px_rgba(255,63,108,0.05)]':'border-[color:var(--line-2)] bg-white hover:border-[color:var(--mute-3)]'}`}>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-0.5 bg-black text-white rounded">Version B</span>
+                          {heroVersion==='B' && <span className="text-[9px] font-bold text-[#FF3F6C] uppercase tracking-widest">● Active Live</span>}
+                        </div>
 
-                {/* Version B Card */}
-                <div onClick={()=>{setHeroVersion('B'); toast('Hero Section switched to Version B (Shaped Collage)','success');}} 
-                  className={`cursor-pointer rounded-xl border p-5 transition-all flex flex-col justify-between ${heroVersion==='B'?'border-[color:var(--accent)] bg-[#fff5f7] shadow-[0_4px_16px_rgba(255,63,108,0.08)]':'border-[color:var(--line-2)] bg-white hover:border-[color:var(--mute-3)]'}`}>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.1em] px-2.5 py-1 bg-black text-white">Version B</span>
-                      {heroVersion==='B' && <span className="pill text-[9px] font-bold text-[color:var(--accent)] border-[color:var(--accent)] bg-white">● ACTIVE LIVE</span>}
-                    </div>
+                        <h4 className="text-[13px] font-[800] text-[color:var(--ink)]">Typography & Shaped Collage Hero</h4>
+                        <p className="text-[11px] text-[color:var(--mute-2)] leading-relaxed">
+                          Features large stylized side-running 'TECH' & 'WEEK' typography, organic floating graphic collage cards, and a glassmorphic central capsule.
+                        </p>
 
-                    <h4 className="text-[13px] font-[850] text-[color:var(--ink)]">Typography & Shaped Collage Hero</h4>
-                    <p className="text-[11px] text-[color:var(--mute-2)] leading-relaxed">
-                      Features large stylized side-running 'TECH' & 'WEEK' typography, organic floating graphic collage cards, and a glassmorphic central capsule.
-                    </p>
+                        <div className="h-28 rounded-lg bg-[color:var(--ink)] relative overflow-hidden border border-black/10 flex items-center justify-center">
+                          <div className="absolute inset-0 dot-grid opacity-20" />
+                          <div className="absolute top-1/2 left-2 -translate-y-1/2 text-[10px] font-black text-white/10 uppercase tracking-widest" style={{writingMode:'vertical-lr'}}>TECH</div>
+                          <div className="absolute top-1/2 right-2 -translate-y-1/2 text-[10px] font-black text-white/10 uppercase tracking-widest" style={{writingMode:'vertical-lr'}}>WEEK</div>
+                          
+                          <div className="absolute top-2 left-8 w-6 h-6 bg-rose-500/20 border border-rose-500/30 rounded rotate-12 scale-75" />
+                          <div className="absolute bottom-2 right-8 w-6 h-6 bg-blue-500/20 border border-blue-500/30 rounded-full scale-75" />
+                          
+                          <div className="relative z-10 text-center p-2 rounded border border-white/10 bg-black/40 backdrop-blur-[2px] scale-75 space-y-1">
+                            <div className="eyebrow eyebrow-white scale-75">Myntra Tech Week</div>
+                            <div className="font-extrabold text-white text-[9px]">BUILD THE FUTURE</div>
+                            <div className="px-2 py-0.5 bg-[color:var(--accent)] text-white font-semibold rounded-[2px] inline-block scale-75">Register</div>
+                          </div>
+                        </div>
+                      </div>
 
-                    {/* Miniature Layout Preview mockup */}
-                    <div className="h-28 rounded-lg bg-[color:var(--ink)] relative overflow-hidden border border-black/10 flex items-center justify-center">
-                      <div className="absolute inset-0 dot-grid opacity-20" />
-                      <div className="absolute top-1/2 left-2 -translate-y-1/2 text-[10px] font-black text-white/10 uppercase tracking-widest" style={{writingMode:'vertical-lr'}}>TECH</div>
-                      <div className="absolute top-1/2 right-2 -translate-y-1/2 text-[10px] font-black text-white/10 uppercase tracking-widest" style={{writingMode:'vertical-lr'}}>WEEK</div>
-                      
-                      {/* Little floating shapes */}
-                      <div className="absolute top-2 left-8 w-6 h-6 bg-rose-500/20 border border-rose-500/30 rounded rotate-12 scale-75" />
-                      <div className="absolute bottom-2 right-8 w-6 h-6 bg-blue-500/20 border border-blue-500/30 rounded-full scale-75" />
-                      
-                      <div className="relative z-10 text-center p-2 rounded border border-white/10 bg-black/40 backdrop-blur-[2px] scale-75 space-y-1">
-                        <div className="eyebrow eyebrow-white scale-75">Myntra Tech Week</div>
-                        <div className="font-extrabold text-white text-[9px]">BUILD THE FUTURE</div>
-                        <div className="px-2 py-0.5 bg-[color:var(--accent)] text-white font-semibold rounded-[2px] inline-block scale-75">Register</div>
+                      <div className="mt-5 pt-3 border-t border-[color:var(--line)] flex justify-end">
+                        <span className={`text-[11px] font-bold uppercase tracking-wider ${heroVersion==='B'?'text-[#FF3F6C]':'text-slate-400'}`}>
+                          {heroVersion==='B' ? 'Currently Live' : 'Click to Activate'}
+                        </span>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="mt-5 pt-3 border-t border-[color:var(--line)] flex justify-end">
-                    <button className={`btn btn-xs ${heroVersion==='B'?'btn-accent':'btn-ghost'}`}>
-                      {heroVersion==='B' ? 'Currently Live' : 'Switch to Version B'}
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          )}
-
-          {/* Winners editor */}
-          {cTab==='winners' && (
-            <div className="space-y-4 fade-up">
-              <div className="flex items-center justify-between">
-                <p className="text-[12px] text-[color:var(--mute-2)]">{winners.length} winner card{winners.length!==1?'s':''} on Home page</p>
-                <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setShowNewW(true); setNw(blankW()); }}>+ Add Card</Btn>
-              </div>
-              {showNewW && (
-                <div className="bg-[#eeeeff] border border-[#c4b5fd] p-5 space-y-3 fade-up">
-                  <p className="text-[13px] font-semibold text-[color:var(--ink)]">New Winner Card</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    <Inp label="Challenge" value={nw.challenge} onChange={e=>setNw(p=>({...p,challenge:e.target.value}))} placeholder="e.g. Best Partner Name" />
-                    <Inp label="Winner Team" value={nw.winner} onChange={e=>setNw(p=>({...p,winner:e.target.value}))} placeholder="e.g. Pixel Pirates" />
-                    <Inp label="Members" value={nw.members} onChange={e=>setNw(p=>({...p,members:e.target.value}))} placeholder="e.g. Neha Singh & Aryan Kapoor" />
-                    <Inp label="Prize" value={nw.prize} onChange={e=>setNw(p=>({...p,prize:e.target.value}))} placeholder="e.g. 500 pts + Swag" />
-                    <Inp label="Icon (emoji)" value={nw.icon} onChange={e=>setNw(p=>({...p,icon:e.target.value}))} placeholder="🏆" />
-                    <Inp label="Date" value={nw.date} onChange={e=>setNw(p=>({...p,date:e.target.value}))} placeholder="Jul 13" />
-                  </div>
-                  <div className="flex gap-2">
-                    <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setShowNewW(false)}>Cancel</Btn>
-                    <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{
-                      if(!nw.challenge||!nw.winner){toast('Challenge and winner are required.','error');return;}
-                      setWinners(p=>[...p,{...nw,id:`CW${Date.now()}`}]);
-                      setShowNewW(false); toast('Winner card added!','success');
-                    }}>Add Card</Btn>
                   </div>
                 </div>
               )}
-              <div className="space-y-2">
-                {winners.map((w,i)=>(
-                  <div key={w.id}>
-                    {editWId===w.id ? (
-                      <div className="border border-[#c4b5fd] bg-[#f8f6ff] p-4 space-y-3">
-                        <div className="grid grid-cols-2 gap-3">
-                          <Inp label="Challenge" value={w.challenge} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,challenge:e.target.value}:x))} />
-                          <Inp label="Winner" value={w.winner} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,winner:e.target.value}:x))} />
-                          <Inp label="Members" value={w.members} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,members:e.target.value}:x))} />
-                          <Inp label="Prize" value={w.prize} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,prize:e.target.value}:x))} />
-                          <Inp label="Icon" value={w.icon} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,icon:e.target.value}:x))} />
-                          <Inp label="Date" value={w.date} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,date:e.target.value}:x))} />
-                        </div>
-                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setEditWId(null); toast('Card updated.','success'); }}>Save</Btn>
+            </div>
+
+            {/* 2. Key Hackathon Stats */}
+            <div className="bg-white border border-[color:var(--line-2)] rounded-[8px] overflow-hidden">
+              <button 
+                onClick={() => setOpenSections(prev => ({ ...prev, stats: !prev.stats }))}
+                className="w-full flex items-center justify-between p-4 bg-[color:var(--paper)] border-b border-[color:var(--line-2)] text-left hover:bg-slate-50 transition-colors">
+                <div className="flex items-center gap-2">
+                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-slate-500">Section 2:</span>
+                  <span className="text-[13px] font-[800] text-slate-800">Hackathon Key Stats</span>
+                </div>
+                <span className="text-[11px] font-[800] text-slate-400 uppercase tracking-wider">{openSections.stats ? 'Collapse ▲' : 'Expand ▼'}</span>
+              </button>
+
+              {openSections.stats && (
+                <div className="p-5 space-y-4 fade-up max-w-xl">
+                  <p className="text-[12px] text-[color:var(--mute-2)]">Edit the live statistics displayed globally across landing page headers and hero banners.</p>
+                  <div className="space-y-3">
+                    {(editStats ? statsLocal : homeStats).map(([n,l],i)=>(
+                      <div key={i} className="flex items-center gap-3">
+                        <input value={editStats ? statsLocal[i][0] : n} onChange={e=>{ if(editStats){ const s=[...statsLocal]; s[i]=[e.target.value,s[i][1]]; setStatsLocal(s); }}}
+                          readOnly={!editStats}
+                          className={`w-28 border rounded-[4px] px-3 py-2 text-[14px] font-[700] text-center outline-none ${editStats?'border-[#FF3F6C] bg-white':'border-[color:var(--line-2)] bg-[color:var(--paper)] text-[color:var(--mute-3)]'}`} />
+                        <input value={editStats ? statsLocal[i][1] : l} onChange={e=>{ if(editStats){ const s=[...statsLocal]; s[i]=[s[i][0],e.target.value]; setStatsLocal(s); }}}
+                          readOnly={!editStats}
+                          className={`flex-1 border rounded-[4px] px-3 py-2 text-[13px] outline-none ${editStats?'border-[#FF3F6C] bg-white':'border-[color:var(--line-2)] bg-[color:var(--paper)] text-[color:var(--mute-3)]'}`} />
                       </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-2 pt-2 justify-end">
+                    {!editStats ? (
+                      <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setStatsLocal([...homeStats]); setEditStats(true); }}>Edit Key Stats</Btn>
                     ) : (
-                      <div
-                        draggable
-                        onDragStart={()=>setDragWIdx(i)}
-                        onDragOver={e=>e.preventDefault()}
-                        onDrop={e=>{e.preventDefault();if(dragWIdx===null||dragWIdx===i)return;setWinners(p=>{const a=[...p];const[item]=a.splice(dragWIdx,1);a.splice(i,0,item);return a;});setDragWIdx(null);}}
-                        className={`flex items-center gap-3 px-3 py-3 border border-[color:var(--line)] bg-[color:var(--paper)] transition-opacity ${dragWIdx===i?'opacity-40':''}`}>
-                        <div className="cursor-grab active:cursor-grabbing p-1 text-[color:var(--mute-4)] hover:text-[color:var(--mute-3)] flex-shrink-0">
-                          <svg width="10" height="14" viewBox="0 0 10 14" fill="currentColor">
-                            <circle cx="2" cy="2" r="1.5"/><circle cx="8" cy="2" r="1.5"/>
-                            <circle cx="2" cy="7" r="1.5"/><circle cx="8" cy="7" r="1.5"/>
-                            <circle cx="2" cy="12" r="1.5"/><circle cx="8" cy="12" r="1.5"/>
-                          </svg>
-                        </div>
-                        <span className="text-[18px] flex-shrink-0">{w.icon}</span>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-[13px] font-[700] text-[color:var(--ink)]">{w.winner}</p>
-                          <p className="text-[11px] text-[color:var(--mute-3)]">{w.challenge} · {w.prize} · {w.date}</p>
-                        </div>
-                        <div className="flex gap-1.5 flex-shrink-0">
-                          <Btn variant="ghost" className="text-[11px] py-1" onClick={()=>setEditWId(w.id)}>Edit</Btn>
-                          <Btn variant="danger" className="text-[11px] py-1" onClick={()=>{setWinners(p=>p.filter(x=>x.id!==w.id));toast('Card removed.','error');}}>Delete</Btn>
-                        </div>
-                      </div>
+                      <>
+                        <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setEditStats(false)}>Cancel</Btn>
+                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setHomeStats(statsLocal); setEditStats(false); toast('Stats updated!','success'); }}>Save Changes</Btn>
+                      </>
                     )}
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
             </div>
-          )}
 
-          {/* Ideas Arena editor */}
-          {cTab==='ideasarena' && (
-            <div className="space-y-3 fade-up">
-              <p className="text-[12px] text-[color:var(--mute-2)]">{ideas.filter(i=>i.status==='approved').length} approved ideas shown on Home page. Reorder, edit content, or change status.</p>
-              {ideas.map((idea,i)=>(
-                <div key={idea.id}>
-                  {editIdeaId===idea.id ? (
-                    <div className="border border-[#c4b5fd] bg-[#f8f6ff] p-4 space-y-3">
-                      <Inp label="Title" value={ideaDraft.title||''} onChange={e=>setIdeaDraft(d=>({...d,title:e.target.value}))} />
-                      <div>
-                        <label className="block text-[11px] font-semibold text-[color:var(--mute-1)] mb-1">Description</label>
-                        <textarea value={ideaDraft.desc||''} onChange={e=>setIdeaDraft(d=>({...d,desc:e.target.value}))} rows={3}
-                          className="w-full bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] rounded-[3px] px-3 py-2 text-[13px] outline-none resize-none" />
+            {/* 3. TechWeek Winners */}
+            <div className="bg-white border border-[color:var(--line-2)] rounded-[8px] overflow-hidden">
+              <button 
+                onClick={() => setOpenSections(prev => ({ ...prev, winners: !prev.winners }))}
+                className="w-full flex items-center justify-between p-4 bg-[color:var(--paper)] border-b border-[color:var(--line-2)] text-left hover:bg-slate-50 transition-colors">
+                <div className="flex items-center gap-2">
+                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-slate-500">Section 3:</span>
+                  <span className="text-[13px] font-[800] text-slate-800">TechWeek Winners Board</span>
+                </div>
+                <span className="text-[11px] font-[800] text-slate-400 uppercase tracking-wider">{openSections.winners ? 'Collapse ▲' : 'Expand ▼'}</span>
+              </button>
+
+              {openSections.winners && (
+                <div className="p-5 space-y-4 fade-up">
+                  <div className="flex items-center justify-between">
+                    <p className="text-[12px] text-[color:var(--mute-2)]">{winners.length} winner card{winners.length!==1?'s':''} live on landing page. Drag handles to reorder.</p>
+                    <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setShowNewW(true); setNw(blankW()); }}>+ Add Winner Card</Btn>
+                  </div>
+
+                  {showNewW && (
+                    <div className="bg-slate-50 border border-slate-200 p-5 space-y-3 fade-up rounded-[6px]">
+                      <p className="text-[13px] font-bold text-slate-800">New Winner Card</p>
+                      <div className="grid grid-cols-2 gap-3">
+                        <Inp label="Challenge" value={nw.challenge} onChange={e=>setNw(p=>({...p,challenge:e.target.value}))} placeholder="e.g. Best Partner Name" />
+                        <Inp label="Winner Team" value={nw.winner} onChange={e=>setNw(p=>({...p,winner:e.target.value}))} placeholder="e.g. Pixel Pirates" />
+                        <Inp label="Members" value={nw.members} onChange={e=>setNw(p=>({...p,members:e.target.value}))} placeholder="e.g. Neha Singh & Aryan Kapoor" />
+                        <Inp label="Prize" value={nw.prize} onChange={e=>setNw(p=>({...p,prize:e.target.value}))} placeholder="e.g. 500 pts + Swag" />
+                        <Inp label="Icon (emoji)" value={nw.icon} onChange={e=>setNw(p=>({...p,icon:e.target.value}))} placeholder="🏆" />
+                        <Inp label="Date" value={nw.date} onChange={e=>setNw(p=>({...p,date:e.target.value}))} placeholder="Jul 13" />
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 justify-end mt-2">
+                        <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setShowNewW(false)}>Cancel</Btn>
                         <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{
-                          setIdeas(p=>p.map(x=>x.id===idea.id?{...x,...ideaDraft}:x));
-                          setEditIdeaId(null); toast('Idea updated.','success');
-                        }}>Save</Btn>
-                        <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setEditIdeaId(null)}>Cancel</Btn>
-                      </div>
-                    </div>
-                  ) : (
-                    <div
-                      draggable
-                      onDragStart={()=>setDragIdeaIdx(i)}
-                      onDragOver={e=>e.preventDefault()}
-                      onDrop={e=>{e.preventDefault();if(dragIdeaIdx===null||dragIdeaIdx===i)return;setIdeas(p=>{const a=[...p];const[item]=a.splice(dragIdeaIdx,1);a.splice(i,0,item);return a;});setDragIdeaIdx(null);}}
-                      className={`flex items-start gap-3 px-3 py-3 border transition-opacity ${idea.status==='pending'?'border-[#fde68a] bg-[#fffbeb]':idea.status==='rejected'?'border-[#fecaca] bg-[#fef2f2]':'border-[color:var(--line)] bg-[color:var(--paper)]'} ${dragIdeaIdx===i?'opacity-40':''}`}>
-                      <div className="cursor-grab active:cursor-grabbing p-1 text-[color:var(--mute-4)] hover:text-[color:var(--mute-3)] flex-shrink-0 mt-0.5">
-                        <svg width="10" height="14" viewBox="0 0 10 14" fill="currentColor">
-                          <circle cx="2" cy="2" r="1.5"/><circle cx="8" cy="2" r="1.5"/>
-                          <circle cx="2" cy="7" r="1.5"/><circle cx="8" cy="7" r="1.5"/>
-                          <circle cx="2" cy="12" r="1.5"/><circle cx="8" cy="12" r="1.5"/>
-                        </svg>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <p className="text-[13px] font-[700] text-[color:var(--ink)]">{idea.title}</p>
-                          <span className={`text-[10px] font-[700] uppercase px-2 py-0.5 border ${idea.status==='approved'?'bg-[#dcfce7] text-[#15803d] border-[#bbf7d0]':idea.status==='pending'?'bg-[#fef9c3] text-[#a16207] border-[#fde68a]':'bg-[#fee2e2] text-[#dc2626] border-[#fecaca]'}`}>{idea.status}</span>
-                        </div>
-                        <p className="text-[11px] text-[color:var(--mute-3)] mt-0.5">{idea.authorName} · {idea.theme}</p>
-                      </div>
-                      <div className="flex gap-1.5 flex-shrink-0 items-start">
-                        <Btn variant="ghost" className="text-[11px] py-1" onClick={()=>{ setEditIdeaId(idea.id); setIdeaDraft({title:idea.title,desc:idea.desc}); }}>Edit</Btn>
-                        {idea.status!=='approved' && <Btn variant="ghost" className="text-[11px] py-1 text-[#15803d]" onClick={()=>{ setIdeas(p=>p.map(x=>x.id===idea.id?{...x,status:'approved'}:x)); toast('Approved.','success'); }}>Approve</Btn>}
-                        {idea.status==='approved' && <Btn variant="ghost" className="text-[11px] py-1 text-[#dc2626]" onClick={()=>{ setIdeas(p=>p.map(x=>x.id===idea.id?{...x,status:'rejected'}:x)); toast('Revoked.','error'); }}>Revoke</Btn>}
+                          if(!nw.challenge||!nw.winner){toast('Challenge and winner are required.','error');return;}
+                          setWinners(p=>[...p,{...nw,id:`CW${Date.now()}`}]);
+                          setShowNewW(false); toast('Winner card added!','success');
+                        }}>Add Card</Btn>
                       </div>
                     </div>
                   )}
-                </div>
-              ))}
-            </div>
-          )}
 
-          {/* Stats Strip editor */}
-          {cTab==='stats' && (
-            <div className="space-y-4 fade-up max-w-sm">
-              <p className="text-[12px] text-[color:var(--mute-2)]">Edit the stats shown in the hero section on the Home page.</p>
-              {(editStats ? statsLocal : homeStats).map(([n,l],i)=>(
-                <div key={i} className="flex items-center gap-3">
-                  <input value={editStats ? statsLocal[i][0] : n} onChange={e=>{ if(editStats){ const s=[...statsLocal]; s[i]=[e.target.value,s[i][1]]; setStatsLocal(s); }}}
-                    readOnly={!editStats}
-                    className={`w-24 border rounded-[3px] px-3 py-2 text-[14px] font-[700] text-center outline-none ${editStats?'border-[color:var(--accent)] bg-white':'border-[color:var(--line-2)] bg-[color:var(--paper)] text-[color:var(--mute-3)]'}`} />
-                  <input value={editStats ? statsLocal[i][1] : l} onChange={e=>{ if(editStats){ const s=[...statsLocal]; s[i]=[s[i][0],e.target.value]; setStatsLocal(s); }}}
-                    readOnly={!editStats}
-                    className={`flex-1 border rounded-[3px] px-3 py-2 text-[13px] outline-none ${editStats?'border-[color:var(--accent)] bg-white':'border-[color:var(--line-2)] bg-[color:var(--paper)] text-[color:var(--mute-3)]'}`} />
+                  <div className="space-y-2">
+                    {winners.map((w,i)=>(
+                      <div key={w.id}>
+                        {editWId===w.id ? (
+                          <div className="border border-slate-200 bg-slate-50 p-4 rounded-[6px] space-y-3">
+                            <div className="grid grid-cols-2 gap-3">
+                              <Inp label="Challenge" value={w.challenge} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,challenge:e.target.value}:x))} />
+                              <Inp label="Winner" value={w.winner} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,winner:e.target.value}:x))} />
+                              <Inp label="Members" value={w.members} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,members:e.target.value}:x))} />
+                              <Inp label="Prize" value={w.prize} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,prize:e.target.value}:x))} />
+                              <Inp label="Icon" value={w.icon} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,icon:e.target.value}:x))} />
+                              <Inp label="Date" value={w.date} onChange={e=>setWinners(p=>p.map(x=>x.id===w.id?{...x,date:e.target.value}:x))} />
+                            </div>
+                            <div className="flex justify-end gap-2">
+                              <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setEditWId(null); toast('Card updated.','success'); }}>Save Changes</Btn>
+                            </div>
+                          </div>
+                        ) : (
+                          <div
+                            draggable
+                            onDragStart={()=>setDragWIdx(i)}
+                            onDragOver={e=>e.preventDefault()}
+                            onDrop={e=>{e.preventDefault();if(dragWIdx===null||dragWIdx===i)return;setWinners(p=>{const a=[...p];const[item]=a.splice(dragWIdx,1);a.splice(i,0,item);return a;});setDragWIdx(null);}}
+                            className={`flex items-center gap-3 px-3 py-3 border border-[color:var(--line-2)] rounded-[6px] bg-[color:var(--paper)] transition-opacity ${dragWIdx===i?'opacity-40':''}`}>
+                            <div className="cursor-grab active:cursor-grabbing p-1 text-[color:var(--mute-4)] hover:text-[color:var(--mute-3)] flex-shrink-0">
+                              <svg width="10" height="14" viewBox="0 0 10 14" fill="currentColor">
+                                <circle cx="2" cy="2" r="1.5"/><circle cx="8" cy="2" r="1.5"/>
+                                <circle cx="2" cy="7" r="1.5"/><circle cx="8" cy="7" r="1.5"/>
+                                <circle cx="2" cy="12" r="1.5"/><circle cx="8" cy="12" r="1.5"/>
+                              </svg>
+                            </div>
+                            <span className="text-[18px] flex-shrink-0">{w.icon}</span>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[13px] font-[800] text-[color:var(--ink)]">{w.winner}</p>
+                              <p className="text-[11px] text-[color:var(--mute-3)]">{w.challenge} · {w.prize} · {w.date}</p>
+                            </div>
+                            <div className="flex gap-1.5 flex-shrink-0">
+                              <Btn variant="ghost" className="text-[11px] py-1" onClick={()=>setEditWId(w.id)}>Edit</Btn>
+                              <Btn variant="danger" className="text-[11px] py-1" onClick={()=>{setWinners(p=>p.filter(x=>x.id!==w.id));toast('Card removed.','error');}}>Delete</Btn>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
-              <div className="flex gap-2 pt-2">
-                {!editStats ? (
-                  <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setStatsLocal([...homeStats]); setEditStats(true); }}>Edit Stats</Btn>
-                ) : (
-                  <>
-                    <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setEditStats(false)}>Cancel</Btn>
-                    <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setHomeStats(statsLocal); setEditStats(false); toast('Stats updated!','success'); }}>Save</Btn>
-                  </>
-                )}
-              </div>
+              )}
             </div>
-          )}
+
+            {/* 4. Ideas Arena Spotlight */}
+            <div className="bg-white border border-[color:var(--line-2)] rounded-[8px] overflow-hidden">
+              <button 
+                onClick={() => setOpenSections(prev => ({ ...prev, ideas: !prev.ideas }))}
+                className="w-full flex items-center justify-between p-4 bg-[color:var(--paper)] border-b border-[color:var(--line-2)] text-left hover:bg-slate-50 transition-colors">
+                <div className="flex items-center gap-2">
+                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-slate-500">Section 4:</span>
+                  <span className="text-[13px] font-[800] text-slate-800">Ideas Arena Spotlight</span>
+                </div>
+                <span className="text-[11px] font-[800] text-slate-400 uppercase tracking-wider">{openSections.ideas ? 'Collapse ▲' : 'Expand ▼'}</span>
+              </button>
+
+              {openSections.ideas && (
+                <div className="p-5 space-y-4 fade-up">
+                  <p className="text-[12px] text-[color:var(--mute-2)]">{ideas.filter(i=>i.status==='approved').length} approved ideas shown on Home page. Reorder, edit content, or change status.</p>
+                  <div className="space-y-2">
+                    {ideas.map((idea,i)=>(
+                      <div key={idea.id}>
+                        {editIdeaId===idea.id ? (
+                          <div className="border border-slate-200 bg-slate-50 p-4 rounded-[6px] space-y-3">
+                            <Inp label="Title" value={ideaDraft.title||''} onChange={e=>setIdeaDraft(d=>({...d,title:e.target.value}))} />
+                            <div>
+                              <label className="block text-[11px] font-semibold text-[color:var(--mute-1)] mb-1">Description</label>
+                              <textarea value={ideaDraft.desc||''} onChange={e=>setIdeaDraft(d=>({...d,desc:e.target.value}))} rows={3}
+                                className="w-full bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] rounded-[3px] px-3 py-2 text-[13px] outline-none resize-none" />
+                            </div>
+                            <div className="flex gap-2 justify-end">
+                              <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{
+                                setIdeas(p=>p.map(x=>x.id===idea.id?{...x,...ideaDraft}:x));
+                                setEditIdeaId(null); toast('Idea updated.','success');
+                              }}>Save Changes</Btn>
+                              <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setEditIdeaId(null)}>Cancel</Btn>
+                            </div>
+                          </div>
+                        ) : (
+                          <div
+                            draggable
+                            onDragStart={()=>setDragIdeaIdx(i)}
+                            onDragOver={e=>e.preventDefault()}
+                            onDrop={e=>{e.preventDefault();if(dragIdeaIdx===null||dragIdeaIdx===i)return;setIdeas(p=>{const a=[...p];const[item]=a.splice(dragIdeaIdx,1);a.splice(i,0,item);return a;});setDragIdeaIdx(null);}}
+                            className={`flex items-start gap-3 px-3 py-3 border rounded-[6px] transition-opacity ${idea.status==='pending'?'border-[#fde68a] bg-[#fffbeb]':idea.status==='rejected'?'border-[#fecaca] bg-[#fef2f2]':'border-[color:var(--line-2)] bg-[color:var(--paper)]'} ${dragIdeaIdx===i?'opacity-40':''}`}>
+                            <div className="cursor-grab active:cursor-grabbing p-1 text-[color:var(--mute-4)] hover:text-[color:var(--mute-3)] flex-shrink-0 mt-0.5">
+                              <svg width="10" height="14" viewBox="0 0 10 14" fill="currentColor">
+                                <circle cx="2" cy="2" r="1.5"/><circle cx="8" cy="2" r="1.5"/>
+                                <circle cx="2" cy="7" r="1.5"/><circle cx="8" cy="7" r="1.5"/>
+                                <circle cx="2" cy="12" r="1.5"/><circle cx="8" cy="12" r="1.5"/>
+                              </svg>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <p className="text-[13px] font-[800] text-[color:var(--ink)]">{idea.title}</p>
+                                <span className={`text-[9px] font-[800] uppercase px-2 py-0.5 border ${idea.status==='approved'?'bg-[#dcfce7] text-[#15803d] border-[#bbf7d0]':idea.status==='pending'?'bg-[#fef9c3] text-[#a16207] border-[#fde68a]':'bg-[#fee2e2] text-[#dc2626] border-[#fecaca]'}`}>{idea.status}</span>
+                              </div>
+                              <p className="text-[11px] text-[color:var(--mute-3)] mt-0.5">{idea.authorName} · {idea.theme}</p>
+                            </div>
+                            <div className="flex gap-1.5 flex-shrink-0 items-start">
+                              <Btn variant="ghost" className="text-[11px] py-1" onClick={()=>{ setEditIdeaId(idea.id); setIdeaDraft({title:idea.title,desc:idea.desc}); }}>Edit</Btn>
+                              {idea.status!=='approved' && <Btn variant="ghost" className="text-[11px] py-1 text-[#15803d]" onClick={()=>{ setIdeas(p=>p.map(x=>x.id===idea.id?{...x,status:'approved'}:x)); toast('Approved.','success'); }}>Approve</Btn>}
+                              {idea.status==='approved' && <Btn variant="ghost" className="text-[11px] py-1 text-[#dc2626]" onClick={()=>{ setIdeas(p=>p.map(x=>x.id===idea.id?{...x,status:'rejected'}:x)); toast('Revoke','error'); }}>Revoke</Btn>}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 5. Event Dates & Schedule */}
+            <div className="bg-white border border-[color:var(--line-2)] rounded-[8px] overflow-hidden">
+              <button 
+                onClick={() => setOpenSections(prev => ({ ...prev, schedule: !prev.schedule }))}
+                className="w-full flex items-center justify-between p-4 bg-[color:var(--paper)] border-b border-[color:var(--line-2)] text-left hover:bg-slate-50 transition-colors">
+                <div className="flex items-center gap-2">
+                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-slate-500">Section 5:</span>
+                  <span className="text-[13px] font-[800] text-slate-800">Event Dates & Schedule</span>
+                </div>
+                <span className="text-[11px] font-[800] text-slate-400 uppercase tracking-wider">{openSections.schedule ? 'Collapse ▲' : 'Expand ▼'}</span>
+              </button>
+
+              {openSections.schedule && (
+                <div className="p-5 space-y-4 fade-up">
+                  <p className="text-[12px] text-[color:var(--mute-2)]">Edit the live phases, start and end dates shown under "Event Dates" on the landing page.</p>
+                  <div className="space-y-3">
+                    {(editSched ? schedLocal : SCHEDULE).map((s,i)=>(
+                      <div key={i} className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center p-3 border border-slate-100 rounded bg-white">
+                        <div className="flex-1 grid grid-cols-2 gap-2">
+                          <Inp label="Phase Title" value={editSched ? schedLocal[i].label : s.label} onChange={e=>{ if(editSched){ const next=[...schedLocal]; next[i].label=e.target.value; setSchedLocal(next); }}} disabled={!editSched} />
+                          <Inp label="Phase Code" value={editSched ? schedLocal[i].phase : s.phase} onChange={e=>{ if(editSched){ const next=[...schedLocal]; next[i].phase=e.target.value; setSchedLocal(next); }}} disabled={!editSched} />
+                        </div>
+                        <div className="flex-1 grid grid-cols-2 gap-2">
+                          <Inp label="Start Date" value={editSched ? schedLocal[i].start : s.start} onChange={e=>{ if(editSched){ const next=[...schedLocal]; next[i].start=e.target.value; setSchedLocal(next); }}} disabled={!editSched} />
+                          <Inp label="End Date" value={editSched ? schedLocal[i].end : s.end} onChange={e=>{ if(editSched){ const next=[...schedLocal]; next[i].end=e.target.value; setSchedLocal(next); }}} disabled={!editSched} />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-semibold text-[color:var(--mute-1)] mb-1">Status</label>
+                          <select value={editSched ? schedLocal[i].status : s.status} onChange={e=>{ if(editSched){ const next=[...schedLocal]; next[i].status=e.target.value; setSchedLocal(next); }}} disabled={!editSched} className="bg-white border border-[color:var(--line-2)] rounded px-2.5 py-1.5 text-[12px] outline-none">
+                            <option value="upcoming">Upcoming</option>
+                            <option value="live">Live Now</option>
+                            <option value="completed">Completed</option>
+                          </select>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-2 justify-end pt-2">
+                    {!editSched ? (
+                      <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setSchedLocal(JSON.parse(JSON.stringify(SCHEDULE))); setEditSched(true); }}>Edit Schedule</Btn>
+                    ) : (
+                      <>
+                        <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setEditSched(false)}>Cancel</Btn>
+                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ SCHEDULE = schedLocal; setEditSched(false); setHomeStats([...homeStats]); toast('Event Schedule updated live!','success'); }}>Save Changes</Btn>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 6. Prizes & Rewards */}
+            <div className="bg-white border border-[color:var(--line-2)] rounded-[8px] overflow-hidden">
+              <button 
+                onClick={() => setOpenSections(prev => ({ ...prev, rewards: !prev.rewards }))}
+                className="w-full flex items-center justify-between p-4 bg-[color:var(--paper)] border-b border-[color:var(--line-2)] text-left hover:bg-slate-50 transition-colors">
+                <div className="flex items-center gap-2">
+                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-slate-500">Section 6:</span>
+                  <span className="text-[13px] font-[800] text-slate-800">Prizes &amp; Rewards Board</span>
+                </div>
+                <span className="text-[11px] font-[800] text-slate-400 uppercase tracking-wider">{openSections.rewards ? 'Collapse ▲' : 'Expand ▼'}</span>
+              </button>
+
+              {openSections.rewards && (
+                <div className="p-5 space-y-4 fade-up">
+                  <p className="text-[12px] text-[color:var(--mute-2)]">Customize prize values and descriptions in the home page rewards grid.</p>
+                  <div className="space-y-4">
+                    {(editRew ? rewLocal : REWARDS).map((r,i)=>(
+                      <div key={i} className="p-3 border border-slate-100 rounded space-y-2 bg-white">
+                        <div className="grid grid-cols-2 gap-3">
+                          <Inp label="Rank Title" value={editRew ? rewLocal[i].rank : r.rank} onChange={e=>{ if(editRew){ const next=[...rewLocal]; next[i].rank=e.target.value; setRewLocal(next); }}} disabled={!editRew} />
+                          <Inp label="Prize Amount (₹)" value={editRew ? rewLocal[i].prize : r.prize} onChange={e=>{ if(editRew){ const next=[...rewLocal]; next[i].prize=e.target.value; setRewLocal(next); }}} disabled={!editRew} />
+                        </div>
+                        <div>
+                          <Inp label="Perks (comma separated)" value={editRew ? rewLocal[i].perks.join(', ') : r.perks.join(', ')} onChange={e=>{ if(editRew){ const next=[...rewLocal]; next[i].perks=e.target.value.split(',').map(p=>p.trim()); setRewLocal(next); }}} disabled={!editRew} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-2 justify-end pt-2">
+                    {!editRew ? (
+                      <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setRewLocal(JSON.parse(JSON.stringify(REWARDS))); setEditRew(true); }}>Edit Prizes</Btn>
+                    ) : (
+                      <>
+                        <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setEditRew(false)}>Cancel</Btn>
+                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ REWARDS = rewLocal; setEditRew(false); setHomeStats([...homeStats]); toast('Prizes and Rewards updated live!','success'); }}>Save Changes</Btn>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 7. Event Calendar (31 Days of Hustle) */}
+            <div className="bg-white border border-[color:var(--line-2)] rounded-[8px] overflow-hidden">
+              <button 
+                onClick={() => setOpenSections(prev => ({ ...prev, calendar: !prev.calendar }))}
+                className="w-full flex items-center justify-between p-4 bg-[color:var(--paper)] border-b border-[color:var(--line-2)] text-left hover:bg-slate-50 transition-colors">
+                <div className="flex items-center gap-2">
+                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-slate-500">Section 7:</span>
+                  <span className="text-[13px] font-[800] text-slate-800">31 Days of Hustle Calendar</span>
+                </div>
+                <span className="text-[11px] font-[800] text-slate-400 uppercase tracking-wider">{openSections.calendar ? 'Collapse ▲' : 'Expand ▼'}</span>
+              </button>
+
+              {openSections.calendar && (
+                <div className="p-5 space-y-4 fade-up">
+                  <p className="text-[12px] text-[color:var(--mute-2)]">Update key event milestones, sessions, deadlines, and live session links in the event calendar.</p>
+                  
+                  <div className="space-y-4">
+                    {(editCal ? calLocal : HACKATHON_CALENDAR).map((c, i) => (
+                      <div key={i} className="p-4 border border-slate-100 rounded-xl space-y-3 bg-slate-50/30 relative">
+                        {editCal && (
+                          <button 
+                            type="button"
+                            onClick={() => {
+                              const next = [...calLocal];
+                              next.splice(i, 1);
+                              setCalLocal(next);
+                            }}
+                            className="absolute top-3 right-3 text-red-500 hover:text-red-700 text-[12px] font-bold"
+                          >
+                            ✕ Remove
+                          </button>
+                        )}
+                        
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                          <Inp label="Date (e.g. Jun 16)" value={editCal ? calLocal[i].date : c.date} onChange={e => { if(editCal) { const next = [...calLocal]; next[i].date = e.target.value; setCalLocal(next); } }} disabled={!editCal} />
+                          <Inp label="Day (e.g. Monday)" value={editCal ? calLocal[i].day : c.day} onChange={e => { if(editCal) { const next = [...calLocal]; next[i].day = e.target.value; setCalLocal(next); } }} disabled={!editCal} />
+                          <Inp label="Time (e.g. 09:00)" value={editCal ? calLocal[i].time || '' : c.time || ''} onChange={e => { if(editCal) { const next = [...calLocal]; next[i].time = e.target.value; setCalLocal(next); } }} disabled={!editCal} />
+                          <div>
+                            <label className="block text-[11px] font-semibold text-[color:var(--mute-1)] mb-1">Type</label>
+                            <select 
+                              value={editCal ? calLocal[i].type : c.type} 
+                              onChange={e => { if(editCal) { const next = [...calLocal]; next[i].type = e.target.value; setCalLocal(next); } }} 
+                              disabled={!editCal} 
+                              className="w-full bg-white border border-[color:var(--line-2)] rounded-[8px] px-2.5 py-2.5 text-[12px] text-[color:var(--ink)] outline-none cursor-pointer"
+                            >
+                              {['Milestone', 'Session', 'Deadline', 'Round', 'Announcement', 'Pause', 'Finale'].map(t => (
+                                <option key={t} value={t}>{t}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <Inp label="Event Title" value={editCal ? calLocal[i].title : c.title} onChange={e => { if(editCal) { const next = [...calLocal]; next[i].title = e.target.value; setCalLocal(next); } }} disabled={!editCal} />
+                          <Inp label="Event Description" value={editCal ? calLocal[i].desc || '' : c.desc || ''} onChange={e => { if(editCal) { const next = [...calLocal]; next[i].desc = e.target.value; setCalLocal(next); } }} disabled={!editCal} />
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-end">
+                          <Inp label="Google Meet Link (Optional)" value={editCal ? calLocal[i].meetLink || '' : c.meetLink || ''} onChange={e => { if(editCal) { const next = [...calLocal]; next[i].meetLink = e.target.value; setCalLocal(next); } }} disabled={!editCal} />
+                          <div className="flex items-center h-10">
+                            <label className="flex items-center gap-2 text-[12px] font-medium text-slate-700 cursor-pointer">
+                              <input 
+                                type="checkbox" 
+                                checked={editCal ? !!calLocal[i].isLive : !!c.isLive} 
+                                onChange={e => { if(editCal) { const next = [...calLocal]; next[i].isLive = e.target.checked; setCalLocal(next); } }} 
+                                disabled={!editCal}
+                                className="rounded text-[#FF3F6C] focus:ring-[#FF3F6C] h-4 w-4 border-slate-300"
+                              />
+                              Is Live Event Now
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {editCal && (
+                    <button 
+                      type="button"
+                      onClick={() => {
+                        setCalLocal(prev => [...prev, { date: 'Jun 16', day: 'Monday', title: 'New Event', desc: '', time: '12:00', type: 'Session', isLive: false, meetLink: '' }]);
+                      }}
+                      className="w-full py-2.5 border-2 border-dashed border-slate-200 hover:border-slate-400 rounded-xl text-[12px] font-bold text-slate-500 hover:text-slate-700 transition-all flex items-center justify-center gap-1.5"
+                    >
+                      ➕ Add Calendar Event
+                    </button>
+                  )}
+
+                  <div className="flex gap-2 justify-end pt-2">
+                    {!editCal ? (
+                      <Btn variant="primary" className="text-[12px] py-2" onClick={() => { setCalLocal(JSON.parse(JSON.stringify(HACKATHON_CALENDAR))); setEditCal(true); }}>Edit Calendar</Btn>
+                    ) : (
+                      <>
+                        <Btn variant="ghost" className="text-[12px] py-2" onClick={() => setEditCal(false)}>Cancel</Btn>
+                        <Btn variant="primary" className="text-[12px] py-2" onClick={() => { HACKATHON_CALENDAR = calLocal; setEditCal(false); setHomeStats([...homeStats]); toast('Event Calendar updated live!', 'success'); }}>Save Changes</Btn>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+          </div>
         </div>
       )}
 
@@ -6935,79 +7333,202 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
 
           {/* Teams management */}
           {mTab==='teams' && (
-            <div className="space-y-3 fade-up">
-              <p className="text-[12px] text-[color:var(--mute-2)]">{teams.length} teams registered. Assign mentors and view status.</p>
-              {teams.map(t=>(
-                <div key={t.id} className="border border-[color:var(--line)] bg-[color:var(--paper)] p-4">
-                  <div className="flex items-start justify-between gap-4 flex-wrap">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <p className="text-[14px] font-[700] text-[color:var(--ink)]">{t.name}</p>
-                        <span className={`text-[10px] font-[700] uppercase px-2 py-0.5 border ${t.open?'bg-[#dcfce7] text-[#15803d] border-[#bbf7d0]':'bg-[color:var(--paper-2)] text-[color:var(--mute-2)] border-[color:var(--line-2)]'}`}>{t.open?'Open':'Full'}</span>
-                      </div>
-                      <p className="text-[12px] text-[color:var(--mute-1)]">{t.theme} · {t.subTheme}</p>
-                      <p className="text-[11px] text-[color:var(--mute-3)] mt-0.5">{t.depts?.join(', ')} · {t.members.length}/{t.maxSize} members</p>
-                      {t.leadName && <p className="text-[11px] text-[color:var(--mute-2)] mt-1">Lead: <strong>{t.leadName}</strong> ({t.leadDept})</p>}
-                    </div>
-                    <div className="flex-shrink-0">
-                      <label className="block text-[10px] text-[color:var(--mute-3)] uppercase tracking-wide mb-1 font-semibold">Assign Mentor</label>
-                      <select value={t.mentor||''}
-                        onChange={e=>setTeams(p=>p.map(x=>x.id===t.id?{...x,mentor:e.target.value}:x))}
-                        className="bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] rounded-[3px] px-3 py-2 text-[12px] text-[color:var(--ink)] outline-none appearance-none min-w-[160px]">
-                        <option value="">No mentor assigned</option>
-                        {mentors.map(m=><option key={m.id} value={m.id}>{m.name} ({m.dept})</option>)}
-                        {(allUsers||[]).filter(u=>u.role==='mentor'&&!mentors.find(m=>m.id===u.id)).map(m=>(
-                          <option key={m.id} value={m.id}>{m.name} ({m.dept})</option>
-                        ))}
-                      </select>
-                      {t.mentor && (
-                        <p className="text-[11px] text-[#15803d] mt-1">✓ {(allUsers||[]).find(u=>u.id===t.mentor)?.name||'Assigned'}</p>
-                      )}
-                    </div>
-                  </div>
+            <div className="space-y-4 fade-up">
+              {/* Search + Filters row */}
+              <div className="flex flex-wrap gap-3 items-center">
+                <div className="flex-1 min-w-[200px]">
+                  <AnimatedSearchInput value={teamSearchQ} onChange={e=>setTeamSearchQ(e.target.value)} onClear={()=>setTeamSearchQ('')} type="admin_teams" />
                 </div>
-              ))}
+                <select value={teamThemeFilter} onChange={e=>setTeamThemeFilter(e.target.value)}
+                  className="bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] rounded-[3px] px-3 py-2 text-[12px] text-[color:var(--ink)] outline-none appearance-none">
+                  <option value="All">All Themes</option>
+                  {[...new Set(teams.map(t=>t.theme).filter(Boolean))].map(th=>(<option key={th} value={th}>{th}</option>))}
+                </select>
+                <select value={teamMentorFilter} onChange={e=>setTeamMentorFilter(e.target.value)}
+                  className="bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] rounded-[3px] px-3 py-2 text-[12px] text-[color:var(--ink)] outline-none appearance-none">
+                  <option value="All">All Mentor Status</option>
+                  <option value="assigned">Mentor Assigned</option>
+                  <option value="unassigned">No Mentor</option>
+                </select>
+                <p className="text-[11px] text-[color:var(--mute-3)] flex-shrink-0">
+                  {(() => {
+                    const q = teamSearchQ.toLowerCase();
+                    return teams.filter(t =>
+                      (!q || [t.name, t.theme, t.leadName].some(v=>v?.toLowerCase().includes(q))) &&
+                      (teamThemeFilter==='All' || t.theme===teamThemeFilter) &&
+                      (teamMentorFilter==='All' || (teamMentorFilter==='assigned'?!!t.mentor:!t.mentor))
+                    ).length;
+                  })()} / {teams.length} teams
+                </p>
+              </div>
+
+              {/* Team cards grid */}
+              <div className="grid grid-cols-1 gap-3">
+                {(() => {
+                  const q = teamSearchQ.toLowerCase();
+                  const filtered = teams.filter(t =>
+                    (!q || [t.name, t.theme, t.leadName, t.subTheme].some(v=>v?.toLowerCase().includes(q))) &&
+                    (teamThemeFilter==='All' || t.theme===teamThemeFilter) &&
+                    (teamMentorFilter==='All' || (teamMentorFilter==='assigned'?!!t.mentor:!t.mentor))
+                  );
+                  if (!filtered.length) return (
+                    <div className="py-12 text-center text-[13px] text-[color:var(--mute-3)]">No teams match your filters.</div>
+                  );
+                  return filtered.map(t => {
+                    const themeCol = THEME_COLOR[t.theme] || { bg:'#f8f8f9', border:'#e2e2e5', text:'#666' };
+                    const mentorUser = (allUsers||[]).find(u=>u.id===t.mentor);
+                    const initStr = (t.name || 'Team').split(' ').filter(Boolean).map(w=>w[0]).join('').slice(0,2).toUpperCase();
+                    const hue = ((t.name || 'Team').charCodeAt(0)*47 + ((t.name || 'Team').charCodeAt(1)||0)*23) % 360;
+                    return (
+                      <div key={t.id} className="bg-white border border-[color:var(--line-2)] hover:border-[color:var(--mute-3)] transition-colors">
+                        <div className="flex items-start gap-4 p-4">
+                          {/* Team avatar */}
+                          <div className="w-10 h-10 rounded-[4px] flex items-center justify-center text-[13px] font-[800] text-white flex-shrink-0"
+                            style={{background:`hsl(${hue},60%,45%)`}}>{initStr}</div>
+
+                          {/* Main info */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap mb-1">
+                              <p className="text-[14px] font-[700] text-[color:var(--ink)]">{t.name}</p>
+                              <span className={`text-[9px] font-[800] uppercase px-2 py-0.5 border ${t.open?'bg-[#dcfce7] text-[#15803d] border-[#bbf7d0]':'bg-[#fee2e2] text-[#dc2626] border-[#fecaca]'}`}>{t.open?'Open':'Full'}</span>
+                            </div>
+                            <p className="text-[12px] text-[color:var(--mute-1)] mb-1.5" style={{...themeCol, display:'inline-block', padding:'1px 7px', border:`1px solid ${themeCol.border}`, background:themeCol.bg, color:themeCol.text}}>{t.theme}</p>
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {(t.members||[]).slice(0,4).map((mid,mi) => {
+                                const mu = (allUsers||[]).find(u=>u.id===mid);
+                                return mu ? (
+                                  <span key={mi} className="inline-flex items-center gap-1 bg-[color:var(--paper)] border border-[color:var(--line-2)] rounded-full px-2 py-0.5 text-[10px] text-[color:var(--mute-1)]">
+                                    <span className="w-3 h-3 rounded-full flex items-center justify-center text-[6px] font-bold text-white" style={{background:`hsl(${((mu.name || 'U').charCodeAt(0)*53)%360},55%,45%)`}}>{(mu.name || 'U')[0]}</span>
+                                    {(mu.name || 'User').split(' ')[0]}
+                                  </span>
+                                ) : null;
+                              })}
+                              {(t.members||[]).length > 4 && <span className="text-[10px] text-[color:var(--mute-3)] py-0.5">+{t.members.length-4} more</span>}
+                            </div>
+                          </div>
+
+                          {/* Mentor assignment + delete */}
+                          <div className="flex-shrink-0 flex flex-col items-end gap-2">
+                            <div className="text-right">
+                              <label className="block text-[9px] text-[color:var(--mute-4)] uppercase tracking-[0.1em] mb-1 font-semibold">Mentor</label>
+                              <select value={t.mentor||''}
+                                onChange={e=>setTeams(p=>p.map(x=>x.id===t.id?{...x,mentor:e.target.value}:x))}
+                                className="bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] rounded-[3px] px-2.5 py-1.5 text-[12px] text-[color:var(--ink)] outline-none appearance-none min-w-[150px]">
+                                <option value="">— No mentor —</option>
+                                {(allUsers||[]).filter(u=>u.role==='mentor').map(m=>(
+                                  <option key={m.id} value={m.id}>{m.name}</option>
+                                ))}
+                              </select>
+                              {mentorUser && (
+                                <div className="flex items-center gap-1 mt-1 justify-end">
+                                  <span className="w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold text-white" style={{background:`hsl(${((mentorUser.name || 'M').charCodeAt(0)*53)%360},55%,45%)`}}>{(mentorUser.name || 'M')[0]}</span>
+                                  <p className="text-[10px] text-[#16a34a] font-semibold">✓ {mentorUser.name || 'Mentor'}</p>
+                                </div>
+                              )}
+                            </div>
+                            <button
+                              onClick={()=>{ if(window.confirm(`Delete team "${t.name}"?`)) { setTeams(p=>p.filter(x=>x.id!==t.id)); toast('Team deleted.','error'); }}}
+                              className="text-[10px] text-[color:var(--mute-4)] hover:text-[#dc2626] transition-colors btn px-2 py-1 border border-transparent hover:border-[#fecaca] hover:bg-[#fff5f5]">
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  });
+                })()}
+              </div>
             </div>
           )}
 
           {/* Users list */}
           {mTab==='users' && (
-            <div className="fade-up overflow-x-auto">
-              <table className="w-full min-w-[480px]">
-                <thead>
-                  <tr className="border-b border-[color:var(--line)]">
-                    {['Name','Email','Dept','Role','Tag'].map((h,i)=>(
-                      <th key={i} className={`py-3 px-4 text-[10px] text-[color:var(--mute-3)] uppercase tracking-[0.1em] font-semibold ${i===0?'text-left':'text-left'}`}>{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {(allUsers||[]).map(u=>{
-                    const tag = getTag(u.dept);
-                    const ts = tag ? TAG_STYLE[tag] : null;
-                    return (
-                      <tr key={u.id} className="border-b border-[#f7f7f8] hover:bg-[color:var(--paper)]">
-                        <td className="py-3 px-4">
-                          <div className="flex items-center gap-2.5">
-                            <div className="w-7 h-7 rounded-full bg-[color:var(--accent)] flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0">{initials(u.name)}</div>
-                            <p className="text-[13px] font-medium text-[color:var(--ink)]">{u.name}</p>
-                          </div>
-                        </td>
-                        <td className="py-3 px-4 text-[12px] text-[color:var(--mute-2)]">{u.email}</td>
-                        <td className="py-3 px-4 text-[12px] text-[color:var(--mute-1)]">{u.dept}</td>
-                        <td className="py-3 px-4">
-                          <span className={`text-[10px] font-[700] uppercase px-2 py-0.5 border ${u.role==='coordinator'?'bg-[#fef9c3] text-[#a16207] border-[#fde68a]':u.role==='mentor'?'bg-[#dbeafe] text-[#1d4ed8] border-[#bfdbfe]':'bg-[color:var(--paper-2)] text-[color:var(--mute-2)] border-[color:var(--line-2)]'}`}>{u.role}</span>
-                        </td>
-                        <td className="py-3 px-4">
-                          {ts && u.role==='participant' && (
-                            <span className="text-[10px] font-[700] uppercase px-2 py-0.5 border" style={{background:ts.bg,borderColor:ts.border,color:ts.text}}>{tag}</span>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+            <div className="fade-up space-y-4">
+              {/* Search + Filters */}
+              <div className="flex flex-wrap gap-3 items-center">
+                <div className="flex-1 min-w-[200px]">
+                  <AnimatedSearchInput value={userSearchQ} onChange={e=>setUserSearchQ(e.target.value)} onClear={()=>setUserSearchQ('')} type="users" />
+                </div>
+                <select value={userDeptFilter} onChange={e=>setUserDeptFilter(e.target.value)}
+                  className="bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] rounded-[3px] px-3 py-2 text-[12px] text-[color:var(--ink)] outline-none appearance-none">
+                  <option value="All">All Departments</option>
+                  {[...new Set((allUsers||[]).map(u=>u.dept).filter(Boolean))].sort().map(d=>(<option key={d} value={d}>{d}</option>))}
+                </select>
+                <select value={userRoleFilter} onChange={e=>setUserRoleFilter(e.target.value)}
+                  className="bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] rounded-[3px] px-3 py-2 text-[12px] text-[color:var(--ink)] outline-none appearance-none">
+                  <option value="All">All Roles</option>
+                  <option value="participant">Participants</option>
+                  <option value="mentor">Mentors</option>
+                  <option value="jury">Jury</option>
+                  <option value="coordinator">Coordinators</option>
+                </select>
+              </div>
+
+              {/* Table */}
+              <div className="overflow-x-auto border border-[color:var(--line)]">
+                <table className="w-full min-w-[520px]">
+                  <thead>
+                    <tr className="border-b border-[color:var(--line)] bg-[color:var(--paper)]">
+                      {['Name','Email','Department','Role','Tag'].map((h,i)=>(
+                        <th key={i} className="py-2.5 px-4 text-[10px] text-[color:var(--mute-3)] uppercase tracking-[0.1em] font-semibold text-left">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(() => {
+                      const q = userSearchQ.toLowerCase();
+                      const filtered = (allUsers||[]).filter(u =>
+                        (!q || [u.name, u.email, u.dept].some(v=>v?.toLowerCase().includes(q))) &&
+                        (userDeptFilter==='All' || u.dept===userDeptFilter) &&
+                        (userRoleFilter==='All' || u.role===userRoleFilter)
+                      );
+                      if (!filtered.length) return (
+                        <tr><td colSpan={5} className="py-10 text-center text-[12px] text-[color:var(--mute-3)]">No users match your filters.</td></tr>
+                      );
+                      return filtered.map(u => {
+                        const tag = getTag(u.dept);
+                        const ts = tag ? TAG_STYLE[tag] : null;
+                        const hue = (u.name.charCodeAt(0)*47 + (u.name.charCodeAt(1)||0)*23) % 360;
+                        return (
+                          <tr key={u.id} className="border-b border-[#f7f7f8] hover:bg-[color:var(--paper)] transition-colors">
+                            <td className="py-3 px-4">
+                              <div className="flex items-center gap-2.5">
+                                <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
+                                  style={{background:`hsl(${hue},60%,45%)`}}>{initials(u.name)}</div>
+                                <p className="text-[13px] font-medium text-[color:var(--ink)]">{u.name}</p>
+                              </div>
+                            </td>
+                            <td className="py-3 px-4 text-[12px] text-[color:var(--mute-2)]">{u.email}</td>
+                            <td className="py-3 px-4 text-[12px] text-[color:var(--mute-1)]">{u.dept}</td>
+                            <td className="py-3 px-4">
+                              <select value={u.role}
+                                onChange={e => { const newRole = e.target.value; setAllUsers(p=>p.map(x=>x.id===u.id?{...x,role:newRole}:x)); toast(`${u.name}'s role updated to ${newRole}.`,'success'); }}
+                                className={`text-[10px] font-[700] uppercase px-2 py-1 border outline-none appearance-none rounded-[2px] cursor-pointer ${
+                                  u.role==='coordinator'?'bg-[#fef9c3] text-[#a16207] border-[#fde68a]':
+                                  u.role==='mentor'?'bg-[#dbeafe] text-[#1d4ed8] border-[#bfdbfe]':
+                                  u.role==='jury'?'bg-[#fef3c7] text-[#b45309] border-[#fde68a]':
+                                  'bg-[color:var(--paper-2)] text-[color:var(--mute-2)] border-[color:var(--line-2)]'}`}>
+                                <option value="participant">participant</option>
+                                <option value="mentor">mentor</option>
+                                <option value="jury">jury</option>
+                                <option value="coordinator">coordinator</option>
+                              </select>
+                            </td>
+                            <td className="py-3 px-4">
+                              {ts && u.role==='participant' && (
+                                <span className="text-[10px] font-[700] uppercase px-2 py-0.5 border" style={{background:ts.bg,borderColor:ts.border,color:ts.text}}>{tag}</span>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      });
+                    })()}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-[11px] text-[color:var(--mute-3)]">
+                {(() => { const q=userSearchQ.toLowerCase(); return (allUsers||[]).filter(u=>(!q||[u.name,u.email,u.dept].some(v=>v?.toLowerCase().includes(q)))&&(userDeptFilter==='All'||u.dept===userDeptFilter)&&(userRoleFilter==='All'||u.role===userRoleFilter)).length; })()} of {(allUsers||[]).length} users shown
+              </p>
             </div>
           )}
 
@@ -7127,19 +7648,24 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
           {/* Team Progress */}
           {mTab==='progress' && (
             <div className="fade-up space-y-4">
-              <div className="flex justify-end">
-                <div className="relative w-full max-w-sm">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--mute-3)] text-[12px]">🔍</span>
-                  <input value={progQ} onChange={e=>{setProgQ(e.target.value); setProgPage(1);}}
-                    placeholder="Search teams..."
-                    className="w-full bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] rounded-[3px] pl-8 pr-3 py-2 text-[13px] text-[color:var(--ink)] placeholder-[color:var(--mute-4)] outline-none transition-colors" />
-                  {progQ && <button onClick={()=>{setProgQ(''); setProgPage(1);}} className="absolute right-3 top-1/2 -translate-y-1/2 text-[color:var(--mute-3)] hover:text-[color:var(--mute-2)] text-[14px]">×</button>}
+              {/* Search + filter chips */}
+              <div className="flex flex-wrap gap-3 items-center">
+                <div className="flex-1 min-w-[200px]">
+                  <AnimatedSearchInput value={progQ} onChange={e=>{setProgQ(e.target.value); setProgPage(1);}} onClear={()=>{setProgQ(''); setProgPage(1);}} type="progress" />
+                </div>
+                <div className="flex gap-1.5 flex-wrap">
+                  {[['All','All'],['100','Complete ✓'],['incomplete','Incomplete'],['git','Missing Git'],['sandbox','Missing Sandbox'],['api','Missing API'],['infosec','Missing InfoSec']].map(([val,label])=>(
+                    <button key={val} onClick={()=>{setProgFilter(val); setProgPage(1);}}
+                      className={`px-3 py-1.5 text-[11px] font-[700] border btn transition-all ${progFilter===val?'bg-[color:var(--ink)] text-white border-[color:var(--ink)]':'bg-white text-[color:var(--mute-2)] border-[color:var(--line-2)] hover:border-[color:var(--mute-3)] hover:text-[color:var(--ink)]'}`}>
+                      {label}
+                    </button>
+                  ))}
                 </div>
               </div>
               <div className="overflow-x-auto border border-[color:var(--line)]">
                 <table className="w-full min-w-[540px]">
                   <thead>
-                    <tr className="border-b border-[color:var(--line)]">
+                    <tr className="border-b border-[color:var(--line)] bg-[color:var(--paper)]">
                       {['Team','Git Repo','Sandbox','API Keys','InfoSec','Done'].map((h,i)=>(
                         <th key={i} className={`py-3 px-4 text-[10px] text-[color:var(--mute-3)] uppercase tracking-[0.1em] font-semibold ${i===0?'text-left':'text-center'}`}>{h}</th>
                       ))}
@@ -7147,7 +7673,19 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
                   </thead>
                   <tbody>
                     {(() => {
-                      const filtered = prog.filter(t=>!progQ||t.name.toLowerCase().includes(progQ.toLowerCase()));
+                      const q = progQ.toLowerCase();
+                      const filtered = prog.filter(t => {
+                        if (q && !t.name.toLowerCase().includes(q)) return false;
+                        const checks = [t.git, t.sandbox, t.api, t.infosec];
+                        const pct = Math.round(checks.filter(Boolean).length / 4 * 100);
+                        if (progFilter==='100') return pct===100;
+                        if (progFilter==='incomplete') return pct<100;
+                        if (progFilter==='git') return !t.git;
+                        if (progFilter==='sandbox') return !t.sandbox;
+                        if (progFilter==='api') return !t.api;
+                        if (progFilter==='infosec') return !t.infosec;
+                        return true;
+                      });
                       const totalPages = Math.max(1, Math.ceil(filtered.length/JUDGE_PAGE_SIZE));
                       const page = Math.min(progPage, totalPages);
                       const slice = filtered.slice((page-1)*JUDGE_PAGE_SIZE, page*JUDGE_PAGE_SIZE);
@@ -7177,7 +7715,19 @@ function AdminView({ user, teams, setTeams, allUsers, problems, setProblems, pub
               </div>
               {/* Pagination */}
               {(() => {
-                const filtered = prog.filter(t=>!progQ||t.name.toLowerCase().includes(progQ.toLowerCase()));
+                const q = progQ.toLowerCase();
+                const filtered = prog.filter(t => {
+                  if (q && !t.name.toLowerCase().includes(q)) return false;
+                  const checks = [t.git, t.sandbox, t.api, t.infosec];
+                  const pct = Math.round(checks.filter(Boolean).length / 4 * 100);
+                  if (progFilter==='100') return pct===100;
+                  if (progFilter==='incomplete') return pct<100;
+                  if (progFilter==='git') return !t.git;
+                  if (progFilter==='sandbox') return !t.sandbox;
+                  if (progFilter==='api') return !t.api;
+                  if (progFilter==='infosec') return !t.infosec;
+                  return true;
+                });
                 const totalPages = Math.max(1, Math.ceil(filtered.length/JUDGE_PAGE_SIZE));
                 if(totalPages <= 1) return null;
                 const page = Math.min(progPage, totalPages);
@@ -7335,6 +7885,7 @@ function EnablementView({ sessions = [], setSessions, user, toast }) {
   const [sessionStatus, setSessionStatus]   = useState('upcoming');
   const [sessionDate, setSessionDate]       = useState('');
   const [sessionTime, setSessionTime]       = useState('');
+  const [sessionMeetLink, setSessionMeetLink] = useState('');
 
   const clearForm = () => {
     setSessionTitle('');
@@ -7343,6 +7894,7 @@ function EnablementView({ sessions = [], setSessions, user, toast }) {
     setSessionStatus('upcoming');
     setSessionDate('');
     setSessionTime('');
+    setSessionMeetLink('');
     setEditingId(null);
   };
 
@@ -7363,7 +7915,8 @@ function EnablementView({ sessions = [], setSessions, user, toast }) {
         track: sessionTrack,
         status: sessionStatus,
         date: sessionDate.trim(),
-        time: nextTime
+        time: nextTime,
+        meetLink: sessionMeetLink.trim()
       } : s));
       toast('Session updated successfully.', 'success');
     } else {
@@ -7378,7 +7931,8 @@ function EnablementView({ sessions = [], setSessions, user, toast }) {
         track: sessionTrack,
         status: sessionStatus,
         date: sessionDate.trim(),
-        time: nextTime
+        time: nextTime,
+        meetLink: sessionMeetLink.trim()
       };
 
       setSessions(prev => [...prev, newSession]);
@@ -7397,6 +7951,7 @@ function EnablementView({ sessions = [], setSessions, user, toast }) {
     setSessionStatus(s.status);
     setSessionDate(s.date);
     setSessionTime(s.time || '');
+    setSessionMeetLink(s.meetLink || '');
     setAdminOpen(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -7541,6 +8096,18 @@ function EnablementView({ sessions = [], setSessions, user, toast }) {
               />
             </div>
 
+            {/* Google Meet Link */}
+            <div className="md:col-span-3 space-y-1">
+              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Google Meet / Resource Link (Optional)</label>
+              <input 
+                type="url" 
+                value={sessionMeetLink}
+                onChange={e => setSessionMeetLink(e.target.value)}
+                className="w-full bg-slate-800 border border-slate-700 focus:border-slate-500 rounded-[8px] px-3.5 py-2.5 text-[13px] text-white placeholder-slate-555 outline-none transition-all"
+                placeholder="e.g., https://meet.google.com/abc-defg-hij"
+              />
+            </div>
+
             {/* Actions */}
             <div className="md:col-span-3 flex justify-end gap-2.5 pt-2 border-t border-slate-800 mt-2">
               <Btn 
@@ -7606,42 +8173,54 @@ function EnablementView({ sessions = [], setSessions, user, toast }) {
           const info=statusInfo(s.status);
           const colors=getSessionColors(s.track);
           return (
-            <div key={s.id} className="rounded-[16px] border border-[color:var(--line-2)] bg-white hover:-translate-y-1.5 hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col overflow-hidden">
+            <div 
+              key={s.id} 
+              className={`rounded-[16px] border bg-white hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden ${
+                s.status === 'live' 
+                  ? 'border-[#FF3F6C] shadow-[0_8px_30px_rgba(255,63,108,0.06)] ring-1 ring-[#FF3F6C]/20' 
+                  : 'border-[color:var(--line-2)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.06)]'
+              }`}
+            >
               {/* Premium Top Bar matching Teams/Ideas */}
               <div 
                 style={{ backgroundColor: colors.bg, color: colors.text }} 
-                className="px-5 py-3.5 flex justify-between items-center font-mono font-bold text-[12px] uppercase tracking-wider rounded-t-[16px]"
+                className="px-5 py-3 flex justify-between items-center font-mono font-bold text-[11px] uppercase tracking-wider rounded-t-[15px]"
               >
                 <span>{s.id}</span>
                 <span>{s.date}</span>
               </div>
 
               {/* Card Body */}
-              <div className="p-6 flex flex-col gap-4 flex-1 rounded-b-[16px] bg-white">
-                <div>
-                  <p className="text-[11px] text-[color:var(--mute-3)] font-semibold uppercase tracking-wider mb-1.5">
-                    by {s.speaker}
-                  </p>
-                  
-                  {/* Title & Status Tag row */}
-                  <div className="flex items-start justify-between gap-2.5">
-                    <h3 className="text-[17px] font-[800] text-[color:var(--ink)] leading-snug flex-1">
-                      {s.title}
-                    </h3>
-                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${info.cls} border border-current/10 flex-shrink-0`}>
-                      {info.label}
-                    </span>
+              <div className="p-6 flex flex-col gap-4 flex-1 bg-white">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8.5 h-8.5 rounded-full bg-slate-50 flex items-center justify-center text-[11px] font-[900] text-[color:var(--accent)] border border-[color:var(--line-2)] flex-shrink-0 shadow-sm">
+                      {(s.speaker || 'Anonymous').split(' ').filter(Boolean).map(n=>n[0]).join('').toUpperCase()}
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[9.5px] text-[color:var(--mute-3)] font-mono font-bold uppercase tracking-wider">Presenter</span>
+                      <span className="text-[13px] font-[850] text-slate-800 leading-tight">{s.speaker}</span>
+                    </div>
                   </div>
+
+                  <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${info.cls} border border-current/10 flex-shrink-0`}>
+                    {s.status === 'live' && <span className="w-1.5 h-1.5 bg-[#dc2626] rounded-full mr-1.5 animate-pulse"></span>}
+                    {info.label}
+                  </span>
                 </div>
 
-                {/* Subtheme */}
-                <p className="text-[12px] text-[color:var(--accent)] font-semibold -mt-2">
-                  {TRACKS[s.track]}
-                </p>
+                <div>
+                  <h3 className="text-[17px] font-[900] text-[color:var(--ink)] leading-snug tracking-tight mb-1">
+                    {s.title}
+                  </h3>
+                  <span className="inline-flex px-2 py-0.5 rounded-[6px] text-[10.5px] font-[800] text-[color:var(--accent)] bg-[color:var(--accent)]/5 uppercase tracking-wide">
+                    {TRACKS[s.track]}
+                  </span>
+                </div>
 
                 {/* 🛠️ Admin Action Pills */}
                 {isAdmin && (
-                  <div className="flex gap-2 justify-end -mt-1 pt-1 animate-fade-in">
+                  <div className="flex gap-2 justify-end pt-1 animate-fade-in border-t border-slate-50 mt-1">
                     <button 
                       onClick={() => handleStartEdit(s)}
                       className="px-3 py-1 border border-[color:var(--line-2)] hover:border-slate-400 hover:bg-slate-50 text-[11px] font-[800] rounded-full text-slate-600 transition-all flex items-center gap-1.5 shadow-sm"
@@ -7658,17 +8237,41 @@ function EnablementView({ sessions = [], setSessions, user, toast }) {
                 )}
 
                 {/* Dashed divider */}
-                <div className="border-t border-dashed border-[color:var(--line-2)]/60 pt-4 mt-auto flex items-center justify-between">
+                <div className="border-t border-dashed border-[color:var(--line-2)]/60 pt-4 mt-auto flex items-center justify-between gap-4">
                   {/* Left Column: Time detail */}
                   <div className="flex flex-col">
                     <span className="text-[11px] text-[color:var(--mute-3)] font-semibold uppercase tracking-wider">Session Time</span>
-                    <span className="text-[14px] font-[900] text-[color:var(--ink)] mt-0.5">{s.time ? s.time : 'Recorded'}</span>
+                    <span className="text-[14px] font-[950] text-[color:var(--ink)] mt-0.5">{s.time ? s.time : 'Recorded'}</span>
                   </div>
 
                   {/* Right Column: CTA */}
-                  <button className="px-5 py-2 bg-black hover:bg-slate-800 text-white rounded-full text-[12px] font-[900] transition-all duration-200 shadow-sm">
-                    {info.btn}
-                  </button>
+                  {s.meetLink ? (
+                    <a 
+                      href={s.meetLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className={`px-5 py-2.5 rounded-full text-[12px] font-[900] transition-all duration-200 shadow-sm inline-flex items-center gap-1.5 ${
+                        s.status === 'live' 
+                          ? 'bg-[#FF3F6C] hover:bg-[#e0355f] text-white' 
+                          : s.status === 'upcoming'
+                            ? 'bg-slate-900 hover:bg-slate-800 text-white'
+                            : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                      }`}
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        {s.status === 'recorded' ? (
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" />
+                        ) : (
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+                        )}
+                      </svg>
+                      {s.status === 'live' ? 'Join Live' : s.status === 'upcoming' ? 'Join Meet' : 'Watch Session'}
+                    </a>
+                  ) : (
+                    <button className="px-5 py-2.5 bg-slate-200 text-slate-400 rounded-full text-[12px] font-[900] transition-all duration-200 shadow-sm cursor-not-allowed" title="No link provided yet">
+                      {info.btn}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

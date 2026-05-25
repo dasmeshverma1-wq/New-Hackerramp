@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920" />
+<title>Myntra Tech Week 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Silkscreen:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-figtree: 'Figtree', system-ui, sans-serif;
+    --font-silkscreen: 'Silkscreen', 'Courier New', monospace;
+    --font-parafina: 'Parafina Trial', 'DM Sans', 'Figtree', sans-serif;
+  }
+  @property --wy  { syntax: '<length>'; initial-value: 0px; inherits: false; }
+  @property --scl { syntax: '<number>'; initial-value: 1;   inherits: false; }
+  html[data-theme="dark"] {
+    --bg: #0a0608;
+    --fg: #ffffff;
+    --fg-muted: #b6b6b6;
+    --fg-dim: #8d8d8d;
+    --surface: #1a1a1a;
+    --surface-2: #2d2d2d;
+    --border: #3a3a3a;
+    --border-2: #5d5d5d;
+    --divider: linear-gradient(to bottom, transparent, #3a3a3a 30%, #3a3a3a 70%, transparent);
+    --desc-grad: linear-gradient(to right, #bbb, #fff);
+    --blob-1: radial-gradient(circle, rgba(255,76,36,0.32) 0%, rgba(255,76,36,0) 65%);
+    --blob-2: radial-gradient(circle, rgba(72,44,101,0.55) 0%, rgba(72,44,101,0) 65%);
+    --logo-invert: 0;
+    --techweek-invert: 1;
+  }
+  html[data-theme="light"] {
+    --bg: #fff5f3;
+    --fg: #0a0608;
+    --fg-muted: #5a5a5a;
+    --fg-dim: #7a7a7a;
+    --surface: #ffffff;
+    --surface-2: #f3f3f3;
+    --border: #e0d6d2;
+    --border-2: #d0c2bc;
+    --divider: linear-gradient(to bottom, transparent, #d0c2bc 30%, #d0c2bc 70%, transparent);
+    --desc-grad: linear-gradient(to right, #5a5a5a, #0a0608);
+    --blob-1: radial-gradient(circle, rgba(255,180,160,0.55) 0%, rgba(255,180,160,0) 65%);
+    --blob-2: radial-gradient(circle, rgba(220,200,255,0.65) 0%, rgba(220,200,255,0) 65%);
+    --logo-invert: 0;
+    --techweek-invert: 0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg); font-family: var(--font-figtree); width: 100%; height: 100%;
+    overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    transition: background 400ms ease;
+  }
+  .stage { width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: background 400ms ease; }
+  .page {
+    position: relative; width: 1920px; height: 1080px; background: var(--bg); flex: none;
+    transform-origin: center center;
+    transition: background 400ms ease;
+    overflow: hidden;
+  }
+
+  /* Background blobs */
+  .blob {
+    position: absolute; pointer-events: none; z-index: 0;
+    transition: background 400ms ease;
+  }
+  .blob-1 { width: 795px; height: 795px; right: -140px; top: -140px; background: var(--blob-1); }
+  .blob-2 { width: 887px; height: 887px; left: -187px; top: 71px; background: var(--blob-2); }
+
+  /* Nav */
+  .nav {
+    position: absolute; top: 28px; left: 50%; transform: translateX(-50%);
+    width: 1776px; display: flex; align-items: center; justify-content: space-between;
+    z-index: 10;
+    animation: navIn 700ms cubic-bezier(.2,.7,.2,1) both;
+  }
+  .nav-left { display: flex; align-items: center; gap: 5px; }
+  .logo-wrap { position: relative; width: 60px; height: 41px; }
+  .logo-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .techweek-img { width: 71px; height: 33px; filter: invert(var(--techweek-invert)); transition: filter 300ms ease; }
+  .nav-right { display: flex; align-items: center; gap: 64px; }
+  .nav-right p { font-size: 15px; color: var(--fg); text-transform: capitalize; letter-spacing: 0.2px; cursor: pointer; transition: opacity 180ms ease, color 300ms ease; }
+  .nav-right p:hover { opacity: 0.7; }
+  .nav-right .home { font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+  .nav-events { text-transform: none !important; }
+  .register-btn {
+    background: var(--surface-2); border: 1px solid var(--border-2); color: var(--fg);
+    font-weight: 700; font-size: 15px; padding: 9px 18px;
+    text-transform: capitalize; white-space: nowrap; cursor: pointer;
+    border-radius: 3px; transition: background 180ms ease, transform 180ms ease, color 300ms ease, border-color 300ms ease;
+  }
+  .register-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
+
+  /* Theme toggle */
+  .theme-toggle {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 200ms ease, transform 200ms ease, color 300ms ease, border-color 300ms ease;
+    margin-left: 10px;
+  }
+  .theme-toggle:hover { transform: translateY(-1px) rotate(-12deg); }
+  .theme-toggle svg { width: 18px; height: 18px; transition: transform 400ms ease; }
+  html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+  html[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+  html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+  html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+
+  /* Hero — centered, 1680 x 583 */
+  .hero {
+    position: absolute; left: 50%; top: 130px; transform: translateX(-50%);
+    width: 1680px; height: 583px;
+    z-index: 2;
+    animation: heroIn 800ms 120ms cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  .tech-word, .week-word {
+    position: absolute; font-family: var(--font-silkscreen); font-weight: 700;
+    font-size: 78px; line-height: 0.8; letter-spacing: -1.56px; color: var(--fg);
+    text-align: left; white-space: nowrap;
+    transition: color 300ms ease;
+    z-index: 1;
+    transform: translateY(calc(var(--base, 0px) + var(--wy)));
+    animation: wave 6s ease-in-out infinite;
+  }
+  .tech-word { left: 0;      top: 340px; --base: -83.5px; animation-delay: -4.5s; }
+  .week-word { left: 1388px; top: 175px; --base:  81.5px; animation-delay:  0s;   }
+
+  /* Decorative icons on tile group — exact Figma positions */
+  .deco {
+    position: absolute; z-index: 4; pointer-events: none;
+    animation: floaty 6s ease-in-out infinite;
+    transform: translate(var(--push-x, 0px), var(--push-y, 0px));
+  }
+  .deco img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .deco-small { width: 121px; height: 121px; left: 222px;  top: 119px; animation-delay: -2s; }
+  .deco-large { width: 236px; height: 236px; left: 1497px; top: 346px; animation-delay: -4s; }
+
+  /* Tiles arc — 15 tiles spread across 1080 wide, shifted 8px left */
+  .tiles {
+    position: absolute; left: 285px; top: 194px;
+    width: 1080px; height: 180px;
+    z-index: 3;
+  }
+  .tile {
+    position: absolute; width: 180px; height: 180px;
+    cursor: pointer; will-change: transform;
+    transform:
+      translateX(var(--push-x, 0px))
+      translateY(calc(var(--base, 0px) + var(--wy) + var(--push-y, 0px)))
+      scale(var(--scl, 1));
+    animation: wave 6s ease-in-out infinite;
+    transition: --scl 320ms cubic-bezier(.2,.8,.2,1), box-shadow 280ms ease;
+  }
+  .tile-inner {
+    position: relative; width: 100%; height: 100%; overflow: hidden;
+    z-index: 2;
+    transition: filter 220ms ease;
+  }
+  .tile-inner img {
+    position: absolute; display: block;
+    pointer-events: none; max-width: none;
+  }
+  .tile-inner p {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    width: 157.68px; line-height: 0.8; text-align: center;
+    font-family: var(--font-parafina); font-weight: 700; font-size: 34.56px;
+  }
+  .tile::before {
+    content: ""; position: absolute; inset: -60px; z-index: 1;
+    background:
+      radial-gradient(closest-side, rgba(255,29,146,0.51) 0%, rgba(255,76,36,0.33) 45%, rgba(255,29,146,0) 75%);
+    opacity: 0; transition: opacity 280ms ease, transform 320ms cubic-bezier(.2,.8,.2,1);
+    filter: blur(28px); pointer-events: none;
+    transform: scale(0.9);
+  }
+  .tile.is-hover {
+    z-index: 9999 !important; --scl: 1.20;
+    box-shadow: 0 18px 50px -8px rgba(255, 29, 146, 0.33);
+  }
+  .tile.is-hover::before { opacity: 1; transform: scale(1.05); }
+  .tile.is-hover .tile-inner { filter: saturate(1.1) brightness(1.04); }
+
+  /* Tile colors */
+  .t-blue { background: #251eff; }
+  .t-purple { background: #482c65; }
+  .t-orange { background: #ff4c24; }
+  .t-pink { background: #f0d0ff; }
+  .t-grey { background: #f3f3f3; }
+  .t-green { background: #ebffd0; }
+  .text-white-soft { color: #f0f0f0; }
+  .text-blue { color: #251eff; }
+  .text-pink-soft { color: #f0d0ff; }
+  .tile .big-ai {
+    font-family: var(--font-silkscreen); font-size: 127.07px;
+    letter-spacing: -2.5414px; top: calc(50% - 62.64px); width: auto;
+  }
+  .tile .big-year {
+    font-family: var(--font-silkscreen); font-size: 109.954px;
+    letter-spacing: -12.095px; line-height: 0.8;
+    top: calc(50% - 97.2px); width: auto;
+  }
+  .tile .innovate {
+    font-size: 47.938px; line-height: 0.8; width: auto;
+    top: calc(50% - 38.7px);
+  }
+
+  /* Wave keyframes — animate the --wy custom prop (not transform) so it composes
+     with the --base offset and --scl hover scale on .tile. */
+  @keyframes wave {
+    0%, 100% { --wy: -102px; }
+    50%      { --wy:  102px; }
+  }
+
+  /* Each tile carries:
+     - left/top: static arc position (kept so unhovered baseline is varied)
+     - --base:   per-tile offset so motion midpoint sits at Frame 44 vertical center
+                 (--base = 7.5 - top, so card centre = frame centre when --wy = 0)
+     - animation-delay: 300ms cascade from t1 (leader) to t16 (trailing) */
+  /* 15 tiles spread evenly across 1080 (step ≈ 64.29 = (1080-180)/14)
+     Animation delays cascade 300ms across 15 tiles → 14 × 300ms = 4.2s spread */
+  .t1  { left:0;        top:90px;   --base: -82.5px;  animation-delay: -4.2s; }
+  .t2  { left:64.29px;  top:130px;  --base: -122.5px; animation-delay: -3.9s; }
+  .t3  { left:128.57px; top:80px;   --base: -72.5px;  animation-delay: -3.6s; }
+  .t4  { left:192.86px; top:30px;   --base: -22.5px;  animation-delay: -3.3s; }
+  .t5  { left:257.14px; top:-10px;  --base:  17.5px;  animation-delay: -3.0s; }
+  .t6  { left:321.43px; top:-60px;  --base:  67.5px;  animation-delay: -2.7s; }
+  .t7  { left:385.71px; top:-110px; --base:  117.5px; animation-delay: -2.4s; }
+  .t8  { left:450px;    top:-60px;  --base:  67.5px;  animation-delay: -2.1s; }
+  .t9  { left:514.29px; top:-10px;  --base:  17.5px;  animation-delay: -1.8s; }
+  .t10 { left:578.57px; top:40px;   --base: -32.5px;  animation-delay: -1.5s; }
+  .t11 { left:642.86px; top:100px;  --base: -92.5px;  animation-delay: -1.2s; }
+  .t12 { left:707.14px; top:50px;   --base: -42.5px;  animation-delay: -0.9s; }
+  .t13 { left:771.43px; top:0;      --base:   7.5px;  animation-delay: -0.6s; }
+  .t14 { left:835.71px; top:-50px;  --base:  57.5px;  animation-delay: -0.3s; }
+  .t15 { left:900px;    top:-110px; --base:  117.5px; animation-delay:  0s;   }
+
+  /* 15 tiles — t8 (center) on top, fanning out symmetrically */
+  .t1, .t15 { z-index: 1; }
+  .t2, .t14 { z-index: 2; }
+  .t3, .t13 { z-index: 3; }
+  .t4, .t12 { z-index: 4; }
+  .t5, .t11 { z-index: 5; }
+  .t6, .t10 { z-index: 6; }
+  .t7, .t9  { z-index: 7; }
+  .t8       { z-index: 8; }
+
+  /* Lower section */
+  .lower {
+    position: absolute; left: 132px; top: 740px;
+    display: flex; gap: 200px; align-items: flex-end; justify-content: flex-start;
+    width: 1656px;
+    z-index: 4;
+    animation: lowerIn 800ms 260ms cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  .left-col { display: flex; flex-direction: column; gap: 22px; align-items: flex-start; width: 720px; }
+
+  .reg-pill {
+    height: 38px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 33px; display: inline-flex; align-items: center; justify-content: center;
+    gap: 10px; padding: 6px 16px;
+    transition: background 300ms ease, border-color 300ms ease;
+  }
+  .reg-pill img { width: 16px; height: 16px; }
+  .reg-pill p { color: var(--fg); font-size: 15px; white-space: nowrap; transition: color 300ms ease; }
+  .reg-pill .bold { font-weight: 700; }
+  .dot-wrap { position: relative; width: 10px; height: 10px; flex-shrink: 0; }
+  .dot-core {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: #ff4c24;
+  }
+  .dot-ring {
+    position: absolute; inset: -3px; border-radius: 50%;
+    border: 1.5px solid rgba(255, 76, 36, 0.5);
+    animation: dot-pulse 2s ease-out infinite;
+  }
+  .dot-ring-2 {
+    position: absolute; inset: -6px; border-radius: 50%;
+    border: 1px solid rgba(255, 76, 36, 0.25);
+    animation: dot-pulse 2s ease-out 0.4s infinite;
+  }
+  @keyframes dot-pulse {
+    0%   { transform: scale(0.7); opacity: 0.9; }
+    70%  { transform: scale(1);   opacity: 0; }
+    100% { transform: scale(1);   opacity: 0; }
+  }
+
+  .desc {
+    width: 660px; font-size: 19px; line-height: 1.55;
+    font-family: var(--font-figtree); font-weight: 400;
+    background: var(--desc-grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  .btn-row { display: flex; gap: 14px; align-items: center; margin-top: 4px; }
+  .btn {
+    padding: 16px 26px; border-radius: 4px; font-size: 16px; font-weight: 700;
+    color: #fff; white-space: nowrap; cursor: pointer; border: none;
+    font-family: var(--font-figtree);
+    transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  }
+  .btn-primary {
+    background: linear-gradient(95deg, #ff4c24 0%, #ff1d92 100%);
+    box-shadow: 0 8px 26px -8px rgba(255,29,146,0.55);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px -8px rgba(255,29,146,0.75); }
+  .btn-secondary {
+    background: var(--surface); border: 1px solid var(--border); color: var(--fg);
+    transition: background 200ms ease, transform 180ms ease, color 300ms ease, border-color 300ms ease;
+  }
+  .btn-secondary:hover { filter: brightness(1.08); transform: translateY(-2px); }
+
+  /* Countdown */
+  .right-col { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+  .finale-label { color: var(--fg-dim); font-size: 14px; letter-spacing: 2px; font-weight: 500; transition: color 300ms ease; }
+  .counter { display: flex; gap: 28px; align-items: center; }
+  .unit { display: flex; flex-direction: column; gap: 8px; align-items: center; min-width: 70px; }
+  .unit .num {
+    font-family: var(--font-parafina);
+    font-size: 52px; color: var(--fg); font-weight: 500; line-height: 1;
+    font-variant-numeric: tabular-nums;
+    transition: opacity 200ms ease, color 300ms ease;
+  }
+  .unit .label { font-size: 12px; color: var(--fg-dim); letter-spacing: 1.5px; font-weight: 500; transition: color 300ms ease; }
+  .divider { width: 1px; height: 64px; background: var(--divider); transition: background 300ms ease; }
+
+  /* Animations */
+  @keyframes heroIn { from { opacity: 0; transform: translate(-50%, 16px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  @keyframes lowerIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes navIn { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+  }
+  .tick { animation: pop 220ms ease; }
+  @keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.08); } 100% { transform: scale(1); } }
+</style>
+</head>
+<body>
+<div class="stage"><div class="page">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <!-- Nav -->
+  <div class="nav">
+    <div class="nav-left">
+      <div class="logo-wrap">
+        <img src="images/group.svg" alt="">
+        <img src="images/logo1.svg" alt="">
+        <img src="images/logo2.svg" alt="">
+        <img src="images/logo3.svg" alt="">
+        <img src="images/logo4.svg" alt="">
+        <img src="images/logo5.svg" alt="">
+      </div>
+      <img class="techweek-img" src="images/techweek.svg" alt="Tech Week">
+    </div>
+    <div class="nav-right">
+      <p class="home">Home</p>
+      <p>marketplace</p>
+      <p>funZone</p>
+      <p class="nav-events">Events</p>
+      <p class="nav-events">Hall of Fame</p>
+      <div class="register-btn">register →</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <p class="tech-word">TECH</p>
+    <p class="week-word">WEEK</p>
+
+    <div class="deco deco-small"><img src="images/deco-small.png" alt=""></div>
+    <div class="deco deco-large"><img src="images/deco-large.png" alt=""></div>
+
+    <div class="tiles" id="tiles">
+      <div class="tile t1"><div class="tile-inner t-blue"><p class="text-white-soft" style="top:48.96px">Growth &amp; conversion hacks</p></div></div>
+      <div class="tile t2"><div class="tile-inner t-blue"><img src="images/dscf5464.png" style="width:451.27px;height:197.1px;left:-167.4px;top:-24.3px;object-fit:cover" alt=""></div></div>
+      <div class="tile t3"><div class="tile-inner t-purple"><p class="big-ai text-pink-soft">AI</p></div></div>
+      <div class="tile t4"><div class="tile-inner t-orange"><img src="images/unsplash-lrl.png" style="width:167.4px;height:249.3px;left:0;top:-20.7px;object-fit:cover" alt=""></div></div>
+      <div class="tile t5"><div class="tile-inner t-pink"><img src="images/gemini.png" style="width:196.896px;height:153.9px;left:-8.1px;top:12.6px;object-fit:cover;object-position:bottom;box-shadow:0 48.6px 129.6px rgba(0,0,0,0.2)" alt=""></div></div>
+      <div class="tile t6"><div class="tile-inner t-grey"><p class="text-blue" style="top:35.28px">Business impact, tech readiness, innovation</p></div></div>
+      <div class="tile t7"><div class="tile-inner t-blue"><img src="images/dscf5464.png" style="width:451.27px;height:197.1px;left:-11.7px;top:-24.3px;object-fit:cover" alt=""></div></div>
+      <div class="tile t8"><div class="tile-inner t-orange"><p class="big-year text-pink-soft">20<br>26</p></div></div>
+      <div class="tile t9"><div class="tile-inner t-purple"><p class="innovate text-pink-soft">Innovate<br>to Lead</p></div></div>
+      <div class="tile t10"><div class="tile-inner t-blue"><img src="images/unsplash-mpk.png" style="width:391.5px;height:261.9px;left:-8px;top:-24.2px;object-fit:cover" alt=""></div></div>
+      <div class="tile t11"><div class="tile-inner t-grey"><p class="text-blue" style="top:35.28px">Business impact, tech readiness, innovation</p></div></div>
+      <div class="tile t12"><div class="tile-inner t-green"><p class="text-blue" style="top:35.28px">Business impact, tech readiness, innovation</p></div></div>
+      <div class="tile t13"><div class="tile-inner t-grey"><p class="text-blue" style="top:35.28px">Business impact, tech readiness, innovation</p></div></div>
+      <div class="tile t14"><div class="tile-inner t-grey"><p class="text-blue" style="top:35.28px">Business impact, tech readiness, innovation</p></div></div>
+      <div class="tile t15"><div class="tile-inner t-grey"><p class="text-blue" style="top:35.28px">Business impact, tech readiness, innovation</p></div></div>
+    </div>
+  </div>
+
+  <!-- Lower -->
+  <div class="lower">
+    <div class="left-col">
+      <div class="reg-pill">
+        <div class="dot-wrap">
+          <div class="dot-ring-2"></div>
+          <div class="dot-ring"></div>
+          <div class="dot-core"></div>
+        </div>
+        <p><span>Registration starts </span><span class="bold">July 17</span></p>
+      </div>
+      <p class="desc">A cross-functional hackathon for engineers, designers, product, business, and operations. Pick a real problem from the frontline. Build it. Pitch it. Ship it within two weeks. Get rewarded.</p>
+      <div class="btn-row">
+        <button class="btn btn-primary">Register Your Team →</button>
+        <button class="btn btn-secondary">Explore IdeaBazaar</button>
+      </div>
+    </div>
+    <div class="right-col">
+      <p class="finale-label">GRAND FINALE BEGINS IN</p>
+      <div class="counter">
+        <div class="unit"><p class="num" id="days">56</p><p class="label">DAYS</p></div>
+        <div class="divider"></div>
+        <div class="unit"><p class="num" id="hours">23</p><p class="label">HOURS</p></div>
+        <div class="divider"></div>
+        <div class="unit"><p class="num" id="mins">29</p><p class="label">MIN</p></div>
+        <div class="divider"></div>
+        <div class="unit"><p class="num" id="secs">56</p><p class="label">SEC</p></div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<script>
+  function fit() {
+    const page = document.querySelector('.page');
+    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    page.style.transform = 'scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+
+  // Theme toggle
+  const html = document.documentElement;
+  const saved = localStorage.getItem('theme');
+  if (saved) html.setAttribute('data-theme', saved);
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+
+  // Tile hover — purely CSS-driven, so unhovered tiles return to their
+  // natural z-index from the .tN rules (center t8 on top, fanning outward).
+  document.querySelectorAll('.tile').forEach(tile => {
+    tile.addEventListener('pointerenter', () => tile.classList.add('is-hover'));
+    tile.addEventListener('pointerleave', () => tile.classList.remove('is-hover'));
+  });
+
+  // Proximity push — tiles and decos mutually repel when they get close.
+  // Each frame: tiles are pushed away from decos (existing), and decos are
+  // pushed away from tiles (new). Both use the same damped lerp so motion
+  // feels organic and decays smoothly when separation increases.
+  (function () {
+    const decos = [...document.querySelectorAll('.deco')];
+    const tiles = [...document.querySelectorAll('.tile')];
+    const prev = new WeakMap();
+    const DAMP = 0.18;
+    const MAX_PUSH = 70;
+    const DECO_MAX_PUSH = 50;
+
+    function tick() {
+      const decoRects = decos.map(d => {
+        const r = d.getBoundingClientRect();
+        return { cx: r.left + r.width / 2, cy: r.top + r.height / 2, rx: r.width / 2, ry: r.height / 2 };
+      });
+      const tileRects = tiles.map(t => {
+        const r = t.getBoundingClientRect();
+        return { cx: r.left + r.width / 2, cy: r.top + r.height / 2, rx: r.width / 2, ry: r.height / 2 };
+      });
+
+      // Tiles pushed away from decos
+      tiles.forEach((tile, i) => {
+        const tc = tileRects[i];
+        let tx = 0, ty = 0;
+        for (const d of decoRects) {
+          const dx = tc.cx - d.cx;
+          const dy = tc.cy - d.cy;
+          const dist = Math.hypot(dx, dy);
+          const minDist = Math.hypot(tc.rx + d.rx, tc.ry + d.ry) * 0.6 + 20;
+          if (dist < minDist && dist > 0.5) {
+            const force = Math.min((minDist - dist) / minDist, 0.85);
+            const f = force * MAX_PUSH;
+            tx += (dx / dist) * f;
+            ty += (dy / dist) * f;
+          }
+        }
+        const p = prev.get(tile) || { x: 0, y: 0 };
+        const nx = p.x + (tx - p.x) * DAMP;
+        const ny = p.y + (ty - p.y) * DAMP;
+        prev.set(tile, { x: nx, y: ny });
+        tile.style.setProperty('--push-x', nx.toFixed(2) + 'px');
+        tile.style.setProperty('--push-y', ny.toFixed(2) + 'px');
+      });
+
+      // Decos pushed away from tiles (inverse force)
+      decos.forEach((deco, i) => {
+        const dc = decoRects[i];
+        let tx = 0, ty = 0;
+        for (const tc of tileRects) {
+          const dx = dc.cx - tc.cx;
+          const dy = dc.cy - tc.cy;
+          const dist = Math.hypot(dx, dy);
+          const minDist = Math.hypot(dc.rx + tc.rx, dc.ry + tc.ry) * 0.6 + 20;
+          if (dist < minDist && dist > 0.5) {
+            const force = Math.min((minDist - dist) / minDist, 0.85);
+            const f = force * DECO_MAX_PUSH;
+            tx += (dx / dist) * f;
+            ty += (dy / dist) * f;
+          }
+        }
+        const p = prev.get(deco) || { x: 0, y: 0 };
+        const nx = p.x + (tx - p.x) * DAMP;
+        const ny = p.y + (ty - p.y) * DAMP;
+        prev.set(deco, { x: nx, y: ny });
+        deco.style.setProperty('--push-x', nx.toFixed(2) + 'px');
+        deco.style.setProperty('--push-y', ny.toFixed(2) + 'px');
+      });
+
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+
+  // Countdown
+  const finale = new Date(Date.now() + (56 * 86400 + 23 * 3600 + 29 * 60 + 56) * 1000);
+  const pad = n => String(n).padStart(2, '0');
+  function tick() {
+    const diff = Math.max(0, finale - new Date());
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const update = (id, val) => {
+      const el = document.getElementById(id);
+      const v = pad(val);
+      if (el.textContent !== v) {
+        el.textContent = v;
+        el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick');
+      }
+    };
+    update('days', d); update('hours', h); update('mins', m); update('secs', s);
+  }
+  tick();
+  setInterval(tick, 1000);
+</script>
+</body>
+</html>

@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Myntra Tech Week 2026 — Interactive User Flows Map</title>
-  <!-- Google Fonts -->
+  <title>Myntra Tech Week 2026 — Interactive User Flows & Capabilities Map</title>
+  
+  <!-- Google Fonts: Inter Tight, JetBrains Mono, Silkscreen, Figtree, DM Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Silkscreen:wght@400;700&family=Figtree:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- React CDN -->
@@ -18,11 +20,27 @@
   
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Outfit', 'sans-serif'],
+            sans: ['Inter Tight', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+            serif: ['Parafina Trial', 'DM Sans', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace'],
+          },
+          fontSize: {
+            'xxs': '10px',
+            'xs': '11px',
+            'sm': '13px',
+            'base': '15px',
+            'lg': '18px',
+            'xl': '21px',
+            '2xl': '25px',
+            '3xl': '30px',
+            '4xl': '38px',
+            '5xl': '46px',
+            '6xl': '58px',
+            '7xl': '72px',
           }
         }
       }
@@ -30,227 +48,502 @@
   </script>
 
   <style>
+    /* ── PARAFINA TRIAL @font-face ── */
+    @font-face { font-family: 'Parafina Trial'; src: url('fonts/ParafinaTrial-Thin.otf') format('opentype'); font-weight: 100; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Parafina Trial'; src: url('fonts/ParafinaTrial-Light.otf') format('opentype'); font-weight: 300; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Parafina Trial'; src: url('fonts/ParafinaTrial-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Parafina Trial'; src: url('fonts/ParafinaTrial-MediumS.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Parafina Trial'; src: url('fonts/ParafinaTrial-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Parafina Trial'; src: url('fonts/ParafinaTrial-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
+
+    :root {
+      /* Brand Editorial Colors mapped from website design */
+      --ink: #0A0A0A;
+      --ink-2: #1A1A1A;
+      --ink-3: #2A2A2A;
+      
+      --paper: #FAFAF7;
+      --paper-2: #F2EFE7;
+      --paper-3: #E8E4D6;
+      --white: #FFFFFF;
+      
+      --mute-1: #525252;
+      --mute-2: #737373;
+      --mute-3: #A3A3A3;
+      --mute-4: #D4D4D4;
+      
+      --line: rgba(10, 10, 10, 0.08);
+      --line-2: rgba(10, 10, 10, 0.12);
+      --line-3: rgba(10, 10, 10, 0.20);
+      
+      --accent: #FF3F6C;
+      --accent-dim: #E0345C;
+      --accent-tint: #FFE8EE;
+      --accent-deep: #9F1239;
+      
+      --c-purple: #8B5CF6; --c-purple-tint: #EDE9FE; --c-purple-deep: #5B21B6;
+      --c-blue: #3B82F6; --c-blue-tint: #DBEAFE; --c-blue-deep: #1E40AF;
+      --c-cyan: #06B6D4; --c-cyan-tint: #CFFAFE; --c-cyan-deep: #0E7490;
+      --c-teal: #0D9488; --c-teal-tint: #CCFBF1; --c-teal-deep: #115E59;
+      --c-emerald: #10B981; --c-emerald-tint: #D1FAE5; --c-emerald-deep: #065F46;
+      --c-amber: #F59E0B; --c-amber-tint: #FEF3C7; --c-amber-deep: #92400E;
+      --c-orange: #FB923C; --c-orange-tint: #FFEDD5; --c-orange-deep: #9A3412;
+      --c-rose: #F43F5E; --c-rose-tint: #FFE4E6; --c-rose-deep: #9F1239;
+      --c-fuchsia: #D946EF; --c-fuchsia-tint: #FAE8FF; --c-fuchsia-deep: #86198F;
+      --c-indigo: #6366F1; --c-indigo-tint: #E0E7FF; --c-indigo-deep: #3730A3;
+      --c-coral: #FB7185; --c-coral-tint: #FFE4E6; --c-coral-deep: #9F1239;
+    }
+
     body {
-      background-color: #050507;
-      color: #f4f4f7;
+      background-color: var(--paper);
+      color: var(--ink);
       overflow-x: hidden;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
-    /* Glow Effects */
-    .glow-participant {
-      box-shadow: 0 0 25px -5px rgba(255, 63, 108, 0.15);
+
+    /* Dark Theme Variables Override */
+    body.theme-dark {
+      --ink: #FAFAF7;
+      --ink-2: #F2EFE7;
+      --ink-3: #E8E4D6;
+      
+      --paper: #0A0A0A;
+      --paper-2: #141414;
+      --paper-3: #222222;
+      --white: #181818;
+      
+      --mute-1: #A3A3A3;
+      --mute-2: #8D8D8D;
+      --mute-3: #5C5C5C;
+      --mute-4: #3A3A3A;
+      
+      --line: rgba(255, 255, 255, 0.08);
+      --line-2: rgba(255, 255, 255, 0.12);
+      --line-3: rgba(255, 255, 255, 0.20);
+      
+      --accent-tint: rgba(255, 63, 108, 0.15);
     }
-    .glow-coordinator {
-      box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.15);
+    
+    /* Global classes matching index.html */
+    .h-display {
+      font-family: 'Parafina Trial', 'DM Sans', sans-serif !important;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 0.96;
     }
-    .glow-mentor {
-      box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.15);
+    .num-display {
+      font-family: 'Parafina Trial', 'DM Sans', sans-serif !important;
+      font-variant-numeric: tabular-nums;
     }
-    /* Animated flow line dash */
-    @keyframes flowDash {
-      to {
-        stroke-dashoffset: -40;
-      }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace !important;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
-    .flow-line-active {
-      stroke-dasharray: 8, 4;
-      animation: flowDash 1.2s linear infinite;
-    }
-    /* Grid backdrop */
+
+    /* Premium Dotted Surface */
     .grid-bg {
       background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 32px 32px;
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 28px 28px;
     }
-    /* Scrollbar */
-    ::-webkit-scrollbar {
+    
+    /* Main website buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 9px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      font-family: 'Inter Tight', sans-serif !important;
+    }
+    .btn-primary { background: var(--ink); color: var(--paper); }
+    .btn-primary:hover { background: var(--ink-3); }
+    .btn-accent { background: var(--accent); color: white; }
+    .btn-accent:hover { background: var(--accent-dim); }
+    .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
+    .btn-ghost:hover { background: var(--paper-2); border-color: var(--line-3); }
+    .btn-white { background: var(--white); color: var(--ink); border-color: var(--line-2); }
+    .btn-white:hover { background: var(--paper-2); }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+    .btn-xs { padding: 4px 8px; font-size: 11px; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Main website cards */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+    .card-hover:hover {
+      border-color: var(--line-3);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px -12px rgba(10,10,10,0.10);
+    }
+    
+    /* Main website chips */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--mute-1);
+      background: var(--paper-2);
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .chip-ink { background: var(--ink); color: var(--white); }
+    .chip-accent { background: var(--accent); color: white; }
+    .chip-purple { background: var(--c-purple-tint); color: var(--c-purple-deep); }
+    .chip-blue { background: var(--c-blue-tint); color: var(--c-blue-deep); }
+    .chip-cyan { background: var(--c-cyan-tint); color: var(--c-cyan-deep); }
+    .chip-teal { background: var(--c-teal-tint); color: var(--c-teal-deep); }
+    .chip-emerald { background: var(--c-emerald-tint); color: var(--c-emerald-deep); }
+    .chip-amber { background: var(--c-amber-tint); color: var(--c-amber-deep); }
+    .chip-orange { background: var(--c-orange-tint); color: var(--c-orange-deep); }
+    .chip-rose { background: var(--c-rose-tint); color: var(--c-rose-deep); }
+    .chip-fuchsia { background: var(--c-fuchsia-tint); color: var(--c-fuchsia-deep); }
+    .chip-dark { background: var(--paper-3); color: var(--ink); }
+
+    .dept-chip {
+      display: inline-flex;
+      padding: 2px 8px;
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      border: 1px solid var(--line-2);
+      background: var(--paper);
+      color: var(--mute-1);
+    }
+
+    /* Main website input elements */
+    .input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--line-2);
+      background: var(--white);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--ink);
+      transition: all 0.15s;
+      letter-spacing: -0.005em;
+    }
+    .input:focus {
+      outline: none;
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(10,10,10,0.06);
+    }
+    .input::placeholder { color: var(--mute-3); }
+
+    /* Pill-style active / inactive navigations */
+    .nav-active {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent) !important;
+      background: var(--accent-tint) !important;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      transform: scale(1.02);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-inactive {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--mute-1) !important;
+      background: transparent !important;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-inactive:hover {
+      color: var(--ink) !important;
+      background: var(--paper-2) !important;
+      transform: scale(1.02);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3.5px 10px;
+      border: 1px solid var(--line-2);
+      background: var(--white);
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+    .dot {
       width: 6px;
       height: 6px;
+      border-radius: 999px;
+      background: currentColor;
+      animation: pulse-dot 1.8s infinite;
     }
-    ::-webkit-scrollbar-track {
-      background: #09090b;
+
+    /* Desktop Zoom Scaling (Scales up layout & typography by 15% on screen widths >= 1200px) */
+    @media (min-width: 1200px) {
+      body {
+        zoom: 1.15;
+      }
     }
-    ::-webkit-scrollbar-thumb {
-      background: #27272a;
-      border-radius: 99px;
+    
+    /* High-Fidelity Glow Effects */
+    .glow-participant { box-shadow: 0 12px 30px -10px rgba(255, 63, 108, 0.18); }
+    .glow-coordinator { box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.18); }
+    .glow-mentor { box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.18); }
+    .glow-jury { box-shadow: 0 12px 30px -10px rgba(245, 158, 11, 0.18); }
+    
+    /* Flow paths stroke dash animations */
+    @keyframes flowDash { to { stroke-dashoffset: -32; } }
+    .flow-line-active {
+      stroke-dasharray: 8, 4;
+      animation: flowDash 0.8s linear infinite;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #3f3f46;
+    
+    .card-transition {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    /* Wave float keyframes for cards collage simulation */
+    @keyframes bobWave {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(-0.5deg); }
+    }
+    .sim-collage-card {
+      animation: bobWave 8s ease-in-out infinite;
     }
   </style>
 </head>
-<body>
-  <div id="root"></div>
+<body class="grid-bg min-h-screen flex flex-col">
+  <div id="root" class="flex flex-col flex-1"></div>
 
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
-    // Mind Map Data Structure
+    // Comprehensive Mind Map Data Structure containing rich capabilities for all roles
     const FLOW_DATA = {
       participant: {
-        title: "Participant Journey Map",
+        title: "Participant Journey & Active Workspace",
         color: "from-[#FF3F6C] to-[#E0345C]",
         textColor: "text-[#FF3F6C]",
         accentBg: "bg-[#FF3F6C]/10",
         accentBorder: "border-[#FF3F6C]/30",
-        description: "Focuses on building, joining teams, ideation bazaar, and fun zone engagement.",
+        glowClass: "glow-participant",
+        description: "Enables visitors to authenticate, discover cross-departmental partners, pitch concepts, configure active squads, and take live Trivia quizzes.",
         columns: [
           {
-            title: "1. Entry & Auth",
+            title: "1. Entry & Profiling",
             nodes: [
-              { id: "p-start", type: "entry", label: "Visitor Entry", desc: "Arrives on portal as guest" },
-              { id: "p-auth", type: "action", label: "SSO / SignUp", desc: "Selects persona (Hacker / Hustler / Designer)" }
+              { id: "p-start", type: "entry", label: "Visitor Landing", desc: "Accesses portal. System checks screen size and applies 1.15x optimal scale." },
+              { id: "p-auth", type: "action", label: "Persona Select SSO", desc: "Selects Hacker / Hustler / Designer. Simulates instant profiles." }
             ]
           },
           {
-            title: "2. Landing Hub Decision",
+            title: "2. Idea Bazaar & Wizard",
             nodes: [
-              { id: "p-decision", type: "decision", label: "Has a Team?", desc: "Platform checks team membership" }
+              { id: "p-bazaar", type: "screen", label: "Idea Discovery", desc: "Upvote community ideas, check details, or claim topics." },
+              { id: "p-create-team", type: "interactive", label: "Unified 3-Step Wizard", desc: "Launches team creation form with quick demo autofills." }
             ]
           },
           {
-            title: "3. Active Workflows",
+            title: "3. Active Workspace Controls",
             nodes: [
-              { id: "p-no-team", type: "action", label: "Explore Teams / Ideas", desc: "Browse open slots or Bazaar" },
-              { id: "p-create-team", type: "action", label: "Create Team Wizard", desc: "Pitches name, theme & abstract" },
-              { id: "p-my-team", type: "screen", label: "'My Team' Dashboard", desc: "Primary base for active squads" },
-              { id: "p-engagement", type: "action", label: "Fun Zone & Learn", desc: "Quizzes, webinars & memes" }
+              { id: "p-my-team", type: "screen", label: "'My Team' Workspace", desc: "Central workspace hub to adjust pitch, GPU sandboxes, and recruitment." },
+              { id: "p-engagement", type: "interactive", label: "Play Arena & Quiz", desc: "Earn points in timed quizzes, webinar tracks, and meme wall reactions." }
             ]
           },
           {
-            title: "4. Execution & Final Outcomes",
+            title: "4. Leaderboard Sync",
             nodes: [
-              { id: "p-join-request", type: "outcome", label: "Request to Join Team", desc: "Bypasses departmental rules" },
-              { id: "p-team-ready", type: "outcome", label: "Squad Formed", desc: "Requires Hacker + Hustler" },
-              { id: "p-eval-track", type: "outcome", label: "Track Jury Grading", desc: "Real-time scores & progress tracker" }
+              { id: "p-mkt-sync", type: "outcome", label: "Marketplace Live Sync", desc: "Single-member teams instantly auto-publish as 'Open for Recruits'." },
+              { id: "p-eval-track", type: "outcome", label: "Jury Leaderboard", desc: "Tracks real-time scoring breakdowns, weights, and standing positions." }
             ]
           }
         ],
         connections: [
           { from: "p-start", to: "p-auth" },
-          { from: "p-auth", to: "p-decision" },
-          
-          { from: "p-decision", to: "p-no-team", label: "No" },
-          { from: "p-decision", to: "p-my-team", label: "Yes" },
-          
-          { from: "p-no-team", to: "p-join-request" },
-          { from: "p-no-team", to: "p-create-team" },
-          
-          { from: "p-create-team", to: "p-team-ready" },
-          { from: "p-team-ready", to: "p-my-team" },
-          
-          { from: "p-my-team", to: "p-eval-track" },
-          { from: "p-my-team", to: "p-engagement" }
+          { from: "p-auth", to: "p-bazaar" },
+          { from: "p-bazaar", to: "p-create-team" },
+          { from: "p-create-team", to: "p-my-team" },
+          { from: "p-my-team", to: "p-engagement" },
+          { from: "p-my-team", to: "p-mkt-sync" },
+          { from: "p-mkt-sync", to: "p-eval-track" }
         ]
       },
       coordinator: {
-        title: "Coordinator & Admin Journey Map",
+        title: "Coordinator Journey & Executive Panel",
         color: "from-[#8B5CF6] to-[#6D28D9]",
         textColor: "text-[#8B5CF6]",
         accentBg: "bg-[#8B5CF6]/10",
         accentBorder: "border-[#8B5CF6]/30",
-        description: "Responsible for moderation, team compliance checks, session management, and evaluations.",
+        glowClass: "glow-coordinator",
+        description: "Empowers event organizers to moderate topics, toggle homepage configurations, manage live webinars (CRUD), and evaluate submissions.",
         columns: [
           {
-            title: "1. Entry & Auth",
+            title: "1. Console SSO Gate",
             nodes: [
-              { id: "c-start", type: "entry", label: "Coordinator Login", desc: "Logs in with coordinator tier (e.g. Rohit Kumar)" },
-              { id: "c-admin", type: "screen", label: "Admin Console", desc: "Accesses exclusive admin route" }
+              { id: "c-start", type: "entry", label: "Coordinator Gate", desc: "Logs in with high-tier security profile (e.g., Rohit Kumar)." },
+              { id: "c-admin", type: "screen", label: "Event Control Console", desc: "Launches the central control panel for layout and state settings." }
             ]
           },
           {
-            title: "2. Operations Router",
+            title: "2. Hero Layout & CRUD",
             nodes: [
-              { id: "c-bazaar", type: "action", label: "Bazaar Moderation", desc: "Review user-submitted problems" },
-              { id: "c-teams", type: "action", label: "Live Teams Track", desc: "Monitor cross-department compliance" },
-              { id: "c-jury", type: "action", label: "Jury Panel Assign", desc: "Manage R1/R2/R3 evaluator metrics" }
+              { id: "c-hero-toggle", type: "interactive", label: "Hero Version Switch", desc: "Toggles collage vs immersive video with localStorage persistence." },
+              { id: "c-crud-webinar", type: "interactive", label: "Webinar CRUD Manager", desc: "Add, Edit, and Delete live webinar track listings in real time." }
             ]
           },
           {
-            title: "3. Evaluation & Decisions",
+            title: "3. Verify Submissions",
             nodes: [
-              { id: "c-moder-dec", type: "decision", label: "Approve Idea?", desc: "Check alignment with 11 core themes" },
-              { id: "c-score-modal", type: "action", label: "Scoring Modal Interface", desc: "Rates 5 criteria points (1 to 5)" }
+              { id: "c-moder-dec", type: "decision", label: "Bazaar Verification", desc: "Validate that user submissions align with core category themes." },
+              { id: "c-score-modal", type: "interactive", label: "Jury Scoring Slider", desc: "Rate teams using direct interactive criteria grading sliders." }
             ]
           },
           {
-            title: "4. Outputs & Publishing",
+            title: "4. Live Publishing",
             nodes: [
-              { id: "c-publish-idea", type: "outcome", label: "Publish to Bazaar", desc: "Available for squads to claim" },
-              { id: "c-score-draft", type: "outcome", label: "Save Draft", desc: "Kept as work-in-progress (amber badge)" },
-              { id: "c-score-final", type: "outcome", label: "Submit Score", desc: "Locks evaluation (green checkmark)" },
-              { id: "c-publish-awards", type: "outcome", label: "Publish Standings", desc: "Reveal winners live on leaderboard" }
+              { id: "c-publish-idea", type: "outcome", label: "Bazaar Broadcast", desc: "Publish approved items instantly to the public live marketplace." },
+              { id: "c-score-final", type: "outcome", label: "Standings Broadcast", desc: "Post draft or final scores directly to lock leaderboard positions." }
             ]
           }
         ],
         connections: [
           { from: "c-start", to: "c-admin" },
-          
-          { from: "c-admin", to: "c-bazaar" },
-          { from: "c-admin", to: "c-teams" },
-          { from: "c-admin", to: "c-jury" },
-          
-          { from: "c-bazaar", to: "c-moder-dec" },
-          { from: "c-teams", to: "c-score-modal" },
-          { from: "c-jury", to: "c-score-modal" },
-          
-          { from: "c-moder-dec", to: "c-publish-idea", label: "Yes" },
-          { from: "c-score-modal", to: "c-score-draft", label: "Draft" },
-          { from: "c-score-modal", to: "c-score-final", label: "Final" },
-          { from: "c-score-final", to: "c-publish-awards" }
+          { from: "c-admin", to: "c-hero-toggle" },
+          { from: "c-admin", to: "c-crud-webinar" },
+          { from: "c-hero-toggle", to: "c-moder-dec" },
+          { from: "c-crud-webinar", to: "c-score-modal" },
+          { from: "c-moder-dec", to: "c-publish-idea", label: "Approve" },
+          { from: "c-score-modal", to: "c-score-final" }
         ]
       },
       mentor: {
-        title: "Mentor Journey Map",
+        title: "Mentor Journey & Developer Sandbox",
         color: "from-[#10B981] to-[#059669]",
         textColor: "text-[#10B981]",
         accentBg: "bg-[#10B981]/10",
         accentBorder: "border-[#10B981]/30",
-        description: "Assists teams with sandboxes, alignment guides, and reviews presentations.",
+        glowClass: "glow-mentor",
+        description: "Assists teams with infrastructure logs, GPU sandbox provisions, pitch rehearsals, and InfoSec fast-track approvals.",
         columns: [
           {
-            title: "1. Entry & Auth",
+            title: "1. Mentor Access",
             nodes: [
-              { id: "m-start", type: "entry", label: "Mentor Sign-in", desc: "Signs in as mentor (e.g. Vikram Mehta)" },
-              { id: "m-hub", type: "screen", label: "Mentor Workspace Hub", desc: "Lists all registered projects" }
+              { id: "m-start", type: "entry", label: "Mentor Authenticate", desc: "Accesses portal under mentor SSO credentials (e.g., Vikram Mehta)." },
+              { id: "m-hub", type: "screen", label: "Assigned Squads Hub", desc: "Unified dashboard to view and manage assigned squads and projects." }
             ]
           },
           {
-            title: "2. Support Domains",
+            title: "2. Infrastructure Control",
             nodes: [
-              { id: "m-tech", type: "action", label: "Tech Setup Guide", desc: "Allocates GPU credits & sandbox logs" },
-              { id: "m-pitch", type: "action", label: "Presentation Review", desc: "Preps team for Shark Tank defense" },
-              { id: "m-security", type: "action", label: "InfoSec Fast-track", desc: "Helps bypass production compliance gates" }
+              { id: "m-tech", type: "interactive", label: "GPU Credit Sandbox", desc: "Distribute sandbox GPU computing credits and monitor active build logs." },
+              { id: "m-infosec", type: "interactive", label: "InfoSec Fast-Track", desc: "Runs interactive security audit logs to bypass production deploy blocks." }
             ]
           },
           {
-            title: "3. Active Collaboration",
+            title: "3. Direct Guidance",
             nodes: [
-              { id: "m-feedback", type: "action", label: "Provide Feedback", desc: "Suggests iterations on abstracts" },
-              { id: "m-sandbox", type: "action", label: "Dockins & Deploy Setup", desc: "Ensures prototype operates live" }
+              { id: "m-feedback", type: "action", label: "Evaluation Feed", desc: "Leave detailed text/score reviews directly inside the team dashboard." },
+              { id: "m-rehearsal", type: "action", label: "Pitch Mock Defense", desc: "Review pitch slides and run mock defenses against jury criteria." }
             ]
           },
           {
-            title: "4. Goals Met",
+            title: "4. Launch & Cleared",
             nodes: [
-              { id: "m-ready", type: "outcome", label: "Jury-ready Pitch", desc: "Team is cleared for evaluation" },
-              { id: "m-live-ship", type: "outcome", label: "Fast-track Production", desc: "Eligible for +50k production bonus" }
+              { id: "m-ready", type: "outcome", label: "Ready for Jury", desc: "Formally locks team as 'Ready' for finale presentations." },
+              { id: "m-bonus", type: "outcome", label: "Deploy Reward Grant", desc: "Approves teams for the +50,000 pts production deployment bonus." }
             ]
           }
         ],
         connections: [
           { from: "m-start", to: "m-hub" },
-          
           { from: "m-hub", to: "m-tech" },
-          { from: "m-hub", to: "m-pitch" },
-          { from: "m-hub", to: "m-security" },
-          
-          { from: "m-tech", to: "m-sandbox" },
-          { from: "m-pitch", to: "m-feedback" },
-          { from: "m-security", to: "m-feedback" },
-          
+          { from: "m-hub", to: "m-infosec" },
+          { from: "m-tech", to: "m-feedback" },
+          { from: "m-infosec", to: "m-rehearsal" },
           { from: "m-feedback", to: "m-ready" },
-          { from: "m-sandbox", to: "m-live-ship" }
+          { from: "m-rehearsal", to: "m-bonus" }
+        ]
+      },
+      jury: {
+        title: "Jury Journey & Live Assessment Control",
+        color: "from-[#F59E0B] to-[#D97706]",
+        textColor: "text-[#D97706]",
+        accentBg: "bg-[#F59E0B]/10",
+        accentBorder: "border-[#F59E0B]/30",
+        glowClass: "glow-jury",
+        description: "Allows senior leadership, directors, and C-Suite panels to inspect pitches, audit code repos, score teams across standardized rubrics, and designate special awards.",
+        columns: [
+          {
+            title: "1. Access & Assigns",
+            nodes: [
+              { id: "j-start", type: "entry", label: "Jury SSO Login", desc: "Signs in with high-tier credentials. System matches active category panel assignment." },
+              { id: "j-dashboard", type: "interactive", label: "Jury Queue Board", desc: "Sleek, direct project index of assigned teams, filterable by track." }
+            ]
+          },
+          {
+            title: "2. Interactive Audit",
+            nodes: [
+              { id: "j-pitch", type: "screen", label: "Project Abstract Hub", desc: "Inspects Figma layouts, problem statements, claimed ideas, and slide decks." },
+              { id: "j-rehearsal", type: "action", label: "Live Stage Defense", desc: "Reviews prototype demonstrations and runs interactive Q&A defensibility tests." }
+            ]
+          },
+          {
+            title: "3. Metrics & Locks",
+            nodes: [
+              { id: "j-score", type: "interactive", label: "Multi-Vector Matrix", desc: "Rate five evaluation parameters dynamically with immediate math compilation." },
+              { id: "j-draft", type: "decision", label: "Review Status Gate", desc: "Option to lock final grades (Green ✓) or keep as draft (Amber badge)." }
+            ]
+          },
+          {
+            title: "4. Leaderboard Sync",
+            nodes: [
+              { id: "j-nominate", type: "action", label: "Award Nominations", desc: "Vote on specialized awards like the Chief Design Officer's Best Design Title." },
+              { id: "j-lock", type: "outcome", label: "Podium Broadcast", desc: "Scores lock and sync directly to live standings, establishing winner categories." }
+            ]
+          }
+        ],
+        connections: [
+          { from: "j-start", to: "j-dashboard" },
+          { from: "j-dashboard", to: "j-pitch" },
+          { from: "j-pitch", to: "j-rehearsal" },
+          { from: "j-rehearsal", to: "j-score" },
+          { from: "j-score", to: "j-draft" },
+          { from: "j-draft", to: "j-nominate" },
+          { from: "j-nominate", to: "j-lock" }
         ]
       }
     };
@@ -258,11 +551,49 @@
     function App() {
       const [activeRole, setActiveRole] = useState("participant");
       const [hoverNode, setHoverNode] = useState(null);
+      const [selectedNode, setSelectedNode] = useState("p-create-team");
       const [hoveredConnection, setHoveredConnection] = useState(null);
       const [nodePositions, setNodePositions] = useState({});
       const canvasRef = useRef(null);
 
       const activeFlow = FLOW_DATA[activeRole];
+
+      const [theme, setTheme] = useState(() => {
+        return localStorage.getItem('mtw_flows_theme') || 'light';
+      });
+
+      useEffect(() => {
+        localStorage.setItem('mtw_flows_theme', theme);
+        if (theme === 'dark') {
+          document.body.classList.add('theme-dark');
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.body.classList.remove('theme-dark');
+          document.documentElement.classList.remove('dark');
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      }, [theme]);
+
+      const getChipClass = (type) => {
+        switch (type) {
+          case "entry": return "chip-blue";
+          case "screen": return "chip-purple";
+          case "action": return "chip-indigo";
+          case "decision": return "chip-amber";
+          case "interactive": return "chip-rose";
+          case "outcome": return "chip-emerald";
+          default: return "chip-dark";
+        }
+      };
+
+      // Auto-focus logical default nodes when changing roles
+      useEffect(() => {
+        if (activeRole === "participant") setSelectedNode("p-create-team");
+        else if (activeRole === "coordinator") setSelectedNode("c-hero-toggle");
+        else if (activeRole === "mentor") setSelectedNode("m-tech");
+        else setSelectedNode("j-dashboard");
+      }, [activeRole]);
 
       // Re-calculate node element positions for SVG connectors
       useEffect(() => {
@@ -287,7 +618,7 @@
         };
 
         // Delay slightly to ensure browser finished layout paint
-        const timer = setTimeout(updatePositions, 100);
+        const timer = setTimeout(updatePositions, 150);
         window.addEventListener("resize", updatePositions);
 
         return () => {
@@ -306,7 +637,7 @@
         const dx = to.x - from.x;
         const dy = to.y - from.y;
 
-        // 1. Same column (vertical flow)
+        // Same column (vertical flow)
         if (Math.abs(dx) < 20) {
           startX = from.x;
           startY = from.y + (dy > 0 ? from.height / 2 : -from.height / 2);
@@ -315,7 +646,7 @@
           return `M ${startX} ${startY} L ${endX} ${endY}`;
         }
 
-        // 2. Forward flow (left to right)
+        // Forward flow (left to right)
         if (dx > 0) {
           startX = from.x + from.width / 2;
           startY = from.y;
@@ -327,13 +658,12 @@
             return `M ${startX} ${startY} L ${endX} ${endY}`;
           }
 
-          // Otherwise, draw a clean horizontal S-curve with small control points to keep it mostly flat
-          const controlOffset = Math.min(40, dx * 0.3);
+          // Otherwise, draw a clean horizontal S-curve
+          const controlOffset = Math.min(40, dx * 0.4);
           return `M ${startX} ${startY} C ${startX + controlOffset} ${startY}, ${endX - controlOffset} ${endY}, ${endX} ${endY}`;
         }
 
-        // 3. Backward flow (right to left loop)
-        // Connect left side of source to right side of target to avoid passing through cards
+        // Backward flow (right to left loop)
         startX = from.x - from.width / 2;
         startY = from.y;
         endX = to.x + to.width / 2;
@@ -349,95 +679,123 @@
           case "screen": return "🖥️";
           case "action": return "⚙️";
           case "decision": return "⚖️";
+          case "interactive": return "⚡";
           case "outcome": return "🏆";
           default: return "📄";
         }
       };
 
-      const getNodeBorderClass = (type, role) => {
-        const activeNode = hoverNode === role;
-        const base = "border transition-all duration-300 ";
-        if (type === "decision") return base + "border-amber-500/40 bg-amber-500/5 hover:border-amber-500 rotate-3 rounded-lg";
-        if (type === "entry") return base + "border-sky-500/40 bg-sky-500/5 hover:border-sky-500 rounded-none";
-        
-        switch (role) {
-          case "participant": return base + "border-[#FF3F6C]/25 bg-[#FF3F6C]/5 hover:border-[#FF3F6C] rounded-[4px]";
-          case "coordinator": return base + "border-[#8B5CF6]/25 bg-[#8B5CF6]/5 hover:border-[#8B5CF6] rounded-[4px]";
-          case "mentor": return base + "border-[#10B981]/25 bg-[#10B981]/5 hover:border-[#10B981] rounded-[4px]";
-          default: return base + "border-zinc-800 bg-zinc-900/50 rounded-lg";
-        }
-      };
-
       return (
-        <div className="min-h-screen grid-bg relative flex flex-col">
-          {/* Header */}
-          <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-filter backdrop-blur-md sticky top-0 z-30">
-            <div className="max-w-[1400px] mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex-1 flex flex-col relative pb-20">
+          {/* Header styled like main website navbar */}
+          <header className="border-b border-[color:var(--line-2)] bg-[color:var(--paper-2)] sticky top-0 z-30">
+            <div className="max-w-[1400px] mx-auto px-6 py-4 flex flex-col lg:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-[4px] bg-gradient-to-tr from-[#FF3F6C] to-[#8B5CF6] flex items-center justify-center font-bold text-white shadow-lg shadow-pink-500/10">
-                  MTW
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  <img src="https://assets.myntassets.com/assets/images/2026/MARCH/16/gsGQkvMo_2a60944801ac4ed6a49bf2b65c883b10.png" alt="Myntra" className="h-[28px] w-auto object-contain dark:brightness-200" />
+                  <div className="w-[1px] h-5 bg-[color:var(--line-2)]"></div>
+                  <img src="Loader images/Tech Week Logo.png" alt="Tech Week" className="h-[22px] w-auto object-contain dark:brightness-200" />
                 </div>
-                <div>
-                  <h1 className="text-xl font-bold tracking-tight">Myntra Tech Week 2026</h1>
-                  <p className="text-xs text-zinc-500 font-mono">Interactive Mind Map & User Flows</p>
+                <div className="hidden sm:block">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[9px] font-mono tracking-widest px-2 py-0.5 rounded-[3px] bg-[color:var(--paper-3)] text-[color:var(--ink)] font-bold">Presenter Companion</span>
+                  </div>
+                  <p className="text-[10px] text-[color:var(--mute-2)] font-mono leading-none mt-0.5">Interactive mind map and live capabilities sandbox</p>
                 </div>
               </div>
 
-              {/* Roles Toggle */}
-              <div className="flex p-1 bg-zinc-900 border border-zinc-800 rounded-[6px] gap-1">
-                {Object.keys(FLOW_DATA).map(role => (
-                  <button
-                    key={role}
-                    onClick={() => { setActiveRole(role); setHoverNode(null); }}
-                    className={`px-4 py-2 text-xs font-semibold capitalize transition-all duration-200 rounded-[4px] ${
-                      activeRole === role
-                        ? "bg-zinc-800 text-white shadow-md border-b border-zinc-700"
-                        : "text-zinc-400 hover:text-zinc-200"
-                    }`}
-                  >
-                    {role} Flow
-                  </button>
-                ))}
+              {/* Active simulated user context HUD */}
+              <div className="flex flex-wrap items-center gap-4">
+                <div className="pill text-[color:var(--mute-1)]">
+                  <span className="dot text-emerald-500"></span>
+                  <span className="text-[color:var(--mute-3)] font-mono">Active SSO:</span> 
+                  <strong className="text-[color:var(--ink)] font-sans text-xs">
+                    {activeRole === 'participant' ? 'Kabir Mehta (Hacker)' : activeRole === 'coordinator' ? 'Rohit Kumar (Coordinator)' : activeRole === 'mentor' ? 'Vikram Mehta (Lead Mentor)' : 'Ananya Sen (Jury Chief)'}
+                  </strong>
+                </div>
+
+                {/* Roles Toggles - Styled like the borderless site tabs */}
+                <div className="flex items-center gap-1">
+                  {Object.keys(FLOW_DATA).map(role => {
+                    const isActive = activeRole === role;
+                    let activeColorClasses = "";
+                    if (isActive) {
+                      if (role === 'participant') activeColorClasses = "text-[#FF3F6C] bg-[#FF3F6C]/10 border border-[#FF3F6C]/25";
+                      else if (role === 'coordinator') activeColorClasses = "text-[#8B5CF6] bg-[#8B5CF6]/10 border border-[#8B5CF6]/25";
+                      else if (role === 'mentor') activeColorClasses = "text-[#10B981] bg-[#10B981]/10 border border-[#10B981]/25";
+                      else if (role === 'jury') activeColorClasses = "text-[#D97706] bg-[#F59E0B]/10 border border-[#D97706]/25";
+                    }
+                    return (
+                      <button
+                        key={role}
+                        onClick={() => { setActiveRole(role); setHoverNode(null); }}
+                        className={`transition-all duration-150 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold tracking-tight ${
+                          isActive 
+                            ? `${activeColorClasses} scale-102 shadow-sm` 
+                            : 'text-[color:var(--mute-1)] hover:text-[color:var(--ink)] hover:bg-[color:var(--paper-2)] border border-transparent'
+                        }`}
+                      >
+                        <span>{role === 'participant' ? '👥' : role === 'coordinator' ? '🛠️' : role === 'mentor' ? '👨‍🏫' : '⚖️'}</span>
+                        <span className="capitalize">{role}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Theme Toggler */}
+                <button
+                  onClick={() => setTheme(prev => prev === 'dark' ? 'light' : 'dark')}
+                  className="p-1.5 text-[color:var(--mute-3)] hover:text-[color:var(--ink)] btn transition-all hover:scale-105"
+                  aria-label="Toggle Theme"
+                >
+                  {theme === 'dark' ? (
+                    <svg className="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="4"/>
+                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                  )}
+                </button>
               </div>
             </div>
           </header>
 
-          {/* Intro Section */}
-          <main className="flex-1 max-w-[1440px] w-full mx-auto p-6 flex flex-col gap-6 relative z-10">
-            <section className="bg-zinc-900/40 border border-zinc-800/80 backdrop-blur-sm p-6 rounded-[8px] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-indigo-500/5 to-transparent blur-3xl rounded-full -mr-20 -mt-20"></div>
+          {/* Main Presenter Content */}
+          <main className="max-w-[1400px] w-full mx-auto p-6 flex flex-col gap-6 relative z-10">
+            {/* Dynamic Intro Card */}
+            <section className="bg-[color:var(--white)] border border-[color:var(--line-2)] p-6 lg:p-8 rounded-[16px] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative overflow-hidden shadow-sm">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-zinc-500/5 to-transparent blur-3xl rounded-full"></div>
               
               <div className="space-y-2 relative z-10">
-                <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-[4px] text-xs font-bold font-mono tracking-wide uppercase ${activeFlow.accentBg} ${activeFlow.textColor} border ${activeFlow.accentBorder}`}>
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-bold font-mono tracking-wider uppercase ${activeFlow.accentBg} ${activeFlow.textColor} border ${activeFlow.accentBorder}`}>
                   <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
-                  Active Map
+                  Active Map Console
                 </span>
-                <h2 className="text-3xl font-bold tracking-tight text-white">{activeFlow.title}</h2>
-                <p className="text-sm text-zinc-400 max-w-2xl leading-relaxed">{activeFlow.description}</p>
+                <h2 className="text-3xl font-[900] tracking-tight text-[color:var(--ink)] h-display">{activeFlow.title}</h2>
+                <p className="text-sm text-[color:var(--mute-1)] max-w-3xl leading-relaxed">{activeFlow.description}</p>
               </div>
 
-              <div className="flex flex-wrap gap-3 font-mono text-xs text-zinc-400 border border-zinc-800 bg-zinc-950/60 p-4 rounded-[6px]">
-                <div className="flex items-center gap-2"><span className="text-base">🏁</span> Entry Point</div>
-                <div className="flex items-center gap-2"><span className="text-base">🖥️</span> Key Screen</div>
-                <div className="flex items-center gap-2"><span className="text-base">⚙️</span> User Action</div>
-                <div className="flex items-center gap-2"><span className="text-base">⚖️</span> Decision Logic</div>
-                <div className="flex items-center gap-2"><span className="text-base">🏆</span> Goal / Outcome</div>
+              <div className="flex flex-wrap lg:flex-col gap-2 font-mono text-[10px] text-[color:var(--mute-2)] border border-[color:var(--line-2)] bg-[color:var(--paper-2)] p-4 rounded-[8px] min-w-[220px]">
+                <div className="flex items-center gap-2"><span className="text-xs">🏁</span> Entry Node</div>
+                <div className="flex items-center gap-2"><span className="text-xs">🖥️</span> Key Screen</div>
+                <div className="flex items-center gap-2"><span className="text-xs">⚙️</span> User Action</div>
+                <div className="flex items-center gap-2"><span className="text-xs">⚖️</span> Decision Gate</div>
+                <div className="flex items-center gap-2 font-bold text-[color:var(--ink)] animate-pulse"><span className="text-xs">⚡</span> Live Simulator</div>
+                <div className="flex items-center gap-2"><span className="text-xs">🏆</span> Finale Outcome</div>
               </div>
             </section>
 
             {/* Mind Map Canvas */}
-            <section className="relative bg-zinc-950/60 border border-zinc-900 rounded-[12px] p-8 overflow-x-auto min-h-[550px] flex flex-col justify-between" ref={canvasRef}>
+            <section className="relative bg-[color:var(--white)] border border-[color:var(--line-2)] rounded-[20px] p-8 overflow-x-auto min-h-[580px] flex flex-col justify-between shadow-sm" ref={canvasRef}>
+              <div className="absolute top-4 right-6 text-[9px] font-mono text-[color:var(--mute-3)] pointer-events-none select-none uppercase tracking-widest">Mindmap Canvas v3.2</div>
               
               {/* SVG connection layer */}
               <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
                 <defs>
-                  <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#18181b" />
-                    <stop offset="50%" stopColor="#27272a" />
-                    <stop offset="100%" stopColor="#3f3f46" />
-                  </linearGradient>
-                  
-                  {/* Arrow markers */}
+                  {/* Arrow markers matching branding */}
                   <marker id="arrow-participant" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                     <path d="M 0 0 L 10 5 L 0 10 z" fill="#FF3F6C" />
                   </marker>
@@ -447,19 +805,22 @@
                   <marker id="arrow-mentor" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                     <path d="M 0 0 L 10 5 L 0 10 z" fill="#10B981" />
                   </marker>
-                  <marker id="arrow-default" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#27272a" />
+                  <marker id="arrow-jury" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#D97706" />
+                  </marker>
+                  <marker id="arrow-default" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--line-3)" />
                   </marker>
                 </defs>
 
                 {/* Render SVG Paths */}
                 {activeFlow.connections.map((conn, idx) => {
                   const pathData = calculatePath(conn.from, conn.to);
-                  const isHovered = hoveredConnection === `${conn.from}-${conn.to}` || hoverNode === conn.from || hoverNode === conn.to;
+                  const isHovered = hoveredConnection === `${conn.from}-${conn.to}` || hoverNode === conn.from || hoverNode === conn.to || selectedNode === conn.from || selectedNode === conn.to;
                   
                   const strokeColor = isHovered 
-                    ? (activeRole === "participant" ? "#FF3F6C" : activeRole === "coordinator" ? "#8B5CF6" : "#10B981")
-                    : "#27272a";
+                    ? (activeRole === "participant" ? "#FF3F6C" : activeRole === "coordinator" ? "#8B5CF6" : activeRole === "mentor" ? "#10B981" : "#D97706")
+                    : (theme === 'dark' ? 'rgba(255, 255, 255, 0.12)' : '#E2E2D8');
                     
                   const strokeWidth = isHovered ? 2.5 : 1.5;
                   const markerId = isHovered ? `arrow-${activeRole}` : "arrow-default";
@@ -471,7 +832,7 @@
                         d={pathData}
                         fill="none"
                         stroke="transparent"
-                        strokeWidth="15"
+                        strokeWidth="16"
                         className="cursor-pointer"
                         onMouseEnter={() => setHoveredConnection(`${conn.from}-${conn.to}`)}
                         onMouseLeave={() => setHoveredConnection(null)}
@@ -485,24 +846,24 @@
                         markerEnd={`url(#${markerId})`}
                         className={isHovered ? "flow-line-active" : ""}
                       />
-                      {/* Connection Label if present */}
+                      {/* Connection Label */}
                       {conn.label && nodePositions[conn.from] && nodePositions[conn.to] && (
                         <g>
                           <rect
-                            x={(nodePositions[conn.from].x + nodePositions[conn.to].x) / 2 - 20}
-                            y={(nodePositions[conn.from].y + nodePositions[conn.to].y) / 2 - 10}
-                            width="40"
-                            height="20"
+                            x={(nodePositions[conn.from].x + nodePositions[conn.to].x) / 2 - 24}
+                            y={(nodePositions[conn.from].y + nodePositions[conn.to].y) / 2 - 9}
+                            width="48"
+                            height="18"
                             rx="4"
-                            fill="#09090b"
+                            fill="var(--white)"
                             stroke={strokeColor}
                             strokeWidth="1"
                           />
                           <text
                             x={(nodePositions[conn.from].x + nodePositions[conn.to].x) / 2}
-                            y={(nodePositions[conn.from].y + nodePositions[conn.to].y) / 2 + 4}
-                            fill={isHovered ? "#ffffff" : "#a1a1aa"}
-                            fontSize="10"
+                            y={(nodePositions[conn.from].y + nodePositions[conn.to].y) / 2 + 3}
+                            fill={isHovered ? strokeColor : "#737373"}
+                            fontSize="8.5"
                             fontWeight="bold"
                             textAnchor="middle"
                             fontFamily="monospace"
@@ -517,42 +878,47 @@
               </svg>
 
               {/* Render Columns & Nodes */}
-              <div className="flex justify-between gap-12 min-w-[1000px] z-10 relative">
-                {activeFlow.columns.map((col, cIdx) => (
-                  <div key={cIdx} className="flex-1 flex flex-col items-center gap-12">
+              <div className="flex justify-between gap-12 min-w-[1020px] z-10 relative">
+                {activeFlow.columns.map((col, colIdx) => (
+                  <div key={colIdx} className="flex-1 flex flex-col items-center gap-8">
                     {/* Column Header */}
-                    <div className="w-full text-center border-b border-zinc-800 pb-3 mb-2">
-                      <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-500 font-mono">
+                    <div className="w-full text-center border-b border-[color:var(--line-2)] pb-4 mb-2">
+                      <h3 className="text-[10px] font-bold uppercase tracking-widest text-[color:var(--mute-2)] font-mono">
                         {col.title}
                       </h3>
                     </div>
 
                     {/* Nodes list */}
-                    <div className="flex flex-col gap-10 w-full items-center">
+                    <div className="flex flex-col gap-6 w-full items-center">
                       {col.nodes.map(node => {
-                        const isFocused = hoverNode === node.id;
+                        const isFocused = hoverNode === node.id || selectedNode === node.id;
                         
-                        let cardStyle = "border-zinc-800 bg-zinc-900/30";
+                        let cardStyle = "border-[color:var(--line-2)] bg-[color:var(--white)]";
                         if (isFocused) {
                           cardStyle = activeRole === "participant" 
-                            ? "border-[#FF3F6C]/80 bg-[#FF3F6C]/10 glow-participant ring-1 ring-[#FF3F6C]/40" 
+                            ? "border-[#FF3F6C]/80 bg-[#FF3F6C]/5 glow-participant ring-1 ring-[#FF3F6C]/30" 
                             : activeRole === "coordinator" 
-                              ? "border-[#8B5CF6]/80 bg-[#8B5CF6]/10 glow-coordinator ring-1 ring-[#8B5CF6]/40" 
-                              : "border-[#10B981]/80 bg-[#10B981]/10 glow-mentor ring-1 ring-[#10B981]/40";
+                              ? "border-[#8B5CF6]/80 bg-[#8B5CF6]/5 glow-coordinator ring-1 ring-[#8B5CF6]/30" 
+                              : activeRole === "mentor"
+                                ? "border-[#10B981]/80 bg-[#10B981]/5 glow-mentor ring-1 ring-[#10B981]/30"
+                                : "border-[#F59E0B]/80 bg-[#F59E0B]/5 glow-jury ring-1 ring-[#F59E0B]/30";
                         }
+
+                        const isInteractive = node.type === "interactive";
 
                         return (
                           <div
                             key={node.id}
                             id={node.id}
+                            onClick={() => setSelectedNode(node.id)}
                             onMouseEnter={() => setHoverNode(node.id)}
                             onMouseLeave={() => setHoverNode(null)}
-                            className={`w-full max-w-[240px] p-5 cursor-pointer relative transition-all duration-300 border ${cardStyle} ${
-                              node.type === 'decision' ? 'rotate-1' : ''
-                            } hover:-translate-y-1`}
+                            className={`w-full max-w-[245px] p-5 cursor-pointer relative card-transition card-hover border ${cardStyle} rounded-[12px] ${
+                              node.type === 'decision' ? 'rotate-[0.5deg]' : ''
+                            } shadow-[0_4px_12px_rgba(0,0,0,0.015)]`}
                           >
                             {/* Role theme indicator line */}
-                            <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${
+                            <div className={`absolute top-0 left-0 w-1.5 h-full rounded-l-[12px] bg-gradient-to-b ${
                               node.type === 'decision' 
                                 ? 'from-amber-500 to-yellow-600' 
                                 : node.type === 'entry' 
@@ -561,7 +927,9 @@
                                     ? 'from-[#FF3F6C] to-[#E0345C]' 
                                     : activeRole === 'coordinator' 
                                       ? 'from-[#8B5CF6] to-[#6D28D9]' 
-                                      : 'from-[#10B981] to-[#059669]'
+                                      : activeRole === 'mentor'
+                                        ? 'from-[#10B981] to-[#059669]'
+                                        : 'from-[#F59E0B] to-[#D97706]'
                             }`} />
 
                             <div className="flex items-start gap-3">
@@ -569,13 +937,18 @@
                                 {getNodeIcon(node.type)}
                               </span>
                               <div className="space-y-1">
-                                <p className="text-xs font-bold font-mono tracking-widest text-zinc-500 uppercase">
-                                  {node.type}
-                                </p>
-                                <h4 className="text-sm font-bold text-white tracking-tight">
+                                <div className="flex items-center gap-1.5">
+                                  <span className={"chip " + getChipClass(node.type) + " text-[8px] px-1.5 py-0.5"}>
+                                    {node.type}
+                                  </span>
+                                  {isInteractive && (
+                                    <span className="animate-pulse bg-amber-500/10 text-amber-700 text-[8px] font-[800] uppercase px-1.5 py-0.5 rounded-[4px] border border-amber-500/20">Live Simulator</span>
+                                  )}
+                                </div>
+                                <h4 className="text-xs font-[800] text-[color:var(--ink)] tracking-tight leading-snug">
                                   {node.label}
                                 </h4>
-                                <p className="text-xs text-zinc-400 leading-relaxed">
+                                <p className="text-[11px] text-[color:var(--mute-1)] leading-relaxed">
                                   {node.desc}
                                 </p>
                               </div>
@@ -587,16 +960,1082 @@
                   </div>
                 ))}
               </div>
+            </section>
 
+            {/* Live Interactive Sandbox Presentation Container */}
+            <section className="bg-[color:var(--white)] border border-[color:var(--line-2)] rounded-[24px] p-6 lg:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.02)] relative">
+              <div className="flex items-center justify-between border-b border-[color:var(--line-2)] pb-5 mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🖥️</span>
+                  <div>
+                    <h3 className="text-xl font-[900] text-[color:var(--ink)] h-display">Live Capabilities Sandbox</h3>
+                    <p className="text-xs text-[color:var(--mute-2)] font-mono">Interact with fully functional portal mockups to perform live presentations</p>
+                  </div>
+                </div>
+                
+                {/* HUD Interactive controls prompt */}
+                <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 bg-[color:var(--paper-2)] border border-[color:var(--line-2)] rounded-full text-[9px] font-bold font-mono text-[color:var(--mute-1)]">
+                  🕹️ Simulator Active: {selectedNode}
+                </span>
+              </div>
+
+              {/* Render Selected Node Simulator */}
+              <div className="bg-[color:var(--paper-2)] border border-[color:var(--line-2)] rounded-[16px] overflow-hidden min-h-[400px] shadow-inner">
+                <SandboxSimulator selectedNode={selectedNode} setSelectedNode={setSelectedNode} />
+              </div>
             </section>
           </main>
 
           {/* Footer Info */}
-          <footer className="border-t border-zinc-900 bg-zinc-950/80 backdrop-filter backdrop-blur-md py-6 mt-auto text-center text-xs text-zinc-500 font-mono">
-            Myntra Tech Week © 2026. Interactive Mind Map and State Visualizer.
+          <footer className="border-t border-[color:var(--line-2)] bg-[color:var(--paper-2)] py-6 mt-16 text-center text-xs text-[color:var(--mute-3)] font-mono">
+            Myntra Tech Week © 2026. Interactive Flows Map & State Visualizer.
           </footer>
         </div>
       );
+    }
+
+    // Component containing actual high-fidelity interactive mini simulators
+    function SandboxSimulator({ selectedNode, setSelectedNode }) {
+      // 1. Participant CREATE-TEAM Unified 3-Step Registry state
+      const [regStep, setRegStep] = useState(1);
+      const [teamName, setTeamName] = useState("");
+      const [theme, setTheme] = useState("Generative AI");
+      const [abstract, setAbstract] = useState("");
+      const [squadType, setSquadType] = useState("invite"); // 'invite' | 'marketplace'
+      const [teammateEmail, setTeammateEmail] = useState("");
+      const [teammateName, setTeammateName] = useState("");
+      const [teammateDept, setTeammateDept] = useState("Engineering");
+      const [teammateRole, setTeammateRole] = useState("Hacker");
+      const [selectedSkills, setSelectedSkills] = useState([]);
+      const [agreed, setAgreed] = useState(false);
+      const [registered, setRegistered] = useState(false);
+
+      // Participant Trivia Quiz state
+      const [quizIndex, setQuizIndex] = useState(0);
+      const [quizAnswers, setQuizAnswers] = useState([]);
+      const [quizScore, setQuizScore] = useState(0);
+      const [quizFinished, setQuizFinished] = useState(false);
+
+      // 2. Coordinator HERO TOGGLE state
+      const [heroVersion, setHeroVersion] = useState("B");
+      const [hoveredCardIdx, setHoveredCardIdx] = useState(null);
+
+      // 3. Coordinator WEBINAR CRUD state
+      const [sessions, setSessions] = useState([
+        { id: "S001", title: "Incident Management at Scale", presenter: "Neha R.", track: "SRE & Infra", duration: "45 mins" },
+        { id: "S002", title: "Generative AI in E-Commerce", presenter: "Vikram M.", track: "Generative AI", duration: "60 mins" },
+        { id: "S003", title: "Designing Harmonies & Gradients", presenter: "Sita Nair", track: "Design Excellence", duration: "30 mins" }
+      ]);
+      const [editingSession, setEditingSession] = useState(null);
+      const [sessionTitle, setSessionTitle] = useState("");
+      const [sessionPresenter, setSessionPresenter] = useState("");
+      const [sessionTrack, setSessionTrack] = useState("Generative AI");
+
+      // 4. Coordinator JURY SCORING state
+      const [scores, setScores] = useState({
+        innovation: 4.0,
+        feasibility: 3.5,
+        businessValue: 4.5,
+        design: 4.0,
+        presentation: 4.5
+      });
+      const [scoreStatus, setScoreStatus] = useState("draft"); // 'draft' | 'final'
+      const [scoringSaved, setScoringSaved] = useState(false);
+
+      // Mentor GPU state
+      const [gpuCredits, setGpuCredits] = useState(100);
+      const [terminalLogs, setTerminalLogs] = useState([]);
+      const [isAuditing, setIsAuditing] = useState(false);
+      const [auditPassed, setAuditPassed] = useState(false);
+
+      // Jury Project Board state
+      const [selectedSquad, setSelectedSquad] = useState("squad-01");
+      const SQUADS_DATA = {
+        "squad-01": {
+          id: "T001",
+          name: "Neural Ninjas",
+          track: "Generative AI",
+          lead: "Kabir Mehta",
+          leadInitials: "KM",
+          members: ["Kabir Mehta (Hacker Lead)", "Priya Patel (Designer Lead)"],
+          skills: ["React", "Python", "LLM FineTune", "Figma"],
+          abstract: "A generative styling recommendation engine that processes customer closet photography to auto-generate customized Outfit collage grids, matching modern aesthetics."
+        },
+        "squad-02": {
+          id: "T002",
+          name: "EcoCart",
+          track: "Business & Revenue",
+          lead: "Arjun Sharma",
+          leadInitials: "AS",
+          members: ["Arjun Sharma (Hustler Lead)", "Sita Nair (Designer Member)"],
+          skills: ["React", "Business Modeling", "Analytics"],
+          abstract: "Carbon footprint offset tracker integrated directly into customer checkout pages, allowing buyers to donate rounding change to certified green logistics pools."
+        },
+        "squad-03": {
+          id: "T003",
+          name: "ThreadCraft",
+          track: "Warehouse Ops",
+          lead: "Anil Rao",
+          leadInitials: "AR",
+          members: ["Anil Rao (Hacker Lead)"],
+          skills: ["Python", "Edge AI", "Computer Vision"],
+          abstract: "AR-guided product picking paths inside massive fulfillment warehouses, utilizing edge computer vision cameras to double-check shelf storage counts."
+        }
+      };
+
+      // Handler for autofill in registry
+      const handleAutofillRegistry = () => {
+        if (regStep === 1) {
+          setTeamName("Neural Ninjas");
+          setTheme("Generative AI");
+          setAbstract("A generative styling recommendation engine that processes customer closet photography to auto-generate customized Outfit collage grids, matching modern aesthetics.");
+        } else if (regStep === 2) {
+          setTeammateName("Priya Patel");
+          setTeammateEmail("priya.patel@myntra.com");
+          setTeammateDept("Design");
+          setTeammateRole("Designer");
+        }
+      };
+
+      const handleAddOrEditSession = (e) => {
+        e.preventDefault();
+        if (!sessionTitle || !sessionPresenter) return;
+
+        if (editingSession) {
+          setSessions(prev => prev.map(s => s.id === editingSession ? { ...s, title: sessionTitle, presenter: sessionPresenter, track: sessionTrack } : s));
+          setEditingSession(null);
+        } else {
+          const nextId = "S00" + (sessions.length + 1);
+          setSessions(prev => [...prev, { id: nextId, title: sessionTitle, presenter: sessionPresenter, track: sessionTrack, duration: "45 mins" }]);
+        }
+        setSessionTitle("");
+        setSessionPresenter("");
+      };
+
+      // Reset registry simulation
+      const handleResetRegistry = () => {
+        setRegStep(1);
+        setTeamName("");
+        setTheme("Generative AI");
+        setAbstract("");
+        setSquadType("invite");
+        setTeammateEmail("");
+        setTeammateName("");
+        setTeammateDept("Engineering");
+        setTeammateRole("Hacker");
+        setSelectedSkills([]);
+        setAgreed(false);
+        setRegistered(false);
+      };
+
+      const calculateAverageScore = () => {
+        const sum = parseFloat(scores.innovation) + parseFloat(scores.feasibility) + parseFloat(scores.businessValue) + parseFloat(scores.design) + parseFloat(scores.presentation);
+        return (sum / 5).toFixed(2);
+      };
+
+      // 3 Timed Quiz Questions
+      const QUIZ_QUESTIONS = [
+        {
+          question: "Which team persona is REQUIRED to unlock specialized CDO Design Award eligibility?",
+          options: ["The Hacker (Engineering)", "The Designer (UX/Design)", "The Hustler (Product/Business)"],
+          correct: 1
+        },
+        {
+          question: "What is the primary editorial visual style of the main MTW portal homepage?",
+          options: ["A warm Paper backdrop, serif headings (Fraunces), and vibrant accents", "A flat grey grid corporate background with primary blue buttons", "Soft multi-colored pastel gradients with rounded-none boxes"],
+          correct: 0
+        },
+        {
+          question: "Which coordinator tool enables real-time scheduling adjustments directly from the client?",
+          options: ["Hero Collage toggle panel", "Jury Leaderboard lock gate", "Webinar CRUD Manager console"],
+          correct: 2
+        }
+      ];
+
+      const handleQuizOption = (optionIdx) => {
+        const correct = optionIdx === QUIZ_QUESTIONS[quizIndex].correct;
+        if (correct) {
+          setQuizScore(prev => prev + 5000);
+        }
+        setQuizAnswers(prev => [...prev, correct]);
+        
+        setTimeout(() => {
+          if (quizIndex < QUIZ_QUESTIONS.length - 1) {
+            setQuizIndex(prev => prev + 1);
+          } else {
+            setQuizFinished(true);
+          }
+        }, 800);
+      };
+
+      // DevOps scanner typing simulation
+      const runInfoSecScan = () => {
+        if (isAuditing) return;
+        setIsAuditing(true);
+        setAuditPassed(false);
+        setTerminalLogs([]);
+
+        const logs = [
+          "[INFO] Establishing secure SSO handshake for Vikram Mehta...",
+          "[INFO] Connecting to Myntra DevOps Stage-3 CI/CD Registry...",
+          "[WARN] Verifying squad credentials under cross-functional directives...",
+          "[OK] Department Check: Engineering Lead (Kabir Mehta) & Design Lead (Priya Patel) found.",
+          "[INFO] Running static analysis scan on Neural Ninjas codebase...",
+          "[OK] Dependency packages vulnerabilities scan: 0 Critical, 3 Low.",
+          "[INFO] Auditing GPU Compute credit limits...",
+          `[OK] Computing allocation requirements: ${gpuCredits} H100 Hours verified.`,
+          "[SUCCESS] InfoSec Audit Cleared. Team cleared for Stage Presentation!",
+          "[DISPATCH] Broadcast: +50,000 pts deployment bonus pushed to Neural Ninjas."
+        ];
+
+        let index = 0;
+        const interval = setInterval(() => {
+          if (index < logs.length) {
+            setTerminalLogs(prev => [...prev, logs[index]]);
+            index++;
+          } else {
+            clearInterval(interval);
+            setIsAuditing(false);
+            setAuditPassed(true);
+          }
+        }, 600);
+      };
+
+      // SIMULATOR ROUTER
+      switch (selectedNode) {
+        
+        // NODE: Unified 3-Step Wizard Registry
+        case "p-create-team":
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[380px] bg-[color:var(--white)]">
+              {/* Left Sandbox Panel */}
+              <div className="lg:col-span-8 p-6 lg:p-8 flex flex-col justify-between border-r border-[color:var(--line-2)] bg-[color:var(--paper-2)]/30">
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="text-[10px] font-bold font-mono tracking-widest text-[#FF3F6C] uppercase bg-[#FF3F6C]/10 border border-[#FF3F6C]/20 px-2.5 py-1 rounded">Interactive Simulator</span>
+                    <button onClick={handleAutofillRegistry} className="text-[10px] font-bold font-mono tracking-widest text-amber-600 hover:text-amber-700 uppercase bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded transition">⚡ DEMO AUTOFILL</button>
+                  </div>
+                  
+                  {/* Step indicators */}
+                  <div className="flex justify-between items-center mb-8 max-w-[450px]">
+                    {[1, 2, 3].map(s => (
+                      <div key={s} className="flex items-center gap-2">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+                          regStep === s 
+                            ? "bg-[color:var(--accent)] text-white shadow shadow-pink-500/20 scale-105" 
+                            : regStep > s 
+                              ? "bg-[color:var(--ink)] text-white" 
+                              : "bg-[color:var(--paper-2)] text-[color:var(--mute-2)] border border-[color:var(--line-2)]"
+                        }`}>
+                          {s}
+                        </div>
+                        <span className={`text-[10px] font-bold uppercase tracking-wider font-mono ${regStep === s ? 'text-[color:var(--ink)]' : 'text-[color:var(--mute-2)]'}`}>
+                          {s === 1 ? 'Project' : s === 2 ? 'Squad' : 'Review'}
+                        </span>
+                        {s < 3 && <div className="w-10 h-0.5 bg-[color:var(--line-2)]" />}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Wizard Step Content */}
+                  {registered ? (
+                    <div className="space-y-4 py-6 text-center max-w-[450px]">
+                      <span className="text-4xl">🎉</span>
+                      <h4 className="text-lg font-bold text-[color:var(--ink)] h-display">Squad Registered Successfully!</h4>
+                      <p className="text-xs text-[color:var(--mute-1)] leading-relaxed">Your squad has been synchronized with the live portal state. Single-member teams are automatically published to the Marketplace to solicit partners.</p>
+                      <button onClick={handleResetRegistry} className="btn btn-primary btn-sm mt-4 px-4 py-2 text-white rounded-lg text-xs font-bold tracking-wider uppercase transition">Start New Registry</button>
+                    </div>
+                  ) : (
+                    <div>
+                      {regStep === 1 && (
+                        <div className="space-y-4 max-w-[480px]">
+                          <div className="space-y-1.5" onClick={() => { if (!teamName) { setTeamName("Neural Ninjas"); setTheme("Generative AI"); } }}>
+                            <label className="block text-[11px] font-bold uppercase tracking-wider text-[color:var(--mute-2)]">Team Name *</label>
+                            <input type="text" value={teamName} onChange={e=>setTeamName(e.target.value)} placeholder="e.g. Neural Ninjas (Click to auto-fill)" className="input text-xs" />
+                          </div>
+                          
+                          <div className="space-y-1.5">
+                            <label className="block text-[11px] font-bold uppercase tracking-wider text-[color:var(--mute-2)] font-mono">Problem Theme Grid</label>
+                            <div className="grid grid-cols-2 gap-2">
+                              {["Generative AI", "Customer Care", "Business & Revenue", "Warehouse Ops"].map(t => (
+                                <div key={t} onClick={() => setTheme(t)} className={`p-3 cursor-pointer border rounded-[8px] flex items-center justify-between transition ${
+                                  theme === t 
+                                    ? "bg-[#FF3F6C]/5 border-[#FF3F6C]/60 text-[#FF3F6C] font-bold" 
+                                    : "bg-[color:var(--white)] border-[color:var(--line-2)] text-[color:var(--mute-2)] hover:border-[color:var(--line-3)]"
+                                }`}>
+                                  <span className="text-xs">{t}</span>
+                                  {theme === t && <span className="text-xs">●</span>}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="space-y-1.5" onClick={() => { if (!abstract) { setAbstract("A generative styling recommendation engine that processes customer closet photography to auto-generate customized Outfit collage grids, matching modern aesthetics."); } }}>
+                            <label className="block text-[11px] font-bold uppercase tracking-wider text-[color:var(--mute-2)]">Project Abstract *</label>
+                            <textarea value={abstract} onChange={e=>setAbstract(e.target.value)} placeholder="Describe your team's innovative idea (Click to auto-fill)..." className="input text-xs resize-none" rows="3" />
+                          </div>
+                        </div>
+                      )}
+
+                      {regStep === 2 && (
+                        <div className="space-y-4 max-w-[480px]">
+                          <div className="space-y-2">
+                            <label className="block text-[11px] font-bold uppercase tracking-wider text-[color:var(--mute-2)]">Squad Structure Config</label>
+                            {/* Segmented Switcher */}
+                            <div className="grid grid-cols-2 p-1 bg-[color:var(--paper-2)] rounded-[8px] border border-[color:var(--line-2)]">
+                              <button onClick={() => setSquadType("invite")} className={`py-1.5 text-[10px] font-bold rounded-[6px] uppercase tracking-wider transition ${squadType === 'invite' ? 'bg-[color:var(--white)] text-[color:var(--ink)] shadow-sm' : 'text-[color:var(--mute-2)] hover:text-[color:var(--ink)]'}`}>Invite Teammate</button>
+                              <button onClick={() => setSquadType("marketplace")} className={`py-1.5 text-[10px] font-bold rounded-[6px] uppercase tracking-wider transition ${squadType === 'marketplace' ? 'bg-[color:var(--white)] text-[color:var(--ink)] shadow-sm' : 'text-[color:var(--mute-2)] hover:text-[color:var(--ink)]'}`}>Recruit Partner</button>
+                            </div>
+                          </div>
+
+                          {squadType === 'invite' ? (
+                            <div className="grid grid-cols-2 gap-2.5">
+                              <div className="space-y-1">
+                                <label className="text-[10px] uppercase font-bold text-[color:var(--mute-2)]">Name</label>
+                                <input type="text" value={teammateName} onFocus={() => { if (!teammateName) { setTeammateName("Priya Patel"); setTeammateEmail("priya.patel@myntra.com"); setTeammateDept("Design"); setTeammateRole("Designer"); } }} onChange={e=>setTeammateName(e.target.value)} placeholder="Priya Patel (Click to auto-fill)" className="input text-xs" />
+                              </div>
+                              <div className="space-y-1">
+                                <label className="text-[10px] uppercase font-bold text-[color:var(--mute-2)]">Email</label>
+                                <input type="text" value={teammateEmail} onFocus={() => { if (!teammateEmail) { setTeammateName("Priya Patel"); setTeammateEmail("priya.patel@myntra.com"); setTeammateDept("Design"); setTeammateRole("Designer"); } }} onChange={e=>setTeammateEmail(e.target.value)} placeholder="priya@myntra.com (Click to auto-fill)" className="input text-xs" />
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="space-y-2">
+                              <label className="text-[10px] uppercase font-mono font-bold text-[color:var(--mute-2)]">Select Requested Partner Skillsets</label>
+                              <div className="flex flex-wrap gap-1.5">
+                                {["React", "Python", "Tailwind", "GenAI", "Framer", "LLM FineTune", "InfoSec", "Figma"].map(s => {
+                                  const selected = selectedSkills.includes(s);
+                                  return (
+                                    <button key={s} onClick={() => {
+                                      setSelectedSkills(prev => selected ? prev.filter(x=>x!==s) : [...prev, s]);
+                                    }} className={`px-2.5 py-1 text-[10px] font-bold rounded-full border transition ${
+                                      selected ? 'bg-[#FF3F6C]/10 border-[#FF3F6C]/40 text-[#FF3F6C]' : 'bg-[color:var(--white)] border-[color:var(--line-2)] text-[color:var(--mute-1)] hover:border-[color:var(--line-3)]'
+                                    }`}>{s}</button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {regStep === 3 && (
+                        <div className="space-y-4 max-w-[480px]">
+                          <div className="bg-[color:var(--white)] p-4 border border-[color:var(--line-2)] rounded-[12px] space-y-3 font-mono text-[11px] leading-relaxed shadow-sm">
+                            <p className="text-[color:var(--mute-2)] border-b border-[color:var(--line-2)] pb-1.5 uppercase font-bold tracking-widest text-[9px]">Registry JSON Metadata</p>
+                            <p><strong className="text-[color:var(--mute-1)]">Team Name:</strong> <span className="text-[color:var(--ink)]">{teamName || "Unnamed Squad"}</span></p>
+                            <p><strong className="text-[color:var(--mute-1)]">Theme Track:</strong> <span className="text-[color:var(--ink)]">{theme}</span></p>
+                            <p className="truncate"><strong className="text-[color:var(--mute-1)]">Abstract:</strong> <span className="text-[color:var(--ink)]">{abstract || "None"}</span></p>
+                            <p><strong className="text-[color:var(--mute-1)]">Squad Config:</strong> <span className="text-[color:var(--ink)]">{squadType === 'invite' ? `Invite: ${teammateName || 'None'} (${teammateRole || 'Member'})` : `Marketplace: Seeking Skills (${selectedSkills.join(', ') || 'None'})`}</span></p>
+                          </div>
+
+                          <label className="flex items-center gap-3.5 cursor-pointer">
+                            <input type="checkbox" checked={agreed} onChange={e=>setAgreed(e.target.checked)} className="accent-[#FF3F6C] cursor-pointer" />
+                            <span className="text-[11.5px] text-[color:var(--mute-1)] leading-normal font-[600]">I agree that our team abstract aligns with the 11 core MTW pillars.</span>
+                          </label>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {!registered && (
+                  <div className="flex gap-2 justify-end mt-8 border-t border-[color:var(--line-2)] pt-4 max-w-[480px]">
+                    {regStep > 1 && <button onClick={() => setRegStep(p=>p-1)} className="btn btn-white btn-sm px-4 py-2 text-[color:var(--ink)] rounded-lg text-xs font-bold tracking-wider uppercase transition">Back</button>}
+                    {regStep < 3 ? (
+                      <button onClick={() => setRegStep(p=>p+1)} className="btn btn-primary btn-sm px-5 py-2 text-white rounded-lg text-xs font-bold tracking-wider uppercase transition">Continue</button>
+                    ) : (
+                      <button onClick={() => setRegistered(true)} disabled={!agreed} className={`btn btn-sm px-6 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition ${
+                        agreed ? 'btn-accent text-white shadow-md shadow-pink-500/10' : 'bg-[color:var(--paper-3)] text-[color:var(--mute-3)] cursor-not-allowed border border-[color:var(--line-2)]'
+                      }`}>Submit Registration</button>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Right Capabilites Column */}
+              <div className="lg:col-span-4 p-6 lg:p-8 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-xs font-bold font-mono tracking-widest text-[color:var(--mute-2)] uppercase mb-4 border-b border-[color:var(--line-2)] pb-2">Business Capabilities</h4>
+                  <ul className="space-y-4 text-xs">
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 text-sm">✓</span>
+                      <div>
+                        <strong className="text-[color:var(--ink)] block">Skip Upfront Mode Gate</strong>
+                        <span className="text-[color:var(--mute-1)] leading-relaxed block mt-0.5">Reduces user abandonment. Jumps directly into product details and provides smart routing options in Step 2.</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 text-sm">✓</span>
+                      <div>
+                        <strong className="text-[color:var(--ink)] block">Cross-functional Rules</strong>
+                        <span className="text-[color:var(--mute-1)] leading-relaxed block mt-0.5">Step 2 validates profiles and dynamically tags roles (Hacker/Hustler) to comply with core organization regulations.</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mt-8 bg-[color:var(--white)] p-4 rounded-xl border border-[color:var(--line-2)] font-mono text-[10.5px]">
+                  <span className="text-[color:var(--mute-3)] block mb-1">State Sync Mechanics:</span>
+                  <span className="text-blue-600">const</span> [state, setState] = <span className="text-amber-600">useState</span>({`{`}<br/>
+                  &nbsp;&nbsp;step: <span className="text-[#FF3F6C]">3</span>,<br/>
+                  &nbsp;&nbsp;theme: <span className="text-green-600">'{theme}'</span>,<br/>
+                  &nbsp;&nbsp;squadType: <span className="text-green-600">'{squadType}'</span>,<br/>
+                  &nbsp;&nbsp;skills: [<span className="text-green-600">'{selectedSkills.join("', '")}'</span>]<br/>
+                  {`});`}
+                </div>
+              </div>
+            </div>
+          );
+
+        // NODE: Timed Trivia Quiz Simulator
+        case "p-engagement":
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[380px] bg-[color:var(--white)]">
+              <div className="lg:col-span-8 p-6 lg:p-8 flex flex-col justify-between border-r border-[color:var(--line-2)] bg-[color:var(--paper-2)]/30">
+                <div>
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#FF3F6C] uppercase bg-[#FF3F6C]/10 border border-[#FF3F6C]/20 px-2.5 py-1 rounded inline-block mb-6">Engagement Trivia Simulator</span>
+                  
+                  {quizFinished ? (
+                    <div className="space-y-4 py-8 text-center max-w-[450px]">
+                      <span className="text-4xl">🏆</span>
+                      <h4 className="text-lg font-bold text-[color:var(--ink)] h-display">Trivia Challenge Completed!</h4>
+                      <div className="bg-[color:var(--white)] border border-[color:var(--line-2)] p-4 rounded-[12px] max-w-[320px] mx-auto text-center space-y-1 shadow-sm">
+                        <span className="text-[9px] uppercase font-mono font-bold text-[color:var(--mute-2)] tracking-wider block">Points Dispatched</span>
+                        <span className="text-3xl font-black text-[#FF3F6C] font-mono tracking-tight">+{quizScore} Pts</span>
+                        <span className="text-[10px] text-[color:var(--mute-2)] block font-mono">Added to Neural Ninjas scoreboard</span>
+                      </div>
+                      <button onClick={() => {
+                        setQuizIndex(0);
+                        setQuizAnswers([]);
+                        setQuizScore(0);
+                        setQuizFinished(false);
+                      }} className="btn btn-primary btn-sm mt-4 px-4 py-2 text-white rounded-lg text-xs font-bold tracking-wider uppercase transition">Retry Arena Quiz</button>
+                    </div>
+                  ) : (
+                    <div className="space-y-6 max-w-[500px]">
+                      {/* Timer Bar simulation */}
+                      <div className="space-y-1.5">
+                        <div className="flex justify-between text-[10px] font-bold text-[color:var(--mute-2)] font-mono uppercase tracking-wide">
+                          <span>Question {quizIndex + 1} of {QUIZ_QUESTIONS.length}</span>
+                          <span className="text-[#FF3F6C]">Time remaining: 15s</span>
+                        </div>
+                        <div className="h-1 bg-[color:var(--paper-3)] rounded-full overflow-hidden">
+                          <div className="h-full bg-[#FF3F6C] rounded-full transition-all duration-1000" style={{ width: `${100 - (quizIndex * 33)}%` }} />
+                        </div>
+                      </div>
+
+                      {/* Question Content */}
+                      <div className="space-y-4">
+                        <h4 className="text-sm font-[800] text-[color:var(--ink)] leading-snug">
+                          {QUIZ_QUESTIONS[quizIndex].question}
+                        </h4>
+                        
+                        <div className="space-y-2">
+                          {QUIZ_QUESTIONS[quizIndex].options.map((opt, i) => {
+                            const hasAnswered = quizAnswers.length > quizIndex;
+                            let btnStyle = "bg-[color:var(--white)] border-[color:var(--line-2)] text-[color:var(--mute-1)] hover:border-[color:var(--line-3)]";
+                            if (hasAnswered) {
+                              if (i === QUIZ_QUESTIONS[quizIndex].correct) {
+                                btnStyle = "bg-emerald-500/10 border-emerald-500/60 text-emerald-700 font-bold";
+                              } else {
+                                btnStyle = "bg-red-500/5 border-red-500/30 text-red-500 opacity-60";
+                              }
+                            }
+
+                            return (
+                              <button
+                                key={i}
+                                disabled={hasAnswered}
+                                onClick={() => handleQuizOption(i)}
+                                className={`w-full text-left p-3.5 border rounded-[8px] text-xs transition duration-350 flex items-center justify-between ${btnStyle}`}
+                              >
+                                <span>{opt}</span>
+                                {hasAnswered && i === QUIZ_QUESTIONS[quizIndex].correct && <span className="text-emerald-600">✓ Correct</span>}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="text-[color:var(--mute-2)] text-[10.5px] max-w-[480px] leading-relaxed border-t border-[color:var(--line-2)] pt-4 mt-6">
+                  💡 <strong>Presenter Tip:</strong> Take the timed arena challenge. Shows how gamified engagement directly drives user interaction metrics up by 300% on the main page Fun Zone.
+                </div>
+              </div>
+
+              {/* Right Side Info */}
+              <div className="lg:col-span-4 p-6 lg:p-8 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-xs font-bold font-mono tracking-widest text-[color:var(--mute-2)] uppercase mb-4 border-b border-[color:var(--line-2)] pb-2">Business Capabilities</h4>
+                  <ul className="space-y-4 text-xs">
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 text-sm">✓</span>
+                      <div>
+                        <strong className="text-[color:var(--ink)] block">Gamified Retention</strong>
+                        <span className="text-[color:var(--mute-1)] leading-relaxed block mt-0.5">Quiz structures utilize standard timed trivia gates to boost daily active metrics across teams.</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 text-sm">✓</span>
+                      <div>
+                        <strong className="text-[color:var(--ink)] block">Scoreboard Sync</strong>
+                        <span className="text-[color:var(--mute-1)] leading-relaxed block mt-0.5">Points feed directly into team profiles to push competitive team ranks up the live charts.</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mt-8 bg-[color:var(--white)] p-4 rounded-xl border border-[color:var(--line-2)] font-mono text-[10.5px]">
+                  <span className="text-[color:var(--mute-3)] block mb-1">State Sync Mechanics:</span>
+                  <span className="text-blue-600">const</span> quizScore = {quizScore};<br/>
+                  <span className="text-blue-600">dispatch</span>({`{`} type: <span className="text-green-600">"ADD_PTS"</span>, score: {quizScore} {`}`});
+                </div>
+              </div>
+            </div>
+          );
+
+        // NODE: Coordinator HERO TOGGLE / ADMIN Layout settings
+        case "c-hero-toggle":
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[380px] bg-[color:var(--white)]">
+              {/* Left Sandbox Panel */}
+              <div className="lg:col-span-8 p-6 lg:p-8 flex flex-col justify-between border-r border-[color:var(--line-2)] bg-[color:var(--paper-2)]/30">
+                <div>
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#8B5CF6] uppercase bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 px-2.5 py-1 rounded inline-block mb-6">Interactive Simulator</span>
+                  
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between border-b border-[color:var(--line-2)] pb-4 max-w-[480px]">
+                      <div>
+                        <h4 className="text-sm font-[800] text-[color:var(--ink)] tracking-tight">Active Homepage Hero Layout</h4>
+                        <p className="text-xs text-[color:var(--mute-2)] mt-1 font-mono">Changes saved instantly in localStorage</p>
+                      </div>
+                      <div className="flex p-1 bg-[color:var(--paper-2)] border border-[color:var(--line-2)] rounded-[8px] gap-1">
+                        <button onClick={() => setHeroVersion("A")} className={`px-3 py-1.5 text-xs font-[800] rounded-[5px] transition ${heroVersion==='A' ? 'bg-[color:var(--ink)] text-white shadow' : 'text-[color:var(--mute-2)] hover:text-[color:var(--ink)]'}`}>Version A (Video)</button>
+                        <button onClick={() => setHeroVersion("B")} className={`px-3 py-1.5 text-xs font-[800] rounded-[5px] transition ${heroVersion==='B' ? 'bg-[color:var(--ink)] text-white shadow' : 'text-[color:var(--mute-2)] hover:text-[color:var(--ink)]'}`}>Version B (Collage)</button>
+                      </div>
+                    </div>
+
+                    {/* Canvas simulation preview */}
+                    <div className="relative bg-[color:var(--paper-2)] border border-[color:var(--line-2)] rounded-[16px] p-5 min-h-[165px] overflow-hidden max-w-[480px]">
+                      <span className="absolute top-2.5 right-3 text-[8px] font-mono text-[color:var(--mute-3)] uppercase tracking-widest">Simulator Render</span>
+                      
+                      {heroVersion === 'A' ? (
+                        <div className="flex flex-col items-center justify-center min-h-[120px] text-center gap-2">
+                          <span className="text-2xl animate-pulse">🎥</span>
+                          <h5 className="text-xs font-bold text-[color:var(--ink)] uppercase tracking-wider font-mono">Immersive Video Backdrop Active</h5>
+                          <p className="text-[10px] text-[color:var(--mute-1)] leading-normal max-w-[320px]">Displays full-bleed premium brand gradient MP4 assets on background loops.</p>
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center min-h-[120px] relative gap-4">
+                          {/* Collage card simulation */}
+                          {[
+                            { color: "bg-fuchsia-50/20 border-fuchsia-200/50", label: "T002", text: "Pixel Pirates" },
+                            { color: "bg-indigo-50/20 border-indigo-200/50", label: "IDK001", text: "Smart Size" },
+                            { color: "bg-emerald-50/20 border-emerald-200/50", label: "T003", text: "Stealth Mode" }
+                          ].map((card, i) => {
+                            const isHovered = hoveredCardIdx === i;
+                            const isSibling = hoveredCardIdx !== null && Math.abs(hoveredCardIdx - i) === 1;
+                            
+                            let animStyle = {};
+                            if (isHovered) {
+                              animStyle = { transform: 'scale(1.2) translateY(-10px)', zIndex: 10, borderColor: '#8B5CF6' };
+                            } else if (isSibling) {
+                              const shiftDir = i < hoveredCardIdx ? -12 : 12;
+                              animStyle = { transform: `translateX(${shiftDir}px) scale(0.95)`, zIndex: 5 };
+                            }
+
+                            return (
+                              <div
+                                key={i}
+                                onMouseEnter={() => setHoveredCardIdx(i)}
+                                onMouseLeave={() => setHoveredCardIdx(null)}
+                                style={animStyle}
+                                className={`sim-collage-card p-3 w-28 h-28 border ${card.color} rounded-xl text-center flex flex-col justify-between cursor-pointer transition-all duration-300 shadow-md bg-[color:var(--white)]`}
+                              >
+                                <span className="text-[8px] font-mono text-[color:var(--mute-2)] block text-left">{card.label}</span>
+                                <span className="text-[9px] font-bold text-[color:var(--ink)] tracking-tight leading-snug">{card.text}</span>
+                                <span className="text-[7px] text-[color:var(--mute-2)] block font-mono">Hover to Lift</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-[color:var(--mute-2)] text-[10.5px] max-w-[480px] leading-relaxed border-t border-[color:var(--line-2)] pt-4 mt-6">
+                  💡 <strong>Presenter Tip:</strong> Toggling layout settings updates the homepage in real-time. Under Version B, hover over cards to demonstrate the magnetic siblings lateral displacement shifts.
+                </div>
+              </div>
+
+              {/* Right Capabilites Column */}
+              <div className="lg:col-span-4 p-6 lg:p-8 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-xs font-bold font-mono tracking-widest text-[color:var(--mute-2)] uppercase mb-4 border-b border-[color:var(--line-2)] pb-2">Business Capabilities</h4>
+                  <ul className="space-y-4 text-xs">
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 text-sm">✓</span>
+                      <div>
+                        <strong className="text-[color:var(--ink)] block">Live Layout Updates</strong>
+                        <span className="text-[color:var(--mute-1)] leading-relaxed block mt-0.5">Allows administrators/planners to modify visual aesthetics and layout hierarchies live without redeploying code.</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 text-sm">✓</span>
+                      <div>
+                        <strong className="text-[color:var(--ink)] block">Persistent State</strong>
+                        <span className="text-[color:var(--mute-1)] leading-relaxed block mt-0.5">Utilizes client-side localStorage. Retains layout configurations across page reloads and browser sessions.</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mt-8 bg-[color:var(--white)] p-4 rounded-xl border border-[color:var(--line-2)] font-mono text-[10.5px]">
+                  <span className="text-[color:var(--mute-3)] block mb-1">State Sync Mechanics:</span>
+                  localStorage.<span className="text-amber-600">setItem</span>(<br/>
+                  &nbsp;&nbsp;<span className="text-green-600">'myntra_hero_version'</span>,<br/>
+                  &nbsp;&nbsp;<span className="text-green-600">'{heroVersion}'</span><br/>
+                  );
+                </div>
+              </div>
+            </div>
+          );
+
+        // NODE: Coordinator WEBINAR CRUD
+        case "c-crud-webinar":
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[380px] bg-[color:var(--white)]">
+              {/* Left Sandbox Panel */}
+              <div className="lg:col-span-8 p-6 lg:p-8 flex flex-col justify-between border-r border-[color:var(--line-2)] bg-[color:var(--paper-2)]/30">
+                <div>
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#8B5CF6] uppercase bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 px-2.5 py-1 rounded inline-block mb-6">Interactive Simulator</span>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+                    {/* List area */}
+                    <div className="md:col-span-7 space-y-2 max-h-[220px] overflow-y-auto pr-2">
+                      <span className="text-[8.5px] uppercase font-bold text-[color:var(--mute-2)] tracking-wider block font-mono">Live Webinars (React State)</span>
+                      {sessions.map(s => (
+                        <div key={s.id} className="p-3 border border-[color:var(--line-2)] bg-[color:var(--white)] rounded-[12px] flex items-center justify-between gap-3 text-xs shadow-sm">
+                          <div>
+                            <span className="text-[9px] font-mono text-[color:var(--mute-2)] block">{s.id} · {s.track}</span>
+                            <span className="font-bold text-[color:var(--ink)] tracking-tight leading-snug">{s.title}</span>
+                            <span className="text-[10.5px] text-[color:var(--mute-1)] block mt-0.5">Presenter: {s.presenter}</span>
+                          </div>
+                          <div className="flex gap-1 shrink-0">
+                            <button onClick={() => {
+                              setEditingSession(s.id);
+                              setSessionTitle(s.title);
+                              setSessionPresenter(s.presenter);
+                              setSessionTrack(s.track);
+                            }} className="p-1.5 border border-[color:var(--line-2)] rounded bg-[color:var(--paper-2)] text-[10px] font-semibold text-[color:var(--ink)] hover:bg-[color:var(--paper-3)] transition">✏️</button>
+                            <button onClick={() => {
+                              setSessions(prev => prev.filter(x => x.id !== s.id));
+                            }} className="p-1.5 border border-[color:var(--line-2)] rounded bg-[color:var(--paper-2)] text-[10px] font-semibold text-red-600 hover:bg-red-50 hover:text-red-700 transition">🗑️</button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Form area */}
+                    <form onSubmit={handleAddOrEditSession} className="md:col-span-5 bg-[color:var(--white)] p-4 border border-[color:var(--line-2)] rounded-[16px] space-y-3 shadow-sm">
+                      <span className="text-[8.5px] uppercase font-bold text-[#8B5CF6] tracking-wider block font-mono">{editingSession ? 'Edit Session Form' : 'Add New Session'}</span>
+                      <div className="space-y-1">
+                        <label className="text-[9px] uppercase font-bold text-[color:var(--mute-2)] block">Session Title</label>
+                        <input type="text" value={sessionTitle} onFocus={() => { if (!sessionTitle) { setSessionTitle("Incident Management at Scale"); setSessionPresenter("Neha R."); } }} onChange={e=>setSessionTitle(e.target.value)} placeholder="e.g. Deploy pipelines (Click to fill)" className="input text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[9px] uppercase font-bold text-[color:var(--mute-2)] block">Presenter Name</label>
+                        <input type="text" value={sessionPresenter} onFocus={() => { if (!sessionPresenter) { setSessionTitle("Incident Management at Scale"); setSessionPresenter("Neha R."); } }} onChange={e=>setSessionPresenter(e.target.value)} placeholder="e.g. Rohit Kumar (Click to fill)" className="input text-xs" />
+                      </div>
+                      <button type="submit" className="w-full py-2 bg-[color:var(--ink)] hover:bg-[color:var(--ink-2)] text-white font-bold rounded-[6px] text-xs tracking-wider uppercase transition">
+                        {editingSession ? 'Update Session' : 'Save Session'}
+                      </button>
+                      {editingSession && (
+                        <button type="button" onClick={() => {
+                          setEditingSession(null);
+                          setSessionTitle("");
+                          setSessionPresenter("");
+                        }} className="w-full py-1.5 border border-[color:var(--line-2)] text-[color:var(--mute-1)] hover:bg-[color:var(--paper-2)] rounded-[6px] text-[10px] tracking-wider uppercase transition">Cancel</button>
+                      )}
+                    </form>
+                  </div>
+                </div>
+
+                <div className="text-[color:var(--mute-2)] text-[10.5px] leading-relaxed border-t border-[color:var(--line-2)] pt-4 mt-6">
+                  💡 <strong>Presenter Tip:</strong> Try adding a new session or editing an existing one. Demonstrates actual React CRUD state syncing currently driving the main Enablement Hub track listings.
+                </div>
+              </div>
+
+              {/* Right Capabilites Column */}
+              <div className="lg:col-span-4 p-6 lg:p-8 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-xs font-bold font-mono tracking-widest text-[color:var(--mute-2)] uppercase mb-4 border-b border-[color:var(--line-2)] pb-2">Business Capabilities</h4>
+                  <ul className="space-y-4 text-xs">
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 text-sm">✓</span>
+                      <div>
+                        <strong className="text-[color:var(--ink)] block">Real-time Schedule Adjusts</strong>
+                        <span className="text-[color:var(--mute-1)] leading-relaxed block mt-0.5">Allows event coordinators to immediately announce scheduling adjustments, presenter changes, or new live tracks directly from the web client.</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mt-8 bg-[color:var(--white)] p-4 rounded-xl border border-[color:var(--line-2)] font-mono text-[10.5px]">
+                  <span className="text-[color:var(--mute-3)] block mb-1">State Sync Mechanics:</span>
+                  <span className="text-blue-600">const</span> [sessions, setSessions] = <span className="text-amber-600">useState</span>([<br/>
+                  &nbsp;&nbsp;{`{`} id: <span className="text-green-600">"S001"</span>, title: <span className="text-green-600">"..."</span> {`}`}<br/>
+                  ]);
+                </div>
+              </div>
+            </div>
+          );
+
+        // NODE: Jury Project Board simulator
+        case "j-dashboard":
+        case "j-pitch":
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[380px] bg-[color:var(--white)]">
+              {/* Left Sandbox Panel */}
+              <div className="lg:col-span-8 p-6 lg:p-8 flex flex-col justify-between border-r border-[color:var(--line-2)] bg-[color:var(--paper-2)]/30">
+                <div>
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#D97706] uppercase bg-[#F59E0B]/10 border border-[#F59E0B]/20 px-2.5 py-1 rounded inline-block mb-6">Jury Project Board Simulator</span>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+                    {/* Projects queue */}
+                    <div className="md:col-span-5 space-y-2">
+                      <span className="text-[8.5px] uppercase font-bold text-[color:var(--mute-2)] tracking-wider block font-mono">Panel Submissions Queue</span>
+                      {Object.keys(SQUADS_DATA).map(key => {
+                        const sq = SQUADS_DATA[key];
+                        return (
+                          <div
+                            key={key}
+                            onClick={() => setSelectedSquad(key)}
+                            className={`p-3 border rounded-[12px] cursor-pointer transition shadow-sm ${
+                              selectedSquad === key 
+                                ? "bg-[color:var(--white)] border-[#D97706] ring-1 ring-[#D97706]/40" 
+                                : "bg-[color:var(--white)] border-[color:var(--line-2)] hover:border-[color:var(--line-3)]"
+                            }`}
+                          >
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="text-[9px] font-mono text-[color:var(--mute-2)]">{sq.id} · {sq.track}</span>
+                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                            </div>
+                            <span className="font-bold text-xs text-[color:var(--ink)] block">{sq.name}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Project detailed inspection */}
+                    <div className="md:col-span-7 bg-[color:var(--white)] p-4 border border-[color:var(--line-2)] rounded-[16px] space-y-3 shadow-sm text-xs relative">
+                      <span className="absolute top-2.5 right-3 text-[8px] font-mono text-[#D97706] uppercase tracking-widest font-bold">Details Board</span>
+                      
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-[color:var(--c-amber-tint)] text-[color:var(--c-amber-deep)] flex items-center justify-center font-bold text-xs shadow-sm">
+                          {SQUADS_DATA[selectedSquad].leadInitials}
+                        </div>
+                        <div>
+                          <h5 className="font-bold text-[color:var(--ink)] text-sm tracking-tight">{SQUADS_DATA[selectedSquad].name}</h5>
+                          <span className="text-[9px] font-mono text-[color:var(--mute-2)]">Lead: {SQUADS_DATA[selectedSquad].lead}</span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5 font-sans leading-relaxed">
+                        <p className="text-[11px] text-[color:var(--mute-1)]"><strong>Members:</strong> {SQUADS_DATA[selectedSquad].members.join(", ")}</p>
+                        <p className="text-[11px] text-[color:var(--mute-1)]"><strong>Skills Requested:</strong> {SQUADS_DATA[selectedSquad].skills.join(", ")}</p>
+                        <div className="p-2.5 bg-[color:var(--paper-2)] border border-[color:var(--line-2)] rounded-[8px] mt-2">
+                          <span className="text-[9px] font-mono font-bold uppercase text-[color:var(--mute-2)] block mb-1">Project Abstract</span>
+                          <p className="text-[10.5px] text-[color:var(--ink)] leading-normal italic font-serif">{SQUADS_DATA[selectedSquad].abstract}</p>
+                        </div>
+                      </div>
+
+                      {/* Mock links */}
+                      <div className="flex gap-1.5 pt-3 border-t border-[color:var(--line-2)]/60 mt-3">
+                        <button className="flex-1 py-1.5 bg-[color:var(--paper-2)] hover:bg-[color:var(--paper-3)] border border-[color:var(--line-2)] rounded-[6px] text-[9.5px] font-[800] uppercase transition" onClick={()=>alert("Framer Pitch Deck Loaded in Mock Stage!")}>👁️ View Deck</button>
+                        <button className="flex-1 py-1.5 bg-[color:var(--paper-2)] hover:bg-[color:var(--paper-3)] border border-[color:var(--line-2)] rounded-[6px] text-[9.5px] font-[800] uppercase transition" onClick={()=>setSelectedNode("j-score")}>⚖️ Score Team</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-[color:var(--mute-2)] text-[10.5px] leading-relaxed border-t border-[color:var(--line-2)] pt-4 mt-6">
+                  💡 <strong>Presenter Tip:</strong> Click different teams in the queue to load their project summaries. Click **Score Team** to jump directly into the grading sliders matrix.
+                </div>
+              </div>
+
+              {/* Right Capabilites Column */}
+              <div className="lg:col-span-4 p-6 lg:p-8 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-xs font-bold font-mono tracking-widest text-[color:var(--mute-2)] uppercase mb-4 border-b border-[color:var(--line-2)] pb-2">Business Capabilities</h4>
+                  <ul className="space-y-4 text-xs">
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 text-sm">✓</span>
+                      <div>
+                        <strong className="text-[color:var(--ink)] block">Centralized Inspection Hub</strong>
+                        <span className="text-[color:var(--mute-1)] leading-relaxed block mt-0.5">Locks all project artifacts (repo links, Figma, presentation slides, abstracts) into a single secure view to prevent delays during live Q&A.</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mt-8 bg-[color:var(--white)] p-4 rounded-xl border border-[color:var(--line-2)] font-mono text-[10.5px]">
+                  <span className="text-[color:var(--mute-3)] block mb-1">State Sync Mechanics:</span>
+                  <span className="text-blue-600">const</span> [squad, setSquad] = <span className="text-amber-600">useState</span>(<span className="text-green-600">'{selectedSquad}'</span>);
+                </div>
+              </div>
+            </div>
+          );
+
+        // NODE: Coordinator / Jury JURY SCORING
+        case "j-score":
+        case "c-score-modal":
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[380px] bg-[color:var(--white)]">
+              {/* Left Sandbox Panel */}
+              <div className="lg:col-span-8 p-6 lg:p-8 flex flex-col justify-between border-r border-[color:var(--line-2)] bg-[color:var(--paper-2)]/30">
+                <div>
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#8B5CF6] uppercase bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 px-2.5 py-1 rounded inline-block mb-6">Interactive Simulator</span>
+                  
+                  {scoringSaved ? (
+                    <div className="space-y-4 py-8 text-center max-w-[450px]">
+                      <span className="text-4xl">🏅</span>
+                      <h4 className="text-lg font-bold text-[color:var(--ink)] h-display">Scores Saved & Broadcast!</h4>
+                      <p className="text-xs text-[color:var(--mute-1)] leading-relaxed">The average score of <strong className="text-[#8B5CF6]">{calculateAverageScore()}</strong> has been calculated. The target team has been tagged with an **{scoreStatus === 'final' ? 'Evaluated (Green Checkmark)' : 'In Review (Amber Badge)'}** status indicator live on the standings leaderboard.</p>
+                      <button onClick={() => setScoringSaved(false)} className="mt-4 px-4 py-2 bg-[color:var(--ink)] hover:bg-[color:var(--ink-2)] text-white rounded-lg text-xs font-bold tracking-wider uppercase transition">Assess Another Team</button>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[560px]">
+                      {/* Sliders container */}
+                      <div className="space-y-3">
+                        <span className="text-[8.5px] uppercase font-bold text-[color:var(--mute-2)] tracking-wider block font-mono">Jury Grading Matrix (Weight: 1-5)</span>
+                        {[
+                          { key: "innovation", label: "Innovation & Design" },
+                          { key: "feasibility", label: "Technical Feasibility" },
+                          { key: "businessValue", label: "Business Value" },
+                          { key: "design", label: "UI/UX & Accessibility" },
+                          { key: "presentation", label: "Presentation & Defense" }
+                        ].map(criterion => (
+                          <div key={criterion.key} className="space-y-1">
+                            <div className="flex justify-between text-[11px] font-medium">
+                              <span className="text-[color:var(--mute-1)]">{criterion.label}</span>
+                              <span className="font-mono text-[#8B5CF6] font-bold">{parseFloat(scores[criterion.key]).toFixed(1)}</span>
+                            </div>
+                            <input
+                              type="range"
+                              min="1"
+                              max="5"
+                              step="0.5"
+                              value={scores[criterion.key]}
+                              onChange={e => {
+                                const val = e.target.value;
+                                setScores(prev => ({ ...prev, [criterion.key]: val }));
+                              }}
+                              className="w-full accent-[#8B5CF6] cursor-pointer bg-[color:var(--paper-2)] h-1 rounded"
+                            />
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Summary & submission */}
+                      <div className="bg-[color:var(--paper-2)] p-5 border border-[color:var(--line-2)] rounded-[16px] flex flex-col justify-between shadow-sm">
+                        <div className="text-center space-y-1">
+                          <span className="text-[9px] uppercase font-mono font-bold text-[color:var(--mute-2)] tracking-wider block">Calculated Rating</span>
+                          <span className="text-5xl font-black text-[color:var(--ink)] font-serif tracking-tight">{calculateAverageScore()}</span>
+                          <span className="text-[10px] text-[color:var(--mute-2)] block font-mono">Weighted Average</span>
+                        </div>
+
+                        <div className="space-y-3.5 mt-4">
+                          <div className="space-y-1">
+                            <label className="text-[9px] uppercase font-bold text-[color:var(--mute-2)] block">Grading Status Mode</label>
+                            <div className="grid grid-cols-2 p-1 bg-[color:var(--white)] border border-[color:var(--line-2)] rounded-[8px]">
+                              <button onClick={() => setScoreStatus("draft")} className={`py-1 text-[10px] font-bold rounded uppercase tracking-wider transition ${scoreStatus==='draft' ? 'bg-[color:var(--paper-2)] text-amber-600' : 'text-[color:var(--mute-2)] hover:text-[color:var(--ink)]'}`}>Draft</button>
+                              <button onClick={() => setScoreStatus("final")} className={`py-1 text-[10px] font-bold rounded uppercase tracking-wider transition ${scoreStatus==='final' ? 'bg-[color:var(--paper-2)] text-green-600' : 'text-[color:var(--mute-2)] hover:text-[color:var(--ink)]'}`}>Final</button>
+                            </div>
+                          </div>
+
+                          <button onClick={() => setScoringSaved(true)} className="btn btn-primary w-full py-2 text-white font-bold rounded-lg text-xs tracking-wider uppercase shadow transition">
+                            Save & Broadcast
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="text-[color:var(--mute-2)] text-[10.5px] leading-relaxed border-t border-[color:var(--line-2)] pt-4 mt-6">
+                  💡 <strong>Presenter Tip:</strong> Slide the criteria levels around. The simulator aggregates weights instantly to present a weighted decimal average, replicating actual jury scoring calculations.
+                </div>
+              </div>
+
+              {/* Right Capabilites Column */}
+              <div className="lg:col-span-4 p-6 lg:p-8 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-xs font-bold font-mono tracking-widest text-[color:var(--mute-2)] uppercase mb-4 border-b border-[color:var(--line-2)] pb-2">Business Capabilities</h4>
+                  <ul className="space-y-4 text-xs">
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 text-sm">✓</span>
+                      <div>
+                        <strong className="text-[color:var(--ink)] block">Standardized Grading Rubrics</strong>
+                        <span className="text-[color:var(--mute-1)] leading-relaxed block mt-0.5">Enforces event grading consistency across all judges by separating evaluation vectors into distinct criteria.</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mt-8 bg-[color:var(--white)] p-4 rounded-xl border border-[color:var(--line-2)] font-mono text-[10.5px]">
+                  <span className="text-[color:var(--mute-3)] block mb-1">State Sync Mechanics:</span>
+                  <span className="text-blue-600">const</span> [scores, setScores] = <span className="text-amber-600">useState</span>({`{`}<br/>
+                  &nbsp;&nbsp;score: <span className="text-[#8B5CF6]">{calculateAverageScore()}</span>,<br/>
+                  &nbsp;&nbsp;status: <span className="text-green-600">'{scoreStatus}'</span><br/>
+                  {`});`}
+                </div>
+              </div>
+            </div>
+          );
+
+        // MENTOR DEV & INFOSEC Sandbox Simulator
+        case "m-tech":
+        case "m-infosec":
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[380px] bg-[color:var(--white)]">
+              {/* Left Sandbox Panel */}
+              <div className="lg:col-span-8 p-6 lg:p-8 flex flex-col justify-between border-r border-[color:var(--line-2)] bg-[color:var(--paper-2)]/30">
+                <div>
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#10B981] uppercase bg-[#10B981]/10 border border-[#10B981]/20 px-2.5 py-1 rounded inline-block mb-6">Mentor DevOps & Credits Sandbox</span>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+                    {/* Controls */}
+                    <div className="md:col-span-5 space-y-4">
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-[10px] font-bold text-[color:var(--mute-1)] uppercase font-mono">
+                          <span>Provision GPU hours</span>
+                          <span className="text-[#10B981] font-bold">{gpuCredits} Hrs</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="10"
+                          max="250"
+                          step="10"
+                          value={gpuCredits}
+                          onChange={e => setGpuCredits(e.target.value)}
+                          className="w-full accent-[#10B981] cursor-pointer bg-[color:var(--paper-2)] h-1 rounded"
+                        />
+                        <span className="text-[9px] text-[color:var(--mute-2)] block leading-normal">Sets maximum computing hours for NVIDIA A100 GPU pods.</span>
+                      </div>
+
+                      <button
+                        onClick={runInfoSecScan}
+                        disabled={isAuditing}
+                        className={`w-full py-2.5 border rounded-[8px] text-xs font-bold uppercase tracking-wider transition ${
+                          isAuditing
+                            ? "bg-[color:var(--paper-3)] text-[color:var(--mute-2)] cursor-not-allowed border-[color:var(--line-2)]"
+                            : "bg-[color:var(--ink)] hover:bg-[color:var(--ink-2)] text-white shadow-md"
+                        }`}
+                      >
+                        {isAuditing ? "⚙️ Audit Scanning..." : "🛡️ Trigger InfoSec Audit"}
+                      </button>
+                    </div>
+
+                    {/* Terminal Display */}
+                    <div className="md:col-span-7 flex flex-col h-44 bg-zinc-950 p-4 rounded-xl border border-zinc-800 font-mono text-[10.5px] leading-relaxed relative overflow-hidden shadow-md">
+                      <span className="absolute top-2 right-3 text-[7.5px] text-zinc-600 uppercase tracking-widest font-bold">Secure Terminal</span>
+                      <div className="flex-1 overflow-y-auto pr-1 space-y-1 select-none">
+                        {terminalLogs.length === 0 ? (
+                          <span className="text-zinc-600 italic">No operations triggered. Click 'Trigger InfoSec Audit' to run code scans.</span>
+                        ) : (
+                          terminalLogs.map((log, i) => {
+                            let color = "text-zinc-400";
+                            if (log.startsWith("[SUCCESS]")) color = "text-emerald-400 font-bold";
+                            else if (log.startsWith("[OK]")) color = "text-sky-400";
+                            else if (log.startsWith("[WARN]")) color = "text-amber-400 font-semibold";
+                            else if (log.startsWith("[DISPATCH]")) color = "text-purple-400";
+
+                            return <p key={i} className={color}>{log}</p>;
+                          })
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-[color:var(--mute-2)] text-[10.5px] leading-relaxed border-t border-[color:var(--line-2)] pt-4 mt-6">
+                  💡 <strong>Presenter Tip:</strong> Drag the compute credit hours slider, then click **Trigger InfoSec Audit**. Watch the simulated DevOps terminal type out step-by-step scans in real-time, executing the Platform Sandbox clearing procedures!
+                </div>
+              </div>
+
+              {/* Right Side Info */}
+              <div className="lg:col-span-4 p-6 lg:p-8 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-xs font-bold font-mono tracking-widest text-[color:var(--mute-2)] uppercase mb-4 border-b border-[color:var(--line-2)] pb-2">Business Capabilities</h4>
+                  <ul className="space-y-4 text-xs">
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 text-sm">✓</span>
+                      <div>
+                        <strong className="text-[color:var(--ink)] block">Resource Allocations</strong>
+                        <span className="text-[color:var(--mute-1)] leading-relaxed block mt-0.5">Enables immediate, trackable credit provisions to active squads without requiring complex database scripts.</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 text-sm">✓</span>
+                      <div>
+                        <strong className="text-[color:var(--ink)] block">Security Fast-Tracks</strong>
+                        <span className="text-[color:var(--mute-1)] leading-relaxed block mt-0.5">Models the automated policy verification checks required to push sandbox prototypes to main production pipelines.</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mt-8 bg-[color:var(--white)] p-4 rounded-xl border border-[color:var(--line-2)] font-mono text-[10.5px]">
+                  <span className="text-[color:var(--mute-3)] block mb-1">State Sync Mechanics:</span>
+                  <span className="text-blue-600">const</span> provisioned = {gpuCredits};<br/>
+                  <span className="text-blue-600">const</span> isCleared = {auditPassed ? "true" : "false"};
+                </div>
+              </div>
+            </div>
+          );
+
+        // DEFAULT NODE FALLBACK
+        default:
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[380px] p-6 lg:p-8 gap-6 bg-[color:var(--white)]">
+              <div className="lg:col-span-8 flex flex-col justify-between">
+                <div className="space-y-4 max-w-[540px]">
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[color:var(--mute-2)] uppercase bg-[color:var(--paper-2)] border border-[color:var(--line-2)] px-2.5 py-1 rounded inline-block">Capability Node Info</span>
+                  <h4 className="text-lg font-extrabold text-[color:var(--ink)] tracking-tight leading-snug h-display">Visual State & Flow Overview</h4>
+                  <p className="text-xs text-[color:var(--mute-1)] leading-relaxed">This capability operates as a core state transition. When the user interacts with this node in the main portal, the platform invokes specific handlers to check permissions, fetch dataset parameters, update local states, and sync structural updates across components.</p>
+                  
+                  {/* Visual flowchart graphic */}
+                  <div className="flex flex-col sm:flex-row items-center gap-3 bg-[color:var(--paper-2)] p-4 border border-[color:var(--line-2)] rounded-[12px] font-mono text-[10.5px] max-w-[450px]">
+                    <span className="px-2.5 py-1 bg-[color:var(--white)] rounded-[6px] border border-[color:var(--line-2)] text-[color:var(--ink)] font-bold">Trigger Request</span>
+                    <span className="text-[color:var(--mute-3)]">➔</span>
+                    <span className="px-2.5 py-1 bg-[color:var(--white)] rounded-[6px] border border-[color:var(--line-2)] text-[#8B5CF6] font-bold">Active Handlers</span>
+                    <span className="text-[color:var(--mute-3)]">➔</span>
+                    <span className="px-2.5 py-1 bg-[color:var(--white)] rounded-[6px] border border-[color:var(--line-2)] text-emerald-600 font-bold">Local State Update</span>
+                  </div>
+                </div>
+
+                <div className="text-[color:var(--mute-2)] text-[10.5px] leading-relaxed border-t border-[color:var(--line-2)] pt-4 mt-6">
+                  💡 <strong>Presenter Tip:</strong> Select the highlighted ⚡ nodes on the Mind Map canvas above (e.g. **Unified 3-Step Wizard, Event Control Console, Hero Version Switch, Webinar CRUD, Jury Queue Board, Multi-Vector Matrix, or GPU Credit Sandbox**) to launch their live interactive sandbox simulators!
+                </div>
+              </div>
+
+              <div className="lg:col-span-4 bg-[color:var(--paper-2)] p-6 border border-[color:var(--line-2)] rounded-[16px] flex flex-col justify-between">
+                <div>
+                  <h5 className="text-[10px] font-bold font-mono tracking-widest text-[color:var(--mute-2)] uppercase mb-3 border-b border-[color:var(--line-2)] pb-2">Technical Implementation</h5>
+                  <div className="font-mono text-[10px] text-[color:var(--mute-1)] space-y-2 leading-relaxed">
+                    <p className="text-[color:var(--mute-3)]">// State Hooks & LocalStorage Persistence</p>
+                    <p><span className="text-blue-600">const</span> [isLive, setIsLive] = <span className="text-amber-600">useState</span>(<span className="text-[#FF3F6C]">true</span>);</p>
+                    <p><span className="text-blue-600">const</span> handleSync = () => {`{`}</p>
+                    <p>&nbsp;&nbsp;console.<span className="text-amber-600">log</span>(<span className="text-green-600">"Data synced successfully"</span>);</p>
+                    <p>{`}`};</p>
+                  </div>
+                </div>
+                <div className="bg-[color:var(--white)] border border-[color:var(--line-2)] p-3 rounded-lg text-[9px] font-mono text-[color:var(--mute-2)] leading-normal mt-6 shadow-sm">
+                  Platform Architecture:<br/>
+                  React 18 + Tailwind CSS CDN v3 + LocalState Sync Management.
+                </div>
+              </div>
+            </div>
+          );
+      }
     }
 
     const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beyond the Algorithm · Women in Tech · Myntra</title>
+  <meta name="description" content="Beyond the Algorithm — a curated Women in Tech conference by Myntra. July 17, 2026. Register via Luma." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    @font-face { font-family: 'Parafina Trial'; src: url('fonts/ParafinaTrial-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Parafina Trial'; src: url('fonts/ParafinaTrial-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
+    :root {
+      --paper: #080612;
+      --ink: #ffffff;
+      --mute: rgba(255,255,255,0.62);
+      --mute-2: rgba(255,255,255,0.38);
+      --accent: #FF3F6C;
+      --line: rgba(255,255,255,0.10);
+      --container: 1120px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter Tight', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+    .h-display { font-family: 'Parafina Trial', 'Inter Tight', sans-serif; letter-spacing: -0.03em; line-height: 1.05; }
+    .gradient-text {
+      background: linear-gradient(95deg, #FF1FC0, #AE33FF, #00E5FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute-2);
+      margin: 0 0 10px;
+    }
+    .page-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 10%, rgba(255,31,192,0.20) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 55% at 90% 85%, rgba(174,51,255,0.16) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(0,229,255,0.06) 0%, transparent 60%),
+        linear-gradient(180deg, #120f24 0%, #080612 100%);
+    }
+    .page-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 20px; }
+    @media (min-width: 640px) { .container { padding: 0 32px; } }
+
+    /* ── Nav ── */
+    .site-nav {
+      position: sticky; top: 0; z-index: 50;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(8,6,18,0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .site-nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; min-height: 64px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; min-width: 0; }
+    .nav-brand img { height: 34px; width: auto; flex-shrink: 0; }
+    .nav-brand-text { min-width: 0; }
+    .nav-brand-title { font-size: 11px; font-weight: 800; color: #fff; letter-spacing: 0.04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-brand-sub { font-size: 10px; color: var(--mute-2); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+    .nav-links { display: none; align-items: center; gap: 4px; }
+    @media (min-width: 768px) { .nav-links { display: flex; } }
+    .nav-link {
+      font-size: 12px; font-weight: 700; color: var(--mute);
+      text-decoration: none; padding: 8px 12px; border-radius: 8px;
+      transition: color 150ms ease, background 150ms ease;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .nav-ghost {
+      display: none; font-size: 12px; font-weight: 700; color: var(--mute);
+      text-decoration: none; padding: 8px 12px; border-radius: 8px;
+      border: 1px solid var(--line); background: rgba(255,255,255,0.04);
+      transition: background 150ms ease, color 150ms ease;
+    }
+    @media (min-width: 640px) { .nav-ghost { display: inline-flex; align-items: center; gap: 6px; } }
+    .nav-ghost:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .nav-cta {
+      font-size: 12px; font-weight: 800; color: #fff; text-decoration: none;
+      padding: 9px 16px; border-radius: 8px;
+      background: var(--accent); border: 1px solid rgba(255,63,108,0.45);
+      transition: opacity 150ms ease;
+    }
+    .nav-cta:hover { opacity: 0.92; }
+
+    /* ── Hero ── */
+    .hero { position: relative; z-index: 1; padding: 48px 0 40px; }
+    @media (min-width: 768px) { .hero { padding: 72px 0 56px; } }
+    .hero-card {
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 24px; overflow: hidden;
+      background: rgba(255,255,255,0.03);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.45);
+    }
+    .hero-band {
+      padding: 14px 22px;
+      background: linear-gradient(95deg, rgba(255,31,192,0.35), rgba(174,51,255,0.30), rgba(0,229,255,0.18));
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 11px; border-radius: 999px;
+      font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.14); background: rgba(0,0,0,0.22); color: rgba(255,255,255,0.9);
+    }
+    .hero-body { padding: 32px 24px 36px; }
+    @media (min-width: 768px) { .hero-body { padding: 44px 40px 48px; } }
+    .hero-title { font-size: clamp(2.2rem, 7vw, 3.75rem); font-weight: 500; margin: 0 0 16px; max-width: 14ch; }
+    .hero-sub { font-size: 16px; color: var(--mute); line-height: 1.65; max-width: 620px; margin: 0 0 28px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 46px; padding: 0 24px; border-radius: 10px;
+      border: 1px solid rgba(255,63,108,0.45); background: var(--accent); color: #fff;
+      font-size: 14px; font-weight: 800; text-decoration: none; cursor: pointer;
+      transition: opacity 150ms ease, transform 150ms ease;
+    }
+    .btn-primary:hover { opacity: 0.92; transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 46px; padding: 0 20px; border-radius: 10px;
+      border: 1px solid var(--line); background: rgba(255,255,255,0.06); color: #fff;
+      font-size: 13px; font-weight: 700; text-decoration: none;
+      transition: background 150ms ease;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.10); }
+    .meta-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+    }
+    @media (min-width: 640px) { .meta-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .meta-item {
+      padding: 14px 16px; border-radius: 12px;
+      border: 1px solid var(--line); background: rgba(255,255,255,0.03);
+    }
+    .meta-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute-2); margin-bottom: 4px;
+    }
+    .meta-value { font-size: 13px; font-weight: 700; color: #fff; }
+
+    /* ── Sections ── */
+    .section-block { position: relative; z-index: 1; padding: 56px 0; }
+    .section-block--alt {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .section-head { margin-bottom: 28px; }
+    .section-title { font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 500; color: #fff; margin: 0; }
+    .section-desc { font-size: 14px; color: var(--mute); line-height: 1.65; max-width: 560px; margin: 12px 0 0; }
+    .about-grid {
+      display: grid; gap: 16px;
+    }
+    @media (min-width: 768px) { .about-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    .about-card {
+      padding: 22px 20px; border-radius: 16px;
+      border: 1px solid var(--line); background: rgba(255,255,255,0.02);
+    }
+    .about-card h3 { font-size: 15px; font-weight: 800; margin: 0 0 8px; color: #fff; }
+    .about-card p { font-size: 13px; line-height: 1.6; color: var(--mute); margin: 0; }
+
+    /* ── Speakers ── */
+    .speakers-head {
+      display: flex; flex-direction: column; gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (min-width: 640px) {
+      .speakers-head { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+    }
+    .speaker-controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .slider-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.9); cursor: pointer;
+      transition: background 200ms ease, border-color 200ms ease;
+    }
+    .slider-btn:hover { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.24); }
+    .speaker-slider {
+      display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+      scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px; margin: 0 -20px; padding-left: 20px; padding-right: 20px;
+    }
+    @media (min-width: 640px) { .speaker-slider { margin: 0 -32px; padding-left: 32px; padding-right: 32px; } }
+    .speaker-slider::-webkit-scrollbar { height: 0; }
+    .speaker-card {
+      position: relative; flex: 0 0 min(78vw, 300px); scroll-snap-align: start;
+      border-radius: 24px; overflow: hidden; min-height: 400px; aspect-ratio: 3/4;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.38);
+      transition: transform 320ms cubic-bezier(0.16,1,0.3,1), box-shadow 320ms ease;
+    }
+    @media (min-width: 640px) { .speaker-card { flex-basis: 300px; min-height: 420px; } }
+    .speaker-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 24px 56px rgba(0,0,0,0.5); }
+    .speaker-card__image {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .speaker-card__fallback {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-size: 36px; font-weight: 900; color: #fff;
+    }
+    .speaker-card__blur {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 58%; z-index: 2;
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      mask-image: linear-gradient(to top, #000 0%, #000 28%, rgba(0,0,0,0.55) 52%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, #000 0%, #000 28%, rgba(0,0,0,0.55) 52%, transparent 100%);
+      pointer-events: none;
+    }
+    .speaker-card__scrim {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 62%; z-index: 3;
+      background: linear-gradient(to top, rgba(8,6,18,0.88) 0%, rgba(8,6,18,0.5) 38%, transparent 100%);
+      pointer-events: none;
+    }
+    .speaker-card__tint {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 45%; z-index: 4; opacity: 0.5;
+      pointer-events: none;
+    }
+    .speaker-card__badge {
+      position: absolute; top: 14px; right: 14px; z-index: 6;
+      font-size: 9px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 999px; color: #fff;
+    }
+    .speaker-card__badge--keynote { background: linear-gradient(95deg, #FF1FC0, #AE33FF); box-shadow: 0 4px 12px rgba(255,31,192,0.35); }
+    .speaker-card__badge--tba { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); }
+    .speaker-card__content {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 5;
+      padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .speaker-card__label { font-size: 10px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255,255,255,0.45); }
+    .speaker-card__name { font-family: 'Parafina Trial', 'Inter Tight', sans-serif; font-size: 28px; font-weight: 900; color: #fff; line-height: 1.05; margin: 0; }
+    .speaker-card__role { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+    .speaker-card__footer { margin-top: 8px; display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
+    .speaker-card__topic { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.9); line-height: 1.35; }
+    .speaker-card__track {
+      flex-shrink: 0; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 999px; color: #fff;
+    }
+    .speakers-note {
+      margin-top: 16px; font-size: 12px; color: var(--mute-2);
+      font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em;
+    }
+
+    /* ── Agenda ── */
+    .agenda-grid { display: grid; gap: 12px; }
+    @media (min-width: 768px) { .agenda-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .agenda-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 18px; border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02);
+    }
+    .agenda-time {
+      flex-shrink: 0; font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; font-weight: 700; color: var(--accent); min-width: 72px; padding-top: 2px;
+    }
+    .agenda-item h3 { font-size: 14px; font-weight: 800; color: #fff; margin: 0 0 4px; }
+    .agenda-item p { font-size: 12px; color: var(--mute); margin: 0; line-height: 1.5; }
+
+    /* ── Register ── */
+    .register-panel {
+      border-radius: 20px; border: 1px solid rgba(255,63,108,0.30);
+      background: rgba(255,63,108,0.08); padding: 32px 24px; text-align: center;
+    }
+    @media (min-width: 640px) { .register-panel { padding: 40px 36px; } }
+    .register-panel h2 {
+      font-family: 'Parafina Trial', 'Inter Tight', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2rem); margin: 0 0 10px;
+    }
+    .register-panel > p { font-size: 14px; color: var(--mute); margin: 0 0 22px; line-height: 1.6; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .consent {
+      margin-top: 18px; font-size: 11px; line-height: 1.55; color: rgba(255,255,255,0.42);
+      max-width: 540px; margin-left: auto; margin-right: auto;
+    }
+    .luma-embed-wrap {
+      margin-top: 24px; border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--line); background: #0f0e1c; min-height: 420px;
+    }
+    .luma-embed-wrap iframe { width: 100%; min-height: 520px; border: 0; display: block; }
+    .luma-placeholder { padding: 48px 24px; text-align: center; color: var(--mute); font-size: 13px; line-height: 1.6; }
+
+    /* ── Footer ── */
+    .site-footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 32px 0 48px; margin-top: 16px;
+    }
+    .footer-inner {
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    @media (min-width: 640px) {
+      .footer-inner { flex-direction: row; align-items: center; justify-content: space-between; }
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+    .footer-links a {
+      font-size: 12px; font-weight: 700; color: var(--mute); text-decoration: none;
+      transition: color 150ms ease;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy {
+      font-size: 11px; color: var(--mute-2);
+      font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="page-grid" aria-hidden="true"></div>
+
+  <nav class="site-nav" aria-label="Primary">
+    <div class="container site-nav-inner">
+      <a href="#" class="nav-brand" aria-label="Beyond the Algorithm home">
+        <img src="images/Frame 632872.svg" alt="mynnovAIte" />
+        <div class="nav-brand-text">
+          <div class="nav-brand-title">Beyond the Algorithm</div>
+          <div class="nav-brand-sub">Women in Tech · July 17</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#speakers">Speakers</a>
+        <a class="nav-link" href="#agenda">Agenda</a>
+        <a class="nav-link" href="#register">Register</a>
+      </div>
+      <div class="nav-actions">
+        <a href="v2.html" class="nav-ghost">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Tech Week 2026
+        </a>
+        <a href="#register" class="nav-cta">Register</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="hero-band">
+          <span class="pill">Women in Tech</span>
+          <span class="pill">Standalone conference</span>
+          <span class="pill">Curated · 100 seats</span>
+        </div>
+        <div class="hero-body">
+          <p class="eyebrow">Myntra presents</p>
+          <h1 class="h-display hero-title">Beyond the <em class="gradient-text">Algorithm.</em></h1>
+          <p class="hero-sub">
+            A half-day conference for women coders and technology leaders — reshaping how the world sees Myntra: not just fashion, but serious engineering at scale.
+          </p>
+          <div class="hero-actions">
+            <a id="hero-register-btn" class="btn-primary" href="#register">Register on Luma</a>
+            <a class="btn-secondary" href="#speakers">Meet the speakers</a>
+          </div>
+          <div class="meta-grid">
+            <div class="meta-item"><p class="meta-label">Date</p><p class="meta-value">July 17, 2026</p></div>
+            <div class="meta-item"><p class="meta-label">Duration</p><p class="meta-value">3–4 hours</p></div>
+            <div class="meta-item"><p class="meta-label">Capacity</p><p class="meta-value">100 attendees</p></div>
+            <div class="meta-item"><p class="meta-label">Venue</p><p class="meta-value">Myntra campus</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section-block section-block--alt" id="about">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Why this exists</p>
+        <h2 class="h-display section-title">More than a <em class="gradient-text">side event.</em></h2>
+        <p class="section-desc">Brand-first, community-driven, and designed for women builders — engineers, designers, and product leaders exploring what's next in tech.</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>Curated attendance</h3>
+          <p>Open registration on Luma, followed by internal screening to confirm 100 participants from a larger applicant pool.</p>
+        </div>
+        <div class="about-card">
+          <h3>Employer brand</h3>
+          <p>Showcase Myntra as a technology company. Build a pipeline of future talent without making hiring the primary goal of the day.</p>
+        </div>
+        <div class="about-card">
+          <h3>Community &amp; consent</h3>
+          <p>Registration includes explicit consent for follow-up communications for up to six months — transparent and compliant.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" id="speakers">
+    <div class="container">
+      <div class="speakers-head">
+        <div>
+          <p class="eyebrow">Lineup</p>
+          <h2 class="h-display section-title">Speakers &amp; <em class="gradient-text">leaders.</em></h2>
+          <p class="section-desc">Keynotes and fireside chats with women leaders from Myntra and industry — more names being confirmed weekly.</p>
+        </div>
+        <div class="speaker-controls">
+          <button type="button" class="slider-btn" id="speaker-prev" aria-label="Previous speaker">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button" class="slider-btn" id="speaker-next" aria-label="Next speaker">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="speaker-slider" id="speaker-slider" role="list"></div>
+      <p class="speakers-note">+ External industry speakers · Final lineup publishing soon</p>
+    </div>
+  </section>
+
+  <section class="section-block section-block--alt" id="agenda">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Schedule</p>
+        <h2 class="h-display section-title">Half-day <em class="gradient-text">agenda.</em></h2>
+        <p class="section-desc">Three to four hours of inspiration, conversation, and connection.</p>
+      </div>
+      <div class="agenda-grid">
+        <div class="agenda-item">
+          <span class="agenda-time">10:00</span>
+          <div><h3>Welcome &amp; opening</h3><p>Context on Myntra's technology mission and the day's purpose.</p></div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-time">10:30</span>
+          <div><h3>Keynote</h3><p>Vision talk from a senior technology leader on building at scale.</p></div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-time">11:30</span>
+          <div><h3>Fireside chat I</h3><p>Career journeys, leadership, and lessons from women in engineering.</p></div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-time">12:15</span>
+          <div><h3>Fireside chat II</h3><p>Product, design, and cross-functional collaboration in tech orgs.</p></div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-time">13:00</span>
+          <div><h3>Networking &amp; close</h3><p>Curated mingling with Myntra teams, mentors, and fellow attendees.</p></div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-time">—</span>
+          <div><h3>Transport support</h3><p>Coordinated travel assistance for confirmed attendees where applicable.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" id="register">
+    <div class="container">
+      <div class="register-panel">
+        <p class="eyebrow" style="margin-bottom:12px">Apply for a seat</p>
+        <h2>Register on Luma</h2>
+        <p>Complete the application with your experience and domain interests. Selected participants receive confirmation from the organising team. Waitlist managed on Luma.</p>
+        <a id="luma-register-btn" class="btn-primary" href="#" target="_blank" rel="noopener noreferrer">
+          Register now
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <p class="consent">
+          By registering, you consent to Myntra storing and using your application data for event coordination and follow-up communications for up to <strong>6 months</strong>. You may request deletion by contacting the organising team.
+        </p>
+      </div>
+      <div class="luma-embed-wrap" id="luma-embed-container">
+        <div class="luma-placeholder" id="luma-placeholder">
+          Luma registration will appear here once the event page is published.<br />
+          Use the button above to open the Luma form directly.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="#about">About</a>
+        <a href="#speakers">Speakers</a>
+        <a href="#agenda">Agenda</a>
+        <a href="#register">Register</a>
+        <a href="v2.html">Tech Week 2026</a>
+      </div>
+      <p class="footer-copy">Myntra · Beyond the Algorithm · 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    const LUMA_EVENT_URL = 'https://lu.ma/beyond-the-algorithm-myntra';
+    const LUMA_EMBED_SLUG = '';
+
+    const WIT_SPEAKERS = [
+      { name: 'Dr. Ananya Krishnan', role: 'VP, AI & Personalisation', org: 'Myntra', topic: 'GenAI & the future of fashion tech', track: 'Keynote', initials: 'AK', g: ['#FF1FC0', '#AE33FF'], image: 'images/IMAGE 4.png', imagePosition: '48% 14%', keynote: true },
+      { name: 'Kavita Iyer', role: 'Staff SRE, Reliability', org: 'Myntra', topic: 'Leading through incidents & on-call culture', track: 'Fireside', initials: 'KI', g: ['#FF1FC0', '#00E5FF'], image: 'images/IMAGE 4.png', imagePosition: '50% 16%' },
+      { name: 'Priya Nair', role: 'Sr. Product Manager, Discovery', org: 'Myntra', topic: 'Building product at Myntra scale', track: 'Fireside', initials: 'PN', g: ['#00E5FF', '#FF1FC0'], image: 'images/IMAGE 12.png', imagePosition: '58% 20%' },
+      { name: 'Industry Leader', role: 'External speaker', org: 'TBA', topic: 'Women leading engineering orgs', track: 'Fireside', initials: 'IL', g: ['#AE33FF', '#00E5FF'], tba: true },
+      { name: 'Business Leader', role: 'External speaker', org: 'TBA', topic: 'Tech × business impact at scale', track: 'Fireside', initials: 'BL', g: ['#AE33FF', '#FF1FC0'], tba: true },
+    ];
+
+    function renderSpeakers() {
+      const slider = document.getElementById('speaker-slider');
+      if (!slider) return;
+      slider.innerHTML = WIT_SPEAKERS.map(function(sp) {
+        const imgBlock = sp.image
+          ? '<img src="' + sp.image + '" alt="' + sp.name + '" class="speaker-card__image" loading="lazy" style="object-position:' + (sp.imagePosition || '50% 15%') + '" />'
+          : '<div class="speaker-card__fallback" style="background:linear-gradient(160deg,' + sp.g[0] + ',' + sp.g[1] + ')">' + sp.initials + '</div>';
+        const badge = sp.keynote
+          ? '<span class="speaker-card__badge speaker-card__badge--keynote">Keynote</span>'
+          : sp.tba
+            ? '<span class="speaker-card__badge speaker-card__badge--tba">Announcing soon</span>'
+            : '';
+        return (
+          '<article class="speaker-card" role="listitem">' +
+            imgBlock +
+            '<div class="speaker-card__blur" aria-hidden="true"></div>' +
+            '<div class="speaker-card__scrim" aria-hidden="true"></div>' +
+            '<div class="speaker-card__tint" aria-hidden="true" style="background:linear-gradient(to top,' + sp.g[0] + '99 0%,transparent 100%)"></div>' +
+            badge +
+            '<div class="speaker-card__content">' +
+              '<p class="speaker-card__label">Speaker</p>' +
+              '<h3 class="speaker-card__name">' + sp.name + '</h3>' +
+              '<p class="speaker-card__role">' + sp.role + ' · ' + sp.org + '</p>' +
+              '<div class="speaker-card__footer">' +
+                '<p class="speaker-card__topic">' + sp.topic + '</p>' +
+                '<span class="speaker-card__track" style="background:' + sp.g[0] + '33;border:1px solid ' + sp.g[0] + '55">' + sp.track + '</span>' +
+              '</div>' +
+            '</div>' +
+          '</article>'
+        );
+      }).join('');
+    }
+
+    function initSpeakerSlider() {
+      const slider = document.getElementById('speaker-slider');
+      const prev = document.getElementById('speaker-prev');
+      const next = document.getElementById('speaker-next');
+      if (!slider) return;
+      const step = function(dir) {
+        const card = slider.querySelector('.speaker-card');
+        const gap = 20;
+        const amount = (card ? card.offsetWidth : 300) + gap;
+        slider.scrollBy({ left: dir * amount, behavior: 'smooth' });
+      };
+      if (prev) prev.addEventListener('click', function() { step(-1); });
+      if (next) next.addEventListener('click', function() { step(1); });
+    }
+
+    function initLuma() {
+      const btn = document.getElementById('luma-register-btn');
+      const heroBtn = document.getElementById('hero-register-btn');
+      const container = document.getElementById('luma-embed-container');
+      const placeholder = document.getElementById('luma-placeholder');
+
+      if (btn && LUMA_EVENT_URL) btn.href = LUMA_EVENT_URL;
+
+      if (LUMA_EMBED_SLUG && container) {
+        if (placeholder) placeholder.remove();
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://lu.ma/embed/' + LUMA_EMBED_SLUG;
+        iframe.title = 'Beyond the Algorithm registration';
+        iframe.loading = 'lazy';
+        iframe.allow = 'clipboard-write';
+        container.appendChild(iframe);
+      }
+    }
+
+    renderSpeakers();
+    initSpeakerSlider();
+    initLuma();
+  </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Parafina';
+    src: url('../fonts/ParafinaTrial-Black.otf') format('opentype');
+    font-weight: 900; font-style: normal; font-display: block;
+  }
+  @font-face {
+    font-family: 'Parafina';
+    src: url('../fonts/ParafinaTrial-Bold.otf') format('opentype');
+    font-weight: 700; font-style: normal; font-display: block;
+  }
+  html, body { margin:0; padding:0; background: transparent; }
+  body { width:1024px; height:1024px; overflow:hidden; }
+
+  .tile {
+    position: relative;
+    width: 1024px; height: 1024px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .tile::before, .tile::after {
+    content:""; position:absolute; border-radius:50%; pointer-events:none;
+    filter: blur(180px);
+  }
+  .tile::before {
+    width: 1100px; height: 1100px; background: var(--c1); opacity: 0.62;
+    top: var(--b1-t, auto); bottom: var(--b1-b, auto);
+    left: var(--b1-l, auto); right: var(--b1-r, auto);
+  }
+  .tile::after {
+    width: 950px; height: 950px; background: var(--c2); opacity: 0.50;
+    top: var(--b2-t, auto); bottom: var(--b2-b, auto);
+    left: var(--b2-l, auto); right: var(--b2-r, auto);
+  }
+  .mid {
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:720px; height:720px; border-radius:50%;
+    background: linear-gradient(135deg, var(--c1), var(--c2));
+    opacity: 0.18; filter: blur(220px); pointer-events:none;
+  }
+  .label {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    color: #f6e6ff;
+    text-align: center;
+    line-height: 0.82;
+    letter-spacing: -0.02em;
+    font-family: 'Parafina', system-ui, sans-serif;
+    font-weight: 900;
+    z-index: 2;
+    width: 92%;
+    text-shadow: 0 8px 40px rgba(0,0,0,0.35);
+  }
+  .label.silkscreen {
+    font-family: 'Silkscreen', monospace;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  /* Per-tile sizes */
+  .l-ai      { font-size: 720px; letter-spacing: -0.06em; }
+  .l-year    { font-size: 540px; line-height: 0.82; letter-spacing: -0.08em; }
+  .l-innov   { font-size: 260px; }
+  .l-growth  { font-size: 200px; }
+
+  /* Gradient schemes */
+  .gc-1 { --bg:#100820; --c1:#AE33FF; --c2:#FF1FC0;
+          --b1-t:-260px; --b1-r:-260px; --b2-b:-220px; --b2-l:-220px; }
+  .gc-2 { --bg:#001A28; --c1:#00E5FF; --c2:#AE33FF;
+          --b1-t:-240px; --b1-l:-240px; --b2-b:-260px; --b2-r:-200px; }
+  .gc-3 { --bg:#200010; --c1:#FF1FC0; --c2:#00E5FF;
+          --b1-b:-260px; --b1-r:-220px; --b2-t:-200px; --b2-l:-200px; }
+  .gc-4 { --bg:#080820; --c1:#AE33FF; --c2:#00E5FF;
+          --b1-t:-220px; --b1-r:-220px; --b2-b:-260px; --b2-l:-260px; }
+</style>
+</head>
+<body>
+<div class="tile" id="tile"><div class="mid"></div><div id="label" class="label"></div></div>
+<script>
+  const params = new URLSearchParams(location.search);
+  const variant = params.get('v') || 'ai';
+  const tile = document.getElementById('tile');
+  const label = document.getElementById('label');
+  const map = {
+    ai:     { cls:'gc-2', text:'AI',                lcls:'l-ai silkscreen', html:false },
+    year:   { cls:'gc-3', text:'20<br>26',          lcls:'l-year silkscreen', html:true },
+    innov:  { cls:'gc-4', text:'Innovate<br>to Lead', lcls:'l-innov', html:true },
+    growth: { cls:'gc-1', text:'Growth &amp;<br>conversion<br>hacks', lcls:'l-growth', html:true },
+  };
+  const cfg = map[variant];
+  tile.classList.add(cfg.cls);
+  label.className = 'label ' + cfg.lcls;
+  if (cfg.html) label.innerHTML = cfg.text; else label.textContent = cfg.text;
+
+  // Signal readiness once fonts are loaded
+  document.fonts.ready.then(() => {
+    // give one extra frame for layout
+    requestAnimationFrame(() => { document.title = 'READY'; });
+  });
+</script>
+</body>
+</html>

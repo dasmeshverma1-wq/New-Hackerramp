@@ -5446,6 +5446,21 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
     return '';
   };
 
+  const handleHeroRegisterClick = () => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+    if (!user) {
+      if (isMobile) {
+        setView('register');
+        window.scrollTo(0, 0);
+      } else {
+        onLogin();
+      }
+      return;
+    }
+    setView(userHasTeam ? 'teams' : 'register');
+    window.scrollTo(0, 0);
+  };
+
   // Mouse repulsion loop (desktop only — mobile uses stacked card carousel)
   useEffect(() => {
     if (heroVersion !== 'B' || !stageRef.current) return;
@@ -5649,16 +5664,7 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
                         style={{position:'relative', zIndex:1}}
                         onMouseEnter={()=>setBtnHovered(true)}
                         onMouseLeave={()=>setBtnHovered(false)}
-                        onClick={() => {
-                          if (!user) {
-                            if (isMobileHero) setView('register');
-                            else onLogin();
-                          } else if (userHasTeam) {
-                            setView('teams');
-                          } else {
-                            setView('register');
-                          }
-                        }}
+                        onClick={handleHeroRegisterClick}
                       >
                         {userHasTeam ? 'View Your Team' : 'Register Your Team'}
                       </button>
@@ -13199,10 +13205,13 @@ function LoadingScreen({ onComplete }) {
           alt="mynnovAIte"
           style={{
             position: 'absolute',
-            top: '50%', left: '48%',
+            top: '50%',
+            left: '50%',
             transform: 'translate(-50%,-50%)',
-            height: '81px',
+            height: isMobileLoad ? '50px' : '81px',
             width: 'auto',
+            maxWidth: isMobileLoad ? 'calc(100vw - 56px)' : 'none',
+            objectFit: 'contain',
             opacity: logoVisible ? 1 : 0,
             transition: 'opacity 400ms cubic-bezier(0.4,0,0.2,1)',
             pointerEvents: 'none',

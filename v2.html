@@ -2928,6 +2928,7 @@
     }
     .hero-b-stage-wrapper .tile.card-pos-3 {
       display: block !important;
+      transition: none !important;
       animation: swipeBack 1.0s cubic-bezier(0.25, 0.8, 0.25, 1) forwards !important;
     }
 
@@ -5318,10 +5319,14 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
   const [judgeRound, setJudgeRound] = useState(0);
   const [scorecardPage, setScorecardPage] = useState(1);
   const [btnHovered, setBtnHovered] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
+  const [isMobileHero, setIsMobileHero] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches);
+  const [isTouch, setIsTouch] = useState(() => typeof window !== 'undefined' && (window.matchMedia('(max-width: 1023px)').matches || window.matchMedia('(hover: none)').matches));
   useEffect(() => {
-    const mq = window.matchMedia('(hover: none), (max-width: 768px)');
-    const update = () => setIsTouch(mq.matches);
+    const mq = window.matchMedia('(max-width: 1023px)');
+    const update = () => {
+      setIsMobileHero(mq.matches);
+      setIsTouch(mq.matches || window.matchMedia('(hover: none)').matches);
+    };
     update();
     mq.addEventListener('change', update);
     return () => mq.removeEventListener('change', update);
@@ -5388,20 +5393,10 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
 
   // Mobile-only card stack — cycles all 15 wave images every 1s
   useEffect(() => {
-    if (heroVersion !== 'B') return;
-    const mq = window.matchMedia('(max-width: 1023px)');
-    const start = () => {
-      if (!mq.matches) return undefined;
-      return setInterval(() => setActiveTileIndex(prev => (prev + 1) % 15), 1000);
-    };
-    let timer = start();
-    const onChange = () => {
-      if (timer) clearInterval(timer);
-      timer = start();
-    };
-    mq.addEventListener('change', onChange);
-    return () => { if (timer) clearInterval(timer); mq.removeEventListener('change', onChange); };
-  }, [heroVersion]);
+    if (heroVersion !== 'B' || !isMobileHero) return;
+    const timer = setInterval(() => setActiveTileIndex(prev => (prev + 1) % 15), 1000);
+    return () => clearInterval(timer);
+  }, [heroVersion, isMobileHero]);
 
   const HERO_TILE_IDS = ['t1','t2','t3','t4','t5','t6','t7','t8','t9','t10','t11','t12','t13','t14','t15'];
   const getMobileTileClass = (tileId) => {
@@ -5411,7 +5406,7 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
     if (pos === 0) return 'card-pos-0';
     if (pos === 1) return 'card-pos-1';
     if (pos === 2) return 'card-pos-2';
-    if (pos === 14) return 'card-pos-3';
+    if (pos === 14) return `card-pos-3 swipe-${activeTileIndex}`;
     return '';
   };
 
@@ -5534,7 +5529,7 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
                     const tid = `t${i + 1}`;
                     return (
                       <div key={tid}
-                        className={`tile ${tid} ${hoveredTile === i ? 'is-hover' : ''} ${getMobileTileClass(tid)}`}
+                        className={`tile ${tid} ${hoveredTile === i ? 'is-hover' : ''} ${isMobileHero ? getMobileTileClass(tid) : ''}`}
                         onPointerEnter={() => setHoveredTile(i)}
                         onPointerLeave={() => setHoveredTile(null)}>
                         <div className="tile-inner">
@@ -5600,7 +5595,7 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
                         { w:244, h:90,  bg:'rgba(74,18,150,0.90)',br:'rgba(174,51,255,0.48)', blur:1.2},
                       ].map((ring, i, arr) => {
                         const dur = 2.6;
-                        const active = btnHovered || isTouch;
+                        const active = btnHovered || isMobileHero;
                         const ringScale = isTouch ? 0.38 : 1;
                         // Positive stagger: every ring starts the pulse at scale(1) (its resting state),
                         // so there's no snap on hover-in. Small stagger → starts quickly, still ripples.

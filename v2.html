@@ -287,8 +287,14 @@
     display: flex;
     flex-direction: column;
   }
+  .mkt-team-detail-panel > .modal-panel-header--close-only {
+    padding: 10px 12px 2px;
+    border-bottom: none;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
   .mkt-team-detail-panel > .modal-panel-body {
-    padding: 1rem 1.25rem 1.25rem;
+    padding: 0.5rem 1.25rem 1.25rem;
     overflow-y: auto;
     flex: 1;
     min-height: 0;
@@ -943,6 +949,7 @@
   .team-progress-dot--done { background: #22c55e; box-shadow: 0 0 0 1px rgba(34,197,94,0.4); }
   .team-progress-dot--active { background: #FF1FC0; box-shadow: 0 0 0 1px rgba(255,31,192,0.5), 0 0 10px rgba(255,31,192,0.35); }
   .team-progress-dot--locked { opacity: 0.55; }
+  .team-progress-dot--complete { background: #FFD54A; box-shadow: 0 0 0 1px rgba(255,213,74,0.45), 0 0 10px rgba(255,213,74,0.25); }
   .admin-stat-card {
     border: 1px solid rgba(255,255,255,0.10);
     border-radius: 10px;
@@ -1399,6 +1406,37 @@
     gap: 10px;
     flex: 1;
     min-height: 0;
+  }
+  .mkt-team-seeking-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 11px;
+    border-radius: 9999px;
+    background: rgba(174, 51, 255, 0.12);
+    border: 1px solid rgba(174, 51, 255, 0.28);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .mkt-team-status-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    flex-shrink: 0;
+  }
+  .mkt-team-status-chip--full {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fcd34d;
+    border: 1px solid rgba(245, 158, 11, 0.28);
   }
   .mkt-idea-card {
     min-height: 0;
@@ -4227,7 +4265,7 @@ function Countdown({ targetDate }) {
 
 /* ──────────── MODAL ──────────── */
 
-function Modal({ open, onClose, title, size='md', dark=false, panelClass='', children }) {
+function Modal({ open, onClose, title, size='md', dark=false, panelClass='', showClose=false, children }) {
   useEffect(()=>{ document.body.style.overflow=open?'hidden':''; return()=>{document.body.style.overflow=''}; },[open]);
   if (!open) return null;
   // 'drawer' = slides in from right (popup feel, no full-screen scrim)
@@ -4260,9 +4298,9 @@ function Modal({ open, onClose, title, size='md', dark=false, panelClass='', chi
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center modal-scrim px-4 py-6" onClick={onClose}>
       <div className={`w-full ${w} ${panelCls}`} onClick={e=>e.stopPropagation()}>
-        {title && (
-          <div className={headerCls}>
-            <h2 className={titleCls}>{title}</h2>
+        {(title || showClose) && (
+          <div className={`${headerCls}${!title && showClose ? ' modal-panel-header--close-only' : ''}`}>
+            {title ? <h2 className={titleCls}>{title}</h2> : <span aria-hidden="true" />}
             <button onClick={onClose} className={closeCls} aria-label="Close">&times;</button>
           </div>
         )}
@@ -7528,6 +7566,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
 
   const sendJoin = () => {
     if (!user) { onLoginOpen(); return; }
+    if (userTeam) return;
     setJoinRequests(p=>[...p,{
       id:`JR${Date.now()}`, teamId:joinT.id, teamName:joinT.name,
       userId:user.id, userName:user.name, userDept:user.dept,
@@ -7659,8 +7698,10 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
             : 'Explore community-submitted ideas, upvote the strongest concepts, and submit your own for review.'}
           actions={tab==='partners'
             ? [
-                <button key="create-team" onClick={()=>{ if(!user){onLoginOpen();}else{setView('register');} }}
-                  className="bg-[color:var(--ink)] hover:bg-[color:var(--ink-3)] text-white px-4 py-2 rounded-[8px] text-[12px] font-[900] btn">{!user ? 'Sign in to create team' : 'Create team'}</button>,
+                ...(!userTeam ? [
+                  <button key="create-team" onClick={()=>{ if(!user){onLoginOpen();}else{setView('register');} }}
+                    className="bg-[color:var(--ink)] hover:bg-[color:var(--ink-3)] text-white px-4 py-2 rounded-[8px] text-[12px] font-[900] btn">{!user ? 'Sign in to create team' : 'Create team'}</button>,
+                ] : []),
                 <button key="rules" onClick={()=>setShowRules(true)}
                   className="bg-white border border-[color:var(--line-2)] hover:border-[color:var(--ink)] text-[color:var(--ink)] px-4 py-2 rounded-[8px] text-[12px] font-[900] btn">Team RULE</button>,
               ]
@@ -7855,11 +7896,17 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
               const r1Q = teamQualifiedInRound(pubResults, 'R1', userTeam.id);
               const r2Q = teamQualifiedInRound(pubResults, 'R2', userTeam.id);
               const r3Q = teamQualifiedInRound(pubResults, 'R3', userTeam.id);
+              const teamCompleteSub = userTeam.open === false
+                ? `Squad locked — ${userTeam.members.length}/${cap} members ready to compete.`
+                : slotsLeft > 0
+                  ? `Squad live — ${userTeam.members.length}/${cap} members · ${slotsLeft} open slot${slotsLeft > 1 ? 's' : ''}.`
+                  : `Squad at full capacity — ${userTeam.members.length}/${cap} members.`;
               const progressSteps = [
                 { key:'reg', label:'Registration Confirmed', sub:'Team registered successfully', dates: schedReg ? `${schedReg.start} – ${schedReg.end}` : '', dot:'done', muted:false },
-                { key:'r1', label:'Round 1 — Ideation', sub: pubResults?.R1?.published ? (r1Q ? 'Qualified for Round 2' : 'Not selected for Round 2') : (schedR1?.status === 'live' ? 'In progress — submit your brief' : 'Awaiting jury evaluation'), dates: schedR1 ? `${schedR1.start} – ${schedR1.end}` : '', dot: pubResults?.R1?.published ? 'done' : (schedR1?.status === 'live' ? 'active' : 'locked'), score: userTeam.scores?.r1, muted: !pubResults?.R1?.published && schedR1?.status !== 'live' },
-                { key:'r2', label:'Round 2 — Prototype', sub: pubResults?.R2?.published ? (r2Q ? 'Qualified for Grand Finale' : 'Not selected') : 'Locked until Round 1 results publish', dates: schedR2 ? `${schedR2.start} – ${schedR2.end}` : '', dot: pubResults?.R2?.published ? 'done' : 'locked', score: userTeam.scores?.r2, muted: !pubResults?.R2?.published },
-                { key:'r3', label:'Grand Finale', sub: pubResults?.R3?.published ? (r3Q ? 'Finalist — results published' : 'Participated') : 'Locked until Round 2 completes', dates: schedFinale ? `${schedFinale.start} – ${schedFinale.end}` : '', dot: pubResults?.R3?.published ? 'done' : 'locked', score: userTeam.scores?.r3, muted: !pubResults?.R3?.published },
+                { key:'complete', label:'Team Completed', sub: teamCompleteSub, dates: '', dot:'complete', muted:false },
+                { key:'r1', label:'Round 1 — Ideation', sub: pubResults?.R1?.published ? (r1Q ? 'Qualified for Round 2' : 'Not selected for Round 2') : (schedR1?.status === 'live' ? 'In progress — submit your brief' : 'Awaiting jury evaluation'), dates: schedR1 ? `${schedR1.start} – ${schedR1.end}` : '', dot: pubResults?.R1?.published ? 'done' : (schedR1?.status === 'live' ? 'active' : 'locked'), muted: !pubResults?.R1?.published && schedR1?.status !== 'live' },
+                { key:'r2', label:'Round 2 — Prototype', sub: pubResults?.R2?.published ? (r2Q ? 'Qualified for Grand Finale' : 'Not selected') : 'Locked until Round 1 results publish', dates: schedR2 ? `${schedR2.start} – ${schedR2.end}` : '', dot: pubResults?.R2?.published ? 'done' : 'locked', muted: !pubResults?.R2?.published },
+                { key:'r3', label:'Grand Finale', sub: pubResults?.R3?.published ? (r3Q ? 'Finalist — results published' : 'Participated') : 'Locked until Round 2 completes', dates: schedFinale ? `${schedFinale.start} – ${schedFinale.end}` : '', dot: pubResults?.R3?.published ? 'done' : 'locked', muted: !pubResults?.R3?.published },
               ];
               const memberIsNew = (memberId) => teamJoined.some(r => r.userId === memberId && isRecentJoin(r.resolvedAt));
               return (
@@ -8086,9 +8133,6 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
                           <p className={`text-[12px] font-[800] ${step.muted ? 'text-[color:var(--mute-3)]' : 'text-[color:var(--ink)]'}`}>{step.label}</p>
                           <p className={`text-[10.5px] mt-0.5 leading-snug ${step.muted ? 'text-[color:var(--mute-4)]' : 'text-[color:var(--mute-2)]'}`}>{step.sub}</p>
                           {step.dates && <p className="text-[10px] font-mono text-[color:var(--mute-4)] mt-1">{step.dates}</p>}
-                          {step.score != null && (
-                            <span className="inline-block mt-1.5 px-2 py-0.5 bg-indigo-500/15 border border-indigo-400/25 text-indigo-300 font-mono text-[9px] font-bold rounded-[4px]">{step.score} pts</span>
-                          )}
                         </div>
                       ))}
                     </div>
@@ -8104,11 +8148,14 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
               {filteredAll.slice((mktPage-1)*MKT_PAGE_SIZE, mktPage*MKT_PAGE_SIZE).map((team,idx)=>{
                 const req=myReqTo(team);
                 const full=isFull(team);
-                const closed=isRecruitingClosed(team);
                 const joinable=isJoinable(team);
                 const score=matchScore(team);
                 const headerColors = getHeaderColors(team.theme);
                 const cardDate = getCardDate(team.id);
+                const seekingTags = joinable ? [
+                  ...(team.rolesNeeded||[]).map(r => `Seeking ${r}`),
+                  ...(team.skillsNeeded||[]),
+                ] : [];
                 return (
                   <div key={team.id} onClick={()=>setDetailT(team)}
                     className={`mkt-team-card rounded-[16px] flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 min-w-0 ${gc(idx)} hover:shadow-[0_16px_32px_rgba(0,0,0,0.28)] border cursor-pointer group`}>
@@ -8128,24 +8175,13 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
                         <p className="text-[10px] text-[color:var(--mute-3)] font-semibold uppercase tracking-wider mb-1">
                           {team.leadName ? `Led by ${team.leadName} (${team.leadDept || 'Hacker'})` : 'Registered Team'}
                         </p>
-                        <div className="flex items-start justify-between gap-2.5">
-                          <h3 className="text-[16px] font-[800] text-[color:var(--ink)] leading-snug flex-1 group-hover:text-[color:var(--accent)] transition-colors line-clamp-1">
+                        <div className="flex items-start justify-between gap-3">
+                          <h3 className="text-[20px] font-[900] text-[color:var(--ink)] leading-tight flex-1 group-hover:text-[color:var(--accent)] transition-colors line-clamp-2 tracking-tight">
                             {team.name}
                           </h3>
-                          <div className="flex flex-col items-end gap-1 flex-shrink-0">
-                            <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
-                              closed
-                                ? 'bg-white/8 text-[color:var(--mute-2)] border-white/15'
-                                : 'bg-blue-500/15 text-blue-300 border-blue-400/25'
-                            }`}>
-                              {closed ? 'Closed' : 'Open'}
-                            </span>
-                            {full && (
-                              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-400/25">
-                                Full
-                              </span>
-                            )}
-                          </div>
+                          {full && (
+                            <span className="mkt-team-status-chip mkt-team-status-chip--full">Full</span>
+                          )}
                         </div>
                       </div>
 
@@ -8161,24 +8197,12 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
                         </p>
                       )}
 
-                      {/* Seeking details (Roles & Skills) — unified chip style */}
-                      {joinable && (
-                        <div className="flex flex-wrap gap-1.5 mt-1">
-                          {team.rolesNeeded?.map(r=>(
-                            <span key={r} className="px-2.5 py-1 bg-[color:var(--accent)]/12 border border-[color:var(--accent)]/30 text-[color:var(--accent)] text-[9px] font-[800] rounded-[4px] uppercase tracking-wide whitespace-nowrap">
-                              Seeking {r}
-                            </span>
+                      {/* Seeking tags — only on open teams actively recruiting with defined needs */}
+                      {seekingTags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5">
+                          {seekingTags.map(tag => (
+                            <span key={tag} className="mkt-team-seeking-chip">{tag}</span>
                           ))}
-                          {team.skillsNeeded?.slice(0, 2).map(s=>(
-                            <span key={s} className="px-2.5 py-1 bg-[color:var(--accent)]/12 border border-[color:var(--accent)]/30 text-[color:var(--accent)] text-[9px] font-[800] rounded-[4px] uppercase tracking-wide whitespace-nowrap">
-                              {s}
-                            </span>
-                          ))}
-                          {team.skillsNeeded && team.skillsNeeded.length > 2 && (
-                            <span className="px-2 py-1 bg-[color:var(--accent)]/12 border border-[color:var(--accent)]/30 text-[color:var(--accent)] text-[9px] font-[800] rounded-[4px] whitespace-nowrap">
-                              +{team.skillsNeeded.length - 2}
-                            </span>
-                          )}
                         </div>
                       )}
 
@@ -8194,7 +8218,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
                             </span>
                           </div>
                           {joinable && score > 0 && (
-                            <span className={`text-[9px] font-[800] px-2 py-0.5 rounded-[4px] border ${
+                            <span className={`text-[9px] font-[800] px-2.5 py-1 rounded-full border ${
                               score >= 50
                                 ? 'bg-emerald-500/15 text-emerald-300 border-emerald-400/25'
                                 : 'bg-white/[0.06] text-[color:var(--mute-2)] border-white/12'
@@ -8204,7 +8228,8 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
                           )}
                         </div>
 
-                        {/* Right: CTA Join button */}
+                        {/* Right: CTA Join button — hidden once user is on a team */}
+                        {!userTeam && (
                         <button 
                           onClick={e => {
                             e.stopPropagation(); 
@@ -8229,6 +8254,10 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
                         >
                           {!joinable ? (joinBlockReason(team) === 'full' ? 'Full' : 'Not accepting') : !user ? 'Sign in to request' : req?.status === 'pending' ? 'Pending' : req?.status === 'accepted' ? 'Accepted' : 'Request to join'}
                         </button>
+                        )}
+                        {userTeam && userTeam.id === team.id && (
+                          <span className="text-[10px] font-[800] uppercase tracking-wider text-emerald-300/90">Your team</span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -8662,7 +8691,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
         </div>
       )}
 
-      <Modal open={!!detailT} onClose={()=>setDetailT(null)} title="" size="md" dark panelClass="mkt-team-detail-panel">
+      <Modal open={!!detailT} onClose={()=>setDetailT(null)} title="" size="md" dark showClose panelClass="mkt-team-detail-panel">
         {detailT && (() => {
           const full = isFull(detailT);
           const closed = isRecruitingClosed(detailT);
@@ -8680,17 +8709,13 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
           ];
           const openJoinFlow = () => {
             if (!user) { onLoginOpen?.(); return; }
+            if (userTeam) return;
             setDetailT(null);
             setJoinT(detailT);
           };
           return (
-            <div className="space-y-3.5 relative">
-              <button type="button" onClick={()=>setDetailT(null)} aria-label="Close"
-                className="absolute -top-0.5 right-0 z-10 w-7 h-7 rounded-[8px] flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 btn text-lg leading-none">
-                &times;
-              </button>
-
-              <div className="rounded-[12px] overflow-hidden border border-white/10 pr-8">
+            <div className="space-y-3.5">
+              <div className="rounded-[12px] overflow-hidden border border-white/10">
                 <div
                   style={{ background: headerColors.gradient, color: headerColors.text }}
                   className="px-4 py-2.5 flex justify-between items-center font-mono font-bold text-[10px] uppercase tracking-wider"
@@ -8767,7 +8792,11 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
               </div>
 
               <div className="pt-0.5">
-                {!joinable ? (
+                {userTeam ? (
+                  userTeam.id === detailT.id
+                    ? <p className="text-[11px] font-[700] text-emerald-300/90 text-center py-2">This is your team.</p>
+                    : null
+                ) : !joinable ? (
                   <button type="button" disabled className="mkt-team-modal-cta mkt-team-modal-cta--disabled btn">
                     {joinBlockReason(detailT) === 'full' ? 'Team is full' : 'Team is closed to requests'}
                   </button>

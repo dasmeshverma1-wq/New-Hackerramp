@@ -1202,14 +1202,54 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px;
+    gap: 10px;
+    padding: 12px 16px;
     background: rgba(255,255,255,0.02);
     border-bottom: 1px solid rgba(255,255,255,0.10);
     text-align: left;
-    transition: background 200ms ease, border-color 200ms ease;
-    cursor: pointer;
+    transition: background 200ms ease, border-color 200ms ease, opacity 200ms ease;
   }
+  .admin-section-head--hidden { opacity: 0.72; }
   .admin-section-head:hover { background: rgba(255,255,255,0.05); }
+  .admin-section-head-toggle {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: left;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: inherit;
+    padding: 0;
+  }
+  .admin-home-eye-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: rgba(255,255,255,0.88);
+    cursor: pointer;
+    transition: opacity 150ms ease, color 150ms ease;
+  }
+  .admin-home-eye-btn:hover { opacity: 0.82; }
+  .admin-home-eye-btn--on {
+    color: rgba(255,255,255,0.88);
+  }
+  .admin-home-eye-btn--off {
+    color: rgba(255,255,255,0.38);
+  }
+  .admin-home-eye-btn--off:hover {
+    color: rgba(255,255,255,0.55);
+    opacity: 1;
+  }
   .admin-surface {
     border: 1px solid rgba(255,255,255,0.10);
     border-radius: 10px;
@@ -1803,6 +1843,51 @@
   }
   @media (min-width: 640px) {
     .home-section-controls { align-self: auto; }
+  }
+  .home-section-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .home-leaderboard-wrap {
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.02);
+    overflow: hidden;
+  }
+  @media (max-width: 639px) {
+    .home-leaderboard-wrap { overflow-x: visible; }
+    .home-leaderboard-wrap table { min-width: 0 !important; width: 100%; }
+    .home-leaderboard-wrap .lb-col-theme,
+    .home-leaderboard-wrap .lb-col-total { display: none; }
+    .home-leaderboard-wrap th,
+    .home-leaderboard-wrap td { padding: 10px 8px !important; }
+    .home-section-controls .home-slider-btn { display: none; }
+  }
+  .admin-hero-preview {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: #080612;
+    min-height: 168px;
+    position: relative;
+  }
+  .admin-hero-preview__label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.55);
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.14);
   }
   .home-slider-wrap { position: relative; }
   .home-slider-track,
@@ -2815,6 +2900,10 @@
       top: 0 !important;
       margin: 0 !important;
       animation: none !important;
+      --wy: 0px !important;
+      --base: 0px !important;
+      --push-x: 0px !important;
+      --push-y: 0px !important;
     }
     .hero-b-stage-wrapper .tile.card-pos-0 {
       display: block !important;
@@ -2914,6 +3003,11 @@
       align-items: center !important;
       justify-content: center !important;
     }
+    .hero-b-stage-wrapper .hero-register-wrap {
+      padding: 12px 0 !important;
+      width: auto !important;
+      max-width: 100% !important;
+    }
     .hero-b-stage-wrapper .btn-sub-row {
       display: flex !important;
       flex-direction: row !important;
@@ -2921,6 +3015,12 @@
       width: 100% !important;
       align-items: center !important;
       justify-content: center !important;
+    }
+    .hero-b-stage-wrapper .btn-row .btn-primary {
+      width: auto !important;
+      min-width: 0 !important;
+      padding: 12px 28px !important;
+      white-space: nowrap !important;
     }
     .hero-b-stage-wrapper .btn {
       width: 100% !important;
@@ -3061,6 +3161,19 @@ const INIT_JOIN_REQUESTS = [
 /* ── TEAM SIZE CONFIG ── (configurable) */
 const TEAM_MAX_SIZE     = 5;   // upper bound for total members
 const TEAM_MIN_TO_CLOSE = 2;   // minimum members required to mark a team Closed
+
+const DEFAULT_HOME_VISIBILITY = {
+  stats: true,
+  howItWorks: true,
+  winners: true,
+  ideas: true,
+  schedule: true,
+  speakers: true,
+  rewards: true,
+  leaderboard: true,
+  witBanner: true,
+  hallOfFame: true,
+};
 
 /* ── CARD UI CHARACTER LIMITS ── keep copy within card bounds */
 const CARD_LIMITS = {
@@ -3220,14 +3333,35 @@ const DEMO_BOOTHS = [
   { id:'DB04', title:'Dockins Deploy Studio',    org:'Engineering',    speaker:'Vineet Shah',        location:'Maker Bay · Booth 2',       hours:'Jul 10–12 · 9 AM – 4 PM', image:'images/IMAGE 9.png', desc:'Blue-green releases, canary deploys, and platform automation walkthroughs.' },
 ];
 
-const SPEAKERS = [
-  { name:'Dr. Ananya Krishnan', role:'VP, AI & Personalisation', org:'Myntra',        topic:'GenAI for Fashion Tech',          track:'Gen AI',  initials:'AK', g:['#FF1FC0','#AE33FF'], image:'images/IMAGE 4.png',  imagePosition:'48% 14%', keynote:true  },
-  { name:'Sanjay Gupta',        role:'Director, Information Security', org:'Myntra',   topic:'InfoSec Compliance 101',          track:'InfoSec', initials:'SG', g:['#00E5FF','#AE33FF'], image:'images/IMAGE 12.png', imagePosition:'52% 12%'               },
-  { name:'Rahul Dev',           role:'Principal Engineer, ML Platform', org:'Myntra', topic:'Prompt Engineering Masterclass',  track:'Gen AI',  initials:'RD', g:['#AE33FF','#FF1FC0'], image:'images/IMAGE 4.png',  imagePosition:'56% 18%'               },
-  { name:'Kavita Iyer',         role:'Staff SRE, Reliability', org:'Myntra',          topic:'On-Call Culture & Incident Mgmt', track:'SRE',     initials:'KI', g:['#FF1FC0','#00E5FF'], image:'images/IMAGE 4.png',  imagePosition:'50% 16%'               },
-  { name:'Vineet Shah',         role:'Lead, Platform Engineering', org:'Myntra',      topic:'Blue-Green & Canary Deployments', track:'Dockins', initials:'VS', g:['#AE33FF','#00E5FF'], image:'images/IMAGE 12.png', imagePosition:'44% 15%'               },
-  { name:'Priya Nair',          role:'Sr. Product Manager, Discovery', org:'Myntra',  topic:'Building for Scale at Myntra',     track:'Product', initials:'PN', g:['#00E5FF','#FF1FC0'], image:'images/IMAGE 12.png', imagePosition:'58% 20%'               },
+const DEFAULT_SPEAKERS = [
+  { id:'SPK1', name:'Dr. Ananya Krishnan', role:'VP, AI & Personalisation', org:'Myntra',        topic:'GenAI for Fashion Tech',          track:'Gen AI',  initials:'AK', g:['#FF1FC0','#AE33FF'], image:'images/IMAGE 4.png',  imagePosition:'48% 14%', keynote:true  },
+  { id:'SPK2', name:'Sanjay Gupta',        role:'Director, Information Security', org:'Myntra',   topic:'InfoSec Compliance 101',          track:'InfoSec', initials:'SG', g:['#00E5FF','#AE33FF'], image:'images/IMAGE 12.png', imagePosition:'52% 12%', keynote:false },
+  { id:'SPK3', name:'Rahul Dev',           role:'Principal Engineer, ML Platform', org:'Myntra', topic:'Prompt Engineering Masterclass',  track:'Gen AI',  initials:'RD', g:['#AE33FF','#FF1FC0'], image:'images/IMAGE 4.png',  imagePosition:'56% 18%', keynote:false },
+  { id:'SPK4', name:'Kavita Iyer',         role:'Staff SRE, Reliability', org:'Myntra',          topic:'On-Call Culture & Incident Mgmt', track:'SRE',     initials:'KI', g:['#FF1FC0','#00E5FF'], image:'images/IMAGE 4.png',  imagePosition:'50% 16%', keynote:false },
+  { id:'SPK5', name:'Vineet Shah',         role:'Lead, Platform Engineering', org:'Myntra',      topic:'Blue-Green & Canary Deployments', track:'Dockins', initials:'VS', g:['#AE33FF','#00E5FF'], image:'images/IMAGE 12.png', imagePosition:'44% 15%', keynote:false },
+  { id:'SPK6', name:'Priya Nair',          role:'Sr. Product Manager, Discovery', org:'Myntra',  topic:'Building for Scale at Myntra',     track:'Product', initials:'PN', g:['#00E5FF','#FF1FC0'], image:'images/IMAGE 12.png', imagePosition:'58% 20%', keynote:false },
 ];
+
+const DEFAULT_HOME_STATS_STRIP = [
+  { label:'Teams registered', value:'118', color:'var(--accent)' },
+  { label:'Participants', value:'412', color:'var(--c-purple)' },
+  { label:'Departments', value:'12', color:'var(--c-blue)' },
+  { label:'Ideas in Bazaar', value:'209', color:'var(--c-amber)' },
+  { label:'Sessions planned', value:'24', color:'var(--c-cyan)' },
+  { label:'Prize pool (₹)', value:'12L+', color:'var(--c-fuchsia)' },
+];
+
+const DEFAULT_HALL_OF_FAME = {
+  edition:'Tech Week · Nov 2025',
+  tagline:'"InnovAIte to Lead"',
+  tagLabel:'Last Year Winners',
+  cards:[
+    { id:'HOF1', badge:'🏆', award:'Winning Team', team:'Vit-On Catalog', project:'StyleMatch — Explore different outfit styles before you buy', members:'Chinmay Nanda, Sukhneer Singh, Kedar Vaidya, Tipu Ali Khan & Apoorva Ira', c1:'#FFB6DD', c2:'#FFD4EA' },
+    { id:'HOF2', badge:'🥈', award:'Runner-Up', team:'CacheMeIfYouCan', project:'Smart caching layer for fashion discovery personalisation', members:'Azeem, Himanshu, Manas, Satish & Pooshkar', c1:'#C8BCFF', c2:'#DDD4FF' },
+  ],
+};
+
+const SPEAKER_TRACKS = ['Gen AI', 'InfoSec', 'SRE', 'Dockins', 'Product'];
 
 const DAILY_EVENTS = [
   { date:'2026-06-16', title:'Registration Opens',              type:'reg',          time:'9:00 AM',   desc:'Portal goes live. Teams can register from today.' },
@@ -5179,7 +5313,8 @@ function WomenInTechBanner() {
   );
 }
 
-function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+','Participants'],['3','Rounds'],['₹2L+','Prize pool'],['5','Themes']], setView, heroVersion, user, onLogin, onLogout, theme, setTheme, ideas=[], setIdeas=()=>{}, problemCount=0 }) {
+function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFAULT_HOME_STATS_STRIP, speakers = DEFAULT_SPEAKERS, hallOfFame = DEFAULT_HALL_OF_FAME, setView, heroVersion, user, onLogin, onLogout, theme, setTheme, ideas=[], setIdeas=()=>{}, problemCount=0, homeVisibility=DEFAULT_HOME_VISIBILITY }) {
+  const vis = { ...DEFAULT_HOME_VISIBILITY, ...homeVisibility };
   const [judgeRound, setJudgeRound] = useState(0);
   const [scorecardPage, setScorecardPage] = useState(1);
   const [btnHovered, setBtnHovered] = useState(false);
@@ -5251,26 +5386,39 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
     return () => clearInterval(timer);
   }, [heroVersion]);
 
-  // Card swiping interval (2.5s) for mobile stack
+  // Mobile-only card stack — cycles all 15 wave images every 1s
   useEffect(() => {
     if (heroVersion !== 'B') return;
-    const timer = setInterval(() => {
-      setActiveTileIndex((prev) => (prev + 1) % 4);
-    }, 2500);
-    return () => clearInterval(timer);
+    const mq = window.matchMedia('(max-width: 1023px)');
+    const start = () => {
+      if (!mq.matches) return undefined;
+      return setInterval(() => setActiveTileIndex(prev => (prev + 1) % 15), 1000);
+    };
+    let timer = start();
+    const onChange = () => {
+      if (timer) clearInterval(timer);
+      timer = start();
+    };
+    mq.addEventListener('change', onChange);
+    return () => { if (timer) clearInterval(timer); mq.removeEventListener('change', onChange); };
   }, [heroVersion]);
 
+  const HERO_TILE_IDS = ['t1','t2','t3','t4','t5','t6','t7','t8','t9','t10','t11','t12','t13','t14','t15'];
   const getMobileTileClass = (tileId) => {
-    const mobileTiles = ['t2', 't5', 't3', 't10'];
-    const idx = mobileTiles.indexOf(tileId);
+    const idx = HERO_TILE_IDS.indexOf(tileId);
     if (idx === -1) return '';
-    const pos = (idx - activeTileIndex + 4) % 4;
-    return `card-pos-${pos}`;
+    const pos = (idx - activeTileIndex + 15) % 15;
+    if (pos === 0) return 'card-pos-0';
+    if (pos === 1) return 'card-pos-1';
+    if (pos === 2) return 'card-pos-2';
+    if (pos === 14) return 'card-pos-3';
+    return '';
   };
 
-  // Mouse repulsion loop
+  // Mouse repulsion loop (desktop only — mobile uses stacked card carousel)
   useEffect(() => {
     if (heroVersion !== 'B' || !stageRef.current) return;
+    if (window.innerWidth < 1024) return;
 
     const decos = Array.from(stageRef.current.querySelectorAll('.deco'));
     const tiles = Array.from(stageRef.current.querySelectorAll('.tile'));
@@ -5382,51 +5530,19 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
                 <div className="deco deco-large"><img src="images/deco-large.png" alt="" /></div>
 
                 <div className="tiles" id="tiles">
-                  <div className={`tile t1 ${hoveredTile === 0 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(0)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 1.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t2 ${hoveredTile === 1 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(1)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 2.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t3 ${hoveredTile === 2 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(2)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 3.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t4 ${hoveredTile === 3 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(3)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 4.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t5 ${hoveredTile === 4 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(4)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 5.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t6 ${hoveredTile === 5 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(5)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 6.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t7 ${hoveredTile === 6 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(6)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 7.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t8 ${hoveredTile === 7 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(7)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 8.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t9 ${hoveredTile === 8 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(8)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 9.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t10 ${hoveredTile === 9 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(9)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 10.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t11 ${hoveredTile === 10 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(10)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 11.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t12 ${hoveredTile === 11 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(11)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 12.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t13 ${hoveredTile === 12 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(12)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 13.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t14 ${hoveredTile === 13 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(13)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 14.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
-                  <div className={`tile t15 ${hoveredTile === 14 ? 'is-hover' : ''}`} onPointerEnter={() => setHoveredTile(14)} onPointerLeave={() => setHoveredTile(null)}>
-                    <div className="tile-inner"><img src="images/IMAGE 15.png" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" /></div>
-                  </div>
+                  {Array.from({length:15}, (_, i) => {
+                    const tid = `t${i + 1}`;
+                    return (
+                      <div key={tid}
+                        className={`tile ${tid} ${hoveredTile === i ? 'is-hover' : ''} ${getMobileTileClass(tid)}`}
+                        onPointerEnter={() => setHoveredTile(i)}
+                        onPointerLeave={() => setHoveredTile(null)}>
+                        <div className="tile-inner">
+                          <img src={`images/IMAGE ${i + 1}.png`} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -5466,10 +5582,14 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
                     </div>
                   </div>
                   <p className="desc">Pick a real problem from the frontline. Build it. Pitch it. Ship it in 14 days and win big.</p>
-                  <div className="btn-row" style={{flexDirection:'column', marginTop:'32px'}}>
+                  <div className="btn-row" style={{flexDirection:'column', marginTop: isTouch ? '20px' : '32px'}}>
                     {/* Concentric filled rings */}
                     <div
-                      style={{position:'relative', display:'inline-flex', alignItems:'center', justifyContent:'center', padding:'18px 220px'}}
+                      className="hero-register-wrap"
+                      style={{
+                        position:'relative', display:'inline-flex', alignItems:'center', justifyContent:'center',
+                        padding: isTouch ? '10px 0' : '18px 220px',
+                      }}
                     >
                       {/* Outermost → innermost: each fills behind the next, creating layered depth */}
                       {[
@@ -5481,13 +5601,14 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
                       ].map((ring, i, arr) => {
                         const dur = 2.6;
                         const active = btnHovered || isTouch;
+                        const ringScale = isTouch ? 0.38 : 1;
                         // Positive stagger: every ring starts the pulse at scale(1) (its resting state),
                         // so there's no snap on hover-in. Small stagger → starts quickly, still ripples.
                         const delay = (arr.length - 1 - i) * 0.06;
                         return (
                         <div key={i} style={{
                           position:'absolute',
-                          width:`${ring.w}px`, height:`${ring.h}px`,
+                          width:`${Math.round(ring.w * ringScale)}px`, height:`${Math.round(ring.h * ringScale)}px`,
                           borderRadius:'999px',
                           background:ring.bg,
                           border:`1.5px solid ${ring.br}`,
@@ -5589,44 +5710,37 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
       <div className="relative z-20 w-full" style={{background:'#080612', boxShadow:'0 -8px 30px rgba(0,0,0,0.40)'}}>
         <div className="home-container divide-y divide-[color:var(--line)]">
           {/* Stats strip */}
-          <section className="home-section border-b border-[color:var(--line)]">
+          {vis.stats && <section className="home-section border-b border-[color:var(--line)]">
             <div className="grid grid-cols-3 lg:grid-cols-6 gap-y-10">
-              {[
-                { label:'Teams registered', value:'118', color:'var(--accent)' },
-                { label:'Participants', value:'412', color:'var(--c-purple)' },
-                { label:'Departments', value:'12', color:'var(--c-blue)' },
-                { label:'Ideas in Bazaar', value:'209', color:'var(--c-amber)' },
-                { label:'Sessions planned', value:'24', color:'var(--c-cyan)' },
-                { label:'Prize pool (₹)', value:'12L+', color:'var(--c-fuchsia)' }
-              ].map((s,i) => (
-                <div key={s.label} className={`px-2 lg:px-4 ${i !== 5 ? 'lg:border-r' : ''} border-[color:var(--line)]`}>
+              {homeStatsStrip.map((s,i) => (
+                <div key={s.label} className={`px-2 lg:px-4 ${i !== homeStatsStrip.length - 1 ? 'lg:border-r' : ''} border-[color:var(--line)]`}>
                   <div className="w-7 h-[2px] rounded-full mb-4" style={{background: s.color}}></div>
                   <div className="font-sans font-[950] text-4xl lg:text-5xl tracking-tight leading-none text-[color:var(--ink)]"><AnimatedCounter value={s.value} /></div>
                   <div className="font-mono text-[10px] uppercase tracking-widest mt-3 text-[color:var(--mute-1)]">{s.label}</div>
                 </div>
               ))}
             </div>
-        </section>
+        </section>}
         </div>
       </div>
 
       {/* ── 0. HOW IT WORKS (Full-bleed for sticky scroll) ── */}
-      <div className="relative z-20 w-full" style={{background:'#080612'}}>
+      {vis.howItWorks && <div className="relative z-20 w-full" style={{background:'#080612'}}>
         <HowItWorksSection />
-      </div>
+      </div>}
 
       {/* Re-open Scrollable Content Wrapper */}
       <div className="relative z-20 w-full" style={{background:'#080612'}}>
         <div className="home-container divide-y divide-[color:var(--line)]">
 
       {/* ── 1. CURRENT WINNERS ── */}
-      <CurrentWinnersWidget winners={winners} />
+      {vis.winners && <CurrentWinnersWidget winners={winners} />}
 
       {/* ── 2. IDEAS CAROUSEL ── */}
-      <IdeaCarousel teams={teams} ideas={ideas} setIdeas={setIdeas} user={user} setView={setView} />
+      {vis.ideas && <IdeaCarousel teams={teams} ideas={ideas} setIdeas={setIdeas} user={user} setView={setView} />}
 
       {/* ── 2. EVENT DATES ── (dark themed, full-bleed 100vw) */}
-      <div className="home-section-bleed" style={{
+      {vis.schedule && <div className="home-section-bleed" style={{
         position:'relative', left:'50%', right:'50%',
         marginLeft:'-50vw', marginRight:'-50vw', width:'100vw',
         background:'#080612',
@@ -5654,10 +5768,10 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
 
           <SchedulePhaseStrip />
         </div>
-      </div>
+      </div>}
 
       {/* ── 2.5 SPEAKERS ── (dark themed, full-bleed 100vw) */}
-      <div className="home-section-bleed" style={{
+      {vis.speakers && <div className="home-section-bleed" style={{
         position:'relative', left:'50%', right:'50%',
         marginLeft:'-50vw', marginRight:'-50vw', width:'100vw',
         background:'#080612',
@@ -5704,8 +5818,8 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
               ref={speakerSliderRef}
               className="home-speaker-slider hide-scrollbar -mx-4 sm:-mx-8 px-4 sm:px-8"
             >
-              {SPEAKERS.map((sp, i) => (
-                <div key={i} className="home-speaker-card group">
+              {speakers.map((sp, i) => (
+                <div key={sp.id || sp.name || i} className="home-speaker-card group">
                   {sp.image ? (
                     <img
                       src={sp.image}
@@ -5766,10 +5880,10 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
             </div>
           </div>
         </div>
-      </div>
+      </div>}
 
       {/* ── 3. REWARDS ── (dark themed, full-bleed 100vw) */}
-      <div className="home-section-bleed" style={{
+      {vis.rewards && <div className="home-section-bleed" style={{
         position:'relative', left:'50%', right:'50%',
         marginLeft:'-50vw', marginRight:'-50vw', width:'100vw',
         background:'#080612',
@@ -5930,18 +6044,30 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
             );
           })()}
         </div>
-      </div>
+      </div>}
 
       {/* ── FULL SCOREBOARD OVERLAY ── */}
 
       {/* ── 6. SCORECARD ── (top 5 preview) */}
-      <section className="home-section">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-          <h2 className="h-display home-section-heading text-3xl sm:text-4xl md:text-5xl">
-            Leaderboard.
-          </h2>
-          <span className="text-[11px] font-mono text-[color:var(--mute-3)] uppercase tracking-widest">Top 5 Teams</span>
-        </div>
+      {vis.leaderboard && <section className="home-section">
+        {isTouch ? (
+          <div className="home-section-header-row">
+            <h2 className="h-display home-section-heading text-2xl sm:text-4xl md:text-5xl mb-0">
+              Leaderboard.
+            </h2>
+            <button type="button" onClick={()=>setView('scoreboard')} className="home-section-cta">
+              View all
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+            <h2 className="h-display home-section-heading text-3xl sm:text-4xl md:text-5xl">
+              Leaderboard.
+            </h2>
+            <span className="text-[11px] font-mono text-[color:var(--mute-3)] uppercase tracking-widest">Top 5 Teams</span>
+          </div>
+        )}
         {(() => {
           const hasAnyScores = sortedTeams.some(t=>(t.scores?.r1||0)+(t.scores?.r2||0)+(t.scores?.r3||0)>0);
           const userTeam = user ? teams.find(t=>t.members?.includes(user.id)) : null;
@@ -5988,7 +6114,7 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
                     {isYou && <span style={{fontSize:'9px',fontWeight:900,color:'#FF3F6C',background:'rgba(255,63,108,0.15)',padding:'2px 6px',borderRadius:'4px',letterSpacing:'0.05em'}}>YOU</span>}
                   </div>
                 </td>
-                <td className="py-2.5 px-3 sm:py-3.5 sm:px-4">
+                <td className="lb-col-theme py-2.5 px-3 sm:py-3.5 sm:px-4">
                   <span className="text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-[5px] inline-block"
                     style={{background:tc.bg,color:tc.text,border:`1px solid ${tc.border}`}}>
                     {t.theme}
@@ -6001,7 +6127,7 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
                       : <span className="text-[11px] sm:text-[12px] text-[color:var(--mute-4)]">—</span>}
                   </td>
                 ))}
-                <td className="py-2.5 px-3 sm:py-3.5 sm:px-4 text-center">
+                <td className="lb-col-total py-2.5 px-3 sm:py-3.5 sm:px-4 text-center">
                   <span style={{fontSize:'14px',fontWeight:900,color:isYou?'#FF3F6C':isFirst?'#FF3F6C':isSecond?'#AE33FF':isThird?'#F59E0B':'rgba(255,255,255,0.85)'}}>{total||'—'}</span>
                 </td>
               </tr>
@@ -6009,12 +6135,20 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
           };
 
           return (
-            <div className="overflow-x-auto rounded-[16px] shadow-sm" style={{border:'1px solid rgba(255,255,255,0.09)',background:'rgba(255,255,255,0.02)'}}>
-              <table className="w-full min-w-[500px]">
+            <div className={`home-leaderboard-wrap shadow-sm ${isTouch ? '' : 'overflow-x-auto'}`}>
+              <table className={`w-full ${isTouch ? '' : 'min-w-[500px]'}`}>
                 <thead>
                   <tr style={{borderBottom:'1px solid rgba(255,255,255,0.07)',background:'rgba(255,255,255,0.03)'}}>
-                    {['#','Team','Theme','R1','R2','R3','Total'].map((h,i)=>(
-                      <th key={h} className={`${i<=1?'text-left':'text-center'} py-2.5 px-3 sm:py-3 sm:px-4 text-[10px] sm:text-[11px] text-[color:var(--mute-3)] font-semibold uppercase tracking-[0.08em]`}>{h}</th>
+                    {[
+                      { h:'#', cls:'' },
+                      { h:'Team', cls:'' },
+                      { h:'Theme', cls:'lb-col-theme' },
+                      { h:'R1', cls:'' },
+                      { h:'R2', cls:'' },
+                      { h:'R3', cls:'' },
+                      { h:'Total', cls:'lb-col-total' },
+                    ].map(({h, cls}, i)=>(
+                      <th key={h} className={`${cls} ${i<=1?'text-left':'text-center'} py-2.5 px-3 sm:py-3 sm:px-4 text-[10px] sm:text-[11px] text-[color:var(--mute-3)] font-semibold uppercase tracking-[0.08em]`}>{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -6034,20 +6168,24 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
           );
         })()}
 
-        {/* Show Full Scoreboard CTA */}
-        <div className="flex items-center justify-between mt-5">
-          <p className="text-[11px] text-[color:var(--mute-4)] font-mono">Top 5 of {sortedTeams.length} teams{problemCount>0?` · ${problemCount} challenge${problemCount!==1?'s':''} active`:' · Scores arriving soon'}</p>
-          <button type="button" onClick={()=>setView('scoreboard')} className="home-section-cta">
-            View all {sortedTeams.length} teams
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-        </div>
-      </section>
+        {!isTouch && (
+          <div className="flex items-center justify-between mt-5">
+            <p className="text-[11px] text-[color:var(--mute-4)] font-mono">Top 5 of {sortedTeams.length} teams{problemCount>0?` · ${problemCount} challenge${problemCount!==1?'s':''} active`:' · Scores arriving soon'}</p>
+            <button type="button" onClick={()=>setView('scoreboard')} className="home-section-cta">
+              View all {sortedTeams.length} teams
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        )}
+        {isTouch && (
+          <p className="text-[11px] text-[color:var(--mute-4)] font-mono mt-4 text-center">Top 5 of {sortedTeams.length} teams · R1, R2, R3 only</p>
+        )}
+      </section>}
 
-      <WomenInTechBanner />
+      {vis.witBanner && <WomenInTechBanner />}
 
       {/* ── PAST EDITIONS ── (pastel gradient theme) */}
-      <section className="home-section relative">
+      {vis.hallOfFame && <section className="home-section relative">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 relative">
           <h2 className="h-display home-section-heading text-3xl sm:text-4xl md:text-5xl">
             Hall of <em className="home-heading-accent">Fame.</em>
@@ -6064,18 +6202,15 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
 
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between items-start gap-2.5 pb-6 border-b relative" style={{borderColor:'rgba(255,255,255,0.08)'}}>
               <div>
-                <p className="text-[15px] font-[900] text-[color:var(--ink)]">Tech Week · Nov 2025</p>
-                <p className="text-[12.5px] text-[color:var(--accent)] font-semibold mt-0.5">"InnovAIte to Lead"</p>
+                <p className="text-[15px] font-[900] text-[color:var(--ink)]">{hallOfFame.edition}</p>
+                <p className="text-[12.5px] text-[color:var(--accent)] font-semibold mt-0.5">{hallOfFame.tagline}</p>
               </div>
-              <Tag label="Last Year Winners" variant="orange" small />
+              <Tag label={hallOfFame.tagLabel || 'Last Year Winners'} variant="orange" small />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 relative">
-              {[
-                { badge:'🏆', award:'Winning Team',  team:'Vit-On Catalog',    project:'StyleMatch — Explore different outfit styles before you buy', members:'Chinmay Nanda, Sukhneer Singh, Kedar Vaidya, Tipu Ali Khan & Apoorva Ira', c1:'#FFB6DD', c2:'#FFD4EA' },
-                { badge:'🥈', award:'Runner-Up',     team:'CacheMeIfYouCan',   project:'Smart caching layer for fashion discovery personalisation',   members:'Azeem, Himanshu, Manas, Satish & Pooshkar', c1:'#C8BCFF', c2:'#DDD4FF' },
-              ].map((w,i)=>(
-                <div key={i} className="flex flex-col justify-between p-6 rounded-[12px] shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group relative overflow-hidden"
+              {(hallOfFame.cards || []).map((w,i)=>(
+                <div key={w.id || i} className="flex flex-col justify-between p-6 rounded-[12px] shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group relative overflow-hidden"
                   style={{background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.08)', backdropFilter:'blur(8px)'}}>
                   {/* Inner accent orbs */}
                   <div style={{position:'absolute', top:'-60px', right:'-50px', width:'200px', height:'200px', borderRadius:'50%', background:w.c1, opacity:0.22, filter:'blur(50px)', pointerEvents:'none'}} />
@@ -6099,7 +6234,7 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStats = [['500+',
           </div>
 
         </div>
-      </section>
+      </section>}
 
         {/* End Centered content block and Scrollable Content Wrapper */}
         </div>
@@ -9245,14 +9380,79 @@ function AdminPager({ page, setPage, total, pageSize, label = 'items' }) {
   );
 }
 
-function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, setProblems, pubResults, setPubResults, ideas, setIdeas, winners, setWinners, homeStats, setHomeStats, toast, quizzes, setQuizzes, quizResults, heroVersion, setHeroVersion, themes=THEMES, setThemes=()=>{}, qualInstructions='', setQualInstructions=()=>{}, panels=[], setPanels=()=>{}, judgeScores=[], setJudgeScores=()=>{}, activeRound='R1', setActiveRound=()=>{}, joinRequests=[], setJoinRequests=()=>{} }) {
+const HOME_VISIBILITY_LABELS = {
+  stats: 'Stats strip',
+  howItWorks: 'How it works',
+  winners: 'Current winners',
+  ideas: 'Ideas carousel',
+  schedule: 'Event dates',
+  speakers: 'Speakers & mentors',
+  rewards: 'Prizes & rewards',
+  leaderboard: 'Leaderboard preview',
+  witBanner: 'Women in Tech banner',
+  hallOfFame: 'Hall of Fame',
+};
+
+function AdminHomeEyeBtn({ visKey, homeVisibility, toggleHomeSection, toast }) {
+  if (!visKey) return null;
+  const visible = !!homeVisibility[visKey];
+  const label = HOME_VISIBILITY_LABELS[visKey] || visKey;
+  return (
+    <button
+      type="button"
+      title={visible ? `Visible on homepage — click to hide ${label}` : `Hidden on homepage — click to show ${label}`}
+      aria-label={visible ? `Hide ${label}` : `Show ${label}`}
+      className={`admin-home-eye-btn btn ${visible ? 'admin-home-eye-btn--on' : 'admin-home-eye-btn--off'}`}
+      aria-pressed={visible}
+      onClick={e => {
+        e.stopPropagation();
+        const next = !visible;
+        toggleHomeSection(visKey, next);
+        toast(`${label} ${next ? 'shown' : 'hidden'} on homepage`, 'success');
+      }}
+    >
+      {visible ? (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      ) : (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+          <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
+          <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+          <line x1="2" y1="2" x2="22" y2="22"/>
+        </svg>
+      )}
+    </button>
+  );
+}
+
+function AdminContentSectionHead({ sectionLabel, title, open, onToggle, visKey, homeVisibility, toggleHomeSection, toast }) {
+  const hiddenOnHome = visKey && !homeVisibility[visKey];
+  return (
+    <div className={`admin-section-head${hiddenOnHome ? ' admin-section-head--hidden' : ''}`}>
+      <AdminHomeEyeBtn visKey={visKey} homeVisibility={homeVisibility} toggleHomeSection={toggleHomeSection} toast={toast} />
+      <button type="button" onClick={onToggle} className="admin-section-head-toggle">
+        <div className="flex items-center gap-2 min-w-0">
+          {sectionLabel && <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-[color:var(--mute-3)] flex-shrink-0">{sectionLabel}</span>}
+          <span className={`text-[13px] font-[800] truncate ${hiddenOnHome ? 'text-[color:var(--mute-3)]' : 'text-[color:var(--ink)]'}`}>{title}</span>
+        </div>
+        <span className="text-[11px] font-[800] text-[color:var(--mute-3)] uppercase tracking-wider flex-shrink-0">{open ? 'Collapse ▲' : 'Expand ▼'}</span>
+      </button>
+    </div>
+  );
+}
+
+function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, setProblems, pubResults, setPubResults, ideas, setIdeas, winners, setWinners, homeStatsStrip, setHomeStatsStrip, speakers, setSpeakers, hallOfFame, setHallOfFame, sessions, setSessions, toast, quizzes, setQuizzes, quizResults, heroVersion, setHeroVersion, themes=THEMES, setThemes=()=>{}, qualInstructions='', setQualInstructions=()=>{}, panels=[], setPanels=()=>{}, judgeScores=[], setJudgeScores=()=>{}, activeRound='R1', setActiveRound=()=>{}, joinRequests=[], setJoinRequests=()=>{}, homeVisibility=DEFAULT_HOME_VISIBILITY, setHomeVisibility=()=>{} }) {
   // Section + sub-tab state
   const isJury = user?.role === 'jury';
   const [section, setSection] = useState(isJury ? 'judging' : 'overview');
   const [jTab,    setJTab]    = useState(isJury ? 'scoring' : 'panels');
   const [cTab,    setCTab]    = useState('hero');
   const [mTab,    setMTab]    = useState('teams');
-  const [openSections, setOpenSections] = useState({ hero: true, stats: false, winners: false, ideas: false, schedule: false, rewards: false, calendar: false });
+  const [openSections, setOpenSections] = useState({ hero: true, stats: false, howItWorks: false, winners: false, ideas: false, schedule: false, speakers: false, learnSessions: false, rewards: false, leaderboard: false, witBanner: false, hallOfFame: false, calendar: false });
+  const toggleHomeSection = (key, on) => setHomeVisibility(v => ({ ...v, [key]: on }));
   const [editSched, setEditSched] = useState(false);
   const [schedLocal, setSchedLocal] = useState([...SCHEDULE]);
   const [editRew, setEditRew] = useState(false);
@@ -9279,7 +9479,15 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
 
   // Content — Stats
   const [editStats, setEditStats] = useState(false);
-  const [statsLocal, setStatsLocal] = useState(homeStats);
+  const [statsLocal, setStatsLocal] = useState(homeStatsStrip);
+  const [editSpkId, setEditSpkId] = useState(null);
+  const [showNewSpk, setShowNewSpk] = useState(false);
+  const [spkDraft, setSpkDraft] = useState({});
+  const [editHof, setEditHof] = useState(false);
+  const [hofLocal, setHofLocal] = useState(hallOfFame);
+  const [editSess, setEditSess] = useState(false);
+  const [sessLocal, setSessLocal] = useState(sessions);
+  const blankSpeaker = () => ({ name:'', role:'', org:'Myntra', topic:'', track:'Gen AI', initials:'', g:['#FF1FC0','#AE33FF'], image:'', imagePosition:'50% 15%', keynote:false });
 
   // Content — Ideas edit
   const [editIdeaId, setEditIdeaId] = useState(null);
@@ -10509,136 +10717,126 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
         <div className="space-y-6 fade-up">
           <div>
             <h3 className="text-[14px] font-[900] text-[color:var(--ink)] uppercase tracking-[0.1em]">Homepage Content Manager</h3>
-            <p className="text-[12px] text-[color:var(--mute-3)] mt-0.5">Customize different sections of your live hackathon landing page from a vertical stack editor.</p>
+            <p className="text-[12px] text-[color:var(--mute-3)] mt-0.5">Sections follow the same top-to-bottom order as the live homepage. Use the eye on the left to show or hide a block.</p>
           </div>
 
           <div className="space-y-4">
 
-            {/* 1. Hero Section Layout */}
+            {/* 01 · Hero */}
             <div className="admin-panel-card">
-              <button 
-                onClick={() => setOpenSections(prev => ({ ...prev, hero: !prev.hero }))}
-                className="admin-section-head">
-                <div className="flex items-center gap-2">
-                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-[color:var(--mute-3)]">Section 1:</span>
-                  <span className="text-[13px] font-[800] text-[color:var(--ink)]">Hero Layout Settings</span>
-                </div>
-                <span className="text-[11px] font-[800] text-[color:var(--mute-3)] uppercase tracking-wider">{openSections.hero ? 'Collapse ▲' : 'Expand ▼'}</span>
-              </button>
+              <AdminContentSectionHead
+                sectionLabel="Home 01 ·"
+                title="Hero"
+                open={openSections.hero}
+                onToggle={() => setOpenSections(prev => ({ ...prev, hero: !prev.hero }))}
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
 
               {openSections.hero && (
-                <div className="p-5 space-y-4 fade-up">
-                  <p className="text-[12px] text-[color:var(--mute-3)]">Select which hero section visual theme is displayed to participants on the homepage.</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
-                    {/* Version A Card */}
-                    <div onClick={()=>{setHeroVersion('A'); toast('Hero Section switched to Version A (Immersive Video)','success');}} 
-                      className={`cursor-pointer rounded-xl border p-5 transition-all flex flex-col justify-between ${heroVersion==='A'?'border-[#FF3F6C] bg-[#fff5f7] shadow-[0_4px_16px_rgba(255,63,108,0.12)]':'admin-surface hover:border-white/20'}`}>
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-0.5 bg-black text-white rounded">Version A</span>
-                          {heroVersion==='A' && <span className="text-[9px] font-bold text-[#FF3F6C] uppercase tracking-widest">● Active Live</span>}
-                        </div>
-                        
-                        <h4 className="text-[13px] font-[800] text-[color:var(--ink)]">Immersive Video Hero</h4>
-                        <p className="text-[11px] text-[color:var(--mute-2)] leading-relaxed">
-                          Features a full-bleed looping video background with code/terminal matrix elements, centered typography, and a dark minimal aesthetic.
-                        </p>
-
-                        <div className="h-28 rounded-lg bg-[color:var(--ink)] relative overflow-hidden border border-black/10 flex items-center justify-center">
-                          <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-screen" src="videos/Desktop 2026.05.19 - 18.38.38.mp4" />
-                          <div className="absolute inset-0 dot-grid opacity-30" />
-                          <div className="relative z-10 text-center space-y-1 text-[8px] transform scale-90">
-                            <div className="eyebrow eyebrow-white scale-75">Myntra Tech Week</div>
-                            <div className="font-extrabold text-white text-[9px]">BUILD THE FUTURE</div>
-                            <div className="px-2 py-0.5 bg-white text-black font-semibold rounded-[2px] inline-block scale-75">Register</div>
+                <div className="p-5 space-y-5 fade-up">
+                  <div className="admin-surface p-4 rounded-[10px] space-y-2">
+                    <p className="text-[12px] font-[800] text-[color:var(--ink)]">Why this panel exists</p>
+                    <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">
+                      The homepage hero is the first impression for Tech Week. Pick the layout that matches the campaign phase — immersive video for launch buzz, or the wave collage for the active hackathon. Promotional banners below are managed separately and can be hidden without changing the hero.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    {[
+                      {
+                        id: 'A',
+                        badge: 'Version A',
+                        title: 'Immersive Video Hero',
+                        desc: 'Full-viewport video backdrop, centered headline, and minimal CTAs. Best for broad awareness and registration pushes.',
+                        preview: (
+                          <div className="admin-hero-preview">
+                            <span className="admin-hero-preview__label">Live preview</span>
+                            <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-70" src="videos/Desktop 2026.05.19 - 18.38.38.mp4" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                            <div className="absolute inset-0 flex flex-col items-center justify-end pb-5 px-4 text-center">
+                              <p className="text-[8px] uppercase tracking-[0.2em] text-white/50 mb-1">Myntra Tech Week</p>
+                              <p className="text-[13px] font-[900] text-white leading-tight">Build the future<br/>of fashion commerce</p>
+                              <div className="mt-2 px-3 py-1 rounded-full bg-white text-black text-[8px] font-[800]">Register your team</div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-
-                      <div className="mt-5 pt-3 border-t border-[color:var(--line)] flex justify-end">
-                        <span className={`text-[11px] font-bold uppercase tracking-wider ${heroVersion==='A'?'text-[#FF3F6C]':'text-[color:var(--mute-3)]'}`}>
-                          {heroVersion==='A' ? 'Currently Live' : 'Click to Activate'}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Version B Card */}
-                    <div onClick={()=>{setHeroVersion('B'); toast('Hero Section switched to Version B (Shaped Collage)','success');}} 
-                      className={`cursor-pointer rounded-xl border p-5 transition-all flex flex-col justify-between ${heroVersion==='B'?'border-[#FF3F6C] bg-[#fff5f7] shadow-[0_4px_16px_rgba(255,63,108,0.12)]':'admin-surface hover:border-white/20'}`}>
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-0.5 bg-black text-white rounded">Version B</span>
-                          {heroVersion==='B' && <span className="text-[9px] font-bold text-[#FF3F6C] uppercase tracking-widest">● Active Live</span>}
-                        </div>
-
-                        <h4 className="text-[13px] font-[800] text-[color:var(--ink)]">Typography & Shaped Collage Hero</h4>
-                        <p className="text-[11px] text-[color:var(--mute-2)] leading-relaxed">
-                          Features large stylized side-running 'TECH' & 'WEEK' typography, organic floating graphic collage cards, and a glassmorphic central capsule.
-                        </p>
-
-                        <div className="h-28 rounded-lg bg-[color:var(--ink)] relative overflow-hidden border border-black/10 flex items-center justify-center">
-                          <div className="absolute inset-0 dot-grid opacity-20" />
-                          <div className="absolute top-1/2 left-2 -translate-y-1/2 text-[10px] font-black text-white/10 uppercase tracking-widest" style={{writingMode:'vertical-lr'}}>TECH</div>
-                          <div className="absolute top-1/2 right-2 -translate-y-1/2 text-[10px] font-black text-white/10 uppercase tracking-widest" style={{writingMode:'vertical-lr'}}>WEEK</div>
-                          
-                          <div className="absolute top-2 left-8 w-6 h-6 bg-rose-500/20 border border-rose-500/30 rounded rotate-12 scale-75" />
-                          <div className="absolute bottom-2 right-8 w-6 h-6 bg-blue-500/20 border border-blue-500/30 rounded-full scale-75" />
-                          
-                          <div className="relative z-10 text-center p-2 rounded border border-white/10 bg-black/40 backdrop-blur-[2px] scale-75 space-y-1">
-                            <div className="eyebrow eyebrow-white scale-75">Myntra Tech Week</div>
-                            <div className="font-extrabold text-white text-[9px]">BUILD THE FUTURE</div>
-                            <div className="px-2 py-0.5 bg-[color:var(--accent)] text-white font-semibold rounded-[2px] inline-block scale-75">Register</div>
+                        ),
+                      },
+                      {
+                        id: 'B',
+                        badge: 'Version B',
+                        title: 'Wave Collage Hero',
+                        desc: 'Animated image wave, countdown, and register CTA. Best during active team formation and jury rounds.',
+                        preview: (
+                          <div className="admin-hero-preview">
+                            <span className="admin-hero-preview__label">Live preview</span>
+                            <div className="absolute inset-0 bg-[#0a0608]" />
+                            <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-1">
+                              {[0,1,2].map(i => (
+                                <div key={i} style={{width:36,height:36,borderRadius:8,background:`linear-gradient(135deg, ${['#FF1FC0','#AE33FF','#00E5FF'][i]}, transparent)`, transform:`rotate(${(i-1)*8}deg) translateY(${i*4}px)`, border:'1px solid rgba(255,255,255,0.15)'}} />
+                              ))}
+                            </div>
+                            <div className="absolute bottom-4 left-0 right-0 text-center px-3">
+                              <p className="text-[7px] text-white/40 uppercase tracking-widest mb-1">Grand finale begins in</p>
+                              <p className="text-[11px] font-[900] text-white">38 · 23 · 45 · 51</p>
+                              <div className="mt-2 mx-auto w-fit px-3 py-1 rounded-full bg-white text-black text-[8px] font-[800]">Register your team</div>
+                            </div>
                           </div>
+                        ),
+                      },
+                    ].map(opt => (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        onClick={() => { setHeroVersion(opt.id); toast(`Hero switched to ${opt.title}`, 'success'); }}
+                        className={`text-left rounded-xl border p-4 transition-all ${heroVersion===opt.id ? 'border-[#FF3F6C] bg-[rgba(255,63,108,0.08)] shadow-[0_4px_16px_rgba(255,63,108,0.12)]' : 'admin-surface hover:border-white/20'}`}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-0.5 bg-black text-white rounded">{opt.badge}</span>
+                          {heroVersion===opt.id && <span className="text-[9px] font-bold text-[#FF3F6C] uppercase tracking-widest">● Active</span>}
                         </div>
-                      </div>
-
-                      <div className="mt-5 pt-3 border-t border-[color:var(--line)] flex justify-end">
-                        <span className={`text-[11px] font-bold uppercase tracking-wider ${heroVersion==='B'?'text-[#FF3F6C]':'text-[color:var(--mute-3)]'}`}>
-                          {heroVersion==='B' ? 'Currently Live' : 'Click to Activate'}
-                        </span>
-                      </div>
-                    </div>
-
+                        <h4 className="text-[13px] font-[800] text-[color:var(--ink)] mb-1">{opt.title}</h4>
+                        <p className="text-[11px] text-[color:var(--mute-2)] leading-relaxed mb-3">{opt.desc}</p>
+                        {opt.preview}
+                      </button>
+                    ))}
                   </div>
                 </div>
               )}
             </div>
 
-            {/* 2. Key Hackathon Stats */}
+            {/* 02 · Stats strip */}
             <div className="admin-panel-card">
-              <button 
-                onClick={() => setOpenSections(prev => ({ ...prev, stats: !prev.stats }))}
-                className="admin-section-head">
-                <div className="flex items-center gap-2">
-                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-[color:var(--mute-3)]">Section 2:</span>
-                  <span className="text-[13px] font-[800] text-[color:var(--ink)]">Hackathon Key Stats</span>
-                </div>
-                <span className="text-[11px] font-[800] text-[color:var(--mute-3)] uppercase tracking-wider">{openSections.stats ? 'Collapse ▲' : 'Expand ▼'}</span>
-              </button>
+              <AdminContentSectionHead
+                sectionLabel="Home 02 ·"
+                title="Stats strip"
+                open={openSections.stats}
+                onToggle={() => setOpenSections(prev => ({ ...prev, stats: !prev.stats }))}
+                visKey="stats"
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
 
               {openSections.stats && (
-                <div className="p-5 space-y-4 fade-up max-w-xl">
-                  <p className="text-[12px] text-[color:var(--mute-2)]">Edit the live statistics displayed globally across landing page headers and hero banners.</p>
+                <div className="p-5 space-y-4 fade-up">
+                  <p className="text-[12px] text-[color:var(--mute-2)]">Six metrics in the strip directly under the hero — matches the live homepage grid.</p>
                   <div className="space-y-3">
-                    {(editStats ? statsLocal : homeStats).map(([n,l],i)=>(
-                      <div key={i} className="flex items-center gap-3">
-                        <input value={editStats ? statsLocal[i][0] : n} onChange={e=>{ if(editStats){ const s=[...statsLocal]; s[i]=[e.target.value,s[i][1]]; setStatsLocal(s); }}}
-                          readOnly={!editStats}
-                          className={`w-28 border rounded-[4px] px-3 py-2 text-[14px] font-[700] text-center outline-none ${editStats?'border-[#FF3F6C] bg-white':'border-[color:var(--line-2)] bg-[color:var(--paper)] text-[color:var(--mute-3)]'}`} />
-                        <input value={editStats ? statsLocal[i][1] : l} onChange={e=>{ if(editStats){ const s=[...statsLocal]; s[i]=[s[i][0],e.target.value]; setStatsLocal(s); }}}
-                          readOnly={!editStats}
-                          className={`flex-1 border rounded-[4px] px-3 py-2 text-[13px] outline-none ${editStats?'border-[#FF3F6C] bg-white':'border-[color:var(--line-2)] bg-[color:var(--paper)] text-[color:var(--mute-3)]'}`} />
+                    {(editStats ? statsLocal : homeStatsStrip).map((s,i)=>(
+                      <div key={i} className="admin-surface p-3 rounded-[8px] grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
+                        <Inp label="Value" value={editStats ? statsLocal[i].value : s.value} onChange={e=>{ if(editStats){ const next=[...statsLocal]; next[i]={...next[i],value:e.target.value}; setStatsLocal(next); }}} disabled={!editStats} />
+                        <Inp label="Label" value={editStats ? statsLocal[i].label : s.label} onChange={e=>{ if(editStats){ const next=[...statsLocal]; next[i]={...next[i],label:e.target.value}; setStatsLocal(next); }}} disabled={!editStats} />
+                        <Inp label="Accent color" value={editStats ? statsLocal[i].color : s.color} onChange={e=>{ if(editStats){ const next=[...statsLocal]; next[i]={...next[i],color:e.target.value}; setStatsLocal(next); }}} disabled={!editStats} placeholder="var(--accent) or #hex" />
                       </div>
                     ))}
                   </div>
                   <div className="flex gap-2 pt-2 justify-end">
                     {!editStats ? (
-                      <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setStatsLocal([...homeStats]); setEditStats(true); }}>Edit Key Stats</Btn>
+                      <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setStatsLocal(JSON.parse(JSON.stringify(homeStatsStrip))); setEditStats(true); }}>Edit Stats Strip</Btn>
                     ) : (
                       <>
                         <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setEditStats(false)}>Cancel</Btn>
-                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setHomeStats(statsLocal); setEditStats(false); toast('Stats updated!','success'); }}>Save Changes</Btn>
+                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setHomeStatsStrip(statsLocal); setEditStats(false); toast('Stats strip updated on homepage!','success'); }}>Save Changes</Btn>
                       </>
                     )}
                   </div>
@@ -10646,17 +10844,39 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
               )}
             </div>
 
-            {/* 3. TechWeek Winners */}
+            {/* 03 · How it works */}
             <div className="admin-panel-card">
-              <button 
-                onClick={() => setOpenSections(prev => ({ ...prev, winners: !prev.winners }))}
-                className="admin-section-head">
-                <div className="flex items-center gap-2">
-                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-[color:var(--mute-3)]">Section 3:</span>
-                  <span className="text-[13px] font-[800] text-[color:var(--ink)]">TechWeek Winners Board</span>
+              <AdminContentSectionHead
+                sectionLabel="Home 03 ·"
+                title="How it works"
+                open={openSections.howItWorks}
+                onToggle={() => setOpenSections(prev => ({ ...prev, howItWorks: !prev.howItWorks }))}
+                visKey="howItWorks"
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
+              {openSections.howItWorks && (
+                <div className="p-5 fade-up">
+                  <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">
+                    Sticky scroll journey section directly below the stats strip on the homepage. Content is fixed in the app — use the eye to hide this block during prep or between phases.
+                  </p>
                 </div>
-                <span className="text-[11px] font-[800] text-[color:var(--mute-3)] uppercase tracking-wider">{openSections.winners ? 'Collapse ▲' : 'Expand ▼'}</span>
-              </button>
+              )}
+            </div>
+
+            {/* 04 · Current winners */}
+            <div className="admin-panel-card">
+              <AdminContentSectionHead
+                sectionLabel="Home 04 ·"
+                title="TechWeek Winners"
+                open={openSections.winners}
+                onToggle={() => setOpenSections(prev => ({ ...prev, winners: !prev.winners }))}
+                visKey="winners"
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
 
               {openSections.winners && (
                 <div className="p-5 space-y-4 fade-up">
@@ -10739,17 +10959,18 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
               )}
             </div>
 
-            {/* 4. Ideas Arena Spotlight */}
+            {/* 05 · Ideas carousel */}
             <div className="admin-panel-card">
-              <button 
-                onClick={() => setOpenSections(prev => ({ ...prev, ideas: !prev.ideas }))}
-                className="admin-section-head">
-                <div className="flex items-center gap-2">
-                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-[color:var(--mute-3)]">Section 4:</span>
-                  <span className="text-[13px] font-[800] text-[color:var(--ink)]">Ideas Arena Spotlight</span>
-                </div>
-                <span className="text-[11px] font-[800] text-[color:var(--mute-3)] uppercase tracking-wider">{openSections.ideas ? 'Collapse ▲' : 'Expand ▼'}</span>
-              </button>
+              <AdminContentSectionHead
+                sectionLabel="Home 05 ·"
+                title="Ideas Arena"
+                open={openSections.ideas}
+                onToggle={() => setOpenSections(prev => ({ ...prev, ideas: !prev.ideas }))}
+                visKey="ideas"
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
 
               {openSections.ideas && (
                 <div className="p-5 space-y-4 fade-up">
@@ -10824,17 +11045,18 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
               )}
             </div>
 
-            {/* 5. Event Dates & Schedule */}
+            {/* 06 · Event dates */}
             <div className="admin-panel-card">
-              <button 
-                onClick={() => setOpenSections(prev => ({ ...prev, schedule: !prev.schedule }))}
-                className="admin-section-head">
-                <div className="flex items-center gap-2">
-                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-[color:var(--mute-3)]">Section 5:</span>
-                  <span className="text-[13px] font-[800] text-[color:var(--ink)]">Event Dates & Schedule</span>
-                </div>
-                <span className="text-[11px] font-[800] text-[color:var(--mute-3)] uppercase tracking-wider">{openSections.schedule ? 'Collapse ▲' : 'Expand ▼'}</span>
-              </button>
+              <AdminContentSectionHead
+                sectionLabel="Home 06 ·"
+                title="Event Dates"
+                open={openSections.schedule}
+                onToggle={() => setOpenSections(prev => ({ ...prev, schedule: !prev.schedule }))}
+                visKey="schedule"
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
 
               {openSections.schedule && (
                 <div className="p-5 space-y-4 fade-up">
@@ -10867,7 +11089,7 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
                     ) : (
                       <>
                         <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setEditSched(false)}>Cancel</Btn>
-                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ SCHEDULE = schedLocal; setEditSched(false); setHomeStats([...homeStats]); toast('Event Schedule updated live!','success'); }}>Save Changes</Btn>
+                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ SCHEDULE = schedLocal; setEditSched(false); toast('Event Schedule updated live!','success'); }}>Save Changes</Btn>
                       </>
                     )}
                   </div>
@@ -10875,17 +11097,117 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
               )}
             </div>
 
-            {/* 6. Prizes & Rewards */}
+            {/* 07 · Speakers */}
             <div className="admin-panel-card">
-              <button 
-                onClick={() => setOpenSections(prev => ({ ...prev, rewards: !prev.rewards }))}
-                className="admin-section-head">
-                <div className="flex items-center gap-2">
-                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-[color:var(--mute-3)]">Section 6:</span>
-                  <span className="text-[13px] font-[800] text-[color:var(--ink)]">Prizes &amp; Rewards Board</span>
+              <AdminContentSectionHead
+                sectionLabel="Home 07 ·"
+                title="Speakers & Mentors"
+                open={openSections.speakers}
+                onToggle={() => setOpenSections(prev => ({ ...prev, speakers: !prev.speakers }))}
+                visKey="speakers"
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
+              {openSections.speakers && (
+                <div className="p-5 space-y-4 fade-up">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-[12px] text-[color:var(--mute-2)]">{speakers.length} speaker{speakers.length!==1?'s':''} on the homepage slider.</p>
+                    <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setShowNewSpk(true); setSpkDraft(blankSpeaker()); setEditSpkId(null); }}>+ Add Speaker</Btn>
+                  </div>
+                  {showNewSpk && (
+                    <div className="admin-surface p-4 rounded-[8px] space-y-3">
+                      <p className="text-[13px] font-bold text-[color:var(--ink)]">New Speaker</p>
+                      <div className="grid grid-cols-2 gap-3">
+                        <Inp label="Name" value={spkDraft.name||''} onChange={e=>setSpkDraft(p=>({...p,name:e.target.value}))} />
+                        <Inp label="Initials" value={spkDraft.initials||''} onChange={e=>setSpkDraft(p=>({...p,initials:e.target.value}))} placeholder="AK" />
+                        <Inp label="Role" value={spkDraft.role||''} onChange={e=>setSpkDraft(p=>({...p,role:e.target.value}))} />
+                        <Inp label="Organisation" value={spkDraft.org||''} onChange={e=>setSpkDraft(p=>({...p,org:e.target.value}))} />
+                        <Inp label="Topic" value={spkDraft.topic||''} onChange={e=>setSpkDraft(p=>({...p,topic:e.target.value}))} />
+                        <div>
+                          <label className="block text-[11px] font-semibold text-[color:var(--mute-1)] mb-1">Track</label>
+                          <select value={spkDraft.track||'Gen AI'} onChange={e=>setSpkDraft(p=>({...p,track:e.target.value}))} className="w-full bg-white border border-[color:var(--line-2)] rounded px-2.5 py-2 text-[12px] outline-none">
+                            {SPEAKER_TRACKS.map(t=><option key={t} value={t}>{t}</option>)}
+                          </select>
+                        </div>
+                        <Inp label="Image path" value={spkDraft.image||''} onChange={e=>setSpkDraft(p=>({...p,image:e.target.value}))} placeholder="images/IMAGE 4.png" />
+                        <Inp label="Image position" value={spkDraft.imagePosition||''} onChange={e=>setSpkDraft(p=>({...p,imagePosition:e.target.value}))} placeholder="50% 15%" />
+                        <Inp label="Gradient color 1" value={(spkDraft.g||[])[0]||''} onChange={e=>setSpkDraft(p=>({...p,g:[e.target.value,(p.g||[])[1]||'#AE33FF']}))} />
+                        <Inp label="Gradient color 2" value={(spkDraft.g||[])[1]||''} onChange={e=>setSpkDraft(p=>({...p,g:[(p.g||[])[0]||'#FF1FC0',e.target.value]}))} />
+                      </div>
+                      <label className="flex items-center gap-2 text-[12px] font-medium text-[color:var(--mute-1)] cursor-pointer">
+                        <input type="checkbox" checked={!!spkDraft.keynote} onChange={e=>setSpkDraft(p=>({...p,keynote:e.target.checked}))} className="rounded text-[#FF3F6C] h-4 w-4" />
+                        Keynote speaker
+                      </label>
+                      <div className="flex gap-2 justify-end">
+                        <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setShowNewSpk(false)}>Cancel</Btn>
+                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{
+                          if(!spkDraft.name?.trim()){ toast('Speaker name is required.','error'); return; }
+                          const initials = spkDraft.initials || spkDraft.name.split(' ').filter(Boolean).map(w=>w[0]).join('').slice(0,2).toUpperCase();
+                          setSpeakers(p=>[...p,{...spkDraft, id:`SPK${Date.now()}`, initials, keynote:!!spkDraft.keynote}]);
+                          setShowNewSpk(false); toast('Speaker added to homepage slider!','success');
+                        }}>Add Speaker</Btn>
+                      </div>
+                    </div>
+                  )}
+                  <div className="space-y-2">
+                    {speakers.map(sp=>(
+                      <div key={sp.id}>
+                        {editSpkId===sp.id ? (
+                          <div className="admin-surface p-4 rounded-[8px] space-y-3">
+                            <div className="grid grid-cols-2 gap-3">
+                              <Inp label="Name" value={sp.name} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,name:e.target.value}:x))} />
+                              <Inp label="Initials" value={sp.initials} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,initials:e.target.value}:x))} />
+                              <Inp label="Role" value={sp.role} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,role:e.target.value}:x))} />
+                              <Inp label="Organisation" value={sp.org} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,org:e.target.value}:x))} />
+                              <Inp label="Topic" value={sp.topic} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,topic:e.target.value}:x))} />
+                              <div>
+                                <label className="block text-[11px] font-semibold text-[color:var(--mute-1)] mb-1">Track</label>
+                                <select value={sp.track} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,track:e.target.value}:x))} className="w-full bg-white border border-[color:var(--line-2)] rounded px-2.5 py-2 text-[12px] outline-none">
+                                  {SPEAKER_TRACKS.map(t=><option key={t} value={t}>{t}</option>)}
+                                </select>
+                              </div>
+                              <Inp label="Image path" value={sp.image||''} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,image:e.target.value}:x))} />
+                              <Inp label="Image position" value={sp.imagePosition||''} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,imagePosition:e.target.value}:x))} />
+                            </div>
+                            <div className="flex justify-end gap-2">
+                              <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setEditSpkId(null); toast('Speaker updated.','success'); }}>Save</Btn>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-3 px-3 py-3 border border-[color:var(--line-2)] rounded-[6px] bg-[color:var(--paper)]">
+                            <div className="w-9 h-9 rounded-[6px] overflow-hidden bg-black flex-shrink-0">
+                              {sp.image ? <img src={sp.image} alt="" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[10px] font-bold text-white">{sp.initials}</div>}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[13px] font-[800] text-[color:var(--ink)]">{sp.name}{sp.keynote?' · Keynote':''}</p>
+                              <p className="text-[11px] text-[color:var(--mute-3)]">{sp.role} · {sp.track}</p>
+                            </div>
+                            <div className="flex gap-1.5 flex-shrink-0">
+                              <Btn variant="ghost" className="text-[11px] py-1" onClick={()=>setEditSpkId(sp.id)}>Edit</Btn>
+                              <Btn variant="danger" className="text-[11px] py-1" onClick={()=>{ setSpeakers(p=>p.filter(x=>x.id!==sp.id)); toast('Speaker removed.','error'); }}>Delete</Btn>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <span className="text-[11px] font-[800] text-[color:var(--mute-3)] uppercase tracking-wider">{openSections.rewards ? 'Collapse ▲' : 'Expand ▼'}</span>
-              </button>
+              )}
+            </div>
+
+            {/* 08 · Prizes & rewards */}
+            <div className="admin-panel-card">
+              <AdminContentSectionHead
+                sectionLabel="Home 08 ·"
+                title="Prizes & Rewards"
+                open={openSections.rewards}
+                onToggle={() => setOpenSections(prev => ({ ...prev, rewards: !prev.rewards }))}
+                visKey="rewards"
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
 
               {openSections.rewards && (
                 <div className="p-5 space-y-4 fade-up">
@@ -10909,7 +11231,7 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
                     ) : (
                       <>
                         <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setEditRew(false)}>Cancel</Btn>
-                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ REWARDS = rewLocal; setEditRew(false); setHomeStats([...homeStats]); toast('Prizes and Rewards updated live!','success'); }}>Save Changes</Btn>
+                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ REWARDS = rewLocal; setEditRew(false); toast('Prizes and Rewards updated live!','success'); }}>Save Changes</Btn>
                       </>
                     )}
                   </div>
@@ -10917,17 +11239,127 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
               )}
             </div>
 
-            {/* 7. Event Calendar (31 Days of Hustle) */}
+            {/* 09 · Leaderboard preview */}
             <div className="admin-panel-card">
-              <button 
-                onClick={() => setOpenSections(prev => ({ ...prev, calendar: !prev.calendar }))}
-                className="admin-section-head">
-                <div className="flex items-center gap-2">
-                  <span className="text-[12px] font-[800] uppercase tracking-[0.1em] text-[color:var(--mute-3)]">Section 7:</span>
-                  <span className="text-[13px] font-[800] text-[color:var(--ink)]">31 Days of Hustle Calendar</span>
+              <AdminContentSectionHead
+                sectionLabel="Home 09 ·"
+                title="Leaderboard"
+                open={openSections.leaderboard}
+                onToggle={() => setOpenSections(prev => ({ ...prev, leaderboard: !prev.leaderboard }))}
+                visKey="leaderboard"
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
+              {openSections.leaderboard && (
+                <div className="p-5 fade-up">
+                  <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">
+                    Top-5 team scoreboard on the homepage, fed from live team scores. Full scoreboard is on the Scoreboard page — use the eye to hide this preview block.
+                  </p>
                 </div>
-                <span className="text-[11px] font-[800] text-[color:var(--mute-3)] uppercase tracking-wider">{openSections.calendar ? 'Collapse ▲' : 'Expand ▼'}</span>
-              </button>
+              )}
+            </div>
+
+            {/* 10 · Women in Tech banner */}
+            <div className="admin-panel-card">
+              <AdminContentSectionHead
+                sectionLabel="Home 10 ·"
+                title="Women in Tech — Beyond the Algorithm"
+                open={openSections.witBanner}
+                onToggle={() => setOpenSections(prev => ({ ...prev, witBanner: !prev.witBanner }))}
+                visKey="witBanner"
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
+              {openSections.witBanner && (
+                <div className="p-5 space-y-4 fade-up">
+                  <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">
+                    Promotional banner on the homepage above Hall of Fame. Links to <code className="text-[11px]">women-in-tech.html</code> for Luma registration.
+                  </p>
+                  <div className="admin-hero-preview" style={{ minHeight: '120px' }}>
+                    <span className="admin-hero-preview__label">Banner preview</span>
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(255,31,192,0.25), rgba(174,51,255,0.18), #080612)' }} />
+                    <div className="absolute inset-0 p-4 flex flex-col justify-center">
+                      <p className="text-[8px] uppercase tracking-[0.18em] text-[#fda4af] font-[800] mb-1">Women in Tech · Beyond the Algorithm</p>
+                      <p className="text-[12px] font-[800] text-white leading-snug max-w-[280px]">A standalone tech conference for women builders.</p>
+                      <div className="mt-2 w-fit px-2.5 py-1 rounded-[6px] text-[8px] font-[800] text-white" style={{ background: 'var(--accent)' }}>Register</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 11 · Hall of Fame */}
+            <div className="admin-panel-card">
+              <AdminContentSectionHead
+                sectionLabel="Home 11 ·"
+                title="Hall of Fame"
+                open={openSections.hallOfFame}
+                onToggle={() => setOpenSections(prev => ({ ...prev, hallOfFame: !prev.hallOfFame }))}
+                visKey="hallOfFame"
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
+              {openSections.hallOfFame && (
+                <div className="p-5 space-y-4 fade-up">
+                  <p className="text-[12px] text-[color:var(--mute-2)]">Past edition spotlight at the bottom of the homepage — edition header and winner cards.</p>
+                  {!editHof ? (
+                    <div className="flex justify-end">
+                      <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setHofLocal(JSON.parse(JSON.stringify(hallOfFame))); setEditHof(true); }}>Edit Hall of Fame</Btn>
+                    </div>
+                  ) : (
+                    <div className="admin-surface p-4 rounded-[8px] space-y-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <Inp label="Edition title" value={hofLocal.edition} onChange={e=>setHofLocal(p=>({...p,edition:e.target.value}))} />
+                        <Inp label="Tagline" value={hofLocal.tagline} onChange={e=>setHofLocal(p=>({...p,tagline:e.target.value}))} />
+                        <Inp label="Badge label" value={hofLocal.tagLabel} onChange={e=>setHofLocal(p=>({...p,tagLabel:e.target.value}))} />
+                      </div>
+                    </div>
+                  )}
+                  <div className="space-y-3">
+                    {(editHof ? hofLocal.cards : hallOfFame.cards || []).map((c,i)=>(
+                      <div key={c.id||i} className="admin-surface p-3 rounded-[8px] space-y-2">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                          <Inp label="Badge" value={editHof ? hofLocal.cards[i].badge : c.badge} onChange={e=>{ if(editHof){ const cards=[...hofLocal.cards]; cards[i]={...cards[i],badge:e.target.value}; setHofLocal(p=>({...p,cards})); }}} disabled={!editHof} />
+                          <Inp label="Award label" value={editHof ? hofLocal.cards[i].award : c.award} onChange={e=>{ if(editHof){ const cards=[...hofLocal.cards]; cards[i]={...cards[i],award:e.target.value}; setHofLocal(p=>({...p,cards})); }}} disabled={!editHof} />
+                          <Inp label="Team name" value={editHof ? hofLocal.cards[i].team : c.team} onChange={e=>{ if(editHof){ const cards=[...hofLocal.cards]; cards[i]={...cards[i],team:e.target.value}; setHofLocal(p=>({...p,cards})); }}} disabled={!editHof} />
+                          <Inp label="Project" value={editHof ? hofLocal.cards[i].project : c.project} onChange={e=>{ if(editHof){ const cards=[...hofLocal.cards]; cards[i]={...cards[i],project:e.target.value}; setHofLocal(p=>({...p,cards})); }}} disabled={!editHof} />
+                        </div>
+                        <Inp label="Members" value={editHof ? hofLocal.cards[i].members : c.members} onChange={e=>{ if(editHof){ const cards=[...hofLocal.cards]; cards[i]={...cards[i],members:e.target.value}; setHofLocal(p=>({...p,cards})); }}} disabled={!editHof} />
+                        {editHof && (
+                          <div className="flex justify-between items-center pt-1">
+                            <Btn variant="danger" className="text-[11px] py-1" onClick={()=>setHofLocal(p=>({...p,cards:p.cards.filter((_,idx)=>idx!==i)}))}>Remove card</Btn>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  {editHof && (
+                    <>
+                      <Btn variant="ghost" className="text-[12px] py-2 w-full border border-dashed border-[color:var(--line-3)]" onClick={()=>setHofLocal(p=>({...p,cards:[...p.cards,{id:`HOF${Date.now()}`,badge:'🏅',award:'Honourable Mention',team:'',project:'',members:'',c1:'#C8BCFF',c2:'#DDD4FF'}]}))}>+ Add winner card</Btn>
+                      <div className="flex gap-2 justify-end pt-2">
+                        <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setEditHof(false)}>Cancel</Btn>
+                        <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setHallOfFame(hofLocal); setEditHof(false); toast('Hall of Fame updated on homepage!','success'); }}>Save Changes</Btn>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Agenda page · 31 Days calendar (not a homepage block) */}
+            <div className="admin-panel-card">
+              <AdminContentSectionHead
+                sectionLabel="Agenda page ·"
+                title="31 Days of Hustle Calendar"
+                open={openSections.calendar}
+                onToggle={() => setOpenSections(prev => ({ ...prev, calendar: !prev.calendar }))}
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
 
               {openSections.calendar && (
                 <div className="p-5 space-y-4 fade-up">
@@ -11011,10 +11443,77 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
                     ) : (
                       <>
                         <Btn variant="ghost" className="text-[12px] py-2" onClick={() => setEditCal(false)}>Cancel</Btn>
-                        <Btn variant="primary" className="text-[12px] py-2" onClick={() => { HACKATHON_CALENDAR = calLocal; setEditCal(false); setHomeStats([...homeStats]); toast('Event Calendar updated live!', 'success'); }}>Save Changes</Btn>
+                        <Btn variant="primary" className="text-[12px] py-2" onClick={() => { HACKATHON_CALENDAR = calLocal; setEditCal(false); toast('Event Calendar updated live!', 'success'); }}>Save Changes</Btn>
                       </>
                     )}
                   </div>
+                </div>
+              )}
+            </div>
+
+            {/* Learn page · Sessions & Workshops */}
+            <div className="admin-panel-card">
+              <AdminContentSectionHead
+                sectionLabel="Learn page ·"
+                title="Sessions & Workshops"
+                open={openSections.learnSessions}
+                onToggle={() => setOpenSections(prev => ({ ...prev, learnSessions: !prev.learnSessions }))}
+                homeVisibility={homeVisibility}
+                toggleHomeSection={toggleHomeSection}
+                toast={toast}
+              />
+              {openSections.learnSessions && (
+                <div className="p-5 space-y-4 fade-up">
+                  <p className="text-[12px] text-[color:var(--mute-2)]">Sessions shown on the Learn &amp; Speakers page. Presenter names should match speakers above when possible.</p>
+                  <div className="flex justify-end">
+                    {!editSess ? (
+                      <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setSessLocal(JSON.parse(JSON.stringify(sessions))); setEditSess(true); }}>Edit Sessions</Btn>
+                    ) : (
+                      <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{
+                        const nextId = 'S' + String(Math.max(0, ...sessLocal.map(s=>parseInt(s.id.replace('S',''),10)||0)) + 1).padStart(3,'0');
+                        setSessLocal(p=>[...p,{ id:nextId, title:'New Session', track:'Gen AI', status:'upcoming', date:'Jun 16', time:'10:00 AM', speaker:'', meetLink:'', cardLayout:'standard', speakerImage:'' }]);
+                      }}>+ Add Session</Btn>
+                    )}
+                  </div>
+                  <div className="space-y-3">
+                    {(editSess ? sessLocal : sessions).map((s,i)=>(
+                      <div key={s.id} className="admin-surface p-3 rounded-[8px] space-y-2">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                          <Inp label="Title" value={editSess ? sessLocal[i].title : s.title} onChange={e=>{ if(editSess){ const n=[...sessLocal]; n[i]={...n[i],title:e.target.value}; setSessLocal(n); }}} disabled={!editSess} />
+                          <Inp label="Presenter" value={editSess ? sessLocal[i].speaker : s.speaker} onChange={e=>{ if(editSess){ const n=[...sessLocal]; n[i]={...n[i],speaker:e.target.value}; setSessLocal(n); }}} disabled={!editSess} />
+                          <Inp label="Date" value={editSess ? sessLocal[i].date : s.date} onChange={e=>{ if(editSess){ const n=[...sessLocal]; n[i]={...n[i],date:e.target.value}; setSessLocal(n); }}} disabled={!editSess} />
+                          <Inp label="Time" value={editSess ? (sessLocal[i].time||'') : (s.time||'')} onChange={e=>{ if(editSess){ const n=[...sessLocal]; n[i]={...n[i],time:e.target.value}; setSessLocal(n); }}} disabled={!editSess} />
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                          <div>
+                            <label className="block text-[11px] font-semibold text-[color:var(--mute-1)] mb-1">Track</label>
+                            <select value={editSess ? sessLocal[i].track : s.track} onChange={e=>{ if(editSess){ const n=[...sessLocal]; n[i]={...n[i],track:e.target.value}; setSessLocal(n); }}} disabled={!editSess} className="w-full bg-white border border-[color:var(--line-2)] rounded px-2.5 py-2 text-[12px] outline-none">
+                              {SPEAKER_TRACKS.map(t=><option key={t} value={t}>{t}</option>)}
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-semibold text-[color:var(--mute-1)] mb-1">Status</label>
+                            <select value={editSess ? sessLocal[i].status : s.status} onChange={e=>{ if(editSess){ const n=[...sessLocal]; n[i]={...n[i],status:e.target.value}; setSessLocal(n); }}} disabled={!editSess} className="w-full bg-white border border-[color:var(--line-2)] rounded px-2.5 py-2 text-[12px] outline-none">
+                              {['upcoming','live','recorded'].map(st=><option key={st} value={st}>{st}</option>)}
+                            </select>
+                          </div>
+                          <Inp label="Meet link" value={editSess ? (sessLocal[i].meetLink||'') : (s.meetLink||'')} onChange={e=>{ if(editSess){ const n=[...sessLocal]; n[i]={...n[i],meetLink:e.target.value}; setSessLocal(n); }}} disabled={!editSess} />
+                          <Inp label="Featured image" value={editSess ? (sessLocal[i].speakerImage||'') : (s.speakerImage||'')} onChange={e=>{ if(editSess){ const n=[...sessLocal]; n[i]={...n[i],speakerImage:e.target.value}; setSessLocal(n); }}} disabled={!editSess} />
+                        </div>
+                        {editSess && (
+                          <div className="flex justify-end">
+                            <Btn variant="danger" className="text-[11px] py-1" onClick={()=>setSessLocal(p=>p.filter((_,idx)=>idx!==i))}>Remove</Btn>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  {editSess && (
+                    <div className="flex gap-2 justify-end pt-2">
+                      <Btn variant="ghost" className="text-[12px] py-2" onClick={()=>setEditSess(false)}>Cancel</Btn>
+                      <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{ setSessions(sessLocal); setEditSess(false); toast('Learn & Speakers sessions updated!','success'); }}>Save Changes</Btn>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -11986,7 +12485,7 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
    ENABLEMENT
 ══════════════════════════════ */
 
-function EnablementView({ sessions = [], setSessions, user, toast }) {
+function EnablementView({ sessions = [], setSessions, speakers = DEFAULT_SPEAKERS, user, toast }) {
   const [type,  setType]  = useState('all');
   const [track, setTrack] = useState('all');
   const [searchQ, setSearchQ] = useState('');
@@ -12009,7 +12508,7 @@ function EnablementView({ sessions = [], setSessions, user, toast }) {
 
   const resolveSpeakerImage = (session) => {
     if (session.speakerImage) return session.speakerImage;
-    const idx = SPEAKERS.findIndex(sp => sp.name === session.speaker);
+    const idx = speakers.findIndex(sp => sp.name === session.speaker);
     return idx >= 0 ? `images/IMAGE ${idx + 1}.png` : null;
   };
 
@@ -12335,7 +12834,7 @@ function EnablementView({ sessions = [], setSessions, user, toast }) {
           const colors=getSessionColors(s.track);
           const isFeatured = s.cardLayout === 'featured';
           const speakerPhoto = resolveSpeakerImage(s);
-          const speakerMeta = SPEAKERS.find(sp => sp.name === s.speaker);
+          const speakerMeta = speakers.find(sp => sp.name === s.speaker);
           const initials = (s.speaker || 'Anonymous').split(' ').filter(Boolean).map(n=>n[0]).join('').toUpperCase();
 
           const statusBadge = (
@@ -12535,6 +13034,7 @@ function LoadingScreen({ onComplete }) {
   ];
   const Z      = [1,2,3,4,5,6,7,8,7,6,5,4,3,2,1];
   const ANCHOR = TILES[7];
+  const [isMobileLoad] = React.useState(() => window.matchMedia('(max-width: 1023px)').matches);
 
   // phases: matchcut → slide → logo-in → logo-out
   const [phase, setPhase]               = React.useState('matchcut');
@@ -12585,15 +13085,23 @@ function LoadingScreen({ onComplete }) {
     return () => { clearInterval(mc); document.body.style.overflow = ''; };
   }, []);
 
-  const SZ = '12.5vw';
+  const SZ = isMobileLoad ? 'min(58vw, 248px)' : '12.5vw';
 
   // ── MATCHCUT ─────────────────────────────────────────────────────────────────
   if (phase === 'matchcut') {
     return (
       <div style={{position:'fixed',inset:0,zIndex:9999,background:'#000',display:'flex',alignItems:'center',justifyContent:'center'}}>
-        <div style={{position:'relative',width:SZ,height:SZ,borderRadius:'12px',overflow:'hidden',flexShrink:0}}>
+        <div style={{
+          position:'relative', width:SZ, height:SZ, borderRadius: isMobileLoad ? '18px' : '12px',
+          overflow:'hidden', flexShrink:0,
+          boxShadow: isMobileLoad ? '0 20px 50px rgba(0,0,0,0.55)' : undefined,
+        }}>
           {IMAGES.map((src,i) => (
-            <img key={src} src={src} alt="" style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',opacity:i===currentIndex?1:0}} />
+            <img key={src} src={src} alt="" style={{
+              position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover',
+              opacity: i===currentIndex ? 1 : 0,
+              transition: isMobileLoad ? 'opacity 80ms ease' : 'none',
+            }} />
           ))}
         </div>
       </div>
@@ -12617,20 +13125,35 @@ function LoadingScreen({ onComplete }) {
         // 700ms fade starting 150ms in — cards stay fully visible through most of the unfurl
         transition: tilesFading ? 'opacity 700ms cubic-bezier(0.4,0,0.2,1) 150ms' : 'none',
       }}>
-        <div style={{position:'relative',width:SZ,height:SZ,flexShrink:0}}>
+        <div style={{
+          position:'relative',
+          width: SZ,
+          height: isMobileLoad ? '72vh' : SZ,
+          flexShrink: 0,
+        }}>
           {IMAGES.map((src, i) => {
             const dx    = ((TILES[i].left - ANCHOR.left) / 1920 * 100).toFixed(4) + 'vw';
+            const dyVh  = (i - 7) * 5.2;
             const dist  = Math.abs(i - 7);
-            const delay = dist === 0 ? 0 : dist * dist * 10;
+            const delay = dist === 0 ? 0 : dist * dist * (isMobileLoad ? 8 : 10);
+            const cardStyle = isMobileLoad ? {
+              position:'absolute',
+              left:'50%', top:'50%',
+              width:SZ, height:SZ,
+              borderRadius:'18px', overflow:'hidden', zIndex:Z[i],
+              boxShadow:'0 12px 32px rgba(0,0,0,0.4)',
+              transform: slid
+                ? `translate(-50%, calc(-50% + ${dyVh}vh))`
+                : 'translate(-50%, -50%)',
+              transition: slid ? `transform 500ms cubic-bezier(0.16,1,0.3,1) ${delay}ms` : 'none',
+            } : {
+              position:'absolute', inset:0, width:SZ, height:SZ,
+              borderRadius:'12px', overflow:'hidden', zIndex:Z[i],
+              transform: slid ? `translateX(${dx})` : 'translateX(0)',
+              transition: slid ? `transform 450ms cubic-bezier(0.16,1,0.3,1) ${delay}ms` : 'none',
+            };
             return (
-              <div key={src} style={{
-                position:'absolute', inset:0, width:SZ, height:SZ,
-                borderRadius:'12px', overflow:'hidden', zIndex:Z[i],
-                transform: slid ? `translateX(${dx})` : 'translateX(0)',
-                transition: slid
-                  ? `transform 450ms cubic-bezier(0.16,1,0.3,1) ${delay}ms`
-                  : 'none',
-              }}>
+              <div key={src} style={cardStyle}>
                 <img src={src} alt="" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} />
               </div>
             );
@@ -13067,7 +13590,9 @@ function App() {
     R3:{ published:false, message:'', teams:[] },
   });
   const [winners, setWinners]       = useState(CURRENT_WINNERS);
-  const [homeStats, setHomeStats]   = useState([['500+','Participants'],['3','Rounds'],['₹2L+','Prize pool'],['5','Themes']]);
+  const [homeStatsStrip, setHomeStatsStrip] = useState(DEFAULT_HOME_STATS_STRIP);
+  const [speakers, setSpeakers]     = useState(DEFAULT_SPEAKERS);
+  const [hallOfFame, setHallOfFame] = useState(DEFAULT_HALL_OF_FAME);
   const [allUsers, setAllUsers]     = useState(USERS);
   const [panels, setPanels]         = useState(INIT_PANELS);
   const [judgeScores, setJudgeScores] = useState([]);
@@ -13079,6 +13604,12 @@ function App() {
   const [sessions, setSessions]     = useState(SESSIONS);
   const [editTeamMode, setEditTeamMode] = useState(false);
   const [heroVersion, setHeroVersion] = useState(() => localStorage.getItem('myntra_hero_version') || 'B');
+  const [homeVisibility, setHomeVisibility] = useState(() => {
+    try {
+      const saved = localStorage.getItem('myntra_home_visibility');
+      return saved ? { ...DEFAULT_HOME_VISIBILITY, ...JSON.parse(saved) } : { ...DEFAULT_HOME_VISIBILITY };
+    } catch { return { ...DEFAULT_HOME_VISIBILITY }; }
+  });
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'dark';
   });
@@ -13086,6 +13617,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem('myntra_hero_version', heroVersion);
   }, [heroVersion]);
+
+  useEffect(() => {
+    localStorage.setItem('myntra_home_visibility', JSON.stringify(homeVisibility));
+  }, [homeVisibility]);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -13128,7 +13663,7 @@ function App() {
       />
 
       <main className={view === 'home' ? 'pb-16' : (theme === 'dark' ? 'inner-dark' : 'inner-light')}>
-        {view==='home' && <HomeView teams={teams} winners={winners} homeStats={homeStats} setView={setView} heroVersion={heroVersion} theme={theme} setTheme={setTheme} ideas={ideas} setIdeas={setIdeas} user={user} problemCount={(problems||[]).filter(p=>p.published).length} />}
+        {view==='home' && <HomeView teams={teams} winners={winners} homeStatsStrip={homeStatsStrip} speakers={speakers} hallOfFame={hallOfFame} setView={setView} heroVersion={heroVersion} theme={theme} setTheme={setTheme} ideas={ideas} setIdeas={setIdeas} user={user} problemCount={(problems||[]).filter(p=>p.published).length} homeVisibility={homeVisibility} />}
         {view !== 'home' && (
           <div className="inner-page-shell pt-[88px] pb-16">
             {view==='register'    && <RegisterView    user={user} setTeams={setTeams} teams={teams} ideas={ideas} setIdeas={setIdeas} toast={toast} onLoginOpen={()=>setLogin(true)} userTeam={userTeam} pubResults={pubResults} editTeamMode={editTeamMode} setEditTeamMode={setEditTeamMode} setView={setView} />}
@@ -13137,8 +13672,8 @@ function App() {
             {view==='notifications' && <NotificationsView user={user} notifications={notifications} setNotifications={setNotifications} setView={setView} toast={toast} onLoginOpen={()=>setLogin(true)} />}
             {view==='demobooth'   && <DemoBoothView setView={setView} />}
             {view==='calendar'    && <CalendarView />}
-            {view==='admin'       && <AdminView user={user} teams={teams} setTeams={setTeams} allUsers={allUsers} setAllUsers={setAllUsers} problems={problems} setProblems={setProblems} pubResults={pubResults} setPubResults={setPubResults} ideas={ideas} setIdeas={setIdeas} winners={winners} setWinners={setWinners} homeStats={homeStats} setHomeStats={setHomeStats} toast={toast} quizzes={quizzes} setQuizzes={setQuizzes} quizResults={quizResults} heroVersion={heroVersion} setHeroVersion={setHeroVersion} themes={themes} setThemes={setThemes} qualInstructions={qualInstructions} setQualInstructions={setQualInstructions} panels={panels} setPanels={setPanels} judgeScores={judgeScores} setJudgeScores={setJudgeScores} activeRound={activeRound} setActiveRound={setActiveRound} joinRequests={joinReqs} setJoinRequests={setJoinReqs} />}
-            {view==='sessions'    && <EnablementView sessions={sessions} setSessions={setSessions} user={user} toast={toast} />}
+            {view==='admin'       && <AdminView user={user} teams={teams} setTeams={setTeams} allUsers={allUsers} setAllUsers={setAllUsers} problems={problems} setProblems={setProblems} pubResults={pubResults} setPubResults={setPubResults} ideas={ideas} setIdeas={setIdeas} winners={winners} setWinners={setWinners} homeStatsStrip={homeStatsStrip} setHomeStatsStrip={setHomeStatsStrip} speakers={speakers} setSpeakers={setSpeakers} hallOfFame={hallOfFame} setHallOfFame={setHallOfFame} sessions={sessions} setSessions={setSessions} toast={toast} quizzes={quizzes} setQuizzes={setQuizzes} quizResults={quizResults} heroVersion={heroVersion} setHeroVersion={setHeroVersion} themes={themes} setThemes={setThemes} qualInstructions={qualInstructions} setQualInstructions={setQualInstructions} panels={panels} setPanels={setPanels} judgeScores={judgeScores} setJudgeScores={setJudgeScores} activeRound={activeRound} setActiveRound={setActiveRound} joinRequests={joinReqs} setJoinRequests={setJoinReqs} homeVisibility={homeVisibility} setHomeVisibility={setHomeVisibility} />}
+            {view==='sessions'    && <EnablementView sessions={sessions} setSessions={setSessions} speakers={speakers} user={user} toast={toast} />}
             {view==='scoreboard'  && <ScoreboardView teams={teams} setView={setView} />}
             {view==='faq'         && <FaqView setView={setView} />}
             {view==='contact'     && <ContactView toast={toast} />}

@@ -2211,6 +2211,22 @@
     flex-direction: column;
     gap: 6px;
   }
+  .home-speaker-card__org-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 2px;
+  }
+  .home-speaker-card__company-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    object-fit: contain;
+    background: rgba(255,255,255,0.94);
+    padding: 4px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.22);
+  }
   @media (min-width: 640px) {
     .home-speaker-card { min-height: 420px; }
     .home-speaker-card__content { padding: 24px 24px 26px; }
@@ -3394,13 +3410,81 @@ const DEMO_BOOTHS = [
   { id:'DB04', title:'Dockins Deploy Studio',    org:'Engineering',    speaker:'Vineet Shah',        location:'Maker Bay · Booth 2',       hours:'Jul 10–12 · 9 AM – 4 PM', image:'images/IMAGE 9.png', desc:'Blue-green releases, canary deploys, and platform automation walkthroughs.' },
 ];
 
+const SPEAKER_PHOTO_PLACEHOLDER = 'https://static.licdn.com/aero-v1/sc/h/9c8pery4andzj6ohjkjp54ma2';
+
 const DEFAULT_SPEAKERS = [
-  { id:'SPK1', name:'Dr. Ananya Krishnan', role:'VP, AI & Personalisation', org:'Myntra',        topic:'GenAI for Fashion Tech',          track:'Gen AI',  initials:'AK', g:['#FF1FC0','#AE33FF'], image:'images/IMAGE 4.png',  imagePosition:'48% 14%', keynote:true  },
-  { id:'SPK2', name:'Sanjay Gupta',        role:'Director, Information Security', org:'Myntra',   topic:'InfoSec Compliance 101',          track:'InfoSec', initials:'SG', g:['#00E5FF','#AE33FF'], image:'images/IMAGE 12.png', imagePosition:'52% 12%', keynote:false },
-  { id:'SPK3', name:'Rahul Dev',           role:'Principal Engineer, ML Platform', org:'Myntra', topic:'Prompt Engineering Masterclass',  track:'Gen AI',  initials:'RD', g:['#AE33FF','#FF1FC0'], image:'images/IMAGE 4.png',  imagePosition:'56% 18%', keynote:false },
-  { id:'SPK4', name:'Kavita Iyer',         role:'Staff SRE, Reliability', org:'Myntra',          topic:'On-Call Culture & Incident Mgmt', track:'SRE',     initials:'KI', g:['#FF1FC0','#00E5FF'], image:'images/IMAGE 4.png',  imagePosition:'50% 16%', keynote:false },
-  { id:'SPK5', name:'Vineet Shah',         role:'Lead, Platform Engineering', org:'Myntra',      topic:'Blue-Green & Canary Deployments', track:'Dockins', initials:'VS', g:['#AE33FF','#00E5FF'], image:'images/IMAGE 12.png', imagePosition:'44% 15%', keynote:false },
-  { id:'SPK6', name:'Priya Nair',          role:'Sr. Product Manager, Discovery', org:'Myntra',  topic:'Building for Scale at Myntra',     track:'Product', initials:'PN', g:['#00E5FF','#FF1FC0'], image:'images/IMAGE 12.png', imagePosition:'58% 20%', keynote:false },
+  {
+    id:'SPK1',
+    name:'Nitesh Jain',
+    role:'Senior Principal Engineer',
+    org:'Razorpay',
+    topic:'Building resilient payments infrastructure at scale',
+    track:'Product',
+    initials:'NJ',
+    g:['#3395FF','#0C2451'],
+    image:'https://media.licdn.com/dms/image/v2/D5603AQEgFHywDYTOlA/profile-displayphoto-crop_800_800/B56Z3z2KfYGsAI-/0/1777912557077?e=1782345600&v=beta&t=6B4RSENK2ZECjuG8BeU9_mVNiGXCUEk8d6K_K_WUIeM',
+    companyLogo:'https://media.licdn.com/dms/image/v2/C560BAQHggYLcXxs78w/company-logo_200_200/company-logo_200_200/0/1630638664845/razorpay_logo?e=1782345600&v=beta&t=NaejEFn9aI3c5ri9SvwNC7hI8PoIaNz_DTv1rcDJRiU',
+    imagePosition:'50% 18%',
+    keynote:true,
+  },
+  {
+    id:'SPK2',
+    name:'To be announced',
+    role:'Head of Product (SVP), Enterprise Service Management',
+    org:'Atlassian',
+    topic:'Enterprise service management at global scale',
+    track:'Product',
+    initials:'',
+    g:['#0052CC','#2684FF'],
+    image:'https://media.licdn.com/dms/image/v2/D5603AQFtegddhn5LEg/profile-displayphoto-crop_800_800/B56ZleCEWDKEAI-/0/1758219226793?e=1782345600&v=beta&t=qu7zhNLZ-ft3XhDQk6IIaJxinMCNEBCk23oBf_TFwm8',
+    companyLogo:'https://media.licdn.com/dms/image/v2/D4E0BAQGeyLL6crkJKg/company-logo_200_200/company-logo_200_200/0/1735593604612/atlassian_logo?e=1782345600&v=beta&t=eBTw0TubkXy9S55G0a0ZkF20FL5IU71LTMmT9h900h0',
+    imagePosition:'50% 15%',
+    keynote:true,
+  },
+  {
+    id:'SPK3',
+    name:'Pratyush Kumar',
+    role:'Co-Founder',
+    org:'Sarvam AI',
+    topic:'Sovereign AI and the future of Indian language models',
+    track:'Gen AI',
+    initials:'PK',
+    g:['#7C3AED','#FF1FC0'],
+    image:'https://media.licdn.com/dms/image/v2/C5603AQEczipLD9aE7A/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1640964051203?e=1782345600&v=beta&t=TpYLLWeMZDIwlFTi3q9afi0GiQrvYLAEE_sadLNhi9Y',
+    companyLogo:'https://media.licdn.com/dms/image/v2/D560BAQGjyPkXGTdDAA/company-logo_200_200/B56ZxL8VkkJoAM-/0/1770800634834/sarvam_ai_logo?e=1782345600&v=beta&t=wFA3ix_DHzFv_MkP4JOJ_R36jHAxw4OLK5zH9v9nToU',
+    imagePosition:'50% 16%',
+    keynote:true,
+  },
+  {
+    id:'SPK4',
+    name:'Announced soon',
+    role:'Industry leader',
+    org:'Coming soon',
+    topic:'Session details coming soon',
+    track:'Product',
+    initials:'',
+    g:['#AE33FF','#FF1FC0'],
+    image:SPEAKER_PHOTO_PLACEHOLDER,
+    companyLogo:'',
+    imagePosition:'50% 50%',
+    keynote:false,
+    tbd:true,
+  },
+  {
+    id:'SPK5',
+    name:'Announced soon',
+    role:'Industry leader',
+    org:'Coming soon',
+    topic:'Session details coming soon',
+    track:'Gen AI',
+    initials:'',
+    g:['#00E5FF','#AE33FF'],
+    image:SPEAKER_PHOTO_PLACEHOLDER,
+    companyLogo:'',
+    imagePosition:'50% 50%',
+    keynote:false,
+    tbd:true,
+  },
 ];
 
 const DEFAULT_HOME_STATS_STRIP = [
@@ -5917,13 +6001,18 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
                   )}
 
                   <div className="home-speaker-card__content">
-                    <p className="text-[10px] font-mono uppercase tracking-[0.18em] text-white/45">Speaker</p>
+                    <p className="text-[10px] font-mono uppercase tracking-[0.18em] text-white/45">{sp.tbd ? 'Coming soon' : 'Speaker'}</p>
                     <h3 className="h-display text-[28px] sm:text-[32px] font-[900] text-white leading-[1.05] tracking-tight">
                       {sp.name}
                     </h3>
-                    <p className="text-[12px] text-white/50 leading-snug">
-                      {sp.role} · {sp.org}
-                    </p>
+                    <div className="home-speaker-card__org-row">
+                      {sp.companyLogo ? (
+                        <img src={sp.companyLogo} alt={sp.org} className="home-speaker-card__company-logo" loading="lazy" />
+                      ) : null}
+                      <p className="text-[12px] text-white/50 leading-snug min-w-0">
+                        {sp.role}{sp.org ? ` · ${sp.org}` : ''}
+                      </p>
+                    </div>
                     <div className="mt-3 flex items-end justify-between gap-3">
                       <div className="min-w-0">
                         <p className="text-[9px] font-mono uppercase tracking-[0.14em] text-white/35 mb-1">Speaking on</p>
@@ -9551,7 +9640,7 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
   const [hofLocal, setHofLocal] = useState(hallOfFame);
   const [editSess, setEditSess] = useState(false);
   const [sessLocal, setSessLocal] = useState(sessions);
-  const blankSpeaker = () => ({ name:'', role:'', org:'Myntra', topic:'', track:'Gen AI', initials:'', g:['#FF1FC0','#AE33FF'], image:'', imagePosition:'50% 15%', keynote:false });
+  const blankSpeaker = () => ({ name:'', role:'', org:'Myntra', topic:'', track:'Gen AI', initials:'', g:['#FF1FC0','#AE33FF'], image:'', companyLogo:'', imagePosition:'50% 15%', keynote:false });
 
   // Content — Ideas edit
   const [editIdeaId, setEditIdeaId] = useState(null);
@@ -11194,7 +11283,8 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
                             {SPEAKER_TRACKS.map(t=><option key={t} value={t}>{t}</option>)}
                           </select>
                         </div>
-                        <Inp label="Image path" value={spkDraft.image||''} onChange={e=>setSpkDraft(p=>({...p,image:e.target.value}))} placeholder="images/IMAGE 4.png" />
+                        <Inp label="Image URL" value={spkDraft.image||''} onChange={e=>setSpkDraft(p=>({...p,image:e.target.value}))} placeholder="https://..." />
+                        <Inp label="Company logo URL" value={spkDraft.companyLogo||''} onChange={e=>setSpkDraft(p=>({...p,companyLogo:e.target.value}))} placeholder="https://..." />
                         <Inp label="Image position" value={spkDraft.imagePosition||''} onChange={e=>setSpkDraft(p=>({...p,imagePosition:e.target.value}))} placeholder="50% 15%" />
                         <Inp label="Gradient color 1" value={(spkDraft.g||[])[0]||''} onChange={e=>setSpkDraft(p=>({...p,g:[e.target.value,(p.g||[])[1]||'#AE33FF']}))} />
                         <Inp label="Gradient color 2" value={(spkDraft.g||[])[1]||''} onChange={e=>setSpkDraft(p=>({...p,g:[(p.g||[])[0]||'#FF1FC0',e.target.value]}))} />
@@ -11231,7 +11321,8 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
                                   {SPEAKER_TRACKS.map(t=><option key={t} value={t}>{t}</option>)}
                                 </select>
                               </div>
-                              <Inp label="Image path" value={sp.image||''} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,image:e.target.value}:x))} />
+                              <Inp label="Image URL" value={sp.image||''} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,image:e.target.value}:x))} />
+                              <Inp label="Company logo URL" value={sp.companyLogo||''} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,companyLogo:e.target.value}:x))} />
                               <Inp label="Image position" value={sp.imagePosition||''} onChange={e=>setSpeakers(p=>p.map(x=>x.id===sp.id?{...x,imagePosition:e.target.value}:x))} />
                             </div>
                             <div className="flex justify-end gap-2">

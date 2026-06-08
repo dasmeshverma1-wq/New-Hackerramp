@@ -1315,6 +1315,30 @@
   @media (min-width: 1024px) {
     .inner-page-shell { padding-left: 2.5rem; padding-right: 2.5rem; }
   }
+  @media (max-width: 1023px) {
+    .inner-dark.inner-main-compact {
+      min-height: 0;
+    }
+    .inner-page-shell--compact {
+      padding-bottom: 1.5rem !important;
+    }
+    .register-gate {
+      margin-top: 0;
+      min-height: 0 !important;
+      padding-bottom: 0.5rem;
+    }
+    .register-gate .register-gate-content {
+      padding-top: 1rem;
+      padding-bottom: 0.5rem;
+    }
+    .register-gate h2 {
+      font-size: clamp(2rem, 9vw, 2.75rem) !important;
+      margin-bottom: 1rem !important;
+    }
+    .register-gate .register-gate-content p {
+      margin-bottom: 1.5rem !important;
+    }
+  }
   .mkt-page {
     width: 100%;
     max-width: 100%;
@@ -3870,6 +3894,11 @@ function Nav({ view, setView, user, onLogin, onLogout, userTeam, theme, setTheme
   const navInk    = 'text-white';
   const divider   = 'bg-white/20';
   const logoFilter= {};
+  const goHome = () => {
+    setView('home');
+    setMobileOpen(false);
+    window.scrollTo(0, 0);
+  };
 
   return (
     <>
@@ -3879,9 +3908,9 @@ function Nav({ view, setView, user, onLogin, onLogout, userTeam, theme, setTheme
           <div className={`hidden md:flex ${navBg} border-b ${navBorder} py-[15px] shadow-sm transition-colors duration-300`} style={{backdropFilter:'blur(20px)'}}>
           <div className="home-container flex items-center justify-between gap-4">
 
-          <div className="flex items-center flex-shrink-0">
+          <button type="button" onClick={goHome} className="flex items-center flex-shrink-0 btn p-0 border-0 bg-transparent" aria-label="Go to home">
             <img src="images/Frame 632872.svg" alt="mynnovAIte" className="h-[41px] w-auto object-contain" />
-          </div>
+          </button>
 
           <div className="flex items-center gap-0.5">
             {NAV_ITEMS
@@ -3941,9 +3970,9 @@ function Nav({ view, setView, user, onLogin, onLogout, userTeam, theme, setTheme
               </svg>
             </button>
 
-            <div className="flex items-center">
+            <button type="button" onClick={goHome} className="flex items-center btn p-0 border-0 bg-transparent" aria-label="Go to home">
               <img src="images/Frame 632872.svg" alt="mynnovAIte" className="h-[29px] w-auto object-contain" />
-            </div>
+            </button>
 
             <div className="flex items-center gap-2 pointer-events-auto">
               {user && (
@@ -4004,9 +4033,8 @@ function Nav({ view, setView, user, onLogin, onLogout, userTeam, theme, setTheme
                   <button onClick={()=>{onLogout(); setMobileOpen(false);}} className="text-[12px] font-bold text-[color:var(--mute-3)] hover:text-[color:var(--mute-1)] uppercase tracking-wide">Sign out</button>
                 </div>
              ) : (
-                <button onClick={()=>{onLogin(); setMobileOpen(false);}} className="g-btn w-full py-4 text-[14px] font-bold rounded-[8px] btn transition-all inline-flex items-center justify-center gap-2.5">
-                  <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/><path d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
-                  Sign in with Google
+                <button onClick={()=>{onLogin(); setMobileOpen(false);}} className="btn btn-primary w-full py-4 text-[14px] font-bold rounded-[8px]">
+                  Sign in
                 </button>
              )}
           </div>
@@ -4364,7 +4392,7 @@ function IdeaCard({ team, idea, index = 0, setView, user, onUpvote }) {
                 transition:'background 200ms ease, border-color 200ms ease',
               }}
             >
-              {hasUpvoted ? 'Upvoted ✓' : 'Upvote'}
+              {hasUpvoted ? 'Upvoted ✓' : (user ? 'Upvote' : 'Sign in to upvote')}
             </button>
           </div>
         </div>
@@ -4528,7 +4556,10 @@ function IdeaCarousel({ teams, ideas=[], setIdeas=()=>{}, user, setView }) {
   const sortedIdeas = [...(ideas||[])].filter(i=>i.status==='approved').sort((a,b)=>(b.upvotes?.length||0)-(a.upvotes?.length||0));
 
   const toggleUpvote = ideaId => {
-    if (!user) return;
+    if (!user) {
+      goToSignInPage(setView);
+      return;
+    }
     setIdeas(p=>p.map(i=>i.id===ideaId ? {...i, upvotes: i.upvotes.includes(user.id) ? i.upvotes.filter(x=>x!==user.id) : [...i.upvotes, user.id]} : i));
   };
 
@@ -5447,14 +5478,8 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
   };
 
   const handleHeroRegisterClick = () => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
     if (!user) {
-      if (isMobile) {
-        setView('register');
-        window.scrollTo(0, 0);
-      } else {
-        onLogin();
-      }
+      goToSignInPage(setView);
       return;
     }
     setView(userHasTeam ? 'teams' : 'register');
@@ -5710,7 +5735,7 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
 
             {/* Center-aligned CTA buttons */}
             <div className="flex items-center justify-center gap-4 flex-wrap mb-14 fade-up" style={{animationDelay:'0.3s'}}>
-              <button onClick={()=>setView('register')} className="btn btn-white group">Register your team
+              <button onClick={handleHeroRegisterClick} className="btn btn-white group">{userHasTeam ? 'View your team' : 'Register your team'}
                 <svg className="transform transition-transform group-hover:translate-x-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </button>
               <button onClick={()=>setView('ideabazaar')} className="btn btn-ghost-light">Browse Idea Bazaar</button>
@@ -6544,13 +6569,13 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
 
   /* ── NOT SIGNED IN: gate ── */
   if (!user) return (
-    <div className="max-w-[700px] mx-auto fade-up mt-8 flex flex-col min-h-[400px] relative justify-center items-center">
+    <div className="register-gate max-w-[700px] mx-auto fade-up mt-4 md:mt-8 flex flex-col md:min-h-[400px] relative md:justify-center items-center">
       {/* Subtle Mesh Background & Dot Grid */}
       <div className="absolute inset-0 dot-grid pointer-events-none opacity-40"></div>
       <div className="absolute top-[-100px] right-[-100px] w-80 h-80 rounded-full bg-[color:var(--accent-tint)] opacity-40 filter blur-[80px] pointer-events-none"></div>
       <div className="absolute bottom-[-120px] left-[-120px] w-96 h-96 rounded-full bg-[color:var(--c-purple-tint)] opacity-30 filter blur-[90px] pointer-events-none"></div>
       
-      <div className="relative z-10 w-full p-6 lg:p-10 flex flex-col justify-center items-center text-center my-auto">
+      <div className="register-gate-content relative z-10 w-full p-6 lg:p-10 flex flex-col justify-center items-center text-center md:my-auto">
         <span className="eyebrow text-[10px] text-[color:var(--mute-2)] mb-6 block">Tech Week 2026</span>
         <h2 className="h-display text-5xl lg:text-6xl text-[color:var(--ink)] mb-6" style={{lineHeight: 1.05}}>
           Jump the <em className="gradient-text">ramp.</em>
@@ -7066,7 +7091,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
   });
 
   const sendJoin = () => {
-    if (!user) { toast('Sign in first.','error'); return; }
+    if (!user) { onLoginOpen(); return; }
     setJoinRequests(p=>[...p,{
       id:`JR${Date.now()}`, teamId:joinT.id, teamName:joinT.name,
       userId:user.id, userName:user.name, userDept:user.dept,
@@ -7166,7 +7191,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
   };
 
   const toggleUpvote = (ideaId) => {
-    if (!user) { toast('Sign in to upvote.','error'); return; }
+    if (!user) { onLoginOpen(); return; }
     setIdeas(p=>p.map(i=>i.id===ideaId
       ? { ...i, upvotes: i.upvotes.includes(user.id) ? i.upvotes.filter(x=>x!==user.id) : [...i.upvotes, user.id] }
       : i
@@ -7196,13 +7221,13 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
           actions={tab==='partners'
             ? [
                 <button key="create-team" onClick={()=>{ if(!user){onLoginOpen();}else{setView('register');} }}
-                  className="bg-[color:var(--ink)] hover:bg-[color:var(--ink-3)] text-white px-4 py-2 rounded-[8px] text-[12px] font-[900] btn">Create team</button>,
+                  className="bg-[color:var(--ink)] hover:bg-[color:var(--ink-3)] text-white px-4 py-2 rounded-[8px] text-[12px] font-[900] btn">{!user ? 'Sign in to create team' : 'Create team'}</button>,
                 <button key="rules" onClick={()=>setShowRules(true)}
                   className="bg-white border border-[color:var(--line-2)] hover:border-[color:var(--ink)] text-[color:var(--ink)] px-4 py-2 rounded-[8px] text-[12px] font-[900] btn">Team RULE</button>,
               ]
             : [
-                <button key="submit-idea" onClick={()=>{ if(!user){toast('Sign in to submit an idea.','error');}else{setShowIdeaForm(true);} }}
-                  className="bg-[color:var(--ink)] hover:bg-[color:var(--ink-3)] text-white px-4 py-2 rounded-[8px] text-[12px] font-[900] btn">Submit idea</button>,
+                <button key="submit-idea" onClick={()=>{ if(!user){onLoginOpen();}else{setShowIdeaForm(true);} }}
+                  className="bg-[color:var(--ink)] hover:bg-[color:var(--ink-3)] text-white px-4 py-2 rounded-[8px] text-[12px] font-[900] btn">{!user ? 'Sign in to submit' : 'Submit idea'}</button>,
               ]}
         />
       )}
@@ -7702,15 +7727,17 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
                           onClick={e => {
                             e.stopPropagation(); 
                             if (!user && joinable) { 
-                              toast('Sign in to request to join.', 'error'); 
+                              onLoginOpen();
                               return; 
                             } 
                             if (joinable && !req) setJoinT(team);
                           }}
-                          disabled={!joinable || !!req}
-                          className={`rounded-full px-5 py-2 text-[11px] uppercase tracking-wide font-[800] transition-all ${
+                          disabled={!joinable || (!!req && !!user)}
+                          className={`rounded-full px-5 py-2 text-[11px] font-[800] transition-all ${!user && joinable ? '' : 'uppercase tracking-wide'} ${
                             !joinable
                               ? 'bg-white/[0.04] border border-white/12 text-[color:var(--mute-3)] cursor-default'
+                              : !user
+                                ? 'bg-[color:var(--accent)] text-white hover:opacity-90 shadow-sm'
                               : req?.status === 'pending'
                                 ? 'bg-amber-500/15 border border-amber-400/30 text-amber-300 cursor-default'
                                 : req?.status === 'accepted'
@@ -7718,7 +7745,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
                                   : 'bg-[color:var(--accent)] text-white hover:opacity-90 shadow-sm'
                           }`}
                         >
-                          {!joinable ? (joinBlockReason(team) === 'full' ? 'Full' : 'Not accepting') : req?.status === 'pending' ? 'Pending' : req?.status === 'accepted' ? 'Accepted' : 'Request to Join'}
+                          {!joinable ? (joinBlockReason(team) === 'full' ? 'Full' : 'Not accepting') : !user ? 'Sign in to request' : req?.status === 'pending' ? 'Pending' : req?.status === 'accepted' ? 'Accepted' : 'Request to join'}
                         </button>
                       </div>
                     </div>
@@ -7737,7 +7764,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
       {/* ── TAB 3: REQUESTS ── */}
       {tab==='requests' && (
         <div className="space-y-4">
-          {!user && <Gate title="Sign in required" msg="Sign in to see your join requests." />}
+          {!user && <Gate title="Sign in required" msg="Track pending, accepted, and declined join requests after you sign in." ctaLabel="Sign in to view requests" onCta={onLoginOpen} />}
 
           {/* Status filter */}
           {user && (myOutgoing.length > 0 || inbound.length > 0) && (
@@ -8092,7 +8119,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
                                 : 'bg-[color:var(--ink)] text-white hover:bg-[color:var(--ink-3)]'
                             }`}
                           >
-                            {hasUpvoted ? 'Upvoted ✓' : 'Upvote'}
+                            {hasUpvoted ? 'Upvoted ✓' : (user ? 'Upvote' : 'Sign in to upvote')}
                           </button>
                         </div>
                       </div>
@@ -8138,7 +8165,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
             ...(detailT.missing||[]),
           ];
           const openJoinFlow = () => {
-            if (!user) { toast('Sign in to request to join.', 'error'); onLoginOpen?.(); return; }
+            if (!user) { onLoginOpen?.(); return; }
             setDetailT(null);
             setJoinT(detailT);
           };
@@ -8236,7 +8263,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
                   <button type="button" disabled className="mkt-team-modal-cta mkt-team-modal-cta--accepted btn">You are on this team</button>
                 ) : (
                   <button type="button" className="mkt-team-modal-cta mkt-team-modal-cta--primary btn" onClick={openJoinFlow}>
-                    Request to join
+                    {!user ? 'Sign in to request' : 'Request to join'}
                   </button>
                 )}
               </div>
@@ -9481,7 +9508,7 @@ function AdminContentSectionHead({ sectionLabel, title, open, onToggle, visKey, 
   );
 }
 
-function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, setProblems, pubResults, setPubResults, ideas, setIdeas, winners, setWinners, homeStatsStrip, setHomeStatsStrip, speakers, setSpeakers, hallOfFame, setHallOfFame, sessions, setSessions, toast, quizzes, setQuizzes, quizResults, heroVersion, setHeroVersion, themes=THEMES, setThemes=()=>{}, qualInstructions='', setQualInstructions=()=>{}, panels=[], setPanels=()=>{}, judgeScores=[], setJudgeScores=()=>{}, activeRound='R1', setActiveRound=()=>{}, joinRequests=[], setJoinRequests=()=>{}, homeVisibility=DEFAULT_HOME_VISIBILITY, setHomeVisibility=()=>{} }) {
+function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, setProblems, pubResults, setPubResults, ideas, setIdeas, winners, setWinners, homeStatsStrip, setHomeStatsStrip, speakers, setSpeakers, hallOfFame, setHallOfFame, sessions, setSessions, toast, quizzes, setQuizzes, quizResults, heroVersion, setHeroVersion, themes=THEMES, setThemes=()=>{}, qualInstructions='', setQualInstructions=()=>{}, panels=[], setPanels=()=>{}, judgeScores=[], setJudgeScores=()=>{}, activeRound='R1', setActiveRound=()=>{}, joinRequests=[], setJoinRequests=()=>{}, homeVisibility=DEFAULT_HOME_VISIBILITY, setHomeVisibility=()=>{}, onRequireSignIn }) {
   // Section + sub-tab state
   const isJury = user?.role === 'jury';
   const [section, setSection] = useState(isJury ? 'judging' : 'overview');
@@ -9605,7 +9632,7 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
   const [add, setAdd]   = useState(false);
   const [np, setNp]     = useState({ title:'', category:'', difficulty:'Medium', desc:'', published:false });
 
-  if (!user) return <Gate title="Sign in required" msg="Please sign in to access the Admin panel." />;
+  if (!user) return <Gate title="Sign in required" msg="Please sign in to access the Admin panel." ctaLabel="Sign in to continue" onCta={onRequireSignIn} />;
   if (user.role !== 'coordinator' && user.role !== 'jury') return <Gate title="Access restricted" msg="The Admin panel is available to Event Coordinators and Jury members only." warn />;
   const ROUND_LABELS = { R1:'Round 1 — Ideation', R2:'Round 2 — Prototype', R3:'Round 3 — Finale' };
   const AWARD_OPTS = ['','Top 20','Top 5 Finalist','Winner 🏆','Runner Up 🥈','Best UI/UX 🎨','Most Innovative 💡','Audience Choice ❤️'];
@@ -13040,10 +13067,15 @@ function EnablementView({ sessions = [], setSessions, speakers = DEFAULT_SPEAKER
 
 /* ──────────── GATE ──────────── */
 
-function Gate({ title, msg, warn=false }) {
+function goToSignInPage(setView) {
+  if (setView) setView('register');
+  window.scrollTo(0, 0);
+}
+
+function Gate({ title, msg, warn=false, ctaLabel, onCta }) {
   return (
-    <div className="flex items-center justify-center py-28">
-      <div className="max-w-sm text-center">
+    <div className="flex items-center justify-center py-16 md:py-28">
+      <div className="max-w-sm text-center px-4">
         <div className={`w-11 h-11 rounded-none mx-auto mb-5 flex items-center justify-center ${warn?'bg-[#fffbeb]':'bg-[#eeeeff]'}`}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={warn?'#d97706':'#f97316'} strokeWidth="1.5">
             {warn?<path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>:<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>}
@@ -13051,6 +13083,11 @@ function Gate({ title, msg, warn=false }) {
         </div>
         <p className="font-semibold text-[color:var(--ink)] mb-2">{title}</p>
         <p className="text-[13px] text-[color:var(--mute-2)] leading-relaxed">{msg}</p>
+        {onCta && (
+          <button type="button" onClick={onCta} className="btn btn-primary mt-6">
+            {ctaLabel || 'Sign in to continue'}
+          </button>
+        )}
       </div>
     </div>
   );
@@ -13245,7 +13282,7 @@ function NotificationsView({ user, notifications, setNotifications, setView, toa
       <div className="max-w-[640px] mx-auto text-center py-24">
         <h2 className="text-2xl font-bold mb-2">Notifications</h2>
         <p className="text-[color:var(--mute-2)] mb-6">Sign in to see your invitations, team updates and reminders.</p>
-        <button onClick={onLoginOpen} className="btn btn-primary">Sign in</button>
+        <button onClick={onLoginOpen} className="btn btn-primary">Sign in to view notifications</button>
       </div>
     );
   }
@@ -13688,13 +13725,15 @@ function App() {
   const toast = (msg, type='success') => setToast({ msg, type, k:Date.now() });
 
   const userTeam = user ? teams.find(t => t.members.some(m => m === user.id) || t.leadName === user.name) : null;
+  const navigateToSignIn = () => goToSignInPage(setView);
+  const openLoginModal = () => setLogin(true);
 
   return (
     <div className="min-h-screen" style={{background: view === 'home' ? '' : (theme === 'dark' ? '#080612' : '#FAFAF7')}}>
       {loading && <LoadingScreen onComplete={() => { setLoading(false); window.scrollTo(0, 0); }} />}
 
       <Nav view={view} setView={setView} user={user}
-        onLogin={()=>setLogin(true)}
+        onLogin={navigateToSignIn}
         onLogout={()=>{setUser(null); toast('Signed out.','info');}}
         userTeam={userTeam}
         theme={theme}
@@ -13702,17 +13741,17 @@ function App() {
         notifications={notifications}
       />
 
-      <main className={view === 'home' ? 'pb-16' : (theme === 'dark' ? 'inner-dark' : 'inner-light')}>
-        {view==='home' && <HomeView teams={teams} winners={winners} homeStatsStrip={homeStatsStrip} speakers={speakers} hallOfFame={hallOfFame} setView={setView} heroVersion={heroVersion} theme={theme} setTheme={setTheme} ideas={ideas} setIdeas={setIdeas} user={user} problemCount={(problems||[]).filter(p=>p.published).length} homeVisibility={homeVisibility} />}
+      <main className={`${view === 'home' ? 'pb-16' : (theme === 'dark' ? 'inner-dark' : 'inner-light')}${view === 'register' && !user ? ' inner-main-compact' : ''}`}>
+        {view==='home' && <HomeView teams={teams} winners={winners} homeStatsStrip={homeStatsStrip} speakers={speakers} hallOfFame={hallOfFame} setView={setView} heroVersion={heroVersion} theme={theme} setTheme={setTheme} ideas={ideas} setIdeas={setIdeas} user={user} onLogin={navigateToSignIn} problemCount={(problems||[]).filter(p=>p.published).length} homeVisibility={homeVisibility} />}
         {view !== 'home' && (
-          <div className="inner-page-shell pt-[88px] pb-16">
-            {view==='register'    && <RegisterView    user={user} setTeams={setTeams} teams={teams} ideas={ideas} setIdeas={setIdeas} toast={toast} onLoginOpen={()=>setLogin(true)} userTeam={userTeam} pubResults={pubResults} editTeamMode={editTeamMode} setEditTeamMode={setEditTeamMode} setView={setView} />}
-            {view==='teams'       && <MarketplaceView user={user} teams={teams} setTeams={setTeams} joinRequests={joinReqs} setJoinRequests={setJoinReqs} ideas={ideas} setIdeas={setIdeas} toast={toast} mode="partners" setView={setView} onLoginOpen={()=>setLogin(true)} userTeam={userTeam} setEditTeamMode={setEditTeamMode} pubResults={pubResults} themes={themes} qualInstructions={qualInstructions} problems={problems} />}
-            {view==='ideabazaar'  && <MarketplaceView user={user} teams={teams} setTeams={setTeams} joinRequests={joinReqs} setJoinRequests={setJoinReqs} ideas={ideas} setIdeas={setIdeas} toast={toast} mode="ideas" setView={setView} onLoginOpen={()=>setLogin(true)} userTeam={userTeam} setEditTeamMode={setEditTeamMode} pubResults={pubResults} themes={themes} qualInstructions={qualInstructions} problems={problems} />}
-            {view==='notifications' && <NotificationsView user={user} notifications={notifications} setNotifications={setNotifications} setView={setView} toast={toast} onLoginOpen={()=>setLogin(true)} />}
+          <div className={`inner-page-shell pt-[88px] ${view === 'register' && !user ? 'inner-page-shell--compact pb-6' : 'pb-16'}`}>
+            {view==='register'    && <RegisterView    user={user} setTeams={setTeams} teams={teams} ideas={ideas} setIdeas={setIdeas} toast={toast} onLoginOpen={openLoginModal} userTeam={userTeam} pubResults={pubResults} editTeamMode={editTeamMode} setEditTeamMode={setEditTeamMode} setView={setView} />}
+            {view==='teams'       && <MarketplaceView user={user} teams={teams} setTeams={setTeams} joinRequests={joinReqs} setJoinRequests={setJoinReqs} ideas={ideas} setIdeas={setIdeas} toast={toast} mode="partners" setView={setView} onLoginOpen={navigateToSignIn} userTeam={userTeam} setEditTeamMode={setEditTeamMode} pubResults={pubResults} themes={themes} qualInstructions={qualInstructions} problems={problems} />}
+            {view==='ideabazaar'  && <MarketplaceView user={user} teams={teams} setTeams={setTeams} joinRequests={joinReqs} setJoinRequests={setJoinReqs} ideas={ideas} setIdeas={setIdeas} toast={toast} mode="ideas" setView={setView} onLoginOpen={navigateToSignIn} userTeam={userTeam} setEditTeamMode={setEditTeamMode} pubResults={pubResults} themes={themes} qualInstructions={qualInstructions} problems={problems} />}
+            {view==='notifications' && <NotificationsView user={user} notifications={notifications} setNotifications={setNotifications} setView={setView} toast={toast} onLoginOpen={navigateToSignIn} />}
             {view==='demobooth'   && <DemoBoothView setView={setView} />}
             {view==='calendar'    && <CalendarView />}
-            {view==='admin'       && <AdminView user={user} teams={teams} setTeams={setTeams} allUsers={allUsers} setAllUsers={setAllUsers} problems={problems} setProblems={setProblems} pubResults={pubResults} setPubResults={setPubResults} ideas={ideas} setIdeas={setIdeas} winners={winners} setWinners={setWinners} homeStatsStrip={homeStatsStrip} setHomeStatsStrip={setHomeStatsStrip} speakers={speakers} setSpeakers={setSpeakers} hallOfFame={hallOfFame} setHallOfFame={setHallOfFame} sessions={sessions} setSessions={setSessions} toast={toast} quizzes={quizzes} setQuizzes={setQuizzes} quizResults={quizResults} heroVersion={heroVersion} setHeroVersion={setHeroVersion} themes={themes} setThemes={setThemes} qualInstructions={qualInstructions} setQualInstructions={setQualInstructions} panels={panels} setPanels={setPanels} judgeScores={judgeScores} setJudgeScores={setJudgeScores} activeRound={activeRound} setActiveRound={setActiveRound} joinRequests={joinReqs} setJoinRequests={setJoinReqs} homeVisibility={homeVisibility} setHomeVisibility={setHomeVisibility} />}
+            {view==='admin'       && <AdminView user={user} teams={teams} setTeams={setTeams} allUsers={allUsers} setAllUsers={setAllUsers} problems={problems} setProblems={setProblems} pubResults={pubResults} setPubResults={setPubResults} ideas={ideas} setIdeas={setIdeas} winners={winners} setWinners={setWinners} homeStatsStrip={homeStatsStrip} setHomeStatsStrip={setHomeStatsStrip} speakers={speakers} setSpeakers={setSpeakers} hallOfFame={hallOfFame} setHallOfFame={setHallOfFame} sessions={sessions} setSessions={setSessions} toast={toast} quizzes={quizzes} setQuizzes={setQuizzes} quizResults={quizResults} heroVersion={heroVersion} setHeroVersion={setHeroVersion} themes={themes} setThemes={setThemes} qualInstructions={qualInstructions} setQualInstructions={setQualInstructions} panels={panels} setPanels={setPanels} judgeScores={judgeScores} setJudgeScores={setJudgeScores} activeRound={activeRound} setActiveRound={setActiveRound} joinRequests={joinReqs} setJoinRequests={setJoinReqs} homeVisibility={homeVisibility} setHomeVisibility={setHomeVisibility} onRequireSignIn={navigateToSignIn} />}
             {view==='sessions'    && <EnablementView sessions={sessions} setSessions={setSessions} speakers={speakers} user={user} toast={toast} />}
             {view==='scoreboard'  && <ScoreboardView teams={teams} setView={setView} />}
             {view==='faq'         && <FaqView setView={setView} />}

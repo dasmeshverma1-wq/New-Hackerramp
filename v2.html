@@ -5649,9 +5649,18 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
                         style={{position:'relative', zIndex:1}}
                         onMouseEnter={()=>setBtnHovered(true)}
                         onMouseLeave={()=>setBtnHovered(false)}
-                        onClick={() => { if (!user) { onLogin(); } else if (userHasTeam) { setView('teams'); } else { setView('register'); } }}
+                        onClick={() => {
+                          if (!user) {
+                            if (isMobileHero) setView('register');
+                            else onLogin();
+                          } else if (userHasTeam) {
+                            setView('teams');
+                          } else {
+                            setView('register');
+                          }
+                        }}
                       >
-                        {userHasTeam ? 'View Your Team' : 'Register Your Team'}
+                        {userHasTeam ? 'View Your Team' : (isMobileHero && !user ? 'Sign Up' : 'Register Your Team')}
                       </button>
                     </div>
                   </div>

@@ -1,0 +1,4 @@
+Used on: Home → How It Works section (animated robot above heading)
+Local copy: external/how-it-works-robot-microsoft-teams.png
+Source URL:
+https://em-content.zobj.net/source/microsoft-teams/400/robot_1f916.png

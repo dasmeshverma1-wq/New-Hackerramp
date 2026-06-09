@@ -1,0 +1,4 @@
+Used on: App-wide FluentEmoji helper (🚀); not currently on home carousel but part of shared emoji set
+Local copy: external/fluent-emoji-rocket-microsoft-teams.png
+Source URL:
+https://em-content.zobj.net/source/microsoft-teams/337/rocket_1f680.png

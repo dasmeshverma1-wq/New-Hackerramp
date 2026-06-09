@@ -7,7 +7,8 @@ Packaged for developers implementing the homepage. Source page: `v2.html` → `H
 | Folder | Contents |
 |--------|----------|
 | `local/` | Files copied from repo (`images/`, `videos/`) with **where-used** names |
-| `speakers/` | Local speaker placeholder photos |
+| `Prices/` | Prizes & Rewards medals + special-award icons — see [`Prices/README.md`](Prices/README.md) |
+| `speakers/` | Speaker card photos (canonical + source filenames) |
 | `external/` | Remote URLs + downloaded PNGs (Microsoft Teams emoji, LinkedIn) |
 | `inline-svg/` | Inline SVG icons extracted from home markup (stroke icons, not image files in app) |
 
@@ -66,7 +67,13 @@ Rule cards: **CSS solid colors** only.
 
 ## TechWeek winners (podium)
 
-No image files — medal characters are **Unicode emoji** in code: 🥇 🥈 🥉
+| Asset | Used where |
+|-------|------------|
+| `Prices/medal-1st-place.png` | 1st place card — medal behind copy |
+| `Prices/medal-2nd-place.png` | 2nd place card |
+| `Prices/medal-3rd-place.png` | 3rd place card |
+
+Loaded via `PODIUM_MEDAL_IMAGES` in `v2.html`.
 
 ---
 
@@ -94,11 +101,13 @@ No image files — phase timeline is CSS.
 | `external/speaker-SPK2-atlassian-logo.url.txt` | Atlassian | Company logo |
 | `external/speaker-SPK3-pratyush-kumar-photo.url.txt` | Pratyush Kumar | Card photo |
 | `external/speaker-SPK3-sarvam-ai-logo.url.txt` | Sarvam AI | Company logo |
-| `images/speakers/nitesh-jain.jpeg` | Nitesh Jain (SPK1) | Card photo — from `assets/home-screen/speakers/1st.jpeg` |
-| `images/speakers/shamik-sharma.jpeg` | Shamik Sharma (SPK2) | from `assets/.../2nd.jpeg` |
-| `images/speakers/pratyush-kumar.jpeg` | Pratyush Kumar (SPK3) | from `assets/.../3rd.jpeg` |
-| `images/speakers/announced-soon-1.jpeg` | Announced soon (SPK4) | from `assets/.../speaker-SPK4-announced-soon.jpeg` |
-| `images/speakers/announced-soon-2.jpeg` | Announced soon (SPK5) | from `assets/.../speaker-SPK5-announced-soon.jpeg` |
+| `speakers/nitesh-jain.jpeg` | Nitesh Jain (SPK1) | Canonical name — also `speakers/1st.jpeg` |
+| `speakers/shamik-sharma.jpeg` | Shamik Sharma (SPK2) | also `speakers/2nd.jpeg` |
+| `speakers/pratyush-kumar.jpeg` | Pratyush Kumar (SPK3) | also `speakers/3rd.jpeg` |
+| `speakers/announced-soon-1.jpeg` | Announced soon (SPK4) | also `speaker-SPK4-announced-soon.jpeg` |
+| `speakers/announced-soon-2.jpeg` | Announced soon (SPK5) | also `speaker-SPK5-announced-soon.jpeg` |
+
+Runtime paths in `v2.html` still use `images/speakers/*.jpeg` (copies live in repo `images/speakers/`).
 
 Company logos still load from LinkedIn URLs in `DEFAULT_SPEAKERS`.
 
@@ -108,12 +117,18 @@ Company logos still load from LinkedIn URLs in `DEFAULT_SPEAKERS`.
 
 | Asset | Used where |
 |-------|------------|
-| `external/rewards-live-implementation-victory-hand-microsoft-teams.png` | Live Implementation Prize billboard |
-| `external/rewards-victory-hand-microsoft-teams.url.txt` | Source URL |
+| `Prices/medal-1st-place.png` | 1st Place card |
+| `Prices/medal-2nd-place.png` | 2nd Place card |
+| `Prices/medal-3rd-place.png` | 3rd Place card |
+| `Prices/award-best-ui-ux.png` | Best UI/UX award card (blurred right-side wash) |
+| `Prices/award-most-innovative.png` | Most Innovative award card |
+| `Prices/award-live-implementation.png` | Live Implementation bonus card |
 
-Reward tier medals/pills use **Unicode emoji** in code: 🥇 🥈 🥉 🎨 💡 🔥 💎 🌟 ✨ ⚡ 🚀
+Full mapping: [`Prices/README.md`](Prices/README.md). Loaded via `PODIUM_MEDAL_IMAGES` and `REWARD_AWARD_ICONS` in `v2.html`.
 
-Card backgrounds: **CSS gradients** (no PNG).
+Perk pills and card backgrounds are **CSS/text** — no image files.
+
+**Legacy (not used on home anymore):** `external/rewards-live-implementation-victory-hand-microsoft-teams.png` — replaced by `Prices/award-live-implementation.png`.
 
 ---
 

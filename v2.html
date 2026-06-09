@@ -2696,6 +2696,31 @@
   .home-reward-card--gold .home-dark-card-stat { font-size: 30px !important; }
   .home-reward-card--silver .home-dark-card-stat { font-size: 26px !important; }
   .home-reward-card--bronze .home-dark-card-stat { font-size: 26px !important; }
+  @media (max-width: 767px) {
+    .home-reward-card--gold .home-podium-medal-img,
+    .home-reward-card--silver .home-podium-medal-img,
+    .home-reward-card--bronze .home-podium-medal-img {
+      z-index: 0;
+      opacity: 0.48;
+    }
+    .home-reward-card--gold .home-dark-card-scrim,
+    .home-reward-card--silver .home-dark-card-scrim,
+    .home-reward-card--bronze .home-dark-card-scrim {
+      z-index: 1;
+      background: linear-gradient(
+        105deg,
+        rgba(8, 6, 18, 0.92) 0%,
+        rgba(8, 6, 18, 0.72) 42%,
+        rgba(8, 6, 18, 0.28) 68%,
+        rgba(8, 6, 18, 0.12) 100%
+      );
+    }
+    .home-reward-card--gold .home-podium-card-body,
+    .home-reward-card--silver .home-podium-card-body,
+    .home-reward-card--bronze .home-podium-card-body {
+      z-index: 2;
+    }
+  }
   .group:hover .home-podium-medal-img,
   .group:hover .home-podium-award-icon:not(.home-podium-award-icon--wide),
   .home-reward-card:hover .home-podium-medal-img,
@@ -4291,14 +4316,14 @@ const QUIZZES = [
 
 const WINNER_PODIUM_TIERS = ['gold', 'silver', 'bronze'];
 const PODIUM_MEDAL_IMAGES = [
-  'assets/home-screen/Prices/In_this_Purple_Art_Style__202606091450-removebg-preview.png',
-  'assets/home-screen/Prices/Make_2nd_Place_Silver_Verison_202606091450-removebg-preview.png',
-  'assets/home-screen/Prices/Make_3rd_Place_Bronze_Verison_202606091451-removebg-preview.png',
+  'assets/home-screen/Prices/medal-1st-place.png',
+  'assets/home-screen/Prices/medal-2nd-place.png',
+  'assets/home-screen/Prices/medal-3rd-place.png',
 ];
 const REWARD_AWARD_ICONS = {
-  ux: 'assets/home-screen/Prices/UX.png',
-  innovative: 'assets/home-screen/Prices/In_this_Purple_Art_Style__202606091508-removebg-preview.png',
-  shipping: 'assets/home-screen/Prices/In_this_Purple_Art_Style,_202606091538.png',
+  ux: 'assets/home-screen/Prices/award-best-ui-ux.png',
+  innovative: 'assets/home-screen/Prices/award-most-innovative.png',
+  shipping: 'assets/home-screen/Prices/award-live-implementation.png',
 };
 
 const CURRENT_WINNERS = [

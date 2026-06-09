@@ -584,15 +584,11 @@
     z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 0;
     padding: 1.5rem;
   }
   @media (min-width: 768px) {
     .home-wit-banner-inner {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
       padding: 2rem 2.25rem;
     }
   }
@@ -610,18 +606,93 @@
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.14);
   }
+  .home-wit-event-name {
+    font-family: 'Parafina Trial', 'Inter Tight', sans-serif;
+    font-size: clamp(1.75rem, 5vw, 2.75rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin: 0;
+  }
+  .home-wit-event-name em {
+    font-style: normal;
+    background: linear-gradient(95deg, #FF1FC0, #AE33FF, #00E5FF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .home-wit-tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fda4af;
+    margin: 0 0 10px;
+  }
   .home-wit-banner-stats {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 10px;
-    margin-top: 1rem;
+    margin-top: 1.25rem;
+  }
+  @media (min-width: 540px) {
+    .home-wit-banner-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
   .home-wit-banner-stat {
-    padding: 10px 14px;
+    padding: 12px 14px;
     border-radius: 10px;
     border: 1px solid rgba(255,255,255,0.10);
     background: rgba(255,255,255,0.04);
     min-width: 0;
+  }
+  .home-wit-banner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .home-wit-banner-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 42px;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+    background: var(--accent);
+    border: 1px solid rgba(255,63,108,0.45);
+    text-decoration: none;
+    transition: opacity 150ms ease;
+  }
+  .home-wit-banner-cta:hover { opacity: 0.92; }
+  .home-wit-banner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.72);
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    text-decoration: none;
+    transition: background 150ms ease, color 150ms ease;
+  }
+  .home-wit-banner-link:hover {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
   }
   .home-section-eyebrow {
     color: rgba(255,255,255,0.5);
@@ -2630,6 +2701,90 @@
     .hero-b-stage-wrapper {
       zoom: 0.869565; /* Reverts zoom for the aspect-ratio based collage canvas (1 / 1.15) */
     }
+  }
+
+  /* ── HERO VERSION A (dark Women in Tech) ── */
+  .hero-a-stage {
+    position: relative;
+    overflow: hidden;
+    background: #080612;
+    color: #fff;
+  }
+  .hero-a-stage__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.22;
+    pointer-events: none;
+  }
+  .hero-a-stage__grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.28;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+  }
+  .hero-a-stage__glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+  }
+  .hero-a-stage__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 70% at 15% 10%, rgba(255,31,192,0.22) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 60% at 85% 90%, rgba(174,51,255,0.18) 0%, transparent 50%),
+      linear-gradient(180deg, rgba(8,6,18,0.55) 0%, rgba(8,6,18,0.92) 55%, #080612 100%);
+    pointer-events: none;
+  }
+  .hero-a-inner {
+    position: relative;
+    z-index: 2;
+  }
+  .hero-a-title {
+    font-family: 'Parafina Trial', 'Inter Tight', sans-serif;
+    font-size: clamp(3.25rem, 12vw, 6.75rem);
+    font-weight: 500;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    color: #fff;
+    margin: 0;
+  }
+  .hero-a-title em {
+    font-style: normal;
+    background: linear-gradient(95deg, #FF1FC0, #AE33FF, #00E5FF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-a-tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fda4af;
+    margin: 0 0 12px;
+  }
+  .hero-a-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
   }
 
   /* ── HERO VERSION B STYLES ── */
@@ -5686,7 +5841,7 @@ function CurrentWinnersWidget({ winners = CURRENT_WINNERS }) {
 }
 
 
-function CountdownTimer({ targetDate }) {
+function CountdownTimer({ targetDate, label = 'Grand Finale Begins In' }) {
   const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
 
   useEffect(() => {
@@ -5712,7 +5867,7 @@ function CountdownTimer({ targetDate }) {
 
   return (
     <div className="inline-block text-center border-t border-[rgba(255,255,255,0.1)] pt-2.5 mt-1 w-full max-w-[175px]">
-      <div className="text-[6.5px] text-[rgba(255,255,255,0.4)] tracking-[0.25em] uppercase font-[800] mb-1.5">Grand Finale Begins In</div>
+      <div className="text-[6.5px] text-[rgba(255,255,255,0.4)] tracking-[0.25em] uppercase font-[800] mb-1.5">{label}</div>
       <div className="flex items-center justify-between gap-1.5 px-0.5">
         {[
           { label: 'Days', value: timeLeft.days },
@@ -5820,40 +5975,33 @@ function WomenInTechBanner() {
           <div className="home-wit-banner-glow" style={{ top: '-60px', left: '-40px', width: '280px', height: '280px', background: 'rgba(255,31,192,0.35)' }} />
           <div className="home-wit-banner-glow" style={{ bottom: '-80px', right: '-30px', width: '320px', height: '320px', background: 'rgba(174,51,255,0.28)' }} />
           <div className="home-wit-banner-inner">
-            <div className="flex-1 min-w-0">
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className="home-wit-banner-pill">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M12 2a5 5 0 0 1 5 5v1a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5z"/>
-                    <path d="M6 21v-2a6 6 0 0 1 12 0v2"/>
-                  </svg>
-                  Women in Tech
-                </span>
-                <span className="home-wit-banner-pill" style={{ color: '#fda4af', borderColor: 'rgba(255,63,108,0.35)', background: 'rgba(255,63,108,0.12)' }}>Beyond the Algorithm</span>
-              </div>
-              <h2 className="h-display text-2xl sm:text-3xl md:text-4xl text-white leading-tight tracking-tight">
-                A standalone tech conference for <em className="home-heading-accent">women builders.</em>
-              </h2>
-              <p className="text-[13px] sm:text-[14px] text-white/65 leading-relaxed mt-3 max-w-2xl">
-                Curated half-day experience on July 17 — keynotes, fireside chats, and a chance to see Myntra as a technology company, not just a fashion brand. Open registration · internal screening for 100 seats.
-              </p>
-              <div className="home-wit-banner-stats">
-                {[
-                  ['Date', 'July 17, 2026'],
-                  ['Format', '3–4 hr curated conference'],
-                  ['Registration', 'Apply via Luma'],
-                ].map(([k, v]) => (
-                  <div key={k} className="home-wit-banner-stat">
-                    <p className="text-[10px] font-[800] uppercase tracking-[0.12em] text-white/45">{k}</p>
-                    <p className="text-[12px] font-[700] text-white/85 mt-0.5">{v}</p>
-                  </div>
-                ))}
-              </div>
+            <p className="home-wit-tagline">Beyond the Algorithm</p>
+            <h2 className="home-wit-event-name">
+              Women in <em>Tech</em>
+            </h2>
+            <p className="text-[13px] sm:text-[14px] text-white/70 leading-relaxed mt-3 max-w-2xl">
+              A standalone half-day conference for women builders — keynotes, fireside chats, and a chance to see Myntra as a technology company, not just a fashion brand.
+            </p>
+            <div className="home-wit-banner-stats">
+              {[
+                ['Date', 'July 17, 2026'],
+                ['Format', '3–4 hr · 100 seats'],
+                ['Registration', 'Apply via Luma'],
+              ].map(([k, v]) => (
+                <div key={k} className="home-wit-banner-stat">
+                  <p className="text-[10px] font-[800] uppercase tracking-[0.12em] text-white/45">{k}</p>
+                  <p className="text-[12px] font-[700] text-white/85 mt-0.5">{v}</p>
+                </div>
+              ))}
             </div>
-            <div className="flex flex-col gap-2.5 flex-shrink-0 w-full md:w-auto md:min-w-[200px]">
-              <a href="women-in-tech.html" className="w-full md:w-auto justify-center rounded-[8px] text-[12px] font-[800] btn transition-all inline-flex items-center gap-2" style={{ height: '42px', padding: '0 20px', background: 'var(--accent)', color: '#fff', border: '1px solid rgba(255,63,108,0.45)' }}>
-                Register
+            <div className="home-wit-banner-actions">
+              <a href="women-in-tech.html#register" className="home-wit-banner-cta">
+                Register for Women in Tech
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+              <a href="women-in-tech.html" className="home-wit-banner-link">
+                View event details
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </div>
           </div>
@@ -6183,63 +6331,43 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
           </div>
         </div>
       ) : (
-        <section className="sticky top-0 overflow-hidden z-10 h-screen min-h-[680px] flex flex-col items-center justify-center w-full" style={{background:'var(--ink)', color:'white'}}>
-          <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-screen" src="videos/Desktop 2026.05.19 - 18.38.38.mp4" />
-          <div className="absolute inset-0 dot-grid opacity-60" />
-          
-          <div className="max-w-[800px] mx-auto px-6 relative z-10 flex flex-col items-center text-center pt-28 sm:pt-36 pb-8">
-            
-            {/* Eyebrow badge */}
-            <div className="flex items-center gap-3 mb-8 flex-wrap justify-center fade-up animate-fade-in" style={{animationDelay:'0.05s'}}>
-              <span className="eyebrow eyebrow-white">Myntra Tech Week</span>
-              <span className="w-1 h-1 rounded-full bg-white/30"></span>
-              <span className="eyebrow eyebrow-white text-[color:var(--accent)]">Edition Six · 2026</span>
-              <span className="pill pill-ghost-light ml-2">
-                <span className="dot" style={{color:'var(--accent)'}}></span>
-                Registration open
-              </span>
-            </div>
+        <section className="hero-a-stage sticky top-0 z-10 h-screen min-h-[680px] flex flex-col items-center justify-center w-full">
+          <video autoPlay loop muted playsInline className="hero-a-stage__video" src="videos/Desktop 2026.05.19 - 18.38.38.mp4" aria-hidden="true" />
+          <div className="hero-a-stage__grid" aria-hidden="true" />
+          <div className="hero-a-stage__glow" style={{ top: '-80px', left: '-60px', width: '320px', height: '320px', background: 'rgba(255,31,192,0.35)' }} aria-hidden="true" />
+          <div className="hero-a-stage__glow" style={{ bottom: '-100px', right: '-40px', width: '360px', height: '360px', background: 'rgba(174,51,255,0.28)' }} aria-hidden="true" />
+          <div className="hero-a-stage__scrim" aria-hidden="true" />
 
-            {/* Main Title (Reduced size and centered) */}
-            <h1 className="text-center font-sans font-[900] text-white uppercase tracking-tighter leading-[0.9] fade-up mb-8 w-full" style={{ fontSize: 'clamp(36px, 6.5vw, 76px)', animationDelay:'0.15s' }}>
-              Build the future of<br/>
-              <span className="inline-flex items-center gap-2 flex-wrap justify-center">
-                <em className="gradient-text font-serif normal-case tracking-normal" style={{ fontSize: '0.8em' }}>fashion</em>
-                <div className="inline-flex items-center justify-center w-[1.48em] h-[0.72em] rounded-full overflow-hidden border border-white/20 align-middle bg-black relative"><video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-80" src="videos/Desktop 2026.05.19 - 18.38.38.mp4" /></div>
-                commerce
-              </span>
+          <div className="hero-a-inner max-w-[820px] mx-auto px-6 flex flex-col items-center text-center pt-28 sm:pt-36 pb-8">
+            <p className="hero-a-tagline fade-up" style={{ animationDelay: '0.05s' }}>Beyond the Algorithm</p>
+            <h1 className="hero-a-title fade-up" style={{ animationDelay: '0.12s' }}>
+              Women in <em>Tech</em>
             </h1>
-
-            {/* Centered Minimal Subtext */}
-            <p className="text-base sm:text-lg leading-relaxed max-w-xl text-white/70 mb-10 fade-up" style={{animationDelay:'0.25s'}}>
-              A cross-functional hackathon to pick, build, and pitch a real problem Shark Tank-style. Ship it in 14 days and win big.
+            <p className="text-[15px] sm:text-[17px] leading-relaxed max-w-xl text-white/68 mt-5 mb-6 fade-up" style={{ animationDelay: '0.2s' }}>
+              Myntra&apos;s standalone half-day conference for women builders — keynotes, fireside chats, and a curated room of 100 seats.
             </p>
-
-            {/* Center-aligned CTA buttons */}
-            <div className="flex items-center justify-center gap-4 flex-wrap mb-14 fade-up" style={{animationDelay:'0.3s'}}>
-              <button onClick={handleHeroRegisterClick} className="btn btn-white group">{userHasTeam ? 'View your team' : 'Register your team'}
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-8 fade-up" style={{ animationDelay: '0.26s' }}>
+              <span className="hero-a-pill">July 17, 2026</span>
+              <span className="hero-a-pill">100 curated seats</span>
+              <span className="hero-a-pill">Register via Luma</span>
+            </div>
+            <div className="flex items-center justify-center gap-3 flex-wrap mb-12 fade-up" style={{ animationDelay: '0.32s' }}>
+              <a href="women-in-tech.html#register" className="btn btn-primary group inline-flex items-center gap-2" style={{ minHeight: '46px', padding: '0 22px' }}>
+                Register for Women in Tech
                 <svg className="transform transition-transform group-hover:translate-x-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </button>
-              <button onClick={()=>setView('ideabazaar')} className="btn btn-ghost-light">Browse Idea Bazaar</button>
-              <button onClick={()=>setView('demobooth')} className="btn btn-ghost-light">Demo Booth</button>
+              </a>
+              <a href="women-in-tech.html#speakers" className="btn btn-ghost-light">Meet the speakers</a>
             </div>
-
-            {/* Centered Countdown Timer */}
-            <div className="fade-up w-full flex justify-center" style={{animationDelay:'0.35s'}}>
-              <CountdownTimer targetDate="2026-07-17T09:00:00" />
+            <div className="fade-up w-full flex justify-center" style={{ animationDelay: '0.38s' }}>
+              <CountdownTimer targetDate="2026-07-17T09:00:00" label="Women in Tech begins in" />
             </div>
-
           </div>
 
-          {/* Scroll Indicator */}
           <div className="absolute bottom-8 left-0 right-0 z-10 flex flex-col items-center justify-center gap-2 opacity-50 hover:opacity-100 transition-opacity cursor-pointer animate-bounce"
                onClick={() => {
                  const target = document.querySelector('.relative.z-20');
                  if (target) {
-                   window.scrollTo({
-                     top: target.offsetTop,
-                     behavior: 'smooth'
-                   });
+                   window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
                  }
                }}>
             <span className="text-[9px] font-mono tracking-[0.25em] indent-[0.25em] uppercase font-bold text-white/60">Scroll to Explore</span>
@@ -11338,7 +11466,7 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
                   <div className="admin-surface p-4 rounded-[10px] space-y-2">
                     <p className="text-[12px] font-[800] text-[color:var(--ink)]">Why this panel exists</p>
                     <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">
-                      The homepage hero is the first impression for Tech Week. Pick the layout that matches the campaign phase — immersive video for launch buzz, or the wave collage for the active hackathon. Promotional banners below are managed separately and can be hidden without changing the hero.
+                      The homepage hero is the first impression for Tech Week. Pick the layout that matches the campaign phase — dark Women in Tech promo for conference registration, or the wave collage for the active hackathon. Promotional banners below are managed separately and can be hidden without changing the hero.
                     </p>
                   </div>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -11346,17 +11474,18 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
                       {
                         id: 'A',
                         badge: 'Version A',
-                        title: 'Immersive Video Hero',
-                        desc: 'Full-viewport video backdrop, centered headline, and minimal CTAs. Best for broad awareness and registration pushes.',
+                        title: 'Women in Tech Hero',
+                        desc: 'Dark-themed hero spotlighting the Women in Tech conference. Best for pre-event registration and speaker promotion.',
                         preview: (
                           <div className="admin-hero-preview">
                             <span className="admin-hero-preview__label">Live preview</span>
-                            <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-70" src="videos/Desktop 2026.05.19 - 18.38.38.mp4" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                            <div className="absolute inset-0 flex flex-col items-center justify-end pb-5 px-4 text-center">
-                              <p className="text-[8px] uppercase tracking-[0.2em] text-white/50 mb-1">Myntra Tech Week</p>
-                              <p className="text-[13px] font-[900] text-white leading-tight">Build the future<br/>of fashion commerce</p>
-                              <div className="mt-2 px-3 py-1 rounded-full bg-white text-black text-[8px] font-[800]">Register your team</div>
+                            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(255,31,192,0.18), rgba(174,51,255,0.14), #080612)' }} />
+                            <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+                            <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center">
+                              <p className="text-[7px] uppercase tracking-[0.18em] text-[#fda4af] font-[800] mb-1.5">Beyond the Algorithm</p>
+                              <p className="text-[15px] font-[900] text-white leading-tight">Women in Tech</p>
+                              <p className="text-[8px] text-white/55 mt-1.5 max-w-[200px] leading-snug">Half-day conference · July 17 · 100 seats</p>
+                              <div className="mt-2.5 px-3 py-1 rounded-full text-[8px] font-[800] text-white" style={{ background: 'var(--accent)' }}>Register for Women in Tech</div>
                             </div>
                           </div>
                         ),
@@ -11865,7 +11994,7 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
             <div className="admin-panel-card">
               <AdminContentSectionHead
                 sectionLabel="Home 10 ·"
-                title="Women in Tech — Beyond the Algorithm"
+                title="Women in Tech (Beyond the Algorithm)"
                 open={openSections.witBanner}
                 onToggle={() => setOpenSections(prev => ({ ...prev, witBanner: !prev.witBanner }))}
                 visKey="witBanner"
@@ -11882,8 +12011,8 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
                     <span className="admin-hero-preview__label">Banner preview</span>
                     <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(255,31,192,0.25), rgba(174,51,255,0.18), #080612)' }} />
                     <div className="absolute inset-0 p-4 flex flex-col justify-center">
-                      <p className="text-[8px] uppercase tracking-[0.18em] text-[#fda4af] font-[800] mb-1">Women in Tech · Beyond the Algorithm</p>
-                      <p className="text-[12px] font-[800] text-white leading-snug max-w-[280px]">A standalone tech conference for women builders.</p>
+                      <p className="text-[8px] uppercase tracking-[0.18em] text-[#fda4af] font-[800] mb-1">Beyond the Algorithm</p>
+                      <p className="text-[14px] font-[800] text-white leading-snug max-w-[280px]">Women in Tech</p>
                       <div className="mt-2 w-fit px-2.5 py-1 rounded-[6px] text-[8px] font-[800] text-white" style={{ background: 'var(--accent)' }}>Register</div>
                     </div>
                   </div>

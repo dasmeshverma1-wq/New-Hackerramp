@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Beyond the Algorithm · Women in Tech · Myntra</title>
-  <meta name="description" content="Beyond the Algorithm — a curated Women in Tech conference by Myntra. July 17, 2026. Register via Luma." />
+  <title>Women in Tech · Beyond the Algorithm · Myntra</title>
+  <meta name="description" content="Women in Tech — Beyond the Algorithm. A curated half-day conference by Myntra for women builders. July 17, 2026. Register via Luma." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -129,7 +129,16 @@
     }
     .hero-body { padding: 32px 24px 36px; }
     @media (min-width: 768px) { .hero-body { padding: 44px 40px 48px; } }
-    .hero-title { font-size: clamp(2.2rem, 7vw, 3.75rem); font-weight: 500; margin: 0 0 16px; max-width: 14ch; }
+    .hero-event-name {
+      font-size: clamp(3.25rem, 12vw, 6.75rem); font-weight: 500; margin: 0 0 8px;
+      max-width: 12ch; line-height: 0.98; letter-spacing: -0.04em;
+    }
+    .hero-event-name em { font-style: normal; }
+    .hero-tagline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: #fda4af; margin: 0 0 14px;
+    }
     .hero-sub { font-size: 16px; color: var(--mute); line-height: 1.65; max-width: 620px; margin: 0 0 28px; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
     .btn-primary {
@@ -330,11 +339,11 @@
 
   <nav class="site-nav" aria-label="Primary">
     <div class="container site-nav-inner">
-      <a href="#" class="nav-brand" aria-label="Beyond the Algorithm home">
+      <a href="#" class="nav-brand" aria-label="Women in Tech home">
         <img src="images/Frame 632872.svg" alt="mynnovAIte" />
         <div class="nav-brand-text">
-          <div class="nav-brand-title">Beyond the Algorithm</div>
-          <div class="nav-brand-sub">Women in Tech · July 17</div>
+          <div class="nav-brand-title">Women in Tech</div>
+          <div class="nav-brand-sub">Beyond the Algorithm · July 17</div>
         </div>
       </a>
       <div class="nav-links">
@@ -357,15 +366,16 @@
     <div class="container">
       <div class="hero-card">
         <div class="hero-band">
-          <span class="pill">Women in Tech</span>
           <span class="pill">Standalone conference</span>
           <span class="pill">Curated · 100 seats</span>
+          <span class="pill">July 17, 2026</span>
         </div>
         <div class="hero-body">
           <p class="eyebrow">Myntra presents</p>
-          <h1 class="h-display hero-title">Beyond the <em class="gradient-text">Algorithm.</em></h1>
+          <h1 class="h-display hero-event-name">Women in <em class="gradient-text">Tech</em></h1>
+          <p class="hero-tagline">Beyond the Algorithm</p>
           <p class="hero-sub">
-            A half-day conference for women coders and technology leaders — reshaping how the world sees Myntra: not just fashion, but serious engineering at scale.
+            The <strong style="color:#fff;font-weight:800;">Women in Tech</strong> conference — a half-day for women coders and technology leaders, reshaping how the world sees Myntra: not just fashion, but serious engineering at scale.
           </p>
           <div class="hero-actions">
             <a id="hero-register-btn" class="btn-primary" href="#register">Register on Luma</a>
@@ -386,8 +396,8 @@
     <div class="container">
       <div class="section-head">
         <p class="eyebrow">Why this exists</p>
-        <h2 class="h-display section-title">More than a <em class="gradient-text">side event.</em></h2>
-        <p class="section-desc">Brand-first, community-driven, and designed for women builders — engineers, designers, and product leaders exploring what's next in tech.</p>
+        <h2 class="h-display section-title">The <em class="gradient-text">Women in Tech</em> experience</h2>
+        <p class="section-desc">Beyond the Algorithm is brand-first, community-driven, and designed for women builders — engineers, designers, and product leaders exploring what's next in tech.</p>
       </div>
       <div class="about-grid">
         <div class="about-card">
@@ -468,8 +478,8 @@
     <div class="container">
       <div class="register-panel">
         <p class="eyebrow" style="margin-bottom:12px">Apply for a seat</p>
-        <h2>Register on Luma</h2>
-        <p>Complete the application with your experience and domain interests. Selected participants receive confirmation from the organising team. Waitlist managed on Luma.</p>
+        <h2>Register for Women in Tech</h2>
+        <p>Apply for a seat at the Women in Tech conference via Luma. Share your experience and domain interests — selected participants receive confirmation from the organising team.</p>
         <a id="luma-register-btn" class="btn-primary" href="#" target="_blank" rel="noopener noreferrer">
           Register now
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -496,7 +506,7 @@
         <a href="#register">Register</a>
         <a href="v2.html">Tech Week 2026</a>
       </div>
-      <p class="footer-copy">Myntra · Beyond the Algorithm · 2026</p>
+      <p class="footer-copy">Myntra · Women in Tech · Beyond the Algorithm · 2026</p>
     </div>
   </footer>
 

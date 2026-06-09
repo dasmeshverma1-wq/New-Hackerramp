@@ -4219,9 +4219,9 @@ const PHASES = [
 ];
 
 let REWARDS = [
-  { rank:'1st Place', prize:'1,00,000', perks:['Fast-Track Badge','Direct PM Interview','₹25k Learning Credits'] },
-  { rank:'2nd Place', prize:'60,000',   perks:['Innovation Badge','Senior Mentorship Package','Tech Gear Kit'] },
-  { rank:'3rd Place', prize:'30,000',   perks:['Performer Badge','₹10k Learning Credits','Swag Kit'] },
+  { rank:'1st Place', prize:'1,50,000', perks:['Fast-Track Badge','Direct PM Interview','₹25k Learning Credits'] },
+  { rank:'2nd Place', prize:'1,00,000', perks:['Innovation Badge','Senior Mentorship Package','Tech Gear Kit'] },
+  { rank:'3rd Place', prize:'50,000',   perks:['Performer Badge','₹10k Learning Credits','Swag Kit'] },
   { rank:'Best UI/UX',prize:'15,000',   perks:['Design Excellence Badge','Figma Enterprise License'] },
   { rank:'Most Innovative', prize:'15,000', perks:['Innovation Star Badge','Patent Filing Support'] },
 ];
@@ -6764,9 +6764,9 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
                 b2:{bottom:'-50px', left:'-40px', width:'220px', height:'220px'} },
             ];
             const CARDS = [
-              { sch:0, span:'lg:col-span-4', tier:'gold',        place:'1st Place',                medal: PODIUM_MEDAL_IMAGES[0],        prize:'₹1,00,000', eyebrow:'Grand prize',   pill:'Fast-Track PM Interview', perks: REWARDS[0].perks },
-              { sch:1, span:'lg:col-span-4', tier:'silver',      place:'2nd Place',                medal: PODIUM_MEDAL_IMAGES[1],        prize:'₹60,000',   eyebrow:'Grand prize',   pill:'Senior Mentorship',       perks: REWARDS[1].perks },
-              { sch:2, span:'lg:col-span-4', tier:'bronze',      place:'3rd Place',                medal: PODIUM_MEDAL_IMAGES[2],        prize:'₹30,000',   eyebrow:'Grand prize',   pill:'Swag & Swag Kit',         perks: REWARDS[2].perks },
+              { sch:0, span:'lg:col-span-4', tier:'gold',        place:'1st Place',                medal: PODIUM_MEDAL_IMAGES[0],        prize:'₹1,50,000', eyebrow:'Grand prize',   pill:'Fast-Track PM Interview', perks: REWARDS[0].perks },
+              { sch:1, span:'lg:col-span-4', tier:'silver',      place:'2nd Place',                medal: PODIUM_MEDAL_IMAGES[1],        prize:'₹1,00,000', eyebrow:'Grand prize',   pill:'Senior Mentorship',       perks: REWARDS[1].perks },
+              { sch:2, span:'lg:col-span-4', tier:'bronze',      place:'3rd Place',                medal: PODIUM_MEDAL_IMAGES[2],        prize:'₹50,000',   eyebrow:'Grand prize',   pill:'Swag & Swag Kit',         perks: REWARDS[2].perks },
               { sch:3, span:'lg:col-span-4', tier:'ux',          place:'Best UI/UX Award',         icon: REWARD_AWARD_ICONS.ux,          prize:'₹15,000',   eyebrow:'Special award', pill:'Design Excellence',       perks: REWARDS[3].perks },
               { sch:4, span:'lg:col-span-4', tier:'innovative',  place:'Most Innovative',          icon: REWARD_AWARD_ICONS.innovative,  prize:'₹15,000',   eyebrow:'Special award', pill:'Patent Filing Support',   perks: REWARDS[4].perks },
               { sch:5, span:'lg:col-span-4', tier:'bonus',       place:'Live Implementation Prize', icon: REWARD_AWARD_ICONS.shipping,   prize:'₹50,000',   eyebrow:'Bonus · Limited offer', pill:'Ship to production within a week', perks: ['Ship within a Week'] },

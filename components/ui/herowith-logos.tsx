@@ -6,22 +6,75 @@ import { TextScramble } from './text-scramble';
 
 export type HeroWithLogosProps = {
   badge?: string;
-  titleLead?: string;
-  titleAccent?: string;
+  titleLine1?: string;
+  titleLine2?: string;
+  titleLine3?: string;
   subtitle?: string;
   applyHref?: string;
   applyLabel?: string;
 };
 
+function HeroTitleHeadline({
+  line1,
+  line2,
+  line3,
+  className,
+}: {
+  line1: string;
+  line2: string;
+  line3: string;
+  className?: string;
+}) {
+  const [midTrigger, setMidTrigger] = useState(false);
+  const [accentTrigger, setAccentTrigger] = useState(false);
+
+  return (
+    <h1 className={className}>
+      <span className="block">
+        <TextScramble
+          as="span"
+          duration={0.52}
+          speed={0.07}
+          triggerOnView
+          viewportThreshold={0.4}
+          onScrambleComplete={() => setMidTrigger(true)}
+        >
+          {line1}
+        </TextScramble>
+      </span>
+      <span className="block">
+        <TextScramble
+          as="span"
+          duration={0.52}
+          speed={0.07}
+          trigger={midTrigger}
+          onScrambleComplete={() => setAccentTrigger(true)}
+        >
+          {`${line2} `}
+        </TextScramble>
+        <TextScramble
+          as="span"
+          className="bg-gradient-to-r from-[#FF1FC0] via-[#AE33FF] to-[#00E5FF] bg-clip-text text-transparent"
+          duration={0.52}
+          speed={0.07}
+          trigger={accentTrigger}
+        >
+          {line3}
+        </TextScramble>
+      </span>
+    </h1>
+  );
+}
+
 export function HeroWithLogos({
   badge = 'Myntra presents · Invite-only · July 17',
-  titleLead = 'Women in ',
-  titleAccent = 'Tech',
+  titleLine1 = 'Women',
+  titleLine2 = 'in',
+  titleLine3 = 'Tech',
   subtitle = 'The Leadership Circle — a curated, invite-only forum for women breaking barriers in technology.',
   applyHref = '#',
   applyLabel = 'Apply',
 }: HeroWithLogosProps) {
-  const [accentTrigger, setAccentTrigger] = useState(false);
 
   return (
     <section className="relative flex min-h-[100dvh] flex-col overflow-hidden bg-[linear-gradient(to_bottom,#06050c_0%,#12082a_38%,#4A2FD4_72%,#7B5CFF_88%)] md:min-h-[calc(100vh-64px)]">
@@ -37,52 +90,69 @@ export function HeroWithLogos({
       <figure className="pointer-events-none absolute left-[4vw] top-[64px] z-20 hidden aspect-square w-[32vw] rounded-full bg-[#FF1FC0]/10 opacity-60 blur-[100px] md:block" />
       <figure className="pointer-events-none absolute bottom-[-50px] right-[7vw] z-20 hidden aspect-square w-[30vw] rounded-full bg-[#00E5FF]/10 opacity-50 blur-[100px] md:block" />
 
-      <div className="relative z-10 flex min-h-[100dvh] flex-1 flex-col divide-y divide-white/10 md:min-h-[calc(100vh-64px)]">
-        <div className="flex min-h-0 flex-none items-end justify-center px-4 pb-1 pt-3 md:min-h-[12vh] md:flex-1 md:px-10 md:pb-0 md:pt-0">
-          <div className="flex items-center gap-2 border border-b-0 border-white/10 bg-black/20 px-3 py-1.5 backdrop-blur-sm md:px-4 md:py-2">
-            <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-white/50 md:text-[10px] md:tracking-[0.16em] lg:text-xs">
+      {/* Mobile — single centered stack above details card */}
+      <div className="wit-hero-mobile relative z-10 flex min-h-[100dvh] flex-col items-center justify-center gap-5 px-5 pb-[10.5rem] pt-8 md:hidden">
+        <div className="flex items-center gap-2 border border-white/10 bg-black/20 px-3 py-1.5 backdrop-blur-sm">
+          <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-white/50">
+            {badge}
+          </p>
+        </div>
+
+        <div className="flex w-full max-w-[88vw] flex-col items-center gap-3 text-center">
+          <HeroTitleHeadline
+            line1={titleLine1}
+            line2={titleLine2}
+            line3={titleLine3}
+            className="text-pretty font-[Parafina_Trial,Inter_Tight,sans-serif] text-[3rem] font-medium leading-[0.92] tracking-[-0.04em] text-white"
+          />
+          <h2 className="max-w-sm text-pretty text-xs leading-relaxed text-white/60">{subtitle}</h2>
+        </div>
+
+        <div className="w-full max-w-[320px]">
+          <ShinyButton
+            id="hero-register-btn"
+            href={applyHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="h-12 w-full rounded-xl text-sm"
+          >
+            {applyLabel}
+          </ShinyButton>
+        </div>
+      </div>
+
+      {/* Desktop — three-band layout (unchanged) */}
+      <div className="relative z-10 hidden min-h-[calc(100vh-64px)] flex-1 flex-col divide-y divide-white/10 md:flex">
+        <div className="flex min-h-[12vh] flex-1 items-end justify-center px-10">
+          <div className="flex items-center gap-2 border border-b-0 border-white/10 bg-black/20 px-4 py-2 backdrop-blur-sm">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/50 lg:text-xs">
               {badge}
             </p>
           </div>
         </div>
 
-        <div className="flex flex-none flex-col items-center justify-center px-4 py-3 md:flex-[1.6] md:px-10 md:py-10">
-          <div className="flex w-full max-w-[80vw] flex-col items-center gap-3 md:max-w-3xl md:gap-5">
-            <h1 className="text-pretty text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-[2.35rem] font-medium leading-[0.96] tracking-[-0.04em] text-white sm:text-5xl md:max-w-screen-lg md:text-7xl lg:text-[clamp(62px,9vw,96px)] lg:tracking-[-0.035em]">
-              <TextScramble
-                as="span"
-                duration={0.52}
-                speed={0.07}
-                triggerOnView
-                viewportThreshold={0.4}
-                onScrambleComplete={() => setAccentTrigger(true)}
-              >
-                {titleLead}
-              </TextScramble>
-              <TextScramble
-                as="span"
-                className="bg-gradient-to-r from-[#FF1FC0] via-[#AE33FF] to-[#00E5FF] bg-clip-text text-transparent"
-                duration={0.52}
-                speed={0.07}
-                trigger={accentTrigger}
-              >
-                {titleAccent}
-              </TextScramble>
-            </h1>
-            <h2 className="max-w-2xl text-pretty text-center text-xs leading-relaxed text-white/60 md:text-lg">
+        <div className="flex flex-[1.6] flex-col items-center justify-center px-10 py-10">
+          <div className="flex w-full max-w-3xl flex-col items-center gap-5">
+            <HeroTitleHeadline
+              line1={titleLine1}
+              line2={titleLine2}
+              line3={titleLine3}
+              className="text-pretty text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-8xl font-medium leading-[0.92] tracking-[-0.04em] text-white md:max-w-screen-lg lg:text-[clamp(76px,11vw,116px)] lg:tracking-[-0.035em]"
+            />
+            <h2 className="max-w-2xl text-pretty text-center text-lg leading-relaxed text-white/60">
               {subtitle}
             </h2>
           </div>
         </div>
 
-        <div className="flex min-h-0 flex-none items-start justify-center px-4 pb-[11.5rem] pt-1 md:min-h-[12vh] md:flex-1 md:px-10 md:pb-14 md:pt-0">
+        <div className="flex min-h-[12vh] flex-1 items-start justify-center px-10 pb-14">
           <div className="w-full max-w-[392px]">
             <ShinyButton
-              id="hero-register-btn"
+              id="hero-register-btn-desktop"
               href={applyHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="h-12 w-full rounded-xl text-sm md:h-14 md:text-base"
+              className="h-14 w-full rounded-xl text-base"
             >
               {applyLabel}
             </ShinyButton>

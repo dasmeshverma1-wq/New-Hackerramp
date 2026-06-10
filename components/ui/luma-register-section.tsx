@@ -54,11 +54,11 @@ export function LumaRegisterSection({
       numBars={9}
       gradientFrom={WIT_PURPLE.bar}
       gradientTo="transparent"
-      animationDuration={2.8}
+      animationDuration={3.4}
       backgroundColor={WIT_PURPLE.bg}
       contentAlign="center"
       className="min-h-0 py-12 md:min-h-[100svh] md:py-0"
-      overlayClassName="from-[#06050c]/35 via-[#06050c]/55 to-[#06050c]/15"
+      overlayClassName="from-[#06050c]/40 via-[#06050c]/50 to-transparent"
       contentClassName="flex min-h-0 items-center justify-center px-5 py-10 sm:px-8 md:min-h-[100svh] md:py-20"
     >
       <div id="luma-tab" className="w-full max-w-3xl text-center">

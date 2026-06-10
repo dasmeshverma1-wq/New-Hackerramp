@@ -218,7 +218,7 @@
         position: absolute;
         left: 0;
         right: 0;
-        bottom: max(10px, env(safe-area-inset-bottom));
+        bottom: max(28px, calc(env(safe-area-inset-bottom) + 18px));
         margin: 0;
         z-index: 6;
       }
@@ -249,10 +249,39 @@
         font-size: 11px; line-height: 1.3;
         white-space: normal;
       }
+      #wit-hero-root section {
+        min-height: 100dvh;
+        min-height: 100svh;
+      }
+      #wit-hero-root .wit-hero-mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.25rem;
+        min-height: 100dvh;
+        min-height: 100svh;
+        padding: 2rem 1.25rem 10.5rem;
+        text-align: center;
+      }
+      #wit-hero-root .wit-hero-mobile h1 {
+        font-size: 3rem;
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+      }
+      #wit-hero-root .wit-hero-mobile h2 {
+        max-width: 20rem;
+        font-size: 0.75rem;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.6);
+      }
       #speakers.section-block--alt { padding-bottom: 36px; }
       #luma-register-root { margin-top: -20px; }
       #gradient-bars-footer-root section { min-height: 14rem; }
       .site-footer { padding: 28px 0 40px; }
+    }
+    @media (min-width: 768px) {
+      #wit-hero-root .wit-hero-mobile { display: none !important; }
     }
     .details-banner .details-card { pointer-events: auto; }
     .details-card {
@@ -359,6 +388,7 @@
     #luma-register-root {
       position: relative; z-index: 1;
       margin-top: -20px;
+      overflow: hidden;
     }
     @media (min-width: 768px) {
       #luma-register-root { margin-top: -48px; }
@@ -525,12 +555,19 @@
       position: relative; z-index: 40;
       isolation: isolate;
       margin-top: -1px;
+      overflow: hidden;
+      contain: layout style;
     }
     .site-footer {
-      position: relative; z-index: 1;
+      position: relative; z-index: 2;
       border-top: none;
       padding: 40px 0 56px; margin-top: 0;
-      background: transparent;
+      background: #06050c;
+      transform: translateZ(0);
+    }
+    #gradient-bars-footer-root .site-footer-inner {
+      position: relative; z-index: 2;
+      transform: translateZ(0);
     }
     .footer-top {
       display: flex; flex-direction: column; gap: 28px;
@@ -791,7 +828,7 @@
         navRoot.setAttribute('data-apply-url', LUMA_EVENT_URL);
       }
 
-      const ids = ['hero-register-btn', 'nav-register-btn'];
+      const ids = ['hero-register-btn', 'hero-register-btn-desktop', 'nav-register-btn'];
       ids.forEach(function(id) {
         const el = document.getElementById(id);
         if (!el) return;

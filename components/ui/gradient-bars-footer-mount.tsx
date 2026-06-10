@@ -13,10 +13,12 @@ export function GradientBarsFooter() {
       numBars={9}
       gradientFrom={WIT_PURPLE.bar}
       gradientTo="transparent"
-      animationDuration={2.8}
+      animationDuration={3.4}
       backgroundColor={WIT_PURPLE.bg}
       className="pt-2"
       contentClassName="site-footer-inner"
+      stableOverlay
+      enableBarHover={false}
     >
       <footer className="site-footer">
         <div className="container">

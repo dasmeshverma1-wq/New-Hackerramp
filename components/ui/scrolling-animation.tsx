@@ -20,7 +20,7 @@ export type LeadershipCircleScrollProps = {
 const LOGO_FADE_START = 0.04;
 const LOGO_FADE_END = 0.16;
 const CIRCLE_REVEAL_START = 0.05;
-const SCROLL_HINT_IDLE_MS = 3000;
+const SCROLL_HINT_IDLE_MS = 2000;
 
 const LEADER_PLACEHOLDER_IMAGE = 'images/speakers/announced-soon-1.jpeg';
 

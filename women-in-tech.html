@@ -302,7 +302,7 @@
       .details-card { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
     .detail-item {
-      display: flex; align-items: flex-start; gap: 12px;
+      display: flex; align-items: center; gap: 12px;
       padding: 16px 18px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
@@ -338,6 +338,9 @@
     }
     @media (min-width: 640px) {
       .detail-item__value { font-size: 14px; }
+    }
+    @media (min-width: 960px) {
+      .detail-item__value { white-space: nowrap; }
     }
 
     /* ── Buttons ── */
@@ -665,7 +668,7 @@
           <div class="detail-item__icon" aria-hidden="true">👥</div>
           <div class="detail-item__body">
             <span class="detail-item__label">Capacity</span>
-            <span class="detail-item__value">Strictly limited to 100 attendees</span>
+            <span class="detail-item__value">Limited to 100 seats</span>
           </div>
         </article>
       </div>

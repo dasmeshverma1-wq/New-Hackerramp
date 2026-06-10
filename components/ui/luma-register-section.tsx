@@ -16,6 +16,7 @@ export type LumaRegisterSectionProps = {
   titleLead?: string;
   titleAccent?: string;
   description?: string;
+  acceptanceNote?: string;
   applyLabel?: string;
 };
 
@@ -27,6 +28,8 @@ export function LumaRegisterSection({
   titleAccent = 'Women in Tech',
   description =
     'An invite-only forum for women breaking barriers in technology. Limited to 100 seats at Myntra Campus — July 17, 2026.',
+  acceptanceNote =
+    'If your application is accepted, you\'ll join an intimate evening on campus — with time to meet the speakers and leadership circle featured above.',
   applyLabel = 'Apply for Women in Tech',
 }: LumaRegisterSectionProps) {
   useEffect(() => {
@@ -71,9 +74,16 @@ export function LumaRegisterSection({
             {titleAccent}
           </span>
         </h2>
-        <p className="mx-auto mb-7 mt-5 max-w-2xl text-pretty text-center text-sm font-normal leading-relaxed text-white/60 md:text-lg">
+        <p className="mx-auto mb-4 mt-5 max-w-2xl text-pretty text-center text-sm font-normal leading-relaxed text-white/60 md:text-lg">
           {description}
         </p>
+        {acceptanceNote ? (
+          <p className="mx-auto mb-7 max-w-xl text-pretty text-center text-[13px] font-medium leading-relaxed text-white/72 md:text-[15px]">
+            {acceptanceNote}
+          </p>
+        ) : (
+          <div className="mb-7" aria-hidden="true" />
+        )}
         <div className="mx-auto flex w-full max-w-[392px] justify-center">
           <ShinyButton
             id="luma-tab-btn"

@@ -50,7 +50,8 @@ function getMaxRadius() {
   if (typeof window === 'undefined') return 200;
   if (window.innerWidth < 640) return 130;
   if (window.innerWidth < 1024) return 200;
-  return 272;
+  if (window.innerWidth < 1280) return 300;
+  return 318;
 }
 
 function getReleaseRatio() {
@@ -164,6 +165,8 @@ export function LeadershipCircleScroll({
   const centerCopyOpacity = smoothstep(0.28, 0.52, circleProgress);
   const portraitScale = 1 - releaseEase * 0.06;
   const portraitOpacity = smoothstep(0.02, 0.14, circleProgress);
+  const portraitUnblur = smoothstep(0.28, 0.92, circleProgress);
+  const portraitBlurPx = (1 - portraitUnblur) * 20;
   const scrollHintVisible =
     showScrollHint && sectionPinned && stickyProgress < LOGO_FADE_END && logoOpacity > 0.72;
 
@@ -246,7 +249,7 @@ export function LeadershipCircleScroll({
                     return (
                       <div
                         key={profile.name + index}
-                        className="absolute left-1/2 top-1/2 z-10 aspect-square w-[30%] min-w-[84px] max-w-[132px] overflow-hidden rounded-full shadow-[0_10px_32px_rgba(0,0,0,0.35)]"
+                        className="absolute left-1/2 top-1/2 z-10 aspect-square w-[30%] min-w-[84px] max-w-[132px] overflow-hidden rounded-full shadow-[0_10px_32px_rgba(0,0,0,0.35)] lg:min-w-[112px] lg:max-w-[172px] lg:w-[35%] xl:max-w-[192px] xl:w-[36%]"
                         style={{
                           opacity: portraitOpacity,
                           transform: `translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), 0) scale(${portraitScale * portraitOpacity})`,
@@ -258,6 +261,11 @@ export function LeadershipCircleScroll({
                           alt={profile.name}
                           className="h-full w-full object-cover object-top"
                           loading="lazy"
+                          style={{
+                            filter: `blur(${portraitBlurPx}px)`,
+                            transform: 'scale(1.08)',
+                            willChange: 'filter',
+                          }}
                         />
                       </div>
                     );

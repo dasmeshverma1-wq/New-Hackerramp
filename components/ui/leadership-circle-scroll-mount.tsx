@@ -10,7 +10,7 @@ export function mountLeadershipCircleScroll() {
       eyebrow="About"
       title="The Leadership"
       titleAccent="Circle"
-      tagline="Invite-only · 100 seats · Myntra Campus"
+      tagline="Invite-only · 100 seats · Accepted guests meet this circle"
       brandLogoSrc="https://avatars.githubusercontent.com/u/3213662?s=280&v=4"
       brandLogoAlt="Myntra"
     />,

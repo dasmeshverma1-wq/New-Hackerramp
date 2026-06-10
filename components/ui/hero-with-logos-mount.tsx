@@ -16,7 +16,7 @@ export function mountHeroWithLogos() {
     <HeroWithLogos
       applyHref={applyHref}
       badge="Myntra presents · Invite-only · July 17"
-      subtitle="The Leadership Circle — a curated, invite-only forum for women breaking barriers in technology."
+      subtitle="The Leadership Circle — an invite-only forum for women in tech. Apply for a seat; if you're accepted, you'll meet the speakers and leaders featured on this page."
     />,
   );
 }

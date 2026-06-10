@@ -190,6 +190,23 @@
     font-size: clamp(210px, 78vw, 330px);
   }
 
+  /* How it works — sticky rules (mobile) */
+  @media (max-width: 1023px) {
+    .hiw-sticky-panel {
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding-top: max(1.25rem, env(safe-area-inset-top, 0px));
+      padding-bottom: 1.5rem;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .hiw-intro-col .hiw-heading-wrap {
+      display: block;
+      width: 100%;
+    }
+  }
+
   .section-pad { padding-top: 7rem; padding-bottom: 7rem; }
   .section-pad-sm { padding-top: 4rem; padding-bottom: 4rem; }
   @media (max-width: 768px) { .section-pad { padding-top: 4rem; padding-bottom: 4rem; } }
@@ -558,24 +575,28 @@
     border-color: rgba(255, 255, 255, 0.28);
     box-shadow: 0 4px 14px rgba(0, 229, 255, 0.28);
   }
-  .learn-card-placeholder {
+  .learn-card-fallback-image {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:
-      radial-gradient(ellipse 90% 80% at 20% 15%, rgba(0, 229, 255, 0.22) 0%, transparent 55%),
-      radial-gradient(ellipse 70% 70% at 85% 85%, rgba(174, 51, 255, 0.2) 0%, transparent 50%),
-      linear-gradient(165deg, #120f24 0%, #1a1538 48%, #0e0c1a 100%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
-  .learn-card-placeholder__text {
-    font-size: clamp(1.35rem, 4.5vw, 1.75rem);
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.92);
-    text-shadow: 0 2px 18px rgba(0, 229, 255, 0.35);
+  .home-hof-medal-img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 14px rgba(0,0,0,0.28));
+  }
+  .home-hof-members-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    flex-shrink: 0;
+    margin-top: 1px;
+    opacity: 0.9;
   }
   .inner-light .learn-card-photo-panel { border-right-color: rgba(10,10,10,0.14); }
   .inner-light .learn-card-footer-rule { border-top-color: rgba(10,10,10,0.14); }
@@ -4104,11 +4125,13 @@ const INIT_PROBLEMS = [
   { id:'P005', title:'CC Voice Sentiment Analysis',  category:'Customer Care',      difficulty:'Easy',   published:true,  desc:'Real-time sentiment classification on CC calls to auto-escalate at-risk conversations.' },
 ];
 
+const LEARN_CARD_FALLBACK_IMAGE = 'assets/home-screen/external/Minimalist_screen_logo_in_the_202606101803.jpeg';
+
 const SESSIONS = [
   { id:'S001', title:'Sovereign AI and the future of Indian language models', track:'Gen AI',  status:'upcoming', date:'Jul 6', time:'TBA', speaker:'Pratyush Kumar', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/pratyush-kumar.jpeg' },
   { id:'S002', title:'Building resilient payments infrastructure at scale', track:'Product', status:'upcoming', date:'Jul 7', time:'TBA', speaker:'Nitesh Jain',    meetLink:'', cardType:'speaker', speakerImage:'images/speakers/nitesh-jain.jpeg' },
   { id:'S003', title:'Enterprise service management at global scale',         track:'Product', status:'upcoming', date:'Jul 8', time:'TBA', speaker:'Shamik Sharma',  meetLink:'', cardType:'speaker', speakerImage:'images/speakers/shamik-sharma.jpeg' },
-  { id:'S004', title:'Session details coming soon',                           track:'Product', status:'upcoming', date:'Jul 9', time:'TBA', speaker:'Announced soon', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/announced-soon-1.jpeg' },
+  { id:'S004', title:'Session details coming soon',                           track:'Product', status:'upcoming', date:'Jul 9', time:'TBA', speaker:'Announced soon', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/announced-soon-female.jpeg' },
   { id:'S005', title:'Session details coming soon',                           track:'Gen AI',  status:'upcoming', date:'Jul 10', time:'TBA', speaker:'Announced soon', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/announced-soon-2.jpeg' },
   { id:'S006', title:'Prompt Engineering Masterclass',                        track:'Gen AI',  status:'upcoming', date:'Jul 6',  time:'2:00 PM', speaker:'AI Guild', meetLink:'', cardType:'learn' },
   { id:'S007', title:'Zero-Trust Architecture Patterns',                      track:'InfoSec', status:'upcoming', date:'Jul 7',  time:'4:00 PM', speaker:'Security Guild', meetLink:'', cardType:'learn' },
@@ -4211,9 +4234,9 @@ const DEFAULT_SPEAKERS = [
     genre:'Product & Leadership',
     initials:'',
     g:['#AE33FF','#FF1FC0'],
-    image:'images/speakers/announced-soon-1.jpeg',
+    image:'images/speakers/announced-soon-female.jpeg',
     companyLogo:'',
-    imagePosition:'50% 12%',
+    imagePosition:'50% 18%',
     keynote:false,
     tbd:true,
   },
@@ -4250,8 +4273,8 @@ const DEFAULT_HALL_OF_FAME = {
   tagline:'"InnovAIte to Lead"',
   tagLabel:'Last Year Winners',
   cards:[
-    { id:'HOF1', badge:'🏆', award:'Winning Team', team:'Vit-On Catalog', project:'StyleMatch — Explore different outfit styles before you buy', members:'Chinmay Nanda, Sukhneer Singh, Kedar Vaidya, Tipu Ali Khan & Apoorva Ira', c1:'#FFB6DD', c2:'#FFD4EA' },
-    { id:'HOF2', badge:'🥈', award:'Runner-Up', team:'CacheMeIfYouCan', project:'Smart caching layer for fashion discovery personalisation', members:'Azeem, Himanshu, Manas, Satish & Pooshkar', c1:'#C8BCFF', c2:'#DDD4FF' },
+    { id:'HOF1', badge:'', badgeImage:'assets/home-screen/Prices/medal-1st-place.png', award:'Winning Team', team:'Vit-On Catalog', project:'StyleMatch — Explore different outfit styles before you buy', members:'Chinmay Nanda, Sukhneer Singh, Kedar Vaidya, Tipu Ali Khan & Apoorva Ira', c1:'#FFB6DD', c2:'#FFD4EA' },
+    { id:'HOF2', badge:'', badgeImage:'assets/home-screen/Prices/medal-2nd-place.png', award:'Runner-Up', team:'CacheMeIfYouCan', project:'Smart caching layer for fashion discovery personalisation', members:'Azeem, Himanshu, Manas, Satish & Pooshkar', c1:'#C8BCFF', c2:'#DDD4FF' },
   ],
 };
 
@@ -4376,6 +4399,7 @@ const PODIUM_MEDAL_IMAGES = [
   'assets/home-screen/Prices/medal-2nd-place.png',
   'assets/home-screen/Prices/medal-3rd-place.png',
 ];
+const HOF_MEMBERS_ICON = 'assets/home-screen/external/8263-blurple-members.png';
 const REWARD_AWARD_ICONS = {
   ux: 'assets/home-screen/Prices/award-best-ui-ux.png',
   innovative: 'assets/home-screen/Prices/award-most-innovative.png',
@@ -5774,24 +5798,24 @@ function HowItWorksSection() {
 
   return (
     <div ref={containerRef} className="relative w-full" style={{ height: '320vh' }}>
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden bg-[#080612]">
+      <div className="hiw-sticky-panel sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden bg-[#080612]">
         <div style={{position:'absolute', top:'30%', left:'50%', transform:'translate(-50%,-50%)', width:'1000px', height:'500px', borderRadius:'50%', background:'radial-gradient(ellipse, rgba(174,51,255,0.12) 0%, rgba(255,31,192,0.06) 40%, transparent 70%)', pointerEvents:'none', filter:'blur(40px)'}} />
-        <div className="home-container relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        <div className="home-container relative w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
 
             {/* Left Column: Heading */}
-            <div className="col-span-1 lg:col-span-4 flex flex-col justify-center text-left">
+            <div className="hiw-intro-col col-span-1 lg:col-span-4 flex flex-col justify-center items-center text-center lg:items-start lg:text-left">
               {/* Animated Robot GIF Asset */}
               <img
                 src="https://em-content.zobj.net/source/microsoft-teams/400/robot_1f916.png"
                 alt="🤖"
-                className="w-16 h-16 md:w-20 md:h-20 animate-bounce mb-3 select-none pointer-events-none"
+                className="hiw-robot w-16 h-16 md:w-20 md:h-20 mb-3 select-none pointer-events-none mx-auto lg:mx-0 lg:animate-bounce"
                 style={{ animationDuration: '3s' }}
               />
               <p className="text-[11px] tracking-[0.22em] uppercase font-[700] mb-2 text-white/60">
                 What's different this year
               </p>
-              <div className="relative inline-block mb-3">
+              <div className="hiw-heading-wrap relative inline-block mb-3">
                 <h2 className="h-display home-section-heading text-3xl md:text-5xl leading-tight tracking-tight">
                   Five rules that change <em className="home-heading-accent">everything.</em>
                 </h2>
@@ -5799,7 +5823,7 @@ function HowItWorksSection() {
             </div>
 
             {/* Center Column: Card stack */}
-            <div className="col-span-1 lg:col-span-4 relative w-full flex items-center justify-center h-[420px] sm:h-[500px] my-4 lg:my-0">
+            <div className="hiw-cards-col col-span-1 lg:col-span-4 relative w-full flex items-center justify-center h-[380px] sm:h-[500px] my-2 sm:my-4 lg:my-0">
               {HIGHLIGHTS.map((h, i) => {
                 const progress = getCardProgress(i);
 
@@ -5908,16 +5932,16 @@ function HowItWorksSection() {
             </div>
 
             {/* Right Column: synced rule description */}
-            <div className="col-span-1 lg:col-span-4 flex flex-col justify-center text-left min-h-[220px] lg:min-h-[320px]">
+            <div className="hiw-desc-col col-span-1 lg:col-span-4 flex flex-col justify-center items-center text-center min-h-[180px] sm:min-h-[220px] lg:min-h-[320px] lg:items-start lg:text-left">
               <p className="text-[10px] uppercase tracking-[0.22em] font-[800] mb-4 text-white/45">
                 Rule {activeRule.n} of 05
               </p>
-              <div key={activeIndex} className="rule-desc-fade">
+              <div key={activeIndex} className="rule-desc-fade w-full">
                 <p className="text-[16px] sm:text-[18px] md:text-[20px] leading-[1.65] font-medium text-white/80">
                   {activeRule.body}
                 </p>
               </div>
-              <p className="text-[12px] sm:text-[13px] leading-relaxed mt-8 text-white/40">
+              <p className="text-[12px] sm:text-[13px] leading-relaxed mt-6 sm:mt-8 text-white/40">
                 Scroll to move through all five rules.
               </p>
             </div>
@@ -7038,13 +7062,17 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-[10px] font-[800] text-[color:var(--mute-3)] uppercase tracking-[0.12em]">{w.award}</span>
-                      <span className="text-2xl filter drop-shadow-sm select-none">{w.badge}</span>
+                      {w.badgeImage ? (
+                        <img src={w.badgeImage} alt="" className="home-hof-medal-img" loading="lazy" aria-hidden="true" />
+                      ) : w.badge ? (
+                        <span className="text-2xl filter drop-shadow-sm select-none">{w.badge}</span>
+                      ) : null}
                     </div>
                     <p className="text-[16px] font-[800] text-[color:var(--ink)] tracking-tight group-hover:text-[color:var(--accent)] transition-colors">{w.team}</p>
                     <p className="text-[13px] text-[color:var(--ink-2)] font-medium mt-1 leading-snug">{w.project}</p>
                   </div>
                   <div className="mt-6 pt-4 border-t flex items-start gap-2 text-[11px] text-[color:var(--mute-2)] relative z-10" style={{borderColor:'rgba(255,255,255,0.10)'}}>
-                    <span className="flex-shrink-0 mt-0.5 opacity-70">👥</span>
+                    <img src={HOF_MEMBERS_ICON} alt="" className="home-hof-members-icon" loading="lazy" aria-hidden="true" />
                     <span className="leading-relaxed">{w.members}</span>
                   </div>
                 </div>
@@ -13539,9 +13567,13 @@ function EnablementView({ sessions = [], speakers = DEFAULT_SPEAKERS }) {
                   {isSpeaker && speakerPhoto ? (
                     <img src={speakerPhoto} alt={s.speaker} className="absolute inset-0 w-full h-full object-cover object-top" />
                   ) : (
-                    <div className="learn-card-placeholder" aria-hidden="true">
-                      <span className="learn-card-placeholder__text">Learn</span>
-                    </div>
+                    <img
+                      src={LEARN_CARD_FALLBACK_IMAGE}
+                      alt=""
+                      className="learn-card-fallback-image"
+                      loading="lazy"
+                      aria-hidden="true"
+                    />
                   )}
                   <span className={`learn-card-kind-tag learn-card-kind-tag--${cardKind}`}>
                     {isSpeaker ? 'Speaker' : 'Learn'}

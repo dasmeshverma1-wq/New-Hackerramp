@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Women in Tech · The Leadership Circle · Myntra</title>
-  <meta name="description" content="The Leadership Circle — an exclusive, invite-only forum for women breaking barriers in technology. July 17, 2026 · Myntra Campus. Apply via Luma." />
+  <meta name="description" content="The Leadership Circle — invite-only Women in Tech at Myntra Campus, July 17, 2026. Apply via Luma; accepted guests meet the speakers and leadership circle in person." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -538,6 +538,15 @@
       margin-top: 16px; font-size: 12px; color: var(--mute-2);
       font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em;
     }
+    .speakers-benefit {
+      margin-top: 20px; padding: 14px 16px;
+      border: 1px solid rgba(174, 51, 255, 0.28);
+      border-radius: 12px;
+      background: rgba(174, 51, 255, 0.08);
+      font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.78);
+      max-width: 640px;
+    }
+    .speakers-benefit strong { color: #fff; font-weight: 700; }
 
     /* ── Luma register (gradient bars) ── */
     #luma-register-root .luma-tab__title {
@@ -727,7 +736,7 @@
           <h2 class="h-display section-title">
             <span data-text-scramble="Speakers &amp; " data-scramble-delay="0"></span><span data-text-scramble="leaders." data-scramble-class="gradient-text" data-scramble-delay="280"></span>
           </h2>
-          <p class="section-desc">Fireside chat and panel voices shaping the evening — more names being confirmed.</p>
+          <p class="section-desc">Industry voices shaping the evening — apply for your invite; accepted guests get to meet them on campus.</p>
         </div>
         <div class="speaker-controls">
           <button type="button" class="home-speaker-slider-btn" id="speaker-prev" aria-label="Previous speaker">
@@ -739,6 +748,7 @@
         </div>
       </div>
       <div class="home-speaker-slider" id="speaker-slider" role="list"></div>
+      <p class="speakers-benefit"><strong>If you're accepted,</strong> you'll join fireside chat, panel, and networking with the speakers and leaders featured here — in person at Myntra Campus.</p>
       <p class="speakers-note">Full speaker lineup announcing soon</p>
     </div>
   </section>
@@ -761,7 +771,10 @@
       ? 'https://luma.com/embed/event/' + LUMA_EVENT_ID + '/simple'
       : '';
 
-    const SPEAKER_PLACEHOLDER_IMAGE = 'images/speakers/announced-soon-1.jpeg';
+    const WIT_SPEAKER_IMAGES = [
+      'images/speakers/announced-soon-female.jpeg',
+      'images/speakers/announced-soon-female-2.jpeg',
+    ];
     const WIT_SPEAKERS = Array.from({ length: 5 }, function(_, i) {
       return {
         id: 'WIT' + (i + 1),
@@ -769,8 +782,8 @@
         role: 'Speaker',
         org: 'Coming soon',
         g: ['#AE33FF', '#FF1FC0'],
-        image: SPEAKER_PLACEHOLDER_IMAGE,
-        imagePosition: '50% 12%',
+        image: WIT_SPEAKER_IMAGES[i % WIT_SPEAKER_IMAGES.length],
+        imagePosition: i % 2 === 0 ? '50% 18%' : '50% 12%',
         tbd: true,
       };
     });

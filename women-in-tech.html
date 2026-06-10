@@ -380,6 +380,12 @@
       background: transparent;
       border: none;
     }
+    @media (max-width: 767px) {
+      #about.section-block,
+      #leadership-circle-scroll-root {
+        overflow: visible;
+      }
+    }
     #speakers.section-block--alt {
       border-bottom: none;
       background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, #06050c 72%);
@@ -638,6 +644,31 @@
         inset 3px 3px 8px rgba(255, 192, 253, 0.28),
         inset -3px -3px 8px rgba(74, 47, 212, 0.4);
     }
+
+    /* ── Viewport reveal (scroll-in) ── */
+    .wit-reveal {
+      opacity: 0;
+      transform: translate3d(0, 28px, 0);
+      transition:
+        opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--wit-reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
+    .wit-reveal--from-top {
+      transform: translate3d(0, -18px, 0);
+    }
+    .wit-reveal--visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wit-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -652,28 +683,28 @@
   <div class="details-banner" aria-label="Event details">
     <div class="section-ui-shell">
       <div class="details-card">
-        <article class="detail-item">
+        <article class="detail-item wit-reveal" style="--wit-reveal-delay: 0ms">
           <div class="detail-item__icon" aria-hidden="true">📅</div>
           <div class="detail-item__body">
             <span class="detail-item__label">Date</span>
             <span class="detail-item__value">Friday, July 17</span>
           </div>
         </article>
-        <article class="detail-item">
+        <article class="detail-item wit-reveal" style="--wit-reveal-delay: 80ms">
           <div class="detail-item__icon" aria-hidden="true">🕒</div>
           <div class="detail-item__body">
             <span class="detail-item__label">Time</span>
             <span class="detail-item__value">4:00 PM – 7:00 PM</span>
           </div>
         </article>
-        <article class="detail-item">
+        <article class="detail-item wit-reveal" style="--wit-reveal-delay: 160ms">
           <div class="detail-item__icon" aria-hidden="true">📍</div>
           <div class="detail-item__body">
             <span class="detail-item__label">Location</span>
             <span class="detail-item__value">Myntra Campus</span>
           </div>
         </article>
-        <article class="detail-item">
+        <article class="detail-item wit-reveal" style="--wit-reveal-delay: 240ms">
           <div class="detail-item__icon" aria-hidden="true">👥</div>
           <div class="detail-item__body">
             <span class="detail-item__label">Capacity</span>
@@ -685,41 +716,41 @@
   </div>
   </div>
 
-  <section class="section-block" id="about" aria-label="The Leadership Circle">
+  <section class="section-block wit-reveal" id="about" aria-label="About">
     <div id="leadership-circle-scroll-root"></div>
   </section>
 
   <section class="section-block" id="agenda">
     <div class="section-ui-shell">
       <div class="section-head">
-        <p class="eyebrow">Schedule</p>
-        <h2 class="h-display section-title">
+        <p class="eyebrow wit-reveal" style="--wit-reveal-delay: 0ms">Schedule</p>
+        <h2 class="h-display section-title wit-reveal" style="--wit-reveal-delay: 80ms">
           <span data-text-scramble="Event " data-scramble-delay="0"></span><span data-text-scramble="agenda." data-scramble-class="gradient-text" data-scramble-delay="200"></span>
         </h2>
-        <p class="section-desc">A clean, focused evening of connection, conversation, and community.</p>
+        <p class="section-desc wit-reveal" style="--wit-reveal-delay: 160ms">A clean, focused evening of connection, conversation, and community.</p>
       </div>
       <div class="agenda-timeline" role="table" aria-label="Event agenda">
-        <div class="agenda-row" role="row">
+        <div class="agenda-row wit-reveal" role="row" style="--wit-reveal-delay: 0ms">
           <div class="agenda-row-time" role="cell">4:00 PM – 4:45 PM</div>
           <div class="agenda-row-session" role="cell">Welcome &amp; Networking</div>
           <div class="agenda-row-desc" role="cell">Connect with fellow tech leaders over refreshments.</div>
         </div>
-        <div class="agenda-row" role="row">
+        <div class="agenda-row wit-reveal" role="row" style="--wit-reveal-delay: 70ms">
           <div class="agenda-row-time" role="cell">4:45 PM – 5:00 PM</div>
           <div class="agenda-row-session" role="cell">Opening Remarks</div>
           <div class="agenda-row-desc" role="cell">Setting the vision for the Leadership Circle.</div>
         </div>
-        <div class="agenda-row" role="row">
+        <div class="agenda-row wit-reveal" role="row" style="--wit-reveal-delay: 140ms">
           <div class="agenda-row-time" role="cell">5:00 PM – 5:45 PM</div>
           <div class="agenda-row-session" role="cell">Fireside Chat</div>
           <div class="agenda-row-desc" role="cell">An intimate conversation with Sharon.</div>
         </div>
-        <div class="agenda-row" role="row">
+        <div class="agenda-row wit-reveal" role="row" style="--wit-reveal-delay: 210ms">
           <div class="agenda-row-time" role="cell">5:45 PM – 6:45 PM</div>
           <div class="agenda-row-session" role="cell">Panel Discussion</div>
           <div class="agenda-row-desc" role="cell">Deep dive into industry trends and tech leadership strategies.</div>
         </div>
-        <div class="agenda-row" role="row">
+        <div class="agenda-row wit-reveal" role="row" style="--wit-reveal-delay: 280ms">
           <div class="agenda-row-time" role="cell">6:45 PM – 7:00 PM</div>
           <div class="agenda-row-session" role="cell">Closing &amp; Next Steps</div>
           <div class="agenda-row-desc" role="cell">Final thoughts and community takeaways.</div>
@@ -732,13 +763,13 @@
     <div class="section-ui-shell">
       <div class="speakers-head">
         <div>
-          <p class="eyebrow">Lineup</p>
-          <h2 class="h-display section-title">
+          <p class="eyebrow wit-reveal" style="--wit-reveal-delay: 0ms">Lineup</p>
+          <h2 class="h-display section-title wit-reveal" style="--wit-reveal-delay: 80ms">
             <span data-text-scramble="Speakers &amp; " data-scramble-delay="0"></span><span data-text-scramble="leaders." data-scramble-class="gradient-text" data-scramble-delay="280"></span>
           </h2>
-          <p class="section-desc">Industry voices shaping the evening — apply for your invite; accepted guests get to meet them on campus.</p>
+          <p class="section-desc wit-reveal" style="--wit-reveal-delay: 160ms">Industry voices shaping the evening — apply for your invite; accepted guests get to meet them on campus.</p>
         </div>
-        <div class="speaker-controls">
+        <div class="speaker-controls wit-reveal" style="--wit-reveal-delay: 200ms">
           <button type="button" class="home-speaker-slider-btn" id="speaker-prev" aria-label="Previous speaker">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
@@ -748,20 +779,21 @@
         </div>
       </div>
       <div class="home-speaker-slider" id="speaker-slider" role="list"></div>
-      <p class="speakers-benefit"><strong>If you're accepted,</strong> you'll join fireside chat, panel, and networking with the speakers and leaders featured here — in person at Myntra Campus.</p>
-      <p class="speakers-note">Full speaker lineup announcing soon</p>
+      <p class="speakers-benefit wit-reveal" style="--wit-reveal-delay: 120ms"><strong>If you're accepted,</strong> you'll join fireside chat, panel, and networking with the speakers and leaders featured here — in person at Myntra Campus.</p>
+      <p class="speakers-note wit-reveal" style="--wit-reveal-delay: 200ms">Full speaker lineup announcing soon</p>
     </div>
   </section>
 
   <div
     id="luma-register-root"
+    class="wit-reveal"
     data-apply-url="https://lu.ma/beyond-the-algorithm-myntra"
     aria-label="Register for the event"
   ></div>
 
   <script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script>
 
-  <div id="gradient-bars-footer-root" aria-label="Site footer"></div>
+  <div id="gradient-bars-footer-root" class="wit-reveal" aria-label="Site footer"></div>
 
   <script>
     const LUMA_EVENT_URL = 'https://lu.ma/beyond-the-algorithm-myntra';
@@ -791,7 +823,7 @@
     function renderSpeakers() {
       const slider = document.getElementById('speaker-slider');
       if (!slider) return;
-      slider.innerHTML = WIT_SPEAKERS.map(function(sp) {
+      slider.innerHTML = WIT_SPEAKERS.map(function(sp, i) {
         const imgBlock = sp.image
           ? '<img src="' + sp.image + '" alt="' + sp.name + '" class="home-speaker-card__image" loading="lazy" style="object-position:' + (sp.imagePosition || '50% 15%') + '" />'
           : '<div class="home-speaker-card__fallback home-speaker-card__image" style="background:linear-gradient(160deg,' + sp.g[0] + ',' + sp.g[1] + ')">' + sp.initials + '</div>';
@@ -799,7 +831,7 @@
           ? '<img src="' + sp.companyLogo + '" alt="' + sp.org + '" class="home-speaker-card__company-logo" loading="lazy" />'
           : '';
         return (
-          '<div class="home-speaker-card-slot" role="listitem">' +
+          '<div class="home-speaker-card-slot wit-reveal" style="--wit-reveal-delay:' + (i * 90) + 'ms" role="listitem">' +
             '<div class="home-speaker-card">' +
               imgBlock +
               '<div class="home-speaker-card__blur" aria-hidden="true"></div>' +
@@ -868,6 +900,7 @@
     initSpeakerSlider();
     initLuma();
   </script>
+  <script src="assets/viewport-reveal.bundle.js" defer></script>
   <script src="assets/mini-navbar.bundle.js" defer></script>
   <script src="assets/leadership-circle-scroll.bundle.js" defer></script>
   <script src="assets/hero-with-logos.bundle.js" defer></script>
@@ -876,6 +909,9 @@
   <script src="assets/gradient-bars-footer.bundle.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      if (window.WITViewportRevealBundle && window.WITViewportRevealBundle.mountViewportReveals) {
+        window.WITViewportRevealBundle.mountViewportReveals();
+      }
       if (window.WITMiniNavbarBundle && window.WITMiniNavbarBundle.mountMiniNavbar) {
         window.WITMiniNavbarBundle.mountMiniNavbar();
       }

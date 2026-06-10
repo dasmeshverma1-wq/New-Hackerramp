@@ -1,5 +1,54 @@
 import { createRoot } from 'react-dom/client';
-import { LeadershipCircleScroll } from './scrolling-animation';
+import { LeadershipCircleScroll, type ScrollProfile } from './scrolling-animation';
+
+const WIT_SPEAKER_IMAGES = [
+  'images/speakers/announced-soon-female.jpeg',
+  'images/speakers/announced-soon-female-2.jpeg',
+];
+
+const STOCK_PEOPLE_IMAGES = [
+  'images/speakers/announced-soon-female.jpeg',
+  'images/speakers/announced-soon-female-2.jpeg',
+  'images/speakers/announced-soon-1.jpeg',
+  'images/speakers/announced-soon-2.jpeg',
+  'images/have_the_female_hairs_on_202606081700.jpeg',
+  'images/On_this_man_standing_straight_202606081703 (1).jpeg',
+];
+
+function randomRingAngles(count: number, seed: number): number[] {
+  let state = seed;
+  const angles: number[] = [];
+
+  for (let i = 0; i < count; i += 1) {
+    state = (state * 16807) % 2147483647;
+    angles.push((state / 2147483647) * 360 - 180);
+  }
+
+  return angles;
+}
+
+function buildRingProfiles(
+  count: number,
+  imageOffset: number,
+  seed: number,
+  label: string,
+): ScrollProfile[] {
+  const angles = randomRingAngles(count, seed);
+
+  return Array.from({ length: count }, (_, index) => ({
+    name: `${label} ${index + 1}`,
+    image: STOCK_PEOPLE_IMAGES[(index + imageOffset) % STOCK_PEOPLE_IMAGES.length],
+    angleDeg: angles[index],
+  }));
+}
+
+const speakerProfiles: ScrollProfile[] = Array.from({ length: 6 }, (_, index) => ({
+  name: `Speaker ${index + 1}`,
+  image: WIT_SPEAKER_IMAGES[index % WIT_SPEAKER_IMAGES.length],
+}));
+
+const middleRingProfiles = buildRingProfiles(7, 0, 42017, 'Guest');
+const outerRingProfiles = buildRingProfiles(8, 3, 91033, 'Attendee');
 
 export function mountLeadershipCircleScroll() {
   const rootEl = document.getElementById('leadership-circle-scroll-root');
@@ -8,11 +57,13 @@ export function mountLeadershipCircleScroll() {
   createRoot(rootEl).render(
     <LeadershipCircleScroll
       eyebrow="About"
-      title="The Leadership"
-      titleAccent="Circle"
-      tagline="Invite-only · 100 seats · Accepted guests meet this circle"
-      brandLogoSrc="https://avatars.githubusercontent.com/u/3213662?s=280&v=4"
-      brandLogoAlt="Myntra"
+      title="Get a Chance to Meet these Speakers"
+      introType="only-100-seats"
+      hundredEmojiSrc="assets/only-100-seats/100-emoji.png"
+      seatImageSrc="assets/only-100-seats/seat.png"
+      profiles={speakerProfiles}
+      middleRingProfiles={middleRingProfiles}
+      outerRingProfiles={outerRingProfiles}
     />,
   );
 }

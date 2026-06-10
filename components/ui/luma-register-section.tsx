@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { GradientBarsBackground } from './gradient-bars-background';
+import { revealProps } from './reveal-props';
 import ShinyButton from './shiny-button';
 
 const WIT_PURPLE = {
@@ -65,26 +66,43 @@ export function LumaRegisterSection({
       contentClassName="flex min-h-0 items-center justify-center px-5 py-10 sm:px-8 md:min-h-[100svh] md:py-20"
     >
       <div id="luma-tab" className="w-full max-w-3xl text-center">
-        <p className="mb-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/50 md:text-xs">
+        <p
+          {...revealProps(0, 'mb-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/50 md:text-xs')}
+        >
           {eyebrow}
         </p>
-        <h2 className="luma-tab__title text-pretty text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-5xl font-medium leading-[0.96] tracking-[-0.04em] text-white sm:text-6xl md:text-7xl lg:text-[clamp(3rem,8vw,5.5rem)] lg:tracking-[-0.035em]">
+        <h2
+          {...revealProps(
+            80,
+            'luma-tab__title text-pretty text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-5xl font-medium leading-[0.96] tracking-[-0.04em] text-white sm:text-6xl md:text-7xl lg:text-[clamp(3rem,8vw,5.5rem)] lg:tracking-[-0.035em]',
+          )}
+        >
           {titleLead}
           <span className="bg-gradient-to-r from-[#FF1FC0] via-[#AE33FF] to-[#00E5FF] bg-clip-text text-transparent">
             {titleAccent}
           </span>
         </h2>
-        <p className="mx-auto mb-4 mt-5 max-w-2xl text-pretty text-center text-sm font-normal leading-relaxed text-white/60 md:text-lg">
+        <p
+          {...revealProps(
+            160,
+            'mx-auto mb-4 mt-5 max-w-2xl text-pretty text-center text-sm font-normal leading-relaxed text-white/60 md:text-lg',
+          )}
+        >
           {description}
         </p>
         {acceptanceNote ? (
-          <p className="mx-auto mb-7 max-w-xl text-pretty text-center text-[13px] font-medium leading-relaxed text-white/72 md:text-[15px]">
+          <p
+            {...revealProps(
+              220,
+              'mx-auto mb-7 max-w-xl text-pretty text-center text-[13px] font-medium leading-relaxed text-white/72 md:text-[15px]',
+            )}
+          >
             {acceptanceNote}
           </p>
         ) : (
           <div className="mb-7" aria-hidden="true" />
         )}
-        <div className="mx-auto flex w-full max-w-[392px] justify-center">
+        <div {...revealProps(280, 'mx-auto flex w-full max-w-[392px] justify-center')}>
           <ShinyButton
             id="luma-tab-btn"
             href={applyHref}
@@ -100,7 +118,12 @@ export function LumaRegisterSection({
             </svg>
           </ShinyButton>
         </div>
-        <p className="mx-auto mt-5 max-w-md text-[11px] leading-relaxed text-white/45">
+        <p
+          {...revealProps(
+            360,
+            'mx-auto mt-5 max-w-md text-[11px] leading-relaxed text-white/45',
+          )}
+        >
           By registering, you consent to Myntra storing and using your application data for event
           coordination for up to <strong className="text-white/55">6 months</strong>.
         </p>

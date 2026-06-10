@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { revealProps } from './reveal-props';
 import ShinyButton from './shiny-button';
 import { TextScramble } from './text-scramble';
 
@@ -92,13 +93,20 @@ export function HeroWithLogos({
 
       {/* Mobile — single centered stack above details card */}
       <div className="wit-hero-mobile relative z-10 flex min-h-[100dvh] flex-col items-center justify-center gap-5 px-5 pb-[10.5rem] pt-8 md:hidden">
-        <div className="flex items-center gap-2 border border-white/10 bg-black/20 px-3 py-1.5 backdrop-blur-sm">
+        <div
+          {...revealProps(0, 'flex items-center gap-2 border border-white/10 bg-black/20 px-3 py-1.5 backdrop-blur-sm')}
+        >
           <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-white/50">
             {badge}
           </p>
         </div>
 
-        <div className="flex w-full max-w-[88vw] flex-col items-center gap-3 text-center">
+        <div
+          {...revealProps(
+            100,
+            'flex w-full max-w-[88vw] flex-col items-center gap-3 text-center',
+          )}
+        >
           <HeroTitleHeadline
             line1={titleLine1}
             line2={titleLine2}
@@ -108,7 +116,7 @@ export function HeroWithLogos({
           <h2 className="max-w-sm text-pretty text-xs leading-relaxed text-white/60">{subtitle}</h2>
         </div>
 
-        <div className="w-full max-w-[320px]">
+        <div {...revealProps(220, 'w-full max-w-[320px]')}>
           <ShinyButton
             id="hero-register-btn"
             href={applyHref}
@@ -124,7 +132,12 @@ export function HeroWithLogos({
       {/* Desktop — three-band layout (unchanged) */}
       <div className="relative z-10 hidden min-h-[calc(100vh-64px)] flex-1 flex-col divide-y divide-white/10 md:flex">
         <div className="flex min-h-[12vh] flex-1 items-end justify-center px-10">
-          <div className="flex items-center gap-2 border border-b-0 border-white/10 bg-black/20 px-4 py-2 backdrop-blur-sm">
+          <div
+            {...revealProps(
+              0,
+              'flex items-center gap-2 border border-b-0 border-white/10 bg-black/20 px-4 py-2 backdrop-blur-sm',
+            )}
+          >
             <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/50 lg:text-xs">
               {badge}
             </p>
@@ -132,7 +145,9 @@ export function HeroWithLogos({
         </div>
 
         <div className="flex flex-[1.6] flex-col items-center justify-center px-10 py-10">
-          <div className="flex w-full max-w-3xl flex-col items-center gap-5">
+          <div
+            {...revealProps(100, 'flex w-full max-w-3xl flex-col items-center gap-5')}
+          >
             <HeroTitleHeadline
               line1={titleLine1}
               line2={titleLine2}
@@ -146,7 +161,7 @@ export function HeroWithLogos({
         </div>
 
         <div className="flex min-h-[12vh] flex-1 items-start justify-center px-10 pb-14">
-          <div className="w-full max-w-[392px]">
+          <div {...revealProps(220, 'w-full max-w-[392px]')}>
             <ShinyButton
               id="hero-register-btn-desktop"
               href={applyHref}

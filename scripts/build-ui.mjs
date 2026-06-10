@@ -22,6 +22,13 @@ const shared = {
 
 await esbuild.build({
   ...shared,
+  entryPoints: ['components/ui/viewport-reveal-mount.tsx'],
+  outfile: 'assets/viewport-reveal.bundle.js',
+  globalName: 'WITViewportRevealBundle',
+});
+
+await esbuild.build({
+  ...shared,
   entryPoints: ['components/ui/heading-scramble-mount.tsx'],
   outfile: 'assets/text-scramble.bundle.js',
   globalName: 'WITHeadingScrambleBundle',
@@ -69,6 +76,7 @@ await esbuild.build({
   globalName: 'WITNotFoundPageBundle',
 });
 
+console.log('Built assets/viewport-reveal.bundle.js');
 console.log('Built assets/text-scramble.bundle.js');
 console.log('Built assets/hero-with-logos.bundle.js');
 console.log('Built assets/leadership-circle-scroll.bundle.js');

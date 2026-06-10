@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { GradientBarsBackground } from './gradient-bars-background';
+import { revealProps } from './reveal-props';
 
 const WIT_PURPLE = {
   bg: '#06050c',
@@ -22,7 +23,7 @@ export function GradientBarsFooter() {
     >
       <footer className="site-footer">
         <div className="container">
-          <div className="footer-top">
+          <div {...revealProps(0, 'footer-top')}>
             <div className="footer-brand-row">
               <img src="images/Frame 632872.svg" alt="mynnovAIte" />
               <div className="footer-brand-text">
@@ -32,7 +33,7 @@ export function GradientBarsFooter() {
               </div>
             </div>
           </div>
-          <div className="footer-links">
+          <div {...revealProps(100, 'footer-links')}>
             <a href="#about">About</a>
             <a href="#speakers">Speakers</a>
             <a href="#agenda">Agenda</a>
@@ -45,7 +46,10 @@ export function GradientBarsFooter() {
               Contact
             </a>
           </div>
-          <div className="footer-bottom" style={{ marginTop: 20 }}>
+          <div
+            {...revealProps(180, 'footer-bottom')}
+            style={{ marginTop: 20, ...revealProps(180).style }}
+          >
             <p className="footer-copy">
               © 2026 Myntra · Women in Tech · The Leadership Circle
             </p>

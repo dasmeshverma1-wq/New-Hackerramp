@@ -531,6 +531,52 @@
   .learn-card-footer-rule {
     border-top: 1px dashed rgba(255,255,255,0.16);
   }
+  .learn-card-kind-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1;
+    border: 1px solid transparent;
+    pointer-events: none;
+  }
+  .learn-card-kind-tag--speaker {
+    color: #fff;
+    background: rgba(255, 63, 108, 0.92);
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 4px 14px rgba(255, 63, 108, 0.35);
+  }
+  .learn-card-kind-tag--learn {
+    color: #0e0c1a;
+    background: rgba(0, 229, 255, 0.92);
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 4px 14px rgba(0, 229, 255, 0.28);
+  }
+  .learn-card-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(ellipse 90% 80% at 20% 15%, rgba(0, 229, 255, 0.22) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 70% at 85% 85%, rgba(174, 51, 255, 0.2) 0%, transparent 50%),
+      linear-gradient(165deg, #120f24 0%, #1a1538 48%, #0e0c1a 100%);
+  }
+  .learn-card-placeholder__text {
+    font-size: clamp(1.35rem, 4.5vw, 1.75rem);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 2px 18px rgba(0, 229, 255, 0.35);
+  }
   .inner-light .learn-card-photo-panel { border-right-color: rgba(10,10,10,0.14); }
   .inner-light .learn-card-footer-rule { border-top-color: rgba(10,10,10,0.14); }
 
@@ -4059,14 +4105,14 @@ const INIT_PROBLEMS = [
 ];
 
 const SESSIONS = [
-  { id:'S001', title:'Sovereign AI and the future of Indian language models', track:'Gen AI',  status:'upcoming', date:'Jul 6', time:'TBA', speaker:'Pratyush Kumar', meetLink:'', cardLayout:'featured', speakerImage:'images/speakers/pratyush-kumar.jpeg' },
-  { id:'S002', title:'Building resilient payments infrastructure at scale', track:'Product', status:'upcoming', date:'Jul 7', time:'TBA', speaker:'Nitesh Jain',    meetLink:'', cardLayout:'featured', speakerImage:'images/speakers/nitesh-jain.jpeg' },
-  { id:'S003', title:'Enterprise service management at global scale',         track:'Product', status:'upcoming', date:'Jul 8', time:'TBA', speaker:'Shamik Sharma',  meetLink:'', cardLayout:'featured', speakerImage:'images/speakers/shamik-sharma.jpeg' },
-  { id:'S004', title:'Session details coming soon',                           track:'Product', status:'upcoming', date:'Jul 9', time:'TBA', speaker:'Announced soon', meetLink:'', cardLayout:'featured', speakerImage:'images/speakers/announced-soon-1.jpeg' },
-  { id:'S005', title:'Session details coming soon',                           track:'Gen AI',  status:'upcoming', date:'Jul 10', time:'TBA', speaker:'Announced soon', meetLink:'', cardLayout:'featured', speakerImage:'images/speakers/announced-soon-2.jpeg' },
-  { id:'S006', title:'Prompt Engineering Masterclass',                        track:'Gen AI',  status:'upcoming', date:'Jul 6',  time:'2:00 PM', speaker:'AI Guild', meetLink:'', cardLayout:'standard' },
-  { id:'S007', title:'Zero-Trust Architecture Patterns',                      track:'InfoSec', status:'upcoming', date:'Jul 7',  time:'4:00 PM', speaker:'Security Guild', meetLink:'', cardLayout:'standard' },
-  { id:'S008', title:'Dockins Deploy Workshop',                               track:'Dockins', status:'upcoming', date:'Jul 9',  time:'11:00 AM', speaker:'Platform Engineering', meetLink:'', cardLayout:'standard' },
+  { id:'S001', title:'Sovereign AI and the future of Indian language models', track:'Gen AI',  status:'upcoming', date:'Jul 6', time:'TBA', speaker:'Pratyush Kumar', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/pratyush-kumar.jpeg' },
+  { id:'S002', title:'Building resilient payments infrastructure at scale', track:'Product', status:'upcoming', date:'Jul 7', time:'TBA', speaker:'Nitesh Jain',    meetLink:'', cardType:'speaker', speakerImage:'images/speakers/nitesh-jain.jpeg' },
+  { id:'S003', title:'Enterprise service management at global scale',         track:'Product', status:'upcoming', date:'Jul 8', time:'TBA', speaker:'Shamik Sharma',  meetLink:'', cardType:'speaker', speakerImage:'images/speakers/shamik-sharma.jpeg' },
+  { id:'S004', title:'Session details coming soon',                           track:'Product', status:'upcoming', date:'Jul 9', time:'TBA', speaker:'Announced soon', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/announced-soon-1.jpeg' },
+  { id:'S005', title:'Session details coming soon',                           track:'Gen AI',  status:'upcoming', date:'Jul 10', time:'TBA', speaker:'Announced soon', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/announced-soon-2.jpeg' },
+  { id:'S006', title:'Prompt Engineering Masterclass',                        track:'Gen AI',  status:'upcoming', date:'Jul 6',  time:'2:00 PM', speaker:'AI Guild', meetLink:'', cardType:'learn' },
+  { id:'S007', title:'Zero-Trust Architecture Patterns',                      track:'InfoSec', status:'upcoming', date:'Jul 7',  time:'4:00 PM', speaker:'Security Guild', meetLink:'', cardType:'learn' },
+  { id:'S008', title:'Dockins Deploy Workshop',                               track:'Dockins', status:'upcoming', date:'Jul 9',  time:'11:00 AM', speaker:'Platform Engineering', meetLink:'', cardType:'learn' },
 ];
 
 let HACKATHON_CALENDAR = [
@@ -12321,7 +12367,7 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
                     ) : (
                       <Btn variant="primary" className="text-[12px] py-2" onClick={()=>{
                         const nextId = 'S' + String(Math.max(0, ...sessLocal.map(s=>parseInt(s.id.replace('S',''),10)||0)) + 1).padStart(3,'0');
-                        setSessLocal(p=>[...p,{ id:nextId, title:'New Session', track:'Gen AI', status:'upcoming', date:'Jun 16', time:'10:00 AM', speaker:'', meetLink:'', cardLayout:'standard', speakerImage:'' }]);
+                        setSessLocal(p=>[...p,{ id:nextId, title:'New Session', track:'Gen AI', status:'upcoming', date:'Jul 6', time:'10:00 AM', speaker:'', meetLink:'', cardType:'learn', speakerImage:'' }]);
                       }}>+ Add Session</Btn>
                     )}
                   </div>
@@ -12347,8 +12393,15 @@ function AdminView({ user, teams, setTeams, allUsers, setAllUsers, problems, set
                               {['upcoming','live','recorded'].map(st=><option key={st} value={st}>{st}</option>)}
                             </select>
                           </div>
+                          <div>
+                            <label className="block text-[11px] font-semibold text-[color:var(--mute-1)] mb-1">Card type</label>
+                            <select value={editSess ? (sessLocal[i].cardType || (sessLocal[i].speakerImage ? 'speaker' : 'learn')) : (s.cardType || (s.speakerImage ? 'speaker' : 'learn'))} onChange={e=>{ if(editSess){ const n=[...sessLocal]; const nextType=e.target.value; n[i]={...n[i],cardType:nextType,speakerImage:nextType==='learn'?'':n[i].speakerImage}; setSessLocal(n); }}} disabled={!editSess} className="w-full bg-white border border-[color:var(--line-2)] rounded px-2.5 py-2 text-[12px] outline-none">
+                              <option value="speaker">Speaker</option>
+                              <option value="learn">Learn</option>
+                            </select>
+                          </div>
                           <Inp label="Meet link" value={editSess ? (sessLocal[i].meetLink||'') : (s.meetLink||'')} onChange={e=>{ if(editSess){ const n=[...sessLocal]; n[i]={...n[i],meetLink:e.target.value}; setSessLocal(n); }}} disabled={!editSess} />
-                          <Inp label="Featured image" value={editSess ? (sessLocal[i].speakerImage||'') : (s.speakerImage||'')} onChange={e=>{ if(editSess){ const n=[...sessLocal]; n[i]={...n[i],speakerImage:e.target.value}; setSessLocal(n); }}} disabled={!editSess} />
+                          <Inp label="Speaker image URL" value={editSess ? (sessLocal[i].speakerImage||'') : (s.speakerImage||'')} onChange={e=>{ if(editSess){ const n=[...sessLocal]; n[i]={...n[i],speakerImage:e.target.value,cardType:e.target.value.trim()?'speaker':n[i].cardType}; setSessLocal(n); }}} disabled={!editSess} />
                         </div>
                         {editSess && (
                           <div className="flex justify-end">
@@ -13415,10 +13468,11 @@ function EnablementView({ sessions = [], speakers = DEFAULT_SPEAKERS }) {
         {shown.map((s)=>{
           const info=statusInfo(s.status);
           const colors=getSessionColors(s.track);
-          const speakerPhoto = s.speakerImage?.trim() || null;
-          const isFeatured = !!speakerPhoto;
-          const speakerMeta = speakers.find(sp => sp.name === s.speaker);
-          const initials = (s.speaker || 'Anonymous').split(' ').filter(Boolean).map(n=>n[0]).join('').toUpperCase();
+          const cardKind = s.cardType === 'learn' || s.cardType === 'speaker'
+            ? s.cardType
+            : (s.speakerImage?.trim() ? 'speaker' : 'learn');
+          const isSpeaker = cardKind === 'speaker';
+          const speakerPhoto = isSpeaker ? (s.speakerImage?.trim() || null) : null;
 
           const statusBadge = (
             <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${info.cls} border border-current/10 flex-shrink-0`}>
@@ -13480,60 +13534,32 @@ function EnablementView({ sessions = [], speakers = DEFAULT_SPEAKERS }) {
                 <span>{s.date}</span>
               </div>
 
-              {isFeatured ? (
-                <div className="flex flex-1 min-h-[248px]">
-                  <div className="learn-card-photo-panel w-[160px] sm:w-[190px] md:w-[210px] flex-shrink-0 relative overflow-hidden bg-[#0E0C1A]">
-                    {speakerPhoto ? (
-                      <img src={speakerPhoto} alt={s.speaker} className="absolute inset-0 w-full h-full object-cover object-top" />
-                    ) : (
-                      <div
-                        className="absolute inset-0 flex items-center justify-center text-[22px] font-[900] text-white"
-                        style={{ background: speakerMeta ? `linear-gradient(160deg, ${speakerMeta.g[0]}, ${speakerMeta.g[1]})` : 'linear-gradient(160deg, #4f1fb5, #ae33ff)' }}
-                      >
-                        {initials}
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent pointer-events-none" />
-                  </div>
-
-                  <div className="flex-1 p-5 flex flex-col gap-3 min-w-0 bg-transparent">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <span className="text-[9.5px] text-[color:var(--mute-3)] font-mono font-bold uppercase tracking-wider">Presenter</span>
-                        <p className="text-[13px] font-[850] text-[color:var(--ink)] leading-tight truncate">{s.speaker}</p>
-                      </div>
-                      {statusBadge}
+              <div className="flex flex-1 min-h-[248px]">
+                <div className="learn-card-photo-panel w-[160px] sm:w-[190px] md:w-[210px] flex-shrink-0 relative overflow-hidden bg-[#0E0C1A]">
+                  {isSpeaker && speakerPhoto ? (
+                    <img src={speakerPhoto} alt={s.speaker} className="absolute inset-0 w-full h-full object-cover object-top" />
+                  ) : (
+                    <div className="learn-card-placeholder" aria-hidden="true">
+                      <span className="learn-card-placeholder__text">Learn</span>
                     </div>
-
-                    <div>
-                      <h3 className="text-[17px] font-[900] text-[color:var(--ink)] leading-snug tracking-tight mb-1.5 line-clamp-2">
-                        {s.title}
-                      </h3>
-                      <span className="inline-flex px-2 py-0.5 rounded-[6px] text-[10.5px] font-[800] text-[color:var(--accent)] bg-[color:var(--accent)]/5 uppercase tracking-wide">
-                        {TRACKS[s.track]}
-                      </span>
-                    </div>
-
-                    {sessionFooter}
-                  </div>
+                  )}
+                  <span className={`learn-card-kind-tag learn-card-kind-tag--${cardKind}`}>
+                    {isSpeaker ? 'Speaker' : 'Learn'}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent pointer-events-none" />
                 </div>
-              ) : (
-                <div className="p-6 flex flex-col gap-4 flex-1 min-h-[248px] bg-transparent">
+
+                <div className="flex-1 p-5 flex flex-col gap-3 min-w-0 bg-transparent">
                   <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-[34px] h-[34px] rounded-full bg-[color:var(--paper-2)] flex items-center justify-center text-[11px] font-[900] text-[color:var(--accent)] border border-[color:var(--line-2)] flex-shrink-0 shadow-sm">
-                        {initials}
-                      </div>
-                      <div className="flex flex-col min-w-0">
-                        <span className="text-[9.5px] text-[color:var(--mute-3)] font-mono font-bold uppercase tracking-wider">Presenter</span>
-                        <span className="text-[13px] font-[850] text-[color:var(--ink)] leading-tight truncate">{s.speaker}</span>
-                      </div>
+                    <div className="min-w-0">
+                      <span className="text-[9.5px] text-[color:var(--mute-3)] font-mono font-bold uppercase tracking-wider">{isSpeaker ? 'Presenter' : 'Host'}</span>
+                      <p className="text-[13px] font-[850] text-[color:var(--ink)] leading-tight truncate">{s.speaker}</p>
                     </div>
                     {statusBadge}
                   </div>
 
                   <div>
-                    <h3 className="text-[17px] font-[900] text-[color:var(--ink)] leading-snug tracking-tight mb-1">
+                    <h3 className="text-[17px] font-[900] text-[color:var(--ink)] leading-snug tracking-tight mb-1.5 line-clamp-2">
                       {s.title}
                     </h3>
                     <span className="inline-flex px-2 py-0.5 rounded-[6px] text-[10.5px] font-[800] text-[color:var(--accent)] bg-[color:var(--accent)]/5 uppercase tracking-wide">
@@ -13543,7 +13569,7 @@ function EnablementView({ sessions = [], speakers = DEFAULT_SPEAKERS }) {
 
                   {sessionFooter}
                 </div>
-              )}
+              </div>
             </div>
           );
         })}

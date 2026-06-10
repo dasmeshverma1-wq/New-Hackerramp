@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 · Page not found · Women in Tech</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter Tight', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            border: 'hsl(var(--border))',
+            input: 'hsl(var(--input))',
+            ring: 'hsl(var(--ring))',
+            background: 'hsl(var(--background))',
+            foreground: 'hsl(var(--foreground))',
+            primary: {
+              DEFAULT: 'hsl(var(--primary))',
+              foreground: 'hsl(var(--primary-foreground))',
+            },
+            secondary: {
+              DEFAULT: 'hsl(var(--secondary))',
+              foreground: 'hsl(var(--secondary-foreground))',
+            },
+            destructive: {
+              DEFAULT: 'hsl(var(--destructive))',
+              foreground: 'hsl(var(--destructive-foreground))',
+            },
+            muted: {
+              DEFAULT: 'hsl(var(--muted))',
+              foreground: 'hsl(var(--muted-foreground))',
+            },
+            accent: {
+              DEFAULT: 'hsl(var(--accent))',
+              foreground: 'hsl(var(--accent-foreground))',
+            },
+            card: {
+              DEFAULT: 'hsl(var(--card))',
+              foreground: 'hsl(var(--card-foreground))',
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root {
+      --background: 252 33% 4%;
+      --foreground: 0 0% 98%;
+      --card: 252 28% 8%;
+      --card-foreground: 0 0% 98%;
+      --primary: 255 71% 59%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 252 20% 14%;
+      --secondary-foreground: 0 0% 98%;
+      --muted: 252 18% 14%;
+      --muted-foreground: 252 8% 62%;
+      --accent: 252 20% 14%;
+      --accent-foreground: 0 0% 98%;
+      --destructive: 0 72% 51%;
+      --destructive-foreground: 0 0% 98%;
+      --border: 252 14% 18%;
+      --input: 252 14% 18%;
+      --ring: 255 71% 59%;
+    }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: 'Inter Tight', system-ui, sans-serif;
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Tailwind CDN does not scan bundled React — core 404 layout */
+    #not-found-root .inline-flex { display: inline-flex; }
+    #not-found-root .flex { display: flex; }
+    #not-found-root .min-h-svh { min-height: 100svh; }
+    #not-found-root .min-w-0 { min-width: 0; }
+    #not-found-root .w-full { width: 100%; }
+    #not-found-root .max-w-lg { max-width: 32rem; }
+    #not-found-root .max-w-md { max-width: 28rem; }
+    #not-found-root .max-w-sm { max-width: 24rem; }
+    #not-found-root .flex-1 { flex: 1 1 0%; }
+    #not-found-root .flex-col { flex-direction: column; }
+    #not-found-root .items-center { align-items: center; }
+    #not-found-root .justify-center { justify-content: center; }
+    #not-found-root .gap-2 { gap: 0.5rem; }
+    #not-found-root .gap-4 { gap: 1rem; }
+    #not-found-root .gap-6 { gap: 1.5rem; }
+    #not-found-root .-space-x-3 > :not([hidden]) ~ :not([hidden]) { margin-left: -0.75rem; }
+    #not-found-root .overflow-hidden { overflow: hidden; }
+    #not-found-root .rounded-lg { border-radius: 0.5rem; }
+    #not-found-root .rounded-xl { border-radius: 0.75rem; }
+    #not-found-root .rounded-full { border-radius: 9999px; }
+    #not-found-root .border { border-width: 1px; }
+    #not-found-root .border-2 { border-width: 2px; }
+    #not-found-root .border-solid { border-style: solid; }
+    #not-found-root .border-dashed { border-style: dashed; }
+    #not-found-root .border-white\/10 { border-color: rgba(255,255,255,0.1); }
+    #not-found-root .border-background { border-color: hsl(var(--background)); }
+    #not-found-root .ring-1 { box-shadow: 0 0 0 1px rgba(255,255,255,0.1); }
+    #not-found-root .p-6 { padding: 1.5rem; }
+    #not-found-root .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    #not-found-root .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+    #not-found-root .text-center { text-align: center; }
+    #not-found-root .text-balance { text-wrap: balance; }
+    #not-found-root .text-xs { font-size: 0.75rem; line-height: 1rem; }
+    #not-found-root .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+    #not-found-root .text-base { font-size: 1rem; line-height: 1.5rem; }
+    #not-found-root .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    #not-found-root .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    #not-found-root .font-medium { font-weight: 500; }
+    #not-found-root .font-semibold { font-weight: 600; }
+    #not-found-root .font-bold { font-weight: 700; }
+    #not-found-root .tracking-tight { letter-spacing: -0.025em; }
+    #not-found-root .tracking-\[0\.2em\] { letter-spacing: 0.2em; }
+    #not-found-root .uppercase { text-transform: uppercase; }
+    #not-found-root .relative { position: relative; }
+    #not-found-root .absolute { position: absolute; }
+    #not-found-root .inset-0 { inset: 0; }
+    #not-found-root .z-10 { z-index: 10; }
+    #not-found-root .pointer-events-none { pointer-events: none; }
+    #not-found-root .shrink-0 { flex-shrink: 0; }
+    #not-found-root .size-4 { width: 1rem; height: 1rem; }
+    #not-found-root .size-11 { width: 2.75rem; height: 2.75rem; }
+    #not-found-root .h-10 { height: 2.5rem; }
+    #not-found-root .h-11 { height: 2.75rem; }
+    #not-found-root .h-full { height: 100%; }
+    #not-found-root .w-10 { width: 2.5rem; }
+    #not-found-root .whitespace-nowrap { white-space: nowrap; }
+    #not-found-root .object-cover { object-fit: cover; }
+    #not-found-root .aspect-square { aspect-ratio: 1 / 1; }
+    #not-found-root .mb-2 { margin-bottom: 0.5rem; }
+    #not-found-root .bg-background { background-color: hsl(var(--background)); }
+    #not-found-root .bg-card\/40 { background-color: hsl(var(--card) / 0.4); }
+    #not-found-root .bg-muted { background-color: hsl(var(--muted)); }
+    #not-found-root .bg-primary { background-color: hsl(var(--primary)); }
+    #not-found-root .text-foreground { color: hsl(var(--foreground)); }
+    #not-found-root .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+    #not-found-root .text-primary-foreground { color: hsl(var(--primary-foreground)); }
+    #not-found-root .backdrop-blur-sm { backdrop-filter: blur(4px); }
+    #not-found-root .shadow-\[0_0_24px_rgba\(123\,92\,255\,0\.35\)\] {
+      box-shadow: 0 0 24px rgba(123,92,255,0.35);
+    }
+    #not-found-root a {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      min-height: 2.75rem; padding: 0 1.5rem; border-radius: 0.75rem;
+      background: hsl(var(--primary)); color: hsl(var(--primary-foreground));
+      font-size: 0.875rem; font-weight: 600; text-decoration: none;
+      box-shadow: 0 0 24px rgba(123,92,255,0.35);
+      transition: background-color 150ms ease;
+    }
+    #not-found-root a:hover { background: hsl(var(--primary) / 0.9); }
+    @media (min-width: 768px) {
+      #not-found-root .md\:p-12 { padding: 3rem; }
+      #not-found-root .md\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="not-found-root" data-home-href="women-in-tech.html" data-home-label="Back to Women in Tech"></div>
+
+  <script src="assets/not-found-page.bundle.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.WITNotFoundPageBundle && window.WITNotFoundPageBundle.mountNotFoundPage) {
+        window.WITNotFoundPageBundle.mountNotFoundPage();
+      }
+    });
+  </script>
+</body>
+</html>

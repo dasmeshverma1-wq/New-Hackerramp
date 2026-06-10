@@ -92,11 +92,11 @@ export function HeroWithLogos({
       <figure className="pointer-events-none absolute bottom-[-50px] right-[7vw] z-20 hidden aspect-square w-[30vw] rounded-full bg-[#00E5FF]/10 opacity-50 blur-[100px] md:block" />
 
       {/* Mobile — single centered stack above details card */}
-      <div className="wit-hero-mobile relative z-10 flex min-h-[100dvh] flex-col items-center justify-center gap-5 px-5 pb-[10.5rem] pt-8 md:hidden">
+      <div className="wit-hero-mobile relative z-10 flex min-h-[100dvh] flex-col items-center justify-center gap-5 px-5 pb-[11.5rem] pt-8 md:hidden">
         <div
           {...revealProps(0, 'flex items-center gap-2 border border-white/10 bg-black/20 px-3 py-1.5 backdrop-blur-sm')}
         >
-          <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-white/50">
+          <p className="font-mono text-[length:var(--wit-eyebrow,12px)] font-bold uppercase tracking-[0.16em] text-white/50">
             {badge}
           </p>
         </div>
@@ -111,9 +111,9 @@ export function HeroWithLogos({
             line1={titleLine1}
             line2={titleLine2}
             line3={titleLine3}
-            className="text-pretty font-[Parafina_Trial,Inter_Tight,sans-serif] text-[3rem] font-medium leading-[0.92] tracking-[-0.04em] text-white"
+            className="text-pretty font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--wit-title-hero,3rem)] font-medium leading-[0.92] tracking-[-0.04em] text-white"
           />
-          <h2 className="max-w-sm text-pretty text-xs leading-relaxed text-white/60">{subtitle}</h2>
+          <h2 className="max-w-sm text-pretty text-[length:var(--wit-body,1.125rem)] leading-relaxed text-white/62">{subtitle}</h2>
         </div>
 
         <div {...revealProps(220, 'w-full max-w-[320px]')}>
@@ -122,7 +122,7 @@ export function HeroWithLogos({
             href={applyHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="h-12 w-full rounded-xl text-sm"
+            className="h-12 w-full rounded-xl text-[length:var(--wit-body-sm,1rem)]"
           >
             {applyLabel}
           </ShinyButton>
@@ -138,7 +138,7 @@ export function HeroWithLogos({
               'flex items-center gap-2 border border-b-0 border-white/10 bg-black/20 px-4 py-2 backdrop-blur-sm',
             )}
           >
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/50 lg:text-xs">
+            <p className="font-mono text-[length:var(--wit-eyebrow,12px)] font-bold uppercase tracking-[0.16em] text-white/50">
               {badge}
             </p>
           </div>
@@ -154,7 +154,7 @@ export function HeroWithLogos({
               line3={titleLine3}
               className="text-pretty text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-8xl font-medium leading-[0.92] tracking-[-0.04em] text-white md:max-w-screen-lg lg:text-[clamp(76px,11vw,116px)] lg:tracking-[-0.035em]"
             />
-            <h2 className="max-w-2xl text-pretty text-center text-lg leading-relaxed text-white/60">
+            <h2 className="max-w-2xl text-pretty text-center text-[length:var(--wit-body,1.125rem)] leading-relaxed text-white/62 md:text-[length:var(--wit-body,1.375rem)]">
               {subtitle}
             </h2>
           </div>

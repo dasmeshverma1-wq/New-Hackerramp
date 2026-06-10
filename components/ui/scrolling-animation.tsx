@@ -2,6 +2,7 @@
 
 import {
   useEffect,
+  useId,
   useRef,
   useState,
   type CSSProperties,
@@ -143,7 +144,7 @@ function IntroTile({ label, motion, cardClassName, className = '', children }: I
         transform: `translateY(${motion.y}px) scale(${motion.scale})`,
       }}
     >
-      <span className="mb-2 font-mono text-[9px] font-medium uppercase tracking-[0.16em] text-white/30 sm:mb-3 sm:text-[11px]">
+      <span className="lc-intro-label mb-2 font-mono text-[length:var(--wit-mono,0.8125rem)] font-medium uppercase tracking-[0.16em] text-white/30 sm:mb-3">
         {label}
       </span>
       <div
@@ -167,43 +168,34 @@ function Only100SeatsIntro({
   const hundred = introItemMotion(stickyProgress, introOnlyEnd, introHundredEnd);
   const seats = introItemMotion(stickyProgress, introHundredEnd, introSeatsEnd);
 
-  const cardTop =
-    'h-[4.75rem] sm:h-[13.5rem] sm:w-[13.5rem]';
-  const cardSeats =
-    'h-[5.5rem] sm:h-[13.5rem] sm:w-[13.5rem]';
+  const cardClassName =
+    'h-[10rem] w-[10rem] sm:h-[11.5rem] sm:w-[11.5rem] md:h-[12.5rem] md:w-[12.5rem]';
 
   return (
     <div
-      className="mx-auto flex w-[min(92vw,20rem)] flex-col items-center gap-3 sm:w-auto sm:flex-row sm:items-end sm:justify-center sm:gap-8"
+      className="mx-auto flex max-w-full flex-col items-center gap-5 sm:flex-row sm:items-end sm:justify-center sm:gap-6 md:gap-8"
       aria-label="Invite only, one hundred seats"
     >
-      <div className="grid w-full grid-cols-[1.4fr_1fr] gap-3 sm:contents">
-        <IntroTile label="Only" motion={only} cardClassName={cardTop}>
-          <span className="font-[Parafina_Trial,Inter_Tight,sans-serif] text-[1.75rem] font-bold uppercase leading-none tracking-[-0.04em] text-white sm:text-[3.7rem]">
-            ONLY
-          </span>
-        </IntroTile>
+      <IntroTile label="Only" motion={only} className="items-center sm:items-start" cardClassName={cardClassName}>
+        <span className="font-[Parafina_Trial,Inter_Tight,sans-serif] text-[3.5rem] font-bold uppercase leading-none tracking-[-0.04em] text-white sm:text-[3.25rem] md:text-[3.7rem]">
+          ONLY
+        </span>
+      </IntroTile>
 
-        <IntroTile label="100" motion={hundred} cardClassName={cardTop}>
-          <img
-            src={hundredEmojiSrc}
-            alt="100"
-            className="h-12 w-12 object-contain sm:h-[6.5rem] sm:w-[6.5rem]"
-            loading="eager"
-          />
-        </IntroTile>
-      </div>
+      <IntroTile label="100" motion={hundred} className="items-center sm:items-start" cardClassName={cardClassName}>
+        <img
+          src={hundredEmojiSrc}
+          alt="100"
+          className="h-24 w-24 object-contain sm:h-[5.5rem] sm:w-[5.5rem] md:h-[6.5rem] md:w-[6.5rem]"
+          loading="eager"
+        />
+      </IntroTile>
 
-      <IntroTile
-        label="Seats"
-        motion={seats}
-        className="w-full sm:w-auto"
-        cardClassName={`${cardSeats} w-full sm:w-[13.5rem]`}
-      >
+      <IntroTile label="Seats" motion={seats} className="items-center sm:items-start" cardClassName={cardClassName}>
         <img
           src={seatImageSrc}
           alt="Seat"
-          className="h-14 w-14 object-contain sm:h-[7rem] sm:w-[7rem]"
+          className="h-28 w-28 object-contain sm:h-[6rem] sm:w-[6rem] md:h-[7rem] md:w-[7rem]"
           loading="eager"
         />
       </IntroTile>
@@ -222,7 +214,7 @@ type CenterCopyProps = {
 function CenterCopy({ title, titleAccent, tagline, opacity, className = '' }: CenterCopyProps) {
   return (
     <div className={className} style={{ opacity }}>
-      <h2 className="text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-[1.35rem] font-medium leading-[1.12] tracking-[-0.03em] text-white sm:text-[1.65rem] md:text-[1.85rem]">
+      <h2 className="lc-section-title text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--wit-title,2.5rem)] font-medium leading-[1.08] tracking-[-0.03em] text-white">
         {titleAccent ? (
           <>
             {title}{' '}
@@ -235,11 +227,42 @@ function CenterCopy({ title, titleAccent, tagline, opacity, className = '' }: Ce
         )}
       </h2>
       {tagline ? (
-        <p className="mt-3 text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-[0.95rem] font-normal leading-snug tracking-[-0.01em] text-white/55 sm:mt-4 sm:text-base">
+        <p className="lc-section-body mt-4 text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--wit-body,1.125rem)] font-normal leading-snug tracking-[-0.01em] text-white/55 sm:mt-4">
           {tagline}
         </p>
       ) : null}
     </div>
+  );
+}
+
+function GradientRingStroke({
+  opacity,
+  className = 'absolute inset-0 h-full w-full',
+}: {
+  opacity: number;
+  className?: string;
+}) {
+  const gradientId = useId().replace(/:/g, '');
+  const ringOpacity = opacity * 0.42;
+
+  return (
+    <svg className={`pointer-events-none ${className}`} viewBox="0 0 100 100" aria-hidden>
+      <defs>
+        <linearGradient id={gradientId} x1="0%" y1="50%" x2="100%" y2="50%">
+          <stop offset="0%" stopColor={`rgba(255,31,192,${ringOpacity})`} />
+          <stop offset="50%" stopColor={`rgba(174,51,255,${ringOpacity})`} />
+          <stop offset="100%" stopColor={`rgba(0,229,255,${ringOpacity})`} />
+        </linearGradient>
+      </defs>
+      <circle
+        cx="50"
+        cy="50"
+        r="49.5"
+        fill="none"
+        stroke={`url(#${gradientId})`}
+        strokeWidth="0.45"
+      />
+    </svg>
   );
 }
 
@@ -504,7 +527,7 @@ export function LeadershipCircleScroll({
     logoOpacity > 0.72;
 
   const speakerSizeClassName =
-    'w-[30%] min-w-[84px] max-w-[132px] lg:min-w-[112px] lg:max-w-[172px] lg:w-[35%] xl:max-w-[192px] xl:w-[36%]';
+    'w-[38%] min-w-[108px] max-w-[168px] sm:w-[28%] sm:min-w-[84px] sm:max-w-[132px] lg:min-w-[100px] lg:max-w-[156px] lg:w-[32%] xl:max-w-[168px] xl:w-[33%]';
   const extraRingSizeClassName = 'h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10';
 
   return (
@@ -546,16 +569,50 @@ export function LeadershipCircleScroll({
           animation: lc-mini-stay-upright-ccw 68s linear infinite;
         }
       `}</style>
-      <div className="sticky top-0 z-[2] flex h-[100svh] min-h-[480px] items-center justify-center overflow-visible px-2 py-8 sm:overflow-hidden sm:px-0">
-        <p className="pointer-events-none absolute left-1/2 top-5 z-30 -translate-x-1/2 font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-white/35 sm:top-8 sm:text-[10px] sm:tracking-[0.2em]">
+      <div className="sticky top-0 z-[2] flex h-[100svh] min-h-[480px] items-center justify-center overflow-visible px-0 py-6 sm:px-0 sm:py-8">
+        <p className="lc-eyebrow pointer-events-none absolute left-1/2 top-5 z-30 -translate-x-1/2 font-mono text-[length:var(--wit-eyebrow,12px)] font-bold uppercase tracking-[0.2em] text-white/35 sm:top-8">
           {eyebrow}
         </p>
 
-        <div className="section-ui-shell flex w-full flex-col items-center justify-center">
-          <div className="flex w-full max-w-[min(112vw,28rem)] flex-col items-center justify-center sm:max-w-[min(100%,78svh)]">
-          <div className="relative mx-auto aspect-square w-full overflow-visible sm:overflow-hidden">
+        <div className="section-ui-shell relative flex w-full flex-col items-center justify-center max-sm:min-h-[calc(100svh-4.5rem)] max-sm:px-0">
           <div
-            className="pointer-events-none absolute inset-0 z-30 flex flex-col items-center justify-center"
+            className="pointer-events-none absolute inset-0 z-40 flex flex-col items-center justify-center sm:hidden"
+            style={{
+              opacity: logoOpacity,
+              transform: `scale(${logoScale})`,
+            }}
+          >
+            {introType === 'only-100-seats' ? (
+              <Only100SeatsIntro
+                stickyProgress={stickyProgress}
+                hundredEmojiSrc={hundredEmojiSrc}
+                seatImageSrc={seatImageSrc}
+                introOnlyEnd={timeline.introOnlyEnd}
+                introHundredEnd={timeline.introHundredEnd}
+                introSeatsEnd={timeline.introSeatsEnd}
+              />
+            ) : (
+              <img
+                src={brandLogoSrc}
+                alt={brandLogoAlt}
+                className="h-[9rem] w-[9rem] object-contain opacity-95"
+                loading="eager"
+              />
+            )}
+            <p
+              className={`lc-scroll-hint mt-6 font-mono text-[length:var(--wit-caption,0.875rem)] font-bold uppercase tracking-[0.2em] text-white/70 transition-opacity duration-500 ${
+                scrollHintVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+              aria-hidden={!scrollHintVisible}
+            >
+              Scroll more
+            </p>
+          </div>
+
+          <div className="relative mx-auto flex w-full max-w-full flex-col items-center justify-center max-sm:min-h-[calc(100svh-4.5rem)] max-sm:gap-4 sm:max-w-[min(100%,78svh)]">
+          <div className="relative mx-auto aspect-square shrink-0 overflow-visible p-0 max-sm:size-[min(100vw,56svh)] sm:w-full sm:p-[clamp(0.35rem,2.5vw,1.75rem)]">
+          <div
+            className="pointer-events-none absolute inset-0 z-30 hidden flex-col items-center justify-center px-3 sm:flex"
             style={{
               opacity: logoOpacity,
               transform: `scale(${logoScale})`,
@@ -579,7 +636,7 @@ export function LeadershipCircleScroll({
               />
             )}
             <p
-              className={`lc-scroll-hint mt-5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 transition-opacity duration-500 sm:mt-6 sm:text-[11px] ${
+              className={`lc-scroll-hint mt-5 font-mono text-[length:var(--wit-caption,0.875rem)] font-bold uppercase tracking-[0.2em] text-white/70 transition-opacity duration-500 sm:mt-6 ${
                 scrollHintVisible ? 'opacity-100' : 'opacity-0'
               }`}
               aria-hidden={!scrollHintVisible}
@@ -626,24 +683,28 @@ export function LeadershipCircleScroll({
                 </div>
               ) : null}
 
-              <div className="pointer-events-none absolute -inset-[2px] z-10">
-                <RingPortraits
-                  profiles={profiles}
-                  ringTopPct={portraitRingTopPct}
-                  opacity={portraitOpacity}
-                  scale={portraitScale * portraitOpacity}
-                  blurPx={portraitBlurPx}
-                  sizeClassName={speakerSizeClassName}
-                />
-              </div>
+              <div className="relative flex h-[80%] w-[80%] items-center justify-center">
+                <GradientRingStroke opacity={innerRingOpacity} />
 
-              <CenterCopy
-                title={title}
-                titleAccent={titleAccent}
-                tagline={tagline}
-                opacity={centerCopyOpacity}
-                className="pointer-events-none absolute left-1/2 top-1/2 z-0 hidden w-[min(92%,22rem)] -translate-x-1/2 -translate-y-1/2 px-3 md:block"
-              />
+                <CenterCopy
+                  title={title}
+                  titleAccent={titleAccent}
+                  tagline={tagline}
+                  opacity={centerCopyOpacity}
+                  className="pointer-events-none absolute left-1/2 top-1/2 z-0 hidden w-[min(92%,22rem)] -translate-x-1/2 -translate-y-1/2 px-3 md:block"
+                />
+
+                <div className="pointer-events-none absolute -inset-[2px] z-10 overflow-visible">
+                  <RingPortraits
+                    profiles={profiles}
+                    ringTopPct={portraitRingTopPct}
+                    opacity={portraitOpacity}
+                    scale={portraitScale * portraitOpacity}
+                    blurPx={portraitBlurPx}
+                    sizeClassName={speakerSizeClassName}
+                  />
+                </div>
+              </div>
             </div>
           </div>
           </div>
@@ -653,7 +714,11 @@ export function LeadershipCircleScroll({
             titleAccent={titleAccent}
             tagline={tagline}
             opacity={centerCopyOpacity}
-            className="pointer-events-none z-20 mt-6 w-full max-w-md px-4 text-center md:hidden"
+            className={`pointer-events-none z-20 w-full max-w-2xl px-4 text-center md:hidden ${
+              centerCopyOpacity > 0.04
+                ? 'relative mt-1 shrink-0 sm:mt-6'
+                : 'absolute h-0 w-0 overflow-hidden opacity-0'
+            }`}
           />
           </div>
         </div>

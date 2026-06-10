@@ -67,14 +67,14 @@ export function LumaRegisterSection({
     >
       <div id="luma-tab" className="w-full max-w-3xl text-center">
         <p
-          {...revealProps(0, 'mb-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/50 md:text-xs')}
+          {...revealProps(0, 'mb-3.5 font-mono text-[length:var(--wit-eyebrow,12px)] font-bold uppercase tracking-[0.16em] text-white/50')}
         >
           {eyebrow}
         </p>
         <h2
           {...revealProps(
             80,
-            'luma-tab__title text-pretty text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-5xl font-medium leading-[0.96] tracking-[-0.04em] text-white sm:text-6xl md:text-7xl lg:text-[clamp(3rem,8vw,5.5rem)] lg:tracking-[-0.035em]',
+            'luma-tab__title text-pretty text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--wit-title,2.5rem)] font-medium leading-[0.96] tracking-[-0.04em] text-white sm:text-[length:var(--wit-title-hero,3rem)] md:text-[clamp(3rem,8vw,5.5rem)] md:tracking-[-0.035em]',
           )}
         >
           {titleLead}
@@ -85,7 +85,7 @@ export function LumaRegisterSection({
         <p
           {...revealProps(
             160,
-            'mx-auto mb-4 mt-5 max-w-2xl text-pretty text-center text-sm font-normal leading-relaxed text-white/60 md:text-lg',
+            'mx-auto mb-4 mt-5 max-w-2xl text-pretty text-center text-[length:var(--wit-body,1.125rem)] font-normal leading-relaxed text-white/62',
           )}
         >
           {description}
@@ -94,7 +94,7 @@ export function LumaRegisterSection({
           <p
             {...revealProps(
               220,
-              'mx-auto mb-7 max-w-xl text-pretty text-center text-[13px] font-medium leading-relaxed text-white/72 md:text-[15px]',
+              'mx-auto mb-7 max-w-xl text-pretty text-center text-[length:var(--wit-body-sm,1rem)] font-medium leading-relaxed text-white/72',
             )}
           >
             {acceptanceNote}
@@ -110,7 +110,7 @@ export function LumaRegisterSection({
             rel="noopener noreferrer"
             data-luma-action="checkout"
             {...(lumaEventId ? { 'data-luma-event-id': lumaEventId } : {})}
-            className="luma-checkout--button h-14 w-full rounded-xl text-base"
+            className="luma-checkout--button h-14 w-full rounded-xl text-[length:var(--wit-body-sm,1rem)]"
           >
             {applyLabel}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -121,7 +121,7 @@ export function LumaRegisterSection({
         <p
           {...revealProps(
             360,
-            'mx-auto mt-5 max-w-md text-[11px] leading-relaxed text-white/45',
+            'mx-auto mt-5 max-w-md text-[length:var(--wit-caption,0.875rem)] leading-relaxed text-white/45',
           )}
         >
           By registering, you consent to Myntra storing and using your application data for event

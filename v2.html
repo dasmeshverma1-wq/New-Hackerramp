@@ -4059,14 +4059,14 @@ const INIT_PROBLEMS = [
 ];
 
 const SESSIONS = [
-  { id:'S001', title:'Generative AI for Fashion Tech',   track:'Gen AI',  status:'upcoming', date:'Jun 2',  time:'10:00 AM', speaker:'Dr. Ananya Krishnan', meetLink:'https://meet.google.com/ftd-jknx-wos', cardLayout:'featured', speakerImage:'images/IMAGE 1.png' },
-  { id:'S002', title:'Prompt Engineering Masterclass',   track:'Gen AI',  status:'live',     date:'Jun 16', time:'2:00 PM',  speaker:'Rahul Dev',           meetLink:'https://meet.google.com/xyz-pdqo-rst', cardLayout:'featured', speakerImage:'images/IMAGE 3.png' },
-  { id:'S003', title:'InfoSec Compliance 101',           track:'InfoSec', status:'upcoming', date:'Jun 5',  time:'11:00 AM', speaker:'Sanjay Gupta',        meetLink:'https://meet.google.com/inf-sec-comp', cardLayout:'featured', speakerImage:'images/IMAGE 2.png' },
-  { id:'S004', title:'Zero-Trust Architecture Patterns', track:'InfoSec', status:'recorded', date:'May 8',  time:null,       speaker:'Pradeep Nair',        meetLink:'https://meet.google.com/rec-ztap-101', cardLayout:'standard' },
-  { id:'S005', title:'SRE Best Practices at Scale',      track:'SRE',     status:'recorded', date:'May 10', time:null,       speaker:'Meera Nair',          meetLink:'https://meet.google.com/sre-scal-work', cardLayout:'standard' },
-  { id:'S006', title:'On-Call Culture & Incident Mgmt',  track:'SRE',     status:'upcoming', date:'Jun 8',  time:'3:00 PM',  speaker:'Kavita Iyer',         cardLayout:'featured', speakerImage:'images/IMAGE 4.png' },
-  { id:'S007', title:'Dockins Deploy Workshop',          track:'Dockins', status:'recorded', date:'May 12', time:null,       speaker:'Aditya Rao',          meetLink:'https://meet.google.com/dck-dep-work', cardLayout:'standard' },
-  { id:'S008', title:'Blue-Green & Canary Deployments',  track:'Dockins', status:'upcoming', date:'Jun 10', time:'1:00 PM',  speaker:'Vineet Shah',         cardLayout:'featured', speakerImage:'images/IMAGE 5.png' },
+  { id:'S001', title:'Sovereign AI and the future of Indian language models', track:'Gen AI',  status:'upcoming', date:'Jul 6', time:'TBA', speaker:'Pratyush Kumar', meetLink:'', cardLayout:'featured', speakerImage:'images/speakers/pratyush-kumar.jpeg' },
+  { id:'S002', title:'Building resilient payments infrastructure at scale', track:'Product', status:'upcoming', date:'Jul 7', time:'TBA', speaker:'Nitesh Jain',    meetLink:'', cardLayout:'featured', speakerImage:'images/speakers/nitesh-jain.jpeg' },
+  { id:'S003', title:'Enterprise service management at global scale',         track:'Product', status:'upcoming', date:'Jul 8', time:'TBA', speaker:'Shamik Sharma',  meetLink:'', cardLayout:'featured', speakerImage:'images/speakers/shamik-sharma.jpeg' },
+  { id:'S004', title:'Session details coming soon',                           track:'Product', status:'upcoming', date:'Jul 9', time:'TBA', speaker:'Announced soon', meetLink:'', cardLayout:'featured', speakerImage:'images/speakers/announced-soon-1.jpeg' },
+  { id:'S005', title:'Session details coming soon',                           track:'Gen AI',  status:'upcoming', date:'Jul 10', time:'TBA', speaker:'Announced soon', meetLink:'', cardLayout:'featured', speakerImage:'images/speakers/announced-soon-2.jpeg' },
+  { id:'S006', title:'Prompt Engineering Masterclass',                        track:'Gen AI',  status:'upcoming', date:'Jul 6',  time:'2:00 PM', speaker:'AI Guild', meetLink:'', cardLayout:'standard' },
+  { id:'S007', title:'Zero-Trust Architecture Patterns',                      track:'InfoSec', status:'upcoming', date:'Jul 7',  time:'4:00 PM', speaker:'Security Guild', meetLink:'', cardLayout:'standard' },
+  { id:'S008', title:'Dockins Deploy Workshop',                               track:'Dockins', status:'upcoming', date:'Jul 9',  time:'11:00 AM', speaker:'Platform Engineering', meetLink:'', cardLayout:'standard' },
 ];
 
 let HACKATHON_CALENDAR = [
@@ -4112,6 +4112,8 @@ const DEFAULT_SPEAKERS = [
     org:'Razorpay',
     topic:'Building resilient payments infrastructure at scale',
     track:'Product',
+    time:'TBA',
+    genre:'Product & Leadership',
     initials:'NJ',
     g:['#3395FF','#0C2451'],
     image:'images/speakers/nitesh-jain.jpeg',
@@ -4126,6 +4128,8 @@ const DEFAULT_SPEAKERS = [
     org:'Atlassian',
     topic:'Enterprise service management at global scale',
     track:'Product',
+    time:'TBA',
+    genre:'Product & Leadership',
     initials:'SS',
     g:['#0052CC','#2684FF'],
     image:'images/speakers/shamik-sharma.jpeg',
@@ -4140,6 +4144,8 @@ const DEFAULT_SPEAKERS = [
     org:'Sarvam AI',
     topic:'Sovereign AI and the future of Indian language models',
     track:'Gen AI',
+    time:'TBA',
+    genre:'Generative AI',
     initials:'PK',
     g:['#FFB347','#FF6A00'],
     image:'images/speakers/pratyush-kumar.jpeg',
@@ -4155,6 +4161,8 @@ const DEFAULT_SPEAKERS = [
     org:'Coming soon',
     topic:'Session details coming soon',
     track:'Product',
+    time:'TBA',
+    genre:'Product & Leadership',
     initials:'',
     g:['#AE33FF','#FF1FC0'],
     image:'images/speakers/announced-soon-1.jpeg',
@@ -4170,6 +4178,8 @@ const DEFAULT_SPEAKERS = [
     org:'Coming soon',
     topic:'Session details coming soon',
     track:'Gen AI',
+    time:'TBA',
+    genre:'Generative AI',
     initials:'',
     g:['#00E5FF','#AE33FF'],
     image:'images/speakers/announced-soon-2.jpeg',
@@ -4380,7 +4390,7 @@ const TAG_STYLE = {
 };
 const THEMES = ['Business & Revenue','Customer Care','Warehouse Ops','Generative AI','SRE & Infrastructure'];
 const DEFAULT_QUAL_INSTRUCTIONS = 'Ideas must clearly describe the problem, the proposed solution approach, and the expected value. Impact quantification is not required — a directional statement of value is sufficient. Each idea must be original and mapped to one of the organiser-provided themes.';
-const TRACKS = { 'Gen AI':'Generative AI', 'InfoSec':'InfoSec Compliance', 'SRE':'SRE & Infrastructure', 'Dockins':'Dockins Deploy' };
+const TRACKS = { 'Gen AI':'Generative AI', 'InfoSec':'InfoSec Compliance', 'SRE':'SRE & Infrastructure', 'Dockins':'Dockins Deploy', 'Product':'Product & Leadership' };
 
 const teamQualifiedInRound = (pubResults, round, teamId) => {
   if (!pubResults?.[round]?.published) return null;
@@ -13330,14 +13340,6 @@ function EnablementView({ sessions = [], speakers = DEFAULT_SPEAKERS }) {
   const [track, setTrack] = useState('all');
   const [searchQ, setSearchQ] = useState('');
 
-  const resolveSpeakerImage = (session) => {
-    if (session.speakerImage) return session.speakerImage;
-    const match = speakers.find(sp => sp.name === session.speaker);
-    if (match?.image) return match.image;
-    const idx = speakers.findIndex(sp => sp.name === session.speaker);
-    return idx >= 0 ? `images/IMAGE ${idx + 1}.png` : null;
-  };
-
   const shown = (sessions||[]).filter(s=>{
     const t=type==='all'||(type==='live'&&(s.status==='live'||s.status==='upcoming'))||(type==='recorded'&&s.status==='recorded');
     const k=track==='all'||s.track===track;
@@ -13413,8 +13415,8 @@ function EnablementView({ sessions = [], speakers = DEFAULT_SPEAKERS }) {
         {shown.map((s)=>{
           const info=statusInfo(s.status);
           const colors=getSessionColors(s.track);
-          const isFeatured = s.cardLayout === 'featured';
-          const speakerPhoto = resolveSpeakerImage(s);
+          const speakerPhoto = s.speakerImage?.trim() || null;
+          const isFeatured = !!speakerPhoto;
           const speakerMeta = speakers.find(sp => sp.name === s.speaker);
           const initials = (s.speaker || 'Anonymous').split(' ').filter(Boolean).map(n=>n[0]).join('').toUpperCase();
 

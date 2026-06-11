@@ -131,13 +131,13 @@ function Only100SeatsIntro({
   introSeatsEnd,
 }: Only100SeatsIntroProps) {
   const words = [
-    { key: 'only', text: 'Only', start: 0, end: introOnlyEnd },
+    { key: 'only', text: 'ONLY', start: 0, end: introOnlyEnd },
     { key: '100', text: '100', start: introOnlyEnd, end: introHundredEnd },
-    { key: 'seats', text: 'Seats', start: introHundredEnd, end: introSeatsEnd },
+    { key: 'seats', text: 'SEATS', start: introHundredEnd, end: introSeatsEnd },
   ] as const;
 
   const wordClassName =
-    'font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--wit-title-hero,clamp(3.25rem,14vw,5.25rem))] font-bold leading-[0.95] tracking-[-0.04em] text-white';
+    'font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--wit-title-hero,clamp(3.25rem,14vw,5.25rem))] font-bold uppercase leading-[0.95] tracking-[-0.04em] text-white';
 
   return (
     <div

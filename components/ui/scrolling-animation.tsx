@@ -6,7 +6,6 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type ReactNode,
 } from 'react';
 
 export type ScrollProfile = {
@@ -111,8 +110,6 @@ function getReleaseRatio() {
 
 type Only100SeatsIntroProps = {
   stickyProgress: number;
-  hundredEmojiSrc: string;
-  seatImageSrc: string;
   introOnlyEnd: number;
   introHundredEnd: number;
   introSeatsEnd: number;
@@ -122,83 +119,47 @@ function introItemMotion(stickyProgress: number, start: number, end: number) {
   const t = smoothstep(start, end, stickyProgress);
   return {
     opacity: t,
-    scale: 0.86 + easeOutBack(t) * 0.14,
-    y: (1 - t) * 14,
+    scale: 0.92 + easeOutCubic(t) * 0.08,
+    y: (1 - t) * 18,
   };
-}
-
-type IntroTileProps = {
-  label: string;
-  motion: ReturnType<typeof introItemMotion>;
-  cardClassName: string;
-  className?: string;
-  children: ReactNode;
-};
-
-function IntroTile({ label, motion, cardClassName, className = '', children }: IntroTileProps) {
-  return (
-    <div
-      className={`flex flex-col items-start ${className}`}
-      style={{
-        opacity: motion.opacity,
-        transform: `translateY(${motion.y}px) scale(${motion.scale})`,
-      }}
-    >
-      <span className="lc-intro-label mb-2 font-mono text-[length:var(--wit-mono,0.8125rem)] font-medium uppercase tracking-[0.16em] text-white/30 sm:mb-3">
-        {label}
-      </span>
-      <div
-        className={`flex w-full items-center justify-center rounded-2xl bg-[#0c0a14]/90 shadow-[0_20px_56px_rgba(0,0,0,0.55)] backdrop-blur-md sm:rounded-[1.75rem] ${cardClassName}`}
-      >
-        {children}
-      </div>
-    </div>
-  );
 }
 
 function Only100SeatsIntro({
   stickyProgress,
-  hundredEmojiSrc,
-  seatImageSrc,
   introOnlyEnd,
   introHundredEnd,
   introSeatsEnd,
 }: Only100SeatsIntroProps) {
-  const only = introItemMotion(stickyProgress, 0, introOnlyEnd);
-  const hundred = introItemMotion(stickyProgress, introOnlyEnd, introHundredEnd);
-  const seats = introItemMotion(stickyProgress, introHundredEnd, introSeatsEnd);
+  const words = [
+    { key: 'only', text: 'Only', start: 0, end: introOnlyEnd },
+    { key: '100', text: '100', start: introOnlyEnd, end: introHundredEnd },
+    { key: 'seats', text: 'Seats', start: introHundredEnd, end: introSeatsEnd },
+  ] as const;
 
-  const cardClassName =
-    'h-[10rem] w-[10rem] sm:h-[11.5rem] sm:w-[11.5rem] md:h-[12.5rem] md:w-[12.5rem]';
+  const wordClassName =
+    'font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--wit-title-hero,clamp(3.25rem,14vw,5.25rem))] font-bold leading-[0.95] tracking-[-0.04em] text-white';
 
   return (
     <div
-      className="mx-auto flex max-w-full flex-col items-center gap-5 sm:flex-row sm:items-end sm:justify-center sm:gap-6 md:gap-8"
-      aria-label="Invite only, one hundred seats"
+      className="mx-auto flex max-w-full flex-col items-center gap-0.5 sm:flex-row sm:items-baseline sm:justify-center sm:gap-3 md:gap-4"
+      aria-label="Only one hundred seats"
     >
-      <IntroTile label="Only" motion={only} className="items-center sm:items-start" cardClassName={cardClassName}>
-        <span className="font-[Parafina_Trial,Inter_Tight,sans-serif] text-[3.5rem] font-bold uppercase leading-none tracking-[-0.04em] text-white sm:text-[3.25rem] md:text-[3.7rem]">
-          ONLY
-        </span>
-      </IntroTile>
-
-      <IntroTile label="100" motion={hundred} className="items-center sm:items-start" cardClassName={cardClassName}>
-        <img
-          src={hundredEmojiSrc}
-          alt="100"
-          className="h-24 w-24 object-contain sm:h-[5.5rem] sm:w-[5.5rem] md:h-[6.5rem] md:w-[6.5rem]"
-          loading="eager"
-        />
-      </IntroTile>
-
-      <IntroTile label="Seats" motion={seats} className="items-center sm:items-start" cardClassName={cardClassName}>
-        <img
-          src={seatImageSrc}
-          alt="Seat"
-          className="h-28 w-28 object-contain sm:h-[6rem] sm:w-[6rem] md:h-[7rem] md:w-[7rem]"
-          loading="eager"
-        />
-      </IntroTile>
+      {words.map(({ key, text, start, end }) => {
+        const motion = introItemMotion(stickyProgress, start, end);
+        return (
+          <span
+            key={key}
+            className={wordClassName}
+            style={{
+              opacity: motion.opacity,
+              transform: `translateY(${motion.y}px) scale(${motion.scale})`,
+              willChange: 'opacity, transform',
+            }}
+          >
+            {text}
+          </span>
+        );
+      })}
     </div>
   );
 }
@@ -585,8 +546,6 @@ export function LeadershipCircleScroll({
             {introType === 'only-100-seats' ? (
               <Only100SeatsIntro
                 stickyProgress={stickyProgress}
-                hundredEmojiSrc={hundredEmojiSrc}
-                seatImageSrc={seatImageSrc}
                 introOnlyEnd={timeline.introOnlyEnd}
                 introHundredEnd={timeline.introHundredEnd}
                 introSeatsEnd={timeline.introSeatsEnd}
@@ -621,8 +580,6 @@ export function LeadershipCircleScroll({
             {introType === 'only-100-seats' ? (
               <Only100SeatsIntro
                 stickyProgress={stickyProgress}
-                hundredEmojiSrc={hundredEmojiSrc}
-                seatImageSrc={seatImageSrc}
                 introOnlyEnd={timeline.introOnlyEnd}
                 introHundredEnd={timeline.introHundredEnd}
                 introSeatsEnd={timeline.introSeatsEnd}

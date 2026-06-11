@@ -493,6 +493,51 @@
   .inner-dark .text-indigo-300 { color: #a5b4fc !important; }
   /* Join-team panel (light indigo surface) */
   .inner-dark .bg-\[#fbfcff\]  { background: rgba(99,102,241,0.10) !important; }
+  /* Register — marketplace callout (dark-native, no white gradient) */
+  .reg-marketplace-callout {
+    background: var(--paper-2);
+    box-shadow: inset 3px 0 0 rgba(255, 63, 108, 0.45);
+  }
+  .inner-dark .reg-marketplace-callout {
+    background: #0F0E1C;
+    border-color: rgba(255, 255, 255, 0.09) !important;
+    box-shadow: inset 3px 0 0 rgba(255, 63, 108, 0.55);
+  }
+  .inner-dark .reg-marketplace-step {
+    background: #171528 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--mute-2) !important;
+  }
+  .reg-theme-card {
+    background: var(--paper-2);
+  }
+  .reg-theme-card--selected {
+    background: rgba(255, 63, 108, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(255, 63, 108, 0.22);
+  }
+  .inner-dark .reg-theme-card {
+    background: #0F0E1C;
+  }
+  .inner-dark .reg-theme-card--selected {
+    background: rgba(255, 63, 108, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(255, 63, 108, 0.35);
+  }
+  .reg-lead-badge {
+    background: var(--paper-2);
+  }
+  .inner-dark .reg-lead-badge {
+    background: #0F0E1C;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  .reg-review-notice {
+    background: var(--paper-2);
+    box-shadow: inset 3px 0 0 rgba(96, 165, 250, 0.55);
+  }
+  .inner-dark .reg-review-notice {
+    background: #0F0E1C;
+    border-color: rgba(255, 255, 255, 0.09) !important;
+    box-shadow: inset 3px 0 0 rgba(96, 165, 250, 0.65);
+  }
   /* Open badge border */
   .inner-dark .border-\[#dbeafe\]\/50 { border-color: rgba(96,165,250,0.25) !important; }
   /* Full badge border */
@@ -1661,6 +1706,50 @@
   }
   @media (min-width: 1024px) {
     .mkt-page-sidebar { width: 260px; max-width: 260px; }
+  }
+  .mkt-filters-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 180ms ease, border-color 180ms ease;
+  }
+  .mkt-filters-toggle:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+  .mkt-filters-toggle__chevron {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    transition: transform 200ms ease;
+  }
+  .mkt-filters-toggle--open .mkt-filters-toggle__chevron {
+    transform: rotate(180deg);
+  }
+  .mkt-filters-toggle__badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: rgba(255, 63, 108, 0.18);
+    color: #ff8faf;
+    border: 1px solid rgba(255, 63, 108, 0.28);
+  }
+  @media (min-width: 1024px) {
+    .mkt-filters-toggle { display: none; }
+  }
+  .mkt-filters-panel { margin-top: 14px; }
+  @media (min-width: 1024px) {
+    .mkt-filters-panel { margin-top: 0; display: block !important; }
   }
   .mkt-page-main {
     flex: 1;
@@ -3521,6 +3610,26 @@
   .hero-b-stage-wrapper .btn-sub-row {
     display: contents;
   }
+  .hero-b-stage-wrapper .hero-join-team-link {
+    position: relative;
+    z-index: 1;
+    margin-top: 10px;
+    padding: 0;
+    border: none;
+    background: none;
+    font-family: var(--font-figtree);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.72);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: color 180ms ease;
+  }
+  .hero-b-stage-wrapper .hero-join-team-link:hover {
+    color: #fff;
+  }
   .hero-b-stage-wrapper .btn {
     padding: 16px 32px;
     border-radius: 999px;
@@ -3872,6 +3981,10 @@
       width: auto !important;
       padding: 12px 10px !important;
       font-size: 12.5px !important;
+    }
+    .hero-b-stage-wrapper .hero-join-team-link {
+      margin-top: 8px !important;
+      font-size: 13px !important;
     }
 
     .hero-b-stage-wrapper .right-col {
@@ -6380,6 +6493,11 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
     window.scrollTo(0, 0);
   };
 
+  const handleHeroJoinTeamClick = () => {
+    setView('teams');
+    window.scrollTo(0, 0);
+  };
+
   // Mouse repulsion loop (desktop only — mobile uses stacked card carousel)
   useEffect(() => {
     if (heroVersion !== 'B' || !stageRef.current) return;
@@ -6588,6 +6706,15 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
                         {userHasTeam ? 'View Your Team' : 'Register Your Team'}
                       </button>
                     </div>
+                    {!userHasTeam ? (
+                      <button
+                        type="button"
+                        className="hero-join-team-link"
+                        onClick={handleHeroJoinTeamClick}
+                      >
+                        Or Join a Team
+                      </button>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -7104,6 +7231,31 @@ const THEME_DESC = {
   'SRE & Infrastructure': 'Reliability, observability, deployment pipelines, on-call tooling.',
 };
 
+const THEME_ICONS = {
+  'Business & Revenue': '📈',
+  'Customer Care': '🎧',
+  'Warehouse Ops': '📦',
+  'Generative AI': '🤖',
+  'SRE & Infrastructure': '⚙️',
+};
+
+const CURSOR_GENAI_MODELS = [
+  'GPT-4.1', 'o3',
+  'Claude Sonnet 4', 'Claude Opus 4',
+  'Gemini 2.5 Pro', 'Gemini 2.5 Flash',
+];
+
+const SKILL_OPTIONS = [
+  { skill: 'Frontend Development', icon: '🎨' },
+  { skill: 'Backend Development', icon: '⚙️' },
+  { skill: 'Full Stack', icon: '💻' },
+  { skill: 'Machine Learning', icon: '🤖' },
+  { skill: 'Data Modelling & Extraction', icon: '📊' },
+  { skill: 'Platform Engineering', icon: '☁️' },
+  { skill: 'Product Management', icon: '🎯' },
+  { skill: 'UX / Design', icon: '🖌️' },
+];
+
 function RegSteps({ step }) {
   const labels = ['Project Details', 'Squad Configuration', 'Review & Register'];
   return (
@@ -7251,7 +7403,7 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
     if (userTeam) {
       setForm({
         teamName:userTeam.name, theme:userTeam.theme, subTheme:userTeam.subTheme, abstract:userTeam.abstract, pickedIdeaId:userTeam.pickedIdeaId||'',
-        genaiModel:userTeam.genaiModel||'', otherAccess:userTeam.otherAccess||'', skillsNeeded:userTeam.skillsNeeded||[], rolesNeeded:userTeam.rolesNeeded||[],
+        genaiModel:userTeam.otherAccess ? '__other__' : (userTeam.genaiModel||''), otherAccess:userTeam.otherAccess||'', skillsNeeded:userTeam.skillsNeeded||[], rolesNeeded:userTeam.rolesNeeded||[],
         isOpen: userTeam.open !== false,
         members: userTeam.leadName
           ? [{ name: userTeam.leadName, email: user?.email||'', dept: userTeam.leadDept, role:'Team Lead' }]
@@ -7298,28 +7450,19 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
   };
   const v2 = () => {
     const e = {};
-    const memberCount = userTeam ? userTeam.members.length : form.members.length;
-    if (form.isOpen && form.skillsNeeded.length === 0) {
+    if (form.skillsNeeded.length === 0) {
       e.skills = 'Select at least one skillset you are seeking';
-    }
-    if (!form.isOpen && memberCount < TEAM_MIN_TO_CLOSE) {
-      e.status = `A team needs at least ${TEAM_MIN_TO_CLOSE} members to be Closed. Keep it Open to recruit more members.`;
     }
     setErr(e); return !Object.keys(e).length;
   };
   const submit = () => {
     if (!agree) { toast('Please agree to the participation terms.','error'); return; }
-    const isOpen = form.isOpen;
+    const isOpen = true;
     if (userTeam) {
-      // Membership is managed via join requests / removals — don't mutate it here.
-      const memberCount = userTeam.members.length;
-      if (!isOpen && memberCount < TEAM_MIN_TO_CLOSE) {
-        toast(`Need at least ${TEAM_MIN_TO_CLOSE} members to close this team.`,'error'); return;
-      }
       setTeams(p=>p.map(t => t.id === userTeam.id ? {
         ...t,
         name:form.teamName, theme:form.theme, subTheme:form.subTheme,
-        abstract:form.abstract, genaiModel:form.genaiModel, otherAccess:form.otherAccess,
+        abstract:form.abstract, genaiModel:form.genaiModel === '__other__' ? '' : form.genaiModel, otherAccess:form.otherAccess,
         pickedIdeaId:form.pickedIdeaId||null,
         maxSize: t.maxSize || TEAM_MAX_SIZE,
         open:isOpen, missing:isOpen?['recruiting']:[],
@@ -7331,7 +7474,7 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
     } else {
       setTeams(p=>[...p,{
         id:teamId, name:form.teamName, theme:form.theme, subTheme:form.subTheme,
-        abstract:form.abstract, genaiModel:form.genaiModel, otherAccess:form.otherAccess,
+        abstract:form.abstract, genaiModel:form.genaiModel === '__other__' ? '' : form.genaiModel, otherAccess:form.otherAccess,
         pickedIdeaId:form.pickedIdeaId||null,
         members:[user.id], maxSize:TEAM_MAX_SIZE,
         open:isOpen, missing:isOpen?['recruiting']:[],
@@ -7426,14 +7569,6 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
   );
 
   /* ── PHASE 2: TEAM BUILDING FORM ── */
-  const THEME_ICONS = {
-    'Generative AI': '🤖',
-    'Customer Care': '🎧',
-    'Business & Revenue': '📈',
-    'Warehouse Ops': '📦',
-    'SRE & Infrastructure': '⚙️'
-  };
-
   return (
     <div className="max-w-[900px] mx-auto space-y-6 pb-12 fade-up">
       {/* High-Fidelity Premium Page Intro */}
@@ -7441,11 +7576,30 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
         className="-mx-4"
         eyebrow="Myntra Tech Week 2026"
         title={userTeam ? <>Update your <em className="gradient-text">squad.</em></> : <>Register your <em className="gradient-text">squad.</em></>}
-        description={userTeam ? "Revise your project pitch, adjust GenAI tool requests, or update your squad's recruitment needs." : "Pitch your hackathon project, add teammates, or dynamically recruit talent from the live Partner Marketplace."}
+        description={userTeam ? "Revise your project pitch, adjust Gen AI model requests, or update your squad's marketplace listing." : "Pitch your hackathon project and list your team on the Team Marketplace — participants can browse your listing and request to join."}
         actions={
-          <div className="flex items-center gap-2 text-[11px] bg-[color:var(--paper-2)] border border-[color:var(--line-2)] rounded-full px-4.5 py-2 text-[color:var(--mute-1)] font-semibold shadow-sm" style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}>
-            <span className="w-2.5 h-2.5 rounded-full bg-[color:var(--accent)] animate-pulse"></span>
-            <span>Lead: <strong>{user.name}</strong> ({user.dept})</span>
+          <div className="flex flex-col items-center gap-2.5">
+            <div className="reg-lead-badge inline-flex items-center gap-3 rounded-[12px] border border-[color:var(--line-2)] px-3.5 py-2.5">
+              <div className="w-9 h-9 rounded-full bg-[color:var(--accent)]/12 border border-[color:var(--accent)]/25 flex items-center justify-center text-[11px] font-bold text-[color:var(--accent)] shrink-0">
+                {initials(user.name)}
+              </div>
+              <div className="text-left min-w-0">
+                <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-[color:var(--mute-3)]">Team lead</p>
+                <p className="text-[13px] font-semibold text-[color:var(--ink)] leading-tight truncate">
+                  {user.name}
+                  <span className="text-[color:var(--mute-2)] font-medium"> · {user.dept}</span>
+                </p>
+              </div>
+            </div>
+            {!userTeam && setView && (
+              <button
+                type="button"
+                onClick={() => { setView('teams'); window.scrollTo(0, 0); }}
+                className="text-[13px] font-semibold text-[color:var(--accent)] hover:text-[color:var(--accent-deep)] underline underline-offset-2 transition-colors"
+              >
+                Or join a team →
+              </button>
+            )}
           </div>
         }
       />
@@ -7479,18 +7633,28 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
 
               <div className="space-y-2">
                 <label className="block text-[12px] font-bold uppercase tracking-wider text-[color:var(--mute-1)]">Problem Theme <span className="text-[color:var(--accent)]">*</span></label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                <p className="text-[11px] text-[color:var(--mute-3)]">Choose the track that best fits your build.</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-0.5">
                   {THEMES.map(t => {
                     const selected = form.theme === t;
                     return (
-                      <div key={t} onClick={() => sf('theme', t)}
-                        className={`cursor-pointer rounded-[12px] p-4 border transition-all duration-300 relative group overflow-hidden ${selected ? 'border-[color:var(--accent)] bg-[color:var(--accent-tint)] shadow-[0_8px_20px_rgba(255,63,108,0.06)]' : 'border-[color:var(--line-2)] hover:border-[color:var(--mute-3)] bg-white hover:shadow-[0_4px_12px_rgba(10,10,10,0.02)]'}`}>
-                        <div>
-                          <p className={`text-[13.5px] font-bold ${selected ? 'text-[color:var(--accent-deep)]' : 'text-[color:var(--ink)]'}`}>{t}</p>
-                          <p className={`text-[11px] leading-relaxed mt-0.5 ${selected ? 'text-[color:var(--accent-deep)] opacity-85' : 'text-[color:var(--mute-2)]'}`}>{THEME_DESC[t]}</p>
-                        </div>
-                        {selected && <div className="absolute top-0 right-0 w-2 h-full bg-[color:var(--accent)]" />}
-                      </div>
+                      <button
+                        key={t}
+                        type="button"
+                        onClick={() => sf('theme', t)}
+                        className={`reg-theme-card text-left rounded-[12px] p-3.5 border transition-all duration-200 flex gap-3 items-start group ${selected ? 'reg-theme-card--selected border-[color:var(--accent)]' : 'border-[color:var(--line-2)] hover:border-[color:var(--mute-3)]'}`}
+                      >
+                        <span className={`w-9 h-9 rounded-[10px] flex items-center justify-center text-[17px] shrink-0 border ${selected ? 'bg-[color:var(--accent)]/15 border-[color:var(--accent)]/25' : 'bg-[color:var(--paper-3)] border-[color:var(--line-2)]'}`}>
+                          {THEME_ICONS[t] || '⚡'}
+                        </span>
+                        <span className="flex-1 min-w-0 pr-1">
+                          <span className="block text-[13px] font-bold text-[color:var(--ink)] leading-snug">{t}</span>
+                          <span className="block text-[11px] text-[color:var(--mute-2)] leading-relaxed mt-1">{THEME_DESC[t]}</span>
+                        </span>
+                        <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 mt-0.5 transition-all ${selected ? 'border-[color:var(--accent)] bg-[color:var(--accent)]' : 'border-[color:var(--line-3)] group-hover:border-[color:var(--mute-2)] bg-[color:var(--paper-3)]'}`}>
+                          {selected && <span className="text-white text-[10px] font-bold">✓</span>}
+                        </span>
+                      </button>
                     );
                   })}
                 </div>
@@ -7566,33 +7730,45 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
                 {err.abstract && <p className="text-[11px] text-red-500 mt-1">{err.abstract}</p>}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="block text-[12px] font-bold uppercase tracking-wider text-[color:var(--mute-1)]">GenAI Model Access Preferred <span className="text-[color:var(--mute-3)] font-normal normal-case">(optional)</span></label>
-                  <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none opacity-60">🤖</span>
-                    <select value={form.genaiModel} onChange={e=>sf('genaiModel',e.target.value)}
-                      className="w-full bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] focus:ring-4 focus:ring-[color:var(--accent-tint)] rounded-[12px] pl-11 pr-10 py-3.5 text-[14px] text-[color:var(--ink)] outline-none appearance-none transition-all duration-200">
-                      <option value="">Select a preferred GenAI model...</option>
-                      {['GPT-4o (OpenAI)','Claude 3.5 Sonnet (Anthropic)','Gemini 1.5 Pro (Google)','Llama 3 (Meta)','Mistral Large','Stable Diffusion (Image)','DALL·E 3 (Image)','Whisper (Speech-to-Text)','No preference'].map(m=>(
+              <div className="space-y-1.5">
+                <label className="block text-[12px] font-bold uppercase tracking-wider text-[color:var(--mute-1)]">Model & Tooling Access <span className="text-[color:var(--mute-3)] font-normal normal-case">(optional)</span></label>
+                <p className="text-[11px] text-[color:var(--mute-3)]">GPT, Claude, or Gemini via Cursor — or choose Other for additional tooling.</p>
+                <div className="flex flex-col md:flex-row gap-3">
+                  <div className="relative flex-1 min-w-0">
+                    <select
+                      value={
+                        form.genaiModel === '__other__' || (form.otherAccess && !CURSOR_GENAI_MODELS.includes(form.genaiModel))
+                          ? '__other__'
+                          : (form.genaiModel || '')
+                      }
+                      onChange={e => {
+                        const v = e.target.value;
+                        if (v === '__other__') {
+                          setForm(f => ({ ...f, genaiModel: '__other__' }));
+                        } else {
+                          setForm(f => ({ ...f, genaiModel: v, otherAccess: '' }));
+                        }
+                      }}
+                      className="w-full min-h-[46px] bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] focus:ring-4 focus:ring-[color:var(--accent-tint)] rounded-[12px] px-4 pr-10 py-3 text-[14px] text-[color:var(--ink)] outline-none appearance-none transition-all duration-200"
+                    >
+                      <option value="">No preference</option>
+                      {CURSOR_GENAI_MODELS.map(m => (
                         <option key={m} value={m}>{m}</option>
                       ))}
+                      <option value="__other__">Other tooling…</option>
                     </select>
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[color:var(--mute-2)] text-[12px]">▼</div>
                   </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="block text-[12px] font-bold uppercase tracking-wider text-[color:var(--mute-1)]">Other Tooling Required <span className="text-[color:var(--mute-3)] font-normal normal-case">(optional)</span></label>
-                  <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none opacity-60">🛠️</span>
-                    <input
-                      value={form.otherAccess}
-                      onChange={e=>sf('otherAccess',e.target.value)}
-                      placeholder="e.g. AWS credits, Figma Pro, GPU access..."
-                      className="w-full bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] focus:ring-4 focus:ring-[color:var(--accent-tint)] rounded-[12px] pl-11 pr-4 py-3.5 text-[14px] text-[color:var(--ink)] placeholder-[color:var(--mute-3)] outline-none transition-all duration-200"
-                    />
-                  </div>
+                  {form.genaiModel === '__other__' && (
+                    <div className="relative flex-1 min-w-0">
+                      <input
+                        value={form.otherAccess}
+                        onChange={e => sf('otherAccess', e.target.value)}
+                        placeholder="e.g. AWS credits, Figma Pro, GPU access…"
+                        className="w-full min-h-[46px] bg-white border border-[color:var(--line-2)] focus:border-[color:var(--accent)] focus:ring-4 focus:ring-[color:var(--accent-tint)] rounded-[12px] px-4 py-3 text-[14px] text-[color:var(--ink)] placeholder-[color:var(--mute-3)] outline-none transition-all duration-200"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -7612,7 +7788,7 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
             <div className="space-y-6 fade-up">
               <div>
                 <h3 className="text-[16px] font-bold text-[color:var(--ink)] mb-1">Squad Configuration</h3>
-                <p className="text-[12px] text-[color:var(--mute-2)]">Review your profile as the Lead and choose how you want to build the rest of your squad.</p>
+                <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">Review your profile as the Lead and choose the skillsets you need. Your team is listed on the Team Marketplace — participants can request to join and you approve or decline from your dashboard.</p>
               </div>
 
               {/* Lead Card */}
@@ -7633,65 +7809,53 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
                 </div>
               </div>
 
-              {/* Team Status Toggle: Open / Closed */}
-              <div className="space-y-3">
-                <label className="block text-[12px] font-bold uppercase tracking-wider text-[color:var(--mute-1)]">Team Status</label>
-                <div className="grid grid-cols-2 gap-3">
-                  <button type="button" onClick={()=>sf('isOpen', true)}
-                    className={`text-left p-4 rounded-[12px] border transition-all duration-200 ${form.isOpen ? 'border-[color:var(--accent)] bg-[color:var(--accent-tint)] shadow-sm' : 'border-[color:var(--line-2)] bg-white hover:border-[color:var(--mute-3)]'}`}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[15px]">🟢</span>
-                      <span className={`text-[13px] font-[900] ${form.isOpen ? 'text-[color:var(--accent-deep)]' : 'text-[color:var(--ink)]'}`}>Open</span>
+              <div className="reg-marketplace-callout rounded-[14px] border border-[color:var(--line-2)] bg-[color:var(--paper-2)] p-4 sm:p-5">
+                <div className="flex gap-3.5 sm:gap-4">
+                  <div className="w-10 h-10 rounded-[10px] bg-[color:var(--paper-3)] border border-[color:var(--line-2)] flex items-center justify-center text-[17px] shrink-0">🏪</div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13.5px] font-bold text-[color:var(--ink)] leading-snug">Listed on the Team Marketplace</p>
+                    <p className="mt-1.5 text-[12px] text-[color:var(--mute-2)] leading-relaxed">
+                      Your pitch goes live after registration. Participants send a <span className="text-[color:var(--ink)] font-semibold">join request</span> — you can approve or decline from the <span className="text-[color:var(--ink)] font-semibold">My Team</span> tab on the Teams page.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {['Publish', 'Requests', 'Approve'].map((step, i) => (
+                        <span key={step} className="reg-marketplace-step inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border border-[color:var(--line-2)] bg-[color:var(--paper-3)] text-[color:var(--mute-2)]">
+                          <span className="w-3.5 h-3.5 rounded-full bg-[color:var(--accent)]/15 text-[color:var(--accent)] border border-[color:var(--accent)]/25 text-[8px] font-black flex items-center justify-center">{i + 1}</span>
+                          {step}
+                        </span>
+                      ))}
                     </div>
-                    <p className="text-[11px] text-[color:var(--mute-2)] leading-snug">Listed on the marketplace. Others can request to join.</p>
-                  </button>
-                  <button type="button" onClick={()=>sf('isOpen', false)}
-                    className={`text-left p-4 rounded-[12px] border transition-all duration-200 ${!form.isOpen ? 'border-[color:var(--ink)] bg-[color:var(--paper-2)] shadow-sm' : 'border-[color:var(--line-2)] bg-white hover:border-[color:var(--mute-3)]'}`}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[15px]">🔒</span>
-                      <span className="text-[13px] font-[900] text-[color:var(--ink)]">Closed</span>
-                    </div>
-                    <p className="text-[11px] text-[color:var(--mute-2)] leading-snug">Locked roster. Requires at least {TEAM_MIN_TO_CLOSE} members.</p>
-                  </button>
+                  </div>
                 </div>
-                {err.status && <p className="text-[11px] text-red-500 mt-1 font-semibold">⚠️ {err.status}</p>}
-                <p className="text-[11px] text-[color:var(--mute-3)]">Teams can hold up to {TEAM_MAX_SIZE} members. New members join by requesting — there is no invite flow.</p>
               </div>
 
-              {/* Skillsets sought (only when Open) */}
-              {form.isOpen && (
-                <div className="space-y-2 fade-up">
-                  <label className="block text-[12px] font-bold uppercase tracking-wider text-[color:var(--mute-1)]">
-                    What skillsets are you looking for? <span className="text-[color:var(--accent)]">*</span>
-                  </label>
-                  <p className="text-[11px] text-[color:var(--mute-3)]">Select at least one skillset chip to publish your listing.</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
-                    {['Frontend Development', 'Backend Development', 'Full Stack', 'Machine Learning', 'Data Modelling & Extraction', 'Platform Engineering', 'Product Management', 'UX / Design'].map(skill => {
-                      const checked = form.skillsNeeded.includes(skill);
-                      const icons = {
-                        'Frontend Development': '🎨', 'Backend Development': '⚙️', 'Full Stack': '💻',
-                        'Machine Learning': '🤖', 'Data Modelling & Extraction': '📊',
-                        'Platform Engineering': '☁️', 'Product Management': '🎯', 'UX / Design': '🖌️'
-                      };
-                      return (
-                        <div key={skill}
-                          onClick={() => sf('skillsNeeded', checked ? form.skillsNeeded.filter(s => s !== skill) : [...form.skillsNeeded, skill])}
-                          className={`cursor-pointer rounded-[12px] p-3.5 border transition-all duration-200 flex items-center justify-between group ${checked ? 'border-[color:var(--accent)] bg-[color:var(--accent-tint)] shadow-sm' : 'border-[color:var(--line-2)] bg-white hover:border-[color:var(--mute-3)]'}`}
-                        >
-                          <div className="flex items-center gap-2.5">
-                            <span className="text-[16px]">{icons[skill] || '⚡'}</span>
-                            <span className={`text-[12.5px] font-semibold ${checked ? 'text-[color:var(--accent-deep)]' : 'text-[color:var(--mute-1)]'}`}>{skill}</span>
-                          </div>
-                          <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all ${checked ? 'border-[color:var(--accent)] bg-[color:var(--accent)] text-white' : 'border-[color:var(--line-3)] group-hover:border-[color:var(--mute-2)] bg-white'}`}>
-                            {checked && <span className="text-white text-[10px] font-bold">✓</span>}
-                          </div>
+              <div className="space-y-3 fade-up">
+                <label className="block text-[12px] font-bold uppercase tracking-wider text-[color:var(--mute-1)]">
+                  What skillsets are you looking for? <span className="text-[color:var(--accent)]">*</span>
+                </label>
+                <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">Select at least one skillset for your marketplace listing. Teammates use these tags to find teams that match their skills.</p>
+                <p className="text-[11px] text-[color:var(--mute-3)]">Teams can hold up to {TEAM_MAX_SIZE} members. New members join by requesting — there is no invite flow.</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
+                  {SKILL_OPTIONS.map(({ skill, icon }) => {
+                    const checked = form.skillsNeeded.includes(skill);
+                    return (
+                      <div key={skill}
+                        onClick={() => sf('skillsNeeded', checked ? form.skillsNeeded.filter(s => s !== skill) : [...form.skillsNeeded, skill])}
+                        className={`cursor-pointer rounded-[12px] p-3.5 border transition-all duration-200 flex items-center justify-between group ${checked ? 'border-[color:var(--accent)] bg-[color:var(--accent-tint)] shadow-sm' : 'border-[color:var(--line-2)] bg-white hover:border-[color:var(--mute-3)]'}`}
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <span className="text-[16px] shrink-0">{icon}</span>
+                          <span className={`text-[12.5px] font-semibold leading-snug ${checked ? 'text-[color:var(--accent-deep)]' : 'text-[color:var(--mute-1)]'}`}>{skill}</span>
                         </div>
-                      );
-                    })}
-                  </div>
-                  {err.skills && <p className="text-[11px] text-red-500 mt-2 font-semibold">⚠️ {err.skills}</p>}
+                        <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all shrink-0 ml-2 ${checked ? 'border-[color:var(--accent)] bg-[color:var(--accent)] text-white' : 'border-[color:var(--line-3)] group-hover:border-[color:var(--mute-2)] bg-white'}`}>
+                          {checked && <span className="text-white text-[10px] font-bold">✓</span>}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              )}
+                {err.skills && <p className="text-[11px] text-red-500 mt-2 font-semibold">⚠️ {err.skills}</p>}
+              </div>
 
               {/* Action buttons */}
               <div className="flex gap-4 pt-4 border-t border-[color:var(--line-2)] mt-6">
@@ -7731,8 +7895,8 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
                   {[
                     ['Problem Title', form.subTheme],
                     ['Abstract', form.abstract||'Not provided'],
-                    ['GenAI Model', form.genaiModel||'No preference'],
-                    ['Other Access', form.otherAccess||'None requested'],
+                    ['Gen AI Model', (form.genaiModel && form.genaiModel !== '__other__') ? form.genaiModel : 'No preference'],
+                    ['Other Tooling', form.otherAccess||'None requested'],
                     ...(form.skillsNeeded.length ? [['Skills Seeking', form.skillsNeeded.join(', ')]] : []),
                   ].map(([k,v])=>(
                     <div key={k} className="space-y-1">
@@ -7763,11 +7927,15 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
               </div>
 
               {/* Edit deadline notice */}
-              <div className="flex items-start gap-3 bg-[color:var(--accent-tint)] border border-[color:var(--accent-tint)] rounded-[12px] px-4.5 py-4">
-                <span className="text-[16px] flex-shrink-0">💡</span>
-                <p className="text-[12px] text-[color:var(--accent-deep)] leading-relaxed font-medium">
-                  You can edit your team name, sub-theme, and abstract until <strong>Jul 6, 2026</strong>. Members cannot be changed after submission.
-                </p>
+              <div className="reg-review-notice rounded-[12px] border border-[color:var(--line-2)] p-4 flex gap-3.5">
+                <div className="w-9 h-9 rounded-[10px] bg-[color:var(--paper-3)] border border-[color:var(--line-2)] flex items-center justify-center text-[15px] shrink-0">📅</div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[13px] font-semibold text-[color:var(--ink)] leading-snug">Editable until Jul 6, 2026</p>
+                  <p className="mt-1.5 text-[12px] text-[color:var(--mute-2)] leading-relaxed">
+                    You can update your team name, sub-theme, and abstract before that date.
+                    <span className="text-[color:var(--mute-1)]"> Squad members are locked once you submit.</span>
+                  </p>
+                </div>
               </div>
 
               {/* Agreement */}
@@ -7835,6 +8003,8 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
   const [showRules, setShowRules] = useState(false);
   const [teamsPanel, setTeamsPanel] = useState('browse');
   const [ideasPanel, setIdeasPanel] = useState('browse');
+  const [teamsFiltersOpen, setTeamsFiltersOpen] = useState(false);
+  const [ideasFiltersOpen, setIdeasFiltersOpen] = useState(false);
 
   useEffect(() => {
     if (tab === 'partners') setTeamsPanel('browse');
@@ -8004,6 +8174,9 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
       return matchQ && matchSkill && matchRole;
     });
 
+  const teamsActiveFilters = (searchQ ? 1 : 0) + (filter !== 'all' ? 1 : 0) + skillF.length + roleF.length;
+  const ideasActiveFilters = (searchQ ? 1 : 0) + (filter !== 'all' ? 1 : 0);
+
   return (
     <div className="mkt-page space-y-5">
       {(tab==='partners' || tab==='ideas') && (
@@ -8061,7 +8234,21 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
         <div className="mkt-page-layout fade-up mt-4">
           
           {/* Left Sidebar — browse filters only */}
-          {teamsPanel === 'browse' && <aside className="mkt-page-sidebar space-y-6">
+          {teamsPanel === 'browse' && <aside className="mkt-page-sidebar">
+            <button
+              type="button"
+              className={`mkt-filters-toggle btn ${teamsFiltersOpen ? 'mkt-filters-toggle--open' : ''}`}
+              onClick={() => setTeamsFiltersOpen(o => !o)}
+              aria-expanded={teamsFiltersOpen}
+            >
+              <span className="flex items-center gap-2">
+                Filters
+                {teamsActiveFilters > 0 && <span className="mkt-filters-toggle__badge">{teamsActiveFilters}</span>}
+              </span>
+              <span className="mkt-filters-toggle__chevron" aria-hidden="true">▼</span>
+            </button>
+
+            <div className={`mkt-filters-panel space-y-6 ${teamsFiltersOpen ? 'block' : 'hidden'} lg:block`}>
             <div>
               <p className="text-[11px] font-[900] uppercase tracking-[0.14em] text-[color:var(--mute-3)]">Browse Controls</p>
               <p className="text-[12px] text-[color:var(--mute-2)] mt-2 leading-relaxed">Filter by status, skill need, or team keywords.</p>
@@ -8157,6 +8344,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
                   <strong>Cross-domain required.</strong> Every team needs at least 1 Hacker + 1 Hustler. Teams with more than 2 members must span different departments.
                 </p>
               </div>
+            </div>
             </div>
           </aside>}
 
@@ -8675,7 +8863,21 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
         <div className="mkt-page-layout fade-up mt-4">
           
           {/* Left Sidebar — browse filters only */}
-          {ideasPanel === 'browse' && <aside className="mkt-page-sidebar space-y-6">
+          {ideasPanel === 'browse' && <aside className="mkt-page-sidebar">
+            <button
+              type="button"
+              className={`mkt-filters-toggle btn ${ideasFiltersOpen ? 'mkt-filters-toggle--open' : ''}`}
+              onClick={() => setIdeasFiltersOpen(o => !o)}
+              aria-expanded={ideasFiltersOpen}
+            >
+              <span className="flex items-center gap-2">
+                Filters
+                {ideasActiveFilters > 0 && <span className="mkt-filters-toggle__badge">{ideasActiveFilters}</span>}
+              </span>
+              <span className="mkt-filters-toggle__chevron" aria-hidden="true">▼</span>
+            </button>
+
+            <div className={`mkt-filters-panel space-y-6 ${ideasFiltersOpen ? 'block' : 'hidden'} lg:block`}>
             <div>
               <p className="text-[11px] font-[900] uppercase tracking-[0.14em] text-[color:var(--mute-3)]">Browse Controls</p>
               <p className="text-[12px] text-[color:var(--mute-2)] mt-2 leading-relaxed">{approvedIdeas.length} approved ideas. Filter by theme to scan faster.</p>
@@ -8717,6 +8919,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
               </div>
             )}
 
+            </div>
           </aside>}
 
           {/* Right Content */}

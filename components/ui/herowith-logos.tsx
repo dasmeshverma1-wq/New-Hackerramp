@@ -91,19 +91,11 @@ export function HeroWithLogos({
       <figure className="pointer-events-none absolute left-[4vw] top-[64px] z-20 hidden aspect-square w-[32vw] rounded-full bg-[#FF1FC0]/10 opacity-60 blur-[100px] md:block" />
       <figure className="pointer-events-none absolute bottom-[-50px] right-[7vw] z-20 hidden aspect-square w-[30vw] rounded-full bg-[#00E5FF]/10 opacity-50 blur-[100px] md:block" />
 
-      {/* Mobile — single centered stack above details card */}
+      {/* Mobile — single centered stack above details card (badge hidden; shown on md+) */}
       <div className="wit-hero-mobile relative z-10 flex min-h-[100dvh] flex-col items-center justify-center gap-5 px-5 pb-[11.5rem] pt-8 md:hidden">
         <div
-          {...revealProps(0, 'flex items-center gap-2 border border-white/10 bg-black/20 px-3 py-1.5 backdrop-blur-sm')}
-        >
-          <p className="font-mono text-[length:var(--wit-eyebrow,12px)] font-bold uppercase tracking-[0.16em] text-white/50">
-            {badge}
-          </p>
-        </div>
-
-        <div
           {...revealProps(
-            100,
+            0,
             'flex w-full max-w-[88vw] flex-col items-center gap-3 text-center',
           )}
         >

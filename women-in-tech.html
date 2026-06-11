@@ -284,8 +284,7 @@
         line-height: 1.55;
         color: rgba(255,255,255,0.62);
       }
-      #speakers.section-block--alt { padding-bottom: 36px; }
-      #luma-register-root { margin-top: -20px; }
+      #speakers.section-block--alt { padding-bottom: 56px; }
       #gradient-bars-footer-root section { min-height: 14rem; }
       .site-footer { padding: 28px 0 40px; }
     }
@@ -393,20 +392,14 @@
       }
     }
     #speakers.section-block--alt {
-      border-bottom: none;
       background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, #06050c 72%);
-      padding-bottom: 36px;
-    }
-    @media (min-width: 768px) {
-      #speakers.section-block--alt { padding-bottom: 72px; }
     }
     #luma-register-root {
       position: relative; z-index: 1;
-      margin-top: -20px;
       overflow: hidden;
     }
     @media (min-width: 768px) {
-      #luma-register-root { margin-top: -48px; }
+      #luma-register-root { margin-top: 0; }
     }
 
     .section-ui-shell {
@@ -729,6 +722,31 @@
     <div id="leadership-circle-scroll-root"></div>
   </section>
 
+  <section class="section-block section-block--alt speakers-bleed" id="speakers">
+    <div class="section-ui-shell">
+      <div class="speakers-head">
+        <div>
+          <p class="eyebrow wit-reveal" style="--wit-reveal-delay: 0ms">Lineup</p>
+          <h2 class="h-display section-title wit-reveal" style="--wit-reveal-delay: 80ms">
+            <span data-text-scramble="Speakers &amp; " data-scramble-delay="0"></span><span data-text-scramble="leaders." data-scramble-class="gradient-text" data-scramble-delay="280"></span>
+          </h2>
+          <p class="section-desc wit-reveal" style="--wit-reveal-delay: 160ms">Industry voices shaping the evening — apply for your invite; accepted guests get to meet them on campus.</p>
+        </div>
+        <div class="speaker-controls wit-reveal" style="--wit-reveal-delay: 200ms">
+          <button type="button" class="home-speaker-slider-btn" id="speaker-prev" aria-label="Previous speaker">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button" class="home-speaker-slider-btn" id="speaker-next" aria-label="Next speaker">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="home-speaker-slider" id="speaker-slider" role="list"></div>
+      <p class="speakers-benefit wit-reveal" style="--wit-reveal-delay: 120ms"><strong>If you're accepted,</strong> you'll join fireside chat, panel, and networking with the speakers and leaders featured here — in person at Myntra Campus.</p>
+      <p class="speakers-note wit-reveal" style="--wit-reveal-delay: 200ms">Full speaker lineup coming soon</p>
+    </div>
+  </section>
+
   <section class="section-block" id="agenda">
     <div class="section-ui-shell">
       <div class="section-head">
@@ -768,31 +786,6 @@
     </div>
   </section>
 
-  <section class="section-block section-block--alt speakers-bleed" id="speakers">
-    <div class="section-ui-shell">
-      <div class="speakers-head">
-        <div>
-          <p class="eyebrow wit-reveal" style="--wit-reveal-delay: 0ms">Lineup</p>
-          <h2 class="h-display section-title wit-reveal" style="--wit-reveal-delay: 80ms">
-            <span data-text-scramble="Speakers &amp; " data-scramble-delay="0"></span><span data-text-scramble="leaders." data-scramble-class="gradient-text" data-scramble-delay="280"></span>
-          </h2>
-          <p class="section-desc wit-reveal" style="--wit-reveal-delay: 160ms">Industry voices shaping the evening — apply for your invite; accepted guests get to meet them on campus.</p>
-        </div>
-        <div class="speaker-controls wit-reveal" style="--wit-reveal-delay: 200ms">
-          <button type="button" class="home-speaker-slider-btn" id="speaker-prev" aria-label="Previous speaker">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <button type="button" class="home-speaker-slider-btn" id="speaker-next" aria-label="Next speaker">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="home-speaker-slider" id="speaker-slider" role="list"></div>
-      <p class="speakers-benefit wit-reveal" style="--wit-reveal-delay: 120ms"><strong>If you're accepted,</strong> you'll join fireside chat, panel, and networking with the speakers and leaders featured here — in person at Myntra Campus.</p>
-      <p class="speakers-note wit-reveal" style="--wit-reveal-delay: 200ms">Full speaker lineup announcing soon</p>
-    </div>
-  </section>
-
   <div
     id="luma-register-root"
     class="wit-reveal"
@@ -819,7 +812,7 @@
     const WIT_SPEAKERS = Array.from({ length: 5 }, function(_, i) {
       return {
         id: 'WIT' + (i + 1),
-        name: 'Announced Soon',
+        name: 'Coming Soon',
         role: 'Speaker',
         org: 'Coming soon',
         g: ['#AE33FF', '#FF1FC0'],
@@ -848,7 +841,7 @@
               '<div class="home-speaker-card__tint" aria-hidden="true" style="background:linear-gradient(to top,' + sp.g[0] + (sp.tintAlpha || '99') + ' 0%,transparent 100%)"></div>' +
               '<div class="home-speaker-card__content">' +
                 '<p class="home-speaker-card__label">Coming soon</p>' +
-                '<h3 class="home-speaker-card__name">Announced Soon</h3>' +
+                '<h3 class="home-speaker-card__name">' + sp.name + '</h3>' +
                 '<div class="home-speaker-card__org-row">' +
                   logoBlock +
                   '<p class="home-speaker-card__role">Speaker · Coming soon</p>' +

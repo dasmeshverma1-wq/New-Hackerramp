@@ -1681,6 +1681,86 @@
     overflow-x: clip;
     box-sizing: border-box;
   }
+  @media (max-width: 767px) {
+    .page-intro--compact-mobile .page-intro__inner {
+      padding: 14px 16px;
+      gap: 10px;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .page-intro--compact-mobile .page-intro__title {
+      font-size: clamp(1.35rem, 5.8vw, 1.75rem) !important;
+      margin-top: 6px !important;
+      margin-bottom: 0 !important;
+      line-height: 1.12 !important;
+    }
+    .page-intro--compact-mobile .page-intro__desc { display: none; }
+    .page-intro--compact-mobile .page-intro__eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+    }
+    .page-intro--compact-mobile .page-intro__actions {
+      flex-shrink: 0;
+      align-self: flex-end;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .page-intro--compact-mobile .page-intro__actions button,
+    .page-intro--compact-mobile .page-intro__actions .btn {
+      padding: 8px 12px !important;
+      font-size: 11px !important;
+      white-space: nowrap;
+      width: max-content;
+    }
+    .enable-track-filters__scroll {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .enable-track-filters__scroll::-webkit-scrollbar { display: none; }
+    .enable-track-filters__chip {
+      flex: 0 0 auto;
+      min-width: 128px;
+      max-width: 148px;
+      padding: 10px 12px !important;
+      border-radius: 12px !important;
+    }
+    .enable-track-filters__chip .enable-track-label {
+      font-size: 12px !important;
+      line-height: 1.25 !important;
+      margin-bottom: 2px !important;
+      white-space: normal;
+    }
+    .enable-track-filters__chip .enable-track-count {
+      font-size: 10px !important;
+      letter-spacing: 0.06em;
+    }
+  }
+  @media (min-width: 640px) {
+    .enable-track-filters__scroll {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      overflow: visible;
+    }
+  }
+  @media (min-width: 768px) {
+    .enable-track-filters__scroll {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .enable-track-filters__chip {
+      min-width: 0;
+      max-width: none;
+      padding: 20px !important;
+      border-radius: 16px !important;
+    }
+  }
   .mkt-page-layout {
     display: flex;
     flex-direction: column;
@@ -4244,8 +4324,8 @@ const SESSIONS = [
   { id:'S001', title:'Sovereign AI and the future of Indian language models', track:'Gen AI',  status:'upcoming', date:'Jul 6', time:'TBA', speaker:'Pratyush Kumar', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/pratyush-kumar.jpeg' },
   { id:'S002', title:'Building resilient payments infrastructure at scale', track:'Product', status:'upcoming', date:'Jul 7', time:'TBA', speaker:'Nitesh Jain',    meetLink:'', cardType:'speaker', speakerImage:'images/speakers/nitesh-jain.jpeg' },
   { id:'S003', title:'Enterprise service management at global scale',         track:'Product', status:'upcoming', date:'Jul 8', time:'TBA', speaker:'Shamik Sharma',  meetLink:'', cardType:'speaker', speakerImage:'images/speakers/shamik-sharma.jpeg' },
-  { id:'S004', title:'Session details coming soon',                           track:'Product', status:'upcoming', date:'Jul 9', time:'TBA', speaker:'Announced soon', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/announced-soon-female.jpeg' },
-  { id:'S005', title:'Session details coming soon',                           track:'Gen AI',  status:'upcoming', date:'Jul 10', time:'TBA', speaker:'Announced soon', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/announced-soon-2.jpeg' },
+  { id:'S004', title:'Session details coming soon',                           track:'Product', status:'upcoming', date:'Jul 9', time:'TBA', speaker:'Coming Soon', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/announced-soon-female.jpeg' },
+  { id:'S005', title:'Session details coming soon',                           track:'Gen AI',  status:'upcoming', date:'Jul 10', time:'TBA', speaker:'Coming Soon', meetLink:'', cardType:'speaker', speakerImage:'images/speakers/announced-soon-2.jpeg' },
   { id:'S006', title:'Prompt Engineering Masterclass',                        track:'Gen AI',  status:'upcoming', date:'Jul 6',  time:'2:00 PM', speaker:'AI Guild', meetLink:'', cardType:'learn' },
   { id:'S007', title:'Zero-Trust Architecture Patterns',                      track:'InfoSec', status:'upcoming', date:'Jul 7',  time:'4:00 PM', speaker:'Security Guild', meetLink:'', cardType:'learn' },
   { id:'S008', title:'Dockins Deploy Workshop',                               track:'Dockins', status:'upcoming', date:'Jul 9',  time:'11:00 AM', speaker:'Platform Engineering', meetLink:'', cardType:'learn' },
@@ -4338,7 +4418,7 @@ const DEFAULT_SPEAKERS = [
   },
   {
     id:'SPK4',
-    name:'Announced soon',
+    name:'Coming Soon',
     role:'Industry leader',
     org:'Coming soon',
     topic:'Session details coming soon',
@@ -4355,7 +4435,7 @@ const DEFAULT_SPEAKERS = [
   },
   {
     id:'SPK5',
-    name:'Announced soon',
+    name:'Coming Soon',
     role:'Industry leader',
     org:'Coming soon',
     topic:'Session details coming soon',
@@ -5676,16 +5756,16 @@ function AnimatedSearchInput({ value, onChange, onClear, type = 'teams', placeho
   );
 }
 
-function PageIntro({ eyebrow, title, description, actions=null, dark=false, className='' }) {
+function PageIntro({ eyebrow, title, description, actions=null, dark=false, className='', compactOnMobile=false }) {
   return (
-    <div className={`${className} min-w-0 max-w-full ${dark?'bg-[color:var(--ink)] text-white':'bg-white text-[color:var(--ink)]'} rounded-[16px] overflow-hidden`}>
-      <div className="p-6 md:p-8 flex flex-col lg:flex-row lg:items-end justify-between gap-5 min-w-0">
+    <div className={`${className} min-w-0 max-w-full ${compactOnMobile ? 'page-intro--compact-mobile' : ''} ${dark?'bg-[color:var(--ink)] text-white':'bg-white text-[color:var(--ink)]'} rounded-[16px] overflow-hidden`}>
+      <div className="page-intro__inner p-6 md:p-8 flex flex-col lg:flex-row lg:items-end justify-between gap-5 min-w-0">
         <div className="max-w-3xl min-w-0">
-          <p className={`text-[11px] font-[900] uppercase tracking-[0.18em] ${dark?'text-[#f97316]':'text-[color:var(--accent)]'}`}>{eyebrow}</p>
-          <h1 className={`h-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl mt-5 mb-4 break-words ${dark?'text-white':'text-[color:var(--ink)]'}`}>{title}</h1>
-          {description && <p className={`text-[14px] leading-relaxed mt-4 ${dark?'text-[color:var(--mute-4)]':'text-[color:var(--mute-2)]'}`}>{description}</p>}
+          <p className={`page-intro__eyebrow text-[11px] font-[900] uppercase tracking-[0.18em] ${dark?'text-[#f97316]':'text-[color:var(--accent)]'}`}>{eyebrow}</p>
+          <h1 className={`page-intro__title h-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl mt-5 mb-4 break-words ${dark?'text-white':'text-[color:var(--ink)]'}`}>{title}</h1>
+          {description && <p className={`page-intro__desc text-[14px] leading-relaxed mt-4 ${dark?'text-[color:var(--mute-4)]':'text-[color:var(--mute-2)]'}`}>{description}</p>}
         </div>
-        {actions && <div className="flex flex-wrap gap-2 flex-shrink-0">{actions}</div>}
+        {actions && <div className="page-intro__actions flex flex-wrap gap-2 flex-shrink-0">{actions}</div>}
       </div>
     </div>
   );
@@ -8178,12 +8258,13 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
   const ideasActiveFilters = (searchQ ? 1 : 0) + (filter !== 'all' ? 1 : 0);
 
   return (
-    <div className="mkt-page space-y-5">
+    <div className="mkt-page space-y-3 md:space-y-5">
       {(tab==='partners' || tab==='ideas') && (
         <PageIntro
           className="w-full"
+          compactOnMobile
           eyebrow={tab==='partners' ? 'Team Marketplace' : 'Idea Bazaar'}
-          title={tab==='partners' ? <>Find your <em className="gradient-text">squad.</em></> : <>{publishedProblems.length} problem{publishedProblems.length!==1?'s':''}<br/>looking for <em className="gradient-text">solvers.</em></>}
+          title={tab==='partners' ? <>Find your <em className="gradient-text">squad.</em></> : <>{publishedProblems.length} problem{publishedProblems.length!==1?'s':''} looking for <em className="gradient-text">solvers.</em></>}
           description={tab==='partners'
             ? 'Browse registered teams, filter by skills, and send a clean join request when you find the right fit.'
             : 'Explore community-submitted ideas, upvote the strongest concepts, and submit your own for review.'}
@@ -8231,7 +8312,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
       {/* ── TAB 1: FIND A PARTNER ── */}
       {/* ── TAB 1: PARTNERS (merged) ── */}
       {tab==='partners' && (
-        <div className="mkt-page-layout fade-up mt-4">
+        <div className="mkt-page-layout fade-up mt-2 md:mt-4">
           
           {/* Left Sidebar — browse filters only */}
           {teamsPanel === 'browse' && <aside className="mkt-page-sidebar">
@@ -8860,7 +8941,7 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
 
       {/* ── TAB 4: IDEA BOARD ── */}
       {tab==='ideas' && (
-        <div className="mkt-page-layout fade-up mt-4">
+        <div className="mkt-page-layout fade-up mt-2 md:mt-4">
           
           {/* Left Sidebar — browse filters only */}
           {ideasPanel === 'browse' && <aside className="mkt-page-sidebar">
@@ -13649,27 +13730,30 @@ function EnablementView({ sessions = [], speakers = DEFAULT_SPEAKERS }) {
   };
 
   return (
-    <div className="space-y-6 fade-up">
+    <div className="space-y-3 md:space-y-6 fade-up">
       {/* Page Intro matching standard premium style */}
       <PageIntro
+        compactOnMobile
         eyebrow="Learn & Speakers"
-        title={<>Master the tech.<br/>Accelerate your <em className="gradient-text">build.</em></>}
+        title={<>Master the tech. Accelerate your <em className="gradient-text">build.</em></>}
         description="Level up your build. Access live sessions, workshop deep-dives, starter kits, and recorded resources curated for Tech Week 2026."
       />
 
       {/* ── BORDERLESS TRACK CARDS ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+      <div className="enable-track-filters -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="enable-track-filters__scroll">
         {Object.entries(TRACKS).map(([key,label])=>{
           const active=track===key; 
           const cnt=(sessions||[]).filter(s=>s.track===key).length;
           return (
             <button key={key} onClick={()=>setTrack(active?'all':key)}
-              className={`p-5 rounded-[16px] text-left btn transition-all duration-300 hover:-translate-y-0.5 ${active ? 'bg-[color:var(--accent)] text-white shadow-[0_8px_24px_rgba(255,63,108,0.30)]' : `${gc(Object.keys(TRACKS).indexOf(key))} hover:shadow-[0_12px_28px_rgba(0,0,0,0.30)]`}`}>
-              <p className={`text-[15px] font-[800] mb-1 ${active?'text-white':'text-[color:var(--ink)]'}`}>{label}</p>
-              <p className={`text-[11.5px] font-[700] uppercase tracking-wider ${active?'text-white/60':'text-[color:var(--mute-3)]'}`}>{cnt} sessions</p>
+              className={`enable-track-filters__chip p-5 rounded-[16px] text-left btn transition-all duration-300 hover:-translate-y-0.5 ${active ? 'bg-[color:var(--accent)] text-white shadow-[0_8px_24px_rgba(255,63,108,0.30)]' : `${gc(Object.keys(TRACKS).indexOf(key))} hover:shadow-[0_12px_28px_rgba(0,0,0,0.30)]`}`}>
+              <p className={`enable-track-label text-[15px] font-[800] mb-1 ${active?'text-white':'text-[color:var(--ink)]'}`}>{label}</p>
+              <p className={`enable-track-count text-[11.5px] font-[700] uppercase tracking-wider ${active?'text-white/60':'text-[color:var(--mute-3)]'}`}>{cnt} session{cnt!==1?'s':''}</p>
             </button>
           );
         })}
+        </div>
       </div>
 
       {/* ── SEARCH & FILTERS ROW (BORDERLESS) ── */}

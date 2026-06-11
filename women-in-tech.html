@@ -96,10 +96,10 @@
 
     /* ── Mini navbar (floating) ── */
     #wit-mini-nav-root {
-      position: fixed; top: 24px; left: 50%; z-index: 50;
+      position: fixed; top: 24px; left: 50%; z-index: 100;
       width: calc(100% - 2rem); max-width: 960px;
       transform: translateX(-50%);
-      pointer-events: none;
+      pointer-events: auto;
     }
     .wit-mini-nav {
       pointer-events: auto;
@@ -176,8 +176,9 @@
     .wit-mini-nav__apply--block { display: flex; width: 100%; }
     .wit-mini-nav__menu-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 32px; height: 32px; padding: 0; border: none; background: transparent;
-      color: rgba(255,255,255,0.75); cursor: pointer;
+      width: 44px; height: 44px; margin: -6px -6px -6px 0; padding: 0; border: none;
+      background: transparent; color: rgba(255,255,255,0.75); cursor: pointer;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
     }
     @media (min-width: 900px) { .wit-mini-nav__menu-btn { display: none; } }
     .wit-mini-nav__mobile {
@@ -185,8 +186,12 @@
       max-height: 0; opacity: 0; overflow: hidden; pointer-events: none;
       transition: max-height 300ms ease-in-out, opacity 300ms ease-in-out, padding 300ms ease-in-out;
     }
+    .wit-mini-nav--open {
+      overflow: visible;
+    }
     .wit-mini-nav__mobile--open {
       max-height: 480px; opacity: 1; padding-top: 16px; pointer-events: auto;
+      overflow: visible;
     }
     @media (min-width: 900px) { .wit-mini-nav__mobile { display: none !important; } }
     .wit-mini-nav__mobile-nav {
@@ -330,7 +335,36 @@
       border-radius: 10px;
       border: 1px solid rgba(255,255,255,0.1);
       background: rgba(255,255,255,0.05);
-      font-size: 17px; line-height: 1;
+      color: rgba(255,255,255,0.78);
+    }
+    .detail-item__icon svg {
+      width: 18px; height: 18px;
+      stroke: currentColor; fill: none;
+      stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    .detail-item__icon--calendar {
+      padding: 0; overflow: hidden;
+      background: rgba(255,255,255,0.04);
+    }
+    .wit-cal-icon {
+      display: flex; flex-direction: column;
+      width: 100%; height: 100%;
+      text-align: center;
+      font-family: 'Inter Tight', system-ui, sans-serif;
+    }
+    .wit-cal-icon__month {
+      background: rgba(255,255,255,0.1);
+      font-size: 7.5px; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      padding: 4px 0 3px; line-height: 1;
+    }
+    .wit-cal-icon__day {
+      flex: 1; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      color: rgba(255,255,255,0.92); line-height: 1;
     }
     .detail-item__body { min-width: 0; }
     .detail-item__label {
@@ -426,7 +460,7 @@
     .agenda-row:last-child { border-bottom: none; }
     @media (min-width: 640px) {
       .agenda-row {
-        grid-template-columns: 200px 180px 1fr;
+        grid-template-columns: 120px 220px 1fr;
         gap: 20px; align-items: start; padding: 20px 28px;
       }
     }
@@ -455,15 +489,27 @@
       .speakers-head { flex-direction: row; align-items: flex-end; justify-content: space-between; }
     }
     .speaker-controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .home-speaker-slider-wrap {
+      overflow: hidden;
+      width: 100%;
+      padding-top: 6px;
+      margin-top: -6px;
+    }
     .home-speaker-slider {
-      display: flex; gap: 20px; overflow-x: auto; overflow-y: visible;
+      display: flex; gap: 20px; align-items: flex-start;
+      overflow-x: auto; overflow-y: hidden;
       scroll-snap-type: x mandatory; scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
-      padding-top: 8px; padding-bottom: 14px;
+      overscroll-behavior-x: contain;
+      overscroll-behavior-y: auto;
+      padding-bottom: 14px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
-    .home-speaker-slider::-webkit-scrollbar { height: 0; }
+    .home-speaker-slider::-webkit-scrollbar { display: none; }
     .home-speaker-card-slot {
-      flex: 0 0 min(72vw, 260px); scroll-snap-align: start; min-height: 0; height: auto;
+      flex: 0 0 min(72vw, 260px); scroll-snap-align: start;
+      min-height: 0; height: auto; max-height: none;
     }
     @media (min-width: 640px) { .home-speaker-card-slot { flex-basis: 280px; } }
     @media (min-width: 1024px) { .home-speaker-card-slot { flex-basis: 300px; } }
@@ -542,16 +588,6 @@
       margin-top: 16px; font-size: var(--wit-caption); color: var(--mute-2);
       font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em;
     }
-    .speakers-benefit {
-      margin-top: 20px; padding: 16px 18px;
-      border: 1px solid rgba(174, 51, 255, 0.28);
-      border-radius: 12px;
-      background: rgba(174, 51, 255, 0.08);
-      font-size: var(--wit-body-sm); line-height: 1.6; color: rgba(255, 255, 255, 0.78);
-      max-width: 640px;
-    }
-    .speakers-benefit strong { color: #fff; font-weight: 700; }
-
     /* ── Luma register (gradient bars) ── */
     #luma-register-root .luma-tab__title {
       text-shadow: 0 4px 32px rgba(0,0,0,0.55);
@@ -617,10 +653,21 @@
       font-size: var(--wit-mono); color: rgba(255,255,255,0.28);
       font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase;
     }
-    /* React mounts — match shared typography */
+    /* React mounts — leadership circle copy (smaller to avoid portrait overlap) */
+    #leadership-circle-scroll-root {
+      --lc-title: clamp(1.5rem, 4.5vw, 2.125rem);
+      --lc-body: clamp(0.8125rem, 2.4vw, 0.9375rem);
+    }
     #leadership-circle-scroll-root .lc-eyebrow { font-size: var(--wit-eyebrow); }
-    #leadership-circle-scroll-root .lc-section-title { font-size: var(--wit-title); }
-    #leadership-circle-scroll-root .lc-section-body { font-size: var(--wit-body); }
+    #leadership-circle-scroll-root .lc-section-title {
+      font-size: var(--lc-title);
+      line-height: 1.14;
+    }
+    #leadership-circle-scroll-root .lc-section-body {
+      font-size: var(--lc-body);
+      line-height: 1.45;
+      margin-top: 0.625rem;
+    }
 
     /* ── Shiny button (hero + header + register CTAs) ── */
     .shiny-button {
@@ -686,28 +733,39 @@
     <div class="section-ui-shell">
       <div class="details-card">
         <article class="detail-item wit-reveal" style="--wit-reveal-delay: 0ms">
-          <div class="detail-item__icon" aria-hidden="true">📅</div>
+          <div class="detail-item__icon detail-item__icon--calendar" aria-hidden="true">
+            <div class="wit-cal-icon">
+              <span class="wit-cal-icon__month">Jul</span>
+              <span class="wit-cal-icon__day">17</span>
+            </div>
+          </div>
           <div class="detail-item__body">
             <span class="detail-item__label">Date</span>
             <span class="detail-item__value">Friday, July 17</span>
           </div>
         </article>
         <article class="detail-item wit-reveal" style="--wit-reveal-delay: 80ms">
-          <div class="detail-item__icon" aria-hidden="true">🕒</div>
+          <div class="detail-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </div>
           <div class="detail-item__body">
             <span class="detail-item__label">Time</span>
             <span class="detail-item__value">4:00 PM – 7:00 PM</span>
           </div>
         </article>
         <article class="detail-item wit-reveal" style="--wit-reveal-delay: 160ms">
-          <div class="detail-item__icon" aria-hidden="true">📍</div>
+          <div class="detail-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          </div>
           <div class="detail-item__body">
             <span class="detail-item__label">Location</span>
             <span class="detail-item__value">Myntra Campus</span>
           </div>
         </article>
         <article class="detail-item wit-reveal" style="--wit-reveal-delay: 240ms">
-          <div class="detail-item__icon" aria-hidden="true">👥</div>
+          <div class="detail-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 19v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1"/><circle cx="10" cy="8" r="3"/><path d="M22 19v-1a3 3 0 0 0-2-2.83"/><path d="M17 4.5a3 3 0 0 1 0 5.66"/></svg>
+          </div>
           <div class="detail-item__body">
             <span class="detail-item__label">Capacity</span>
             <span class="detail-item__value">Limited to 100 seats</span>
@@ -741,9 +799,10 @@
           </button>
         </div>
       </div>
-      <div class="home-speaker-slider" id="speaker-slider" role="list"></div>
-      <p class="speakers-benefit wit-reveal" style="--wit-reveal-delay: 120ms"><strong>If you're accepted,</strong> you'll join fireside chat, panel, and networking with the speakers and leaders featured here — in person at Myntra Campus.</p>
-      <p class="speakers-note wit-reveal" style="--wit-reveal-delay: 200ms">Full speaker lineup coming soon</p>
+      <div class="home-speaker-slider-wrap">
+        <div class="home-speaker-slider" id="speaker-slider" role="list"></div>
+      </div>
+      <p class="speakers-note wit-reveal" style="--wit-reveal-delay: 120ms">More speakers to be announced soon</p>
     </div>
   </section>
 
@@ -758,29 +817,34 @@
       </div>
       <div class="agenda-timeline" role="table" aria-label="Event agenda">
         <div class="agenda-row wit-reveal" role="row" style="--wit-reveal-delay: 0ms">
-          <div class="agenda-row-time" role="cell">4:00 PM – 4:45 PM</div>
-          <div class="agenda-row-session" role="cell">Welcome &amp; Networking</div>
-          <div class="agenda-row-desc" role="cell">Connect with fellow tech leaders over refreshments.</div>
+          <div class="agenda-row-time" role="cell">4:30 PM</div>
+          <div class="agenda-row-session" role="cell">Arrival</div>
+          <div class="agenda-row-desc" role="cell">The Decompression: Guest registration, introduction and welcome note by Pramod Adiddam, tea/coffee, snacks.</div>
         </div>
         <div class="agenda-row wit-reveal" role="row" style="--wit-reveal-delay: 70ms">
-          <div class="agenda-row-time" role="cell">4:45 PM – 5:00 PM</div>
-          <div class="agenda-row-session" role="cell">Opening Remarks</div>
-          <div class="agenda-row-desc" role="cell">Setting the vision for the Leadership Circle.</div>
+          <div class="agenda-row-time" role="cell">5:00 PM</div>
+          <div class="agenda-row-session" role="cell">Session 1: The Tech Frontiers</div>
+          <div class="agenda-row-desc" role="cell">Vindhya, Sr. Dir Engineering at Myntra + External Tech Titan. Focus: Managing multi-billion dollar marketplace architectures, GenAI infrastructure in fashion tech, and engineering velocity.</div>
         </div>
         <div class="agenda-row wit-reveal" role="row" style="--wit-reveal-delay: 140ms">
-          <div class="agenda-row-time" role="cell">5:00 PM – 5:45 PM</div>
-          <div class="agenda-row-session" role="cell">Fireside Chat</div>
-          <div class="agenda-row-desc" role="cell">An intimate conversation with Sharon.</div>
+          <div class="agenda-row-time" role="cell">5:30 PM</div>
+          <div class="agenda-row-session" role="cell">Q&amp;A</div>
+          <div class="agenda-row-desc" role="cell">Q&amp;A session.</div>
         </div>
         <div class="agenda-row wit-reveal" role="row" style="--wit-reveal-delay: 210ms">
-          <div class="agenda-row-time" role="cell">5:45 PM – 6:45 PM</div>
-          <div class="agenda-row-session" role="cell">Panel Discussion</div>
-          <div class="agenda-row-desc" role="cell">Deep dive into industry trends and tech leadership strategies.</div>
+          <div class="agenda-row-time" role="cell">6:00 PM</div>
+          <div class="agenda-row-session" role="cell">Fireside Chat</div>
+          <div class="agenda-row-desc" role="cell">Sharon Pais, Head at Myntra + External Diversity/Industry Leader. Focus: The &ldquo;Beyond the Algorithm&rdquo; narrative. Navigating high-stakes organizational pivots, intuitive leadership, and building elite diverse tech ecosystems.</div>
         </div>
         <div class="agenda-row wit-reveal" role="row" style="--wit-reveal-delay: 280ms">
-          <div class="agenda-row-time" role="cell">6:45 PM – 7:00 PM</div>
-          <div class="agenda-row-session" role="cell">Closing &amp; Next Steps</div>
-          <div class="agenda-row-desc" role="cell">Final thoughts and community takeaways.</div>
+          <div class="agenda-row-time" role="cell">6:30 PM</div>
+          <div class="agenda-row-session" role="cell">Tech Booths Visit</div>
+          <div class="agenda-row-desc" role="cell">The Marketplace Experience: opening access to engineering showcases, interactive booths.</div>
+        </div>
+        <div class="agenda-row wit-reveal" role="row" style="--wit-reveal-delay: 350ms">
+          <div class="agenda-row-time" role="cell">7:30 PM</div>
+          <div class="agenda-row-session" role="cell">Event Concludes</div>
+          <div class="agenda-row-desc" role="cell">Networking over high tea, present goodies to participants.</div>
         </div>
       </div>
     </div>
@@ -805,22 +869,35 @@
       ? 'https://luma.com/embed/event/' + LUMA_EVENT_ID + '/simple'
       : '';
 
-    const WIT_SPEAKER_IMAGES = [
-      'images/speakers/announced-soon-female.jpeg',
-      'images/speakers/announced-soon-female-2.jpeg',
-    ];
-    const WIT_SPEAKERS = Array.from({ length: 5 }, function(_, i) {
-      return {
-        id: 'WIT' + (i + 1),
-        name: 'Coming Soon',
-        role: 'Speaker',
-        org: 'Coming soon',
+    const WIT_SPEAKERS = [
+      {
+        id: 'WIT1',
+        name: 'Sharon Pais',
+        role: 'Head',
+        org: 'Myntra',
+        g: ['#FF1FC0', '#AE33FF'],
+        image: 'images/speakers/announced-soon-female-2.jpeg',
+        imagePosition: '50% 12%',
+      },
+      {
+        id: 'WIT2',
+        name: 'Vindhya',
+        role: 'Sr. Dir Engineering',
+        org: 'Myntra',
         g: ['#AE33FF', '#FF1FC0'],
-        image: WIT_SPEAKER_IMAGES[i % WIT_SPEAKER_IMAGES.length],
-        imagePosition: i % 2 === 0 ? '50% 18%' : '50% 12%',
-        tbd: true,
-      };
-    });
+        image: 'images/speakers/announced-soon-female.jpeg',
+        imagePosition: '50% 18%',
+      },
+      {
+        id: 'WIT3',
+        name: 'Pramod Adiddam',
+        role: 'Executive Leader · CTO',
+        org: 'Myntra',
+        g: ['#4A2FD4', '#00E5FF'],
+        image: 'images/On_this_man_standing_straight_202606081703 (1).jpeg',
+        imagePosition: '50% 8%',
+      },
+    ];
 
     function renderSpeakers() {
       const slider = document.getElementById('speaker-slider');
@@ -840,11 +917,11 @@
               '<div class="home-speaker-card__scrim" aria-hidden="true"></div>' +
               '<div class="home-speaker-card__tint" aria-hidden="true" style="background:linear-gradient(to top,' + sp.g[0] + (sp.tintAlpha || '99') + ' 0%,transparent 100%)"></div>' +
               '<div class="home-speaker-card__content">' +
-                '<p class="home-speaker-card__label">Coming soon</p>' +
+                '<p class="home-speaker-card__label">' + (sp.tbd ? 'Coming soon' : 'Speaker') + '</p>' +
                 '<h3 class="home-speaker-card__name">' + sp.name + '</h3>' +
                 '<div class="home-speaker-card__org-row">' +
                   logoBlock +
-                  '<p class="home-speaker-card__role">Speaker · Coming soon</p>' +
+                  '<p class="home-speaker-card__role">' + (sp.tbd ? 'Speaker · Coming soon' : sp.role + ' · ' + sp.org) + '</p>' +
                 '</div>' +
               '</div>' +
             '</div>' +

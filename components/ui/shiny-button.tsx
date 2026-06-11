@@ -22,7 +22,7 @@ const shinyStyles = cn(
 
 export default function ShinyButton({
   className,
-  children = 'Apply',
+  children = 'Register to Apply',
   href,
   target,
   rel,

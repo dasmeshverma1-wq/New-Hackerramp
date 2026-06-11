@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { revealProps } from './reveal-props';
 import ShinyButton from './shiny-button';
 
 export type MiniNavLink = {
@@ -39,7 +38,7 @@ export function MiniNavbar({
     { label: 'Register', href: '#luma-register' },
   ],
   applyHref = '#',
-  applyLabel = 'Apply',
+  applyLabel = 'Register to Apply',
   applyId = 'nav-register-btn',
 }: MiniNavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,7 +62,7 @@ export function MiniNavbar({
   }, [isOpen]);
 
   return (
-    <header {...revealProps(0, `wit-mini-nav wit-reveal--from-top ${headerShapeClass}`)}>
+    <header className={`wit-mini-nav ${headerShapeClass}`}>
       <div className="wit-mini-nav__row">
         <a href="#" className="wit-mini-nav__brand" aria-label="Women in Tech home">
           <img src={logoSrc} alt={logoAlt} className="wit-mini-nav__logo" />

@@ -103,6 +103,37 @@ function smoothstep(edge0: number, edge1: number, value: number): number {
   return t * t * (3 - 2 * t);
 }
 
+const RING_REVEAL_STAGGER = 0.14;
+
+function ringPeak(progress: number, index: number) {
+  const start = index * RING_REVEAL_STAGGER;
+  const end = start + RING_REVEAL_STAGGER * 0.88;
+  const t = smoothstep(start, end, progress);
+  const pop = clamp01(easeOutBack(t));
+  return {
+    opacity: t,
+    scale: 0.9 + pop * 0.1,
+  };
+}
+
+type ScrollHintProps = {
+  visible: boolean;
+  className?: string;
+};
+
+function ScrollHint({ visible, className = '' }: ScrollHintProps) {
+  return (
+    <p
+      className={`lc-scroll-hint font-mono text-[length:var(--wit-caption,0.875rem)] font-bold uppercase tracking-[0.2em] text-white/70 transition-opacity duration-500 ${className} ${
+        visible ? 'opacity-100' : 'opacity-0'
+      }`}
+      aria-hidden={!visible}
+    >
+      Scroll more
+    </p>
+  );
+}
+
 function getReleaseRatio() {
   if (typeof window === 'undefined') return 0.55;
   return window.innerWidth < 640 ? 0.45 : 0.55;
@@ -175,7 +206,7 @@ type CenterCopyProps = {
 function CenterCopy({ title, titleAccent, tagline, opacity, className = '' }: CenterCopyProps) {
   return (
     <div className={className} style={{ opacity }}>
-      <h2 className="lc-section-title text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--wit-title,2.5rem)] font-medium leading-[1.08] tracking-[-0.03em] text-white">
+      <h2 className="lc-section-title text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--lc-title,var(--wit-title,2.5rem))] font-medium leading-[1.08] tracking-[-0.03em] text-white">
         {titleAccent ? (
           <>
             {title}{' '}
@@ -188,7 +219,7 @@ function CenterCopy({ title, titleAccent, tagline, opacity, className = '' }: Ce
         )}
       </h2>
       {tagline ? (
-        <p className="lc-section-body mt-4 text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--wit-body,1.125rem)] font-normal leading-snug tracking-[-0.01em] text-white/55 sm:mt-4">
+        <p className="lc-section-body mt-3 text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--lc-body,var(--wit-body,1.125rem))] font-normal leading-snug tracking-[-0.01em] text-white/55 sm:mt-3">
           {tagline}
         </p>
       ) : null}
@@ -460,32 +491,32 @@ export function LeadershipCircleScroll({
     (stickyProgress - timeline.circleRevealStart) /
       (timeline.speakerExpandEnd - timeline.circleRevealStart),
   );
-  const ringHandoff = smoothstep(timeline.logoFadeStart, timeline.logoFadeEnd, stickyProgress);
-
   const stickyEase = easeInOutCubic(circleProgress);
   const releaseEase = easeOutCubic(releaseProgress);
   const portraitRingTopPct = (1 - stickyEase) * 50;
 
   const extraRingPop = smoothstep(EXTRA_RING_REVEAL_START, EXTRA_RING_REVEAL_END, stickyEase);
 
-  const outerRingOpacity = Math.max(
-    ringHandoff * 0.55,
-    smoothstep(0, 0.1, circleProgress),
-  );
-  const innerRingOpacity = Math.max(
-    ringHandoff * 0.65,
-    smoothstep(0, 0.08, circleProgress),
-  );
+  const outerRingPeak = ringPeak(circleProgress, 0);
+  const innerRingPeak = ringPeak(circleProgress, 1);
+  const gradientRingPeak = ringPeak(circleProgress, 2);
+  const coreRingPeak = ringPeak(circleProgress, 3);
+
   const centerCopyOpacity = smoothstep(0.28, 0.52, circleProgress);
   const portraitScale = 1 - releaseEase * 0.06;
   const portraitOpacity = smoothstep(0.02, 0.14, circleProgress);
   const portraitUnblur = smoothstep(0.28, 0.92, circleProgress);
   const portraitBlurPx = (1 - portraitUnblur) * 20;
-  const scrollHintVisible =
-    showScrollHint &&
-    sectionPinned &&
-    stickyProgress < timeline.logoFadeStart &&
-    logoOpacity > 0.72;
+
+  const scrollIdleReady = showScrollHint && sectionPinned && releaseProgress < 0.22;
+  const introScrollHintVisible =
+    scrollIdleReady && stickyProgress < timeline.logoFadeEnd && logoOpacity > 0.12;
+  const postIntroScrollHintVisible =
+    scrollIdleReady &&
+    stickyProgress >= timeline.introSeatsEnd &&
+    stickyProgress < timeline.speakerExpandEnd - 0.04 &&
+    !introScrollHintVisible &&
+    logoOpacity <= 0.12;
 
   const speakerSizeClassName =
     'w-[38%] min-w-[108px] max-w-[168px] sm:w-[28%] sm:min-w-[84px] sm:max-w-[132px] lg:min-w-[100px] lg:max-w-[156px] lg:w-[32%] xl:max-w-[168px] xl:w-[33%]';
@@ -558,14 +589,7 @@ export function LeadershipCircleScroll({
                 loading="eager"
               />
             )}
-            <p
-              className={`lc-scroll-hint mt-6 font-mono text-[length:var(--wit-caption,0.875rem)] font-bold uppercase tracking-[0.2em] text-white/70 transition-opacity duration-500 ${
-                scrollHintVisible ? 'opacity-100' : 'opacity-0'
-              }`}
-              aria-hidden={!scrollHintVisible}
-            >
-              Scroll more
-            </p>
+            <ScrollHint visible={introScrollHintVisible} className="mt-6" />
           </div>
 
           <div className="relative mx-auto flex w-full max-w-full flex-col items-center justify-center max-sm:min-h-[calc(100svh-4.5rem)] max-sm:gap-4 sm:max-w-[min(100%,78svh)]">
@@ -592,19 +616,20 @@ export function LeadershipCircleScroll({
                 loading="eager"
               />
             )}
-            <p
-              className={`lc-scroll-hint mt-5 font-mono text-[length:var(--wit-caption,0.875rem)] font-bold uppercase tracking-[0.2em] text-white/70 transition-opacity duration-500 sm:mt-6 ${
-                scrollHintVisible ? 'opacity-100' : 'opacity-0'
-              }`}
-              aria-hidden={!scrollHintVisible}
-            >
-              Scroll more
-            </p>
+            <ScrollHint visible={introScrollHintVisible} className="mt-5 sm:mt-6" />
           </div>
 
+          <ScrollHint
+            visible={postIntroScrollHintVisible}
+            className="pointer-events-none absolute bottom-2 left-1/2 z-40 -translate-x-1/2 sm:bottom-4"
+          />
+
           <div
-            className="absolute inset-0 flex items-center justify-center rounded-full border-2"
-            style={{ borderColor: `rgba(255,255,255,${outerRingOpacity * 0.12})` }}
+            className="absolute inset-0 flex items-center justify-center rounded-full border-2 transition-[border-color,transform] duration-300"
+            style={{
+              borderColor: `rgba(255,255,255,${outerRingPeak.opacity * 0.12})`,
+              transform: `scale(${outerRingPeak.scale})`,
+            }}
           >
             {hasOuterRing ? (
               <div className="pointer-events-none absolute -inset-[2px] z-[6]">
@@ -622,8 +647,11 @@ export function LeadershipCircleScroll({
             ) : null}
 
             <div
-              className="relative flex h-[83%] w-[83%] items-center justify-center rounded-full border-2"
-              style={{ borderColor: `rgba(123,92,255,${innerRingOpacity * 0.35})` }}
+              className="relative flex h-[83%] w-[83%] items-center justify-center rounded-full border-2 transition-[border-color,transform] duration-300"
+              style={{
+                borderColor: `rgba(123,92,255,${innerRingPeak.opacity * 0.35})`,
+                transform: `scale(${innerRingPeak.scale})`,
+              }}
             >
               {hasMiddleRing ? (
                 <div className="pointer-events-none absolute -inset-[2px] z-[6]">
@@ -640,15 +668,18 @@ export function LeadershipCircleScroll({
                 </div>
               ) : null}
 
-              <div className="relative flex h-[80%] w-[80%] items-center justify-center">
-                <GradientRingStroke opacity={innerRingOpacity} />
+              <div
+                className="relative flex h-[80%] w-[80%] items-center justify-center transition-transform duration-300"
+                style={{ transform: `scale(${coreRingPeak.scale})` }}
+              >
+                <GradientRingStroke opacity={gradientRingPeak.opacity} />
 
                 <CenterCopy
                   title={title}
                   titleAccent={titleAccent}
                   tagline={tagline}
                   opacity={centerCopyOpacity}
-                  className="pointer-events-none absolute left-1/2 top-1/2 z-0 hidden w-[min(92%,22rem)] -translate-x-1/2 -translate-y-1/2 px-3 md:block"
+                  className="pointer-events-none absolute left-1/2 top-1/2 z-0 hidden w-[min(86%,19.5rem)] -translate-x-1/2 -translate-y-[calc(50%-0.625rem)] px-3 md:block"
                 />
 
                 <div className="pointer-events-none absolute -inset-[2px] z-10 overflow-visible">

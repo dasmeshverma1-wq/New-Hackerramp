@@ -1,9 +1,19 @@
 import { createRoot } from 'react-dom/client';
 import { LeadershipCircleScroll, type ScrollProfile } from './scrolling-animation';
 
-const WIT_SPEAKER_IMAGES = [
-  'images/speakers/announced-soon-female.jpeg',
-  'images/speakers/announced-soon-female-2.jpeg',
+const WIT_SPEAKER_PROFILES: ScrollProfile[] = [
+  {
+    name: 'Sharon Pais',
+    image: 'images/speakers/announced-soon-female-2.jpeg',
+  },
+  {
+    name: 'Vindhya',
+    image: 'images/speakers/announced-soon-female.jpeg',
+  },
+  {
+    name: 'Pramod Adiddam',
+    image: 'images/On_this_man_standing_straight_202606081703 (1).jpeg',
+  },
 ];
 
 const STOCK_PEOPLE_IMAGES = [
@@ -42,10 +52,7 @@ function buildRingProfiles(
   }));
 }
 
-const speakerProfiles: ScrollProfile[] = Array.from({ length: 6 }, (_, index) => ({
-  name: `Speaker ${index + 1}`,
-  image: WIT_SPEAKER_IMAGES[index % WIT_SPEAKER_IMAGES.length],
-}));
+const speakerProfiles: ScrollProfile[] = WIT_SPEAKER_PROFILES;
 
 const middleRingProfiles = buildRingProfiles(7, 0, 42017, 'Guest');
 const outerRingProfiles = buildRingProfiles(8, 3, 91033, 'Attendee');

@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState, type ComponentPropsWithoutRef } from 'react';
 import { GradientBarsBackground } from './gradient-bars-background';
 import { revealProps } from './reveal-props';
 import ShinyButton from './shiny-button';
+import { TextScramble } from './text-scramble';
 
 const WIT_PURPLE = {
   bg: '#06050c',
@@ -21,6 +22,41 @@ export type LumaRegisterSectionProps = {
   applyLabel?: string;
 };
 
+function LumaRegisterTitle({
+  titleLead,
+  titleAccent,
+  ...headingProps
+}: {
+  titleLead: string;
+  titleAccent: string;
+} & ComponentPropsWithoutRef<'h2'>) {
+  const [accentTrigger, setAccentTrigger] = useState(false);
+
+  return (
+    <h2 {...headingProps}>
+      <TextScramble
+        as="span"
+        duration={0.52}
+        speed={0.07}
+        triggerOnView
+        viewportThreshold={0.45}
+        onScrambleComplete={() => setAccentTrigger(true)}
+      >
+        {titleLead}
+      </TextScramble>
+      <TextScramble
+        as="span"
+        className="bg-gradient-to-r from-[#FF1FC0] via-[#AE33FF] to-[#00E5FF] bg-clip-text text-transparent"
+        duration={0.52}
+        speed={0.07}
+        trigger={accentTrigger}
+      >
+        {titleAccent}
+      </TextScramble>
+    </h2>
+  );
+}
+
 export function LumaRegisterSection({
   applyHref = '#',
   lumaEventId = '',
@@ -31,7 +67,7 @@ export function LumaRegisterSection({
     'An invite-only forum for women breaking barriers in technology. Limited to 100 seats at Myntra Campus — July 17, 2026.',
   acceptanceNote =
     'If your application is accepted, you\'ll join an intimate evening on campus — with time to meet the speakers and leadership circle featured above.',
-  applyLabel = 'Apply for Women in Tech',
+  applyLabel = 'Register to Apply',
 }: LumaRegisterSectionProps) {
   useEffect(() => {
     const initCheckout = () => {
@@ -71,17 +107,14 @@ export function LumaRegisterSection({
         >
           {eyebrow}
         </p>
-        <h2
+        <LumaRegisterTitle
+          titleLead={titleLead}
+          titleAccent={titleAccent}
           {...revealProps(
             80,
             'luma-tab__title text-pretty text-center font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--wit-title,2.5rem)] font-medium leading-[0.96] tracking-[-0.04em] text-white sm:text-[length:var(--wit-title-hero,3rem)] md:text-[clamp(3rem,8vw,5.5rem)] md:tracking-[-0.035em]',
           )}
-        >
-          {titleLead}
-          <span className="bg-gradient-to-r from-[#FF1FC0] via-[#AE33FF] to-[#00E5FF] bg-clip-text text-transparent">
-            {titleAccent}
-          </span>
-        </h2>
+        />
         <p
           {...revealProps(
             160,

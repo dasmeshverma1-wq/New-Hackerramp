@@ -74,7 +74,7 @@ export function HeroWithLogos({
   titleLine3 = 'Tech',
   subtitle = 'The Leadership Circle — a curated, invite-only forum for women breaking barriers in technology.',
   applyHref = '#',
-  applyLabel = 'Apply',
+  applyLabel = 'Register to Apply',
 }: HeroWithLogosProps) {
 
   return (
@@ -121,13 +121,13 @@ export function HeroWithLogos({
         </div>
       </div>
 
-      {/* Desktop — three-band layout (unchanged) */}
-      <div className="relative z-10 hidden min-h-[calc(100vh-64px)] flex-1 flex-col divide-y divide-white/10 md:flex">
-        <div className="flex min-h-[12vh] flex-1 items-end justify-center px-10">
+      {/* Desktop — three-band layout; pt clears fixed mini-navbar (top 24px + bar height) */}
+      <div className="relative z-10 hidden min-h-[calc(100vh-64px)] flex-1 flex-col divide-y divide-white/10 md:flex md:pt-[5.75rem]">
+        <div className="flex min-h-[10vh] flex-none items-center justify-center px-10 pb-3 pt-1">
           <div
             {...revealProps(
               0,
-              'flex items-center gap-2 border border-b-0 border-white/10 bg-black/20 px-4 py-2 backdrop-blur-sm',
+              'flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2.5 backdrop-blur-sm',
             )}
           >
             <p className="font-mono text-[length:var(--wit-eyebrow,12px)] font-bold uppercase tracking-[0.16em] text-white/50">

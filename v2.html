@@ -1714,6 +1714,32 @@
       white-space: nowrap;
       width: max-content;
     }
+    .agenda-page-phase__header {
+      padding: 12px 14px !important;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .agenda-page-phase__strip > div {
+      min-width: 148px !important;
+    }
+    .agenda-page-timeline {
+      margin-left: 0 !important;
+      padding-left: 0.25rem;
+    }
+    .agenda-page-timeline .agenda-timeline-item {
+      padding-left: 1.5rem !important;
+    }
+    .demo-booth-card {
+      flex-direction: column !important;
+      min-height: 0 !important;
+    }
+    .demo-booth-card__photo {
+      width: 100% !important;
+      height: 168px !important;
+    }
+    .demo-booth-card__body {
+      padding: 1rem !important;
+    }
     .enable-track-filters__scroll {
       display: flex;
       flex-wrap: nowrap;
@@ -1787,33 +1813,47 @@
   @media (min-width: 1024px) {
     .mkt-page-sidebar { width: 260px; max-width: 260px; }
   }
-  .mkt-filters-toggle {
+  .mkt-mobile-search-row {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: stretch;
     gap: 10px;
     width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.03);
+    min-width: 0;
+  }
+  @media (min-width: 1024px) {
+    .mkt-mobile-search-row { display: none; }
+  }
+  .mkt-mobile-search-row__input {
+    flex: 1;
+    min-width: 0;
+  }
+  .mkt-filters-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-shrink: 0;
+    align-self: stretch;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
     color: rgba(255, 255, 255, 0.88);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
+    white-space: nowrap;
     cursor: pointer;
-    transition: background 180ms ease, border-color 180ms ease;
+    transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
   }
-  .mkt-filters-toggle:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.14);
+  .mkt-filters-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.18);
   }
-  .mkt-filters-toggle__chevron {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.45);
-    transition: transform 200ms ease;
-  }
-  .mkt-filters-toggle--open .mkt-filters-toggle__chevron {
-    transform: rotate(180deg);
+  .mkt-filters-btn-secondary--active {
+    background: rgba(255, 63, 108, 0.1);
+    border-color: rgba(255, 63, 108, 0.32);
+    color: #ffb8cc;
   }
   .mkt-filters-toggle__badge {
     font-size: 10px;
@@ -1824,12 +1864,13 @@
     color: #ff8faf;
     border: 1px solid rgba(255, 63, 108, 0.28);
   }
+  .mkt-sidebar-search { display: none; }
   @media (min-width: 1024px) {
-    .mkt-filters-toggle { display: none; }
+    .mkt-sidebar-search { display: block; }
   }
-  .mkt-filters-panel { margin-top: 14px; }
+  .mkt-filters-panel { margin-top: 0; }
   @media (min-width: 1024px) {
-    .mkt-filters-panel { margin-top: 0; display: block !important; }
+    .mkt-filters-panel { display: block !important; }
   }
   .mkt-page-main {
     flex: 1;
@@ -3442,8 +3483,7 @@
   }
 
   /* Hero — centered, 1680 x 583 */
-  /* Hero — V2: original 15-tile continuous wave, larger tiles, no TECH/WEEK, no branding.
-     Just the image carousel as the main hero element. */
+  /* Hero — V2: 14-tile continuous wave (IMAGE 7 removed), larger tiles, no TECH/WEEK, no branding. */
   .hero-b-stage-wrapper .hero {
     position: absolute; left: 50%; top: 90px;
     transform: translateX(-50%);
@@ -3467,11 +3507,11 @@
   .hero-b-stage-wrapper .deco-small { width: 115px; height: 115px; left: 4px;    top: 90px;  animation: floatA 7s ease-in-out infinite; animation-delay: -2s; }
   .hero-b-stage-wrapper .deco-large { width: 202px; height: 202px; left: 1478px; top: 396px; animation: floatB 9s ease-in-out infinite; animation-delay: -4s; }
 
-  /* Tiles arc — 15 tiles 240px each, step=90px so they breathe.
-     Container 1500px wide, centred within 1680px hero (left=90). */
+  /* Tiles arc — 14 tiles 240px each, step=90px so they breathe.
+     Container 1410px wide, centred within 1680px hero (left=90). */
   .hero-b-stage-wrapper .tiles {
     position: absolute; left: 90px; top: 194px;
-    width: 1500px; height: 240px;
+    width: 1410px; height: 240px;
     z-index: 3;
   }
   .hero-b-stage-wrapper .tile {
@@ -3540,24 +3580,22 @@
     50%      { --wy:  102px; }
   }
 
-  /* 15 tiles, 240px each, step=90px (less overlap, more breathing room).
-     --base = -22.5 - tile.top centres each tile's wave midpoint on hero centre.
-     Animation delays cascade 300ms across 15 tiles → 14 × 300ms = 4.2s spread. */
-  .hero-b-stage-wrapper .t1  { left:   0px; top:  90px; --base:-112.5px; animation-delay: -4.2s; }
-  .hero-b-stage-wrapper .t2  { left:  90px; top: 130px; --base:-152.5px; animation-delay: -3.9s; }
-  .hero-b-stage-wrapper .t3  { left: 180px; top:  80px; --base:-102.5px; animation-delay: -3.6s; }
-  .hero-b-stage-wrapper .t4  { left: 270px; top:  30px; --base: -52.5px; animation-delay: -3.3s; }
-  .hero-b-stage-wrapper .t5  { left: 360px; top: -10px; --base: -12.5px; animation-delay: -3.0s; }
-  .hero-b-stage-wrapper .t6  { left: 450px; top: -60px; --base:  37.5px; animation-delay: -2.7s; }
-  .hero-b-stage-wrapper .t7  { left: 540px; top:-110px; --base:  87.5px; animation-delay: -2.4s; }
-  .hero-b-stage-wrapper .t8  { left: 630px; top: -60px; --base:  37.5px; animation-delay: -2.1s; }
-  .hero-b-stage-wrapper .t9  { left: 720px; top: -10px; --base: -12.5px; animation-delay: -1.8s; }
-  .hero-b-stage-wrapper .t10 { left: 810px; top:  40px; --base: -62.5px; animation-delay: -1.5s; }
-  .hero-b-stage-wrapper .t11 { left: 900px; top: 100px; --base:-122.5px; animation-delay: -1.2s; }
-  .hero-b-stage-wrapper .t12 { left: 990px; top:  50px; --base: -72.5px; animation-delay: -0.9s; }
-  .hero-b-stage-wrapper .t13 { left:1080px; top:   0px; --base: -22.5px; animation-delay: -0.6s; }
-  .hero-b-stage-wrapper .t14 { left:1170px; top: -50px; --base:  27.5px; animation-delay: -0.3s; }
-  .hero-b-stage-wrapper .t15 { left:1260px; top:-110px; --base:  87.5px; animation-delay:  0s;   }
+  /* 14 tiles, 240px each, step=90px (IMAGE 7 removed; tiles after t6 shift left one step).
+     Animation delays cascade 300ms across 14 tiles → 13 × 300ms = 3.9s spread. */
+  .hero-b-stage-wrapper .t1  { left:   0px; top:  90px; --base:-112.5px; animation-delay: -3.9s; }
+  .hero-b-stage-wrapper .t2  { left:  90px; top: 130px; --base:-152.5px; animation-delay: -3.6s; }
+  .hero-b-stage-wrapper .t3  { left: 180px; top:  80px; --base:-102.5px; animation-delay: -3.3s; }
+  .hero-b-stage-wrapper .t4  { left: 270px; top:  30px; --base: -52.5px; animation-delay: -3.0s; }
+  .hero-b-stage-wrapper .t5  { left: 360px; top: -10px; --base: -12.5px; animation-delay: -2.7s; }
+  .hero-b-stage-wrapper .t6  { left: 450px; top: -60px; --base:  37.5px; animation-delay: -2.4s; }
+  .hero-b-stage-wrapper .t8  { left: 540px; top: -60px; --base:  37.5px; animation-delay: -2.1s; }
+  .hero-b-stage-wrapper .t9  { left: 630px; top: -10px; --base: -12.5px; animation-delay: -1.8s; }
+  .hero-b-stage-wrapper .t10 { left: 720px; top:  40px; --base: -62.5px; animation-delay: -1.5s; }
+  .hero-b-stage-wrapper .t11 { left: 810px; top: 100px; --base:-122.5px; animation-delay: -1.2s; }
+  .hero-b-stage-wrapper .t12 { left: 900px; top:  50px; --base: -72.5px; animation-delay: -0.9s; }
+  .hero-b-stage-wrapper .t13 { left: 990px; top:   0px; --base: -22.5px; animation-delay: -0.6s; }
+  .hero-b-stage-wrapper .t14 { left:1080px; top: -50px; --base:  27.5px; animation-delay: -0.3s; }
+  .hero-b-stage-wrapper .t15 { left:1170px; top:-110px; --base:  87.5px; animation-delay:  0s;   }
 
   /* t8 (centre) on top, fanning out symmetrically */
   .hero-b-stage-wrapper .t1, .hero-b-stage-wrapper .t15 { z-index: 1; }
@@ -3566,7 +3604,7 @@
   .hero-b-stage-wrapper .t4, .hero-b-stage-wrapper .t12 { z-index: 4; }
   .hero-b-stage-wrapper .t5, .hero-b-stage-wrapper .t11 { z-index: 5; }
   .hero-b-stage-wrapper .t6, .hero-b-stage-wrapper .t10 { z-index: 6; }
-  .hero-b-stage-wrapper .t7, .hero-b-stage-wrapper .t9  { z-index: 7; }
+  .hero-b-stage-wrapper .t9                            { z-index: 7; }
   .hero-b-stage-wrapper .t8                            { z-index: 8; }
 
   /* Lower section — centered hero CTA band (separate from page-section grid) */
@@ -6468,6 +6506,15 @@ function WomenInTechBanner() {
   );
 }
 
+const HERO_WAVE_TILES = [
+  { id: 't1', image: 1 }, { id: 't2', image: 2 }, { id: 't3', image: 3 },
+  { id: 't4', image: 4 }, { id: 't5', image: 5 }, { id: 't6', image: 6 },
+  { id: 't8', image: 8 }, { id: 't9', image: 9 }, { id: 't10', image: 10 },
+  { id: 't11', image: 11 }, { id: 't12', image: 12 }, { id: 't13', image: 13 },
+  { id: 't14', image: 14 }, { id: 't15', image: 15 },
+];
+const HERO_WAVE_TILE_COUNT = HERO_WAVE_TILES.length;
+
 function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFAULT_HOME_STATS_STRIP, speakers = DEFAULT_SPEAKERS, hallOfFame = DEFAULT_HALL_OF_FAME, setView, heroVersion, user, onLogin, onLogout, theme, setTheme, ideas=[], setIdeas=()=>{}, problemCount=0, homeVisibility=DEFAULT_HOME_VISIBILITY }) {
   const vis = { ...DEFAULT_HOME_VISIBILITY, ...homeVisibility };
   const [judgeRound, setJudgeRound] = useState(0);
@@ -6545,22 +6592,21 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
     return () => clearInterval(timer);
   }, [heroVersion]);
 
-  // Mobile-only card stack — cycles all 15 wave images every 1s
+  // Mobile-only card stack — cycles all wave images every 1s (IMAGE 7 excluded)
   useEffect(() => {
     if (heroVersion !== 'B' || !isMobileHero) return;
-    const timer = setInterval(() => setActiveTileIndex(prev => (prev + 1) % 15), 1000);
+    const timer = setInterval(() => setActiveTileIndex(prev => (prev + 1) % HERO_WAVE_TILE_COUNT), 1000);
     return () => clearInterval(timer);
   }, [heroVersion, isMobileHero]);
 
-  const HERO_TILE_IDS = ['t1','t2','t3','t4','t5','t6','t7','t8','t9','t10','t11','t12','t13','t14','t15'];
   const getMobileTileClass = (tileId) => {
-    const idx = HERO_TILE_IDS.indexOf(tileId);
+    const idx = HERO_WAVE_TILES.findIndex(tile => tile.id === tileId);
     if (idx === -1) return '';
-    const pos = (idx - activeTileIndex + 15) % 15;
+    const pos = (idx - activeTileIndex + HERO_WAVE_TILE_COUNT) % HERO_WAVE_TILE_COUNT;
     if (pos === 0) return 'card-pos-0';
     if (pos === 1) return 'card-pos-1';
     if (pos === 2) return 'card-pos-2';
-    if (pos === 14) return `card-pos-3 swipe-${activeTileIndex}`;
+    if (pos === HERO_WAVE_TILE_COUNT - 1) return `card-pos-3 swipe-${activeTileIndex}`;
     return '';
   };
 
@@ -6687,25 +6733,22 @@ function HomeView({ teams = [], winners = CURRENT_WINNERS, homeStatsStrip = DEFA
 
               {/* Local Nav removed to resolve duplication with global fixed header */}
 
-              {/* Hero — V2: original 15-tile continuous wave at 240px, no TECH/WEEK, no branding */}
+              {/* Hero — V2: 14-tile continuous wave at 240px (IMAGE 7 removed) */}
               <div className="hero">
                 <div className="deco deco-small"><img src="images/deco-small.png" alt="" /></div>
                 <div className="deco deco-large"><img src="images/deco-large.png" alt="" /></div>
 
                 <div className="tiles" id="tiles">
-                  {Array.from({length:15}, (_, i) => {
-                    const tid = `t${i + 1}`;
-                    return (
-                      <div key={tid}
-                        className={`tile ${tid} ${hoveredTile === i ? 'is-hover' : ''} ${isMobileHero ? getMobileTileClass(tid) : ''}`}
+                  {HERO_WAVE_TILES.map((tile, i) => (
+                      <div key={tile.id}
+                        className={`tile ${tile.id} ${hoveredTile === i ? 'is-hover' : ''} ${isMobileHero ? getMobileTileClass(tile.id) : ''}`}
                         onPointerEnter={() => setHoveredTile(i)}
                         onPointerLeave={() => setHoveredTile(null)}>
                         <div className="tile-inner">
-                          <img src={`images/IMAGE ${i + 1}.png`} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" />
+                          <img src={`images/IMAGE ${tile.image}.png`} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt="" />
                         </div>
                       </div>
-                    );
-                  })}
+                  ))}
                 </div>
               </div>
 
@@ -7868,7 +7911,7 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
             <div className="space-y-6 fade-up">
               <div>
                 <h3 className="text-[16px] font-bold text-[color:var(--ink)] mb-1">Squad Configuration</h3>
-                <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">Review your profile as the Lead and choose the skillsets you need. Your team is listed on the Team Marketplace — participants can request to join and you approve or decline from your dashboard.</p>
+                <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed">Review your profile as the Lead and choose the skillsets you need. After registration, your team will be listed on the Team Marketplace — participants can request to join and you approve or decline from the My Team tab on the Teams page.</p>
               </div>
 
               {/* Lead Card */}
@@ -7893,9 +7936,9 @@ function RegisterView({ user, setTeams, teams=[], ideas=[], setIdeas=()=>{}, toa
                 <div className="flex gap-3.5 sm:gap-4">
                   <div className="w-10 h-10 rounded-[10px] bg-[color:var(--paper-3)] border border-[color:var(--line-2)] flex items-center justify-center text-[17px] shrink-0">🏪</div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13.5px] font-bold text-[color:var(--ink)] leading-snug">Listed on the Team Marketplace</p>
+                    <p className="text-[13.5px] font-bold text-[color:var(--ink)] leading-snug">Will be listed on the Team Marketplace</p>
                     <p className="mt-1.5 text-[12px] text-[color:var(--mute-2)] leading-relaxed">
-                      Your pitch goes live after registration. Participants send a <span className="text-[color:var(--ink)] font-semibold">join request</span> — you can approve or decline from the <span className="text-[color:var(--ink)] font-semibold">My Team</span> tab on the Teams page.
+                      After registration, your pitch will appear on the <span className="text-[color:var(--ink)] font-semibold">Team Marketplace</span>. Other participants can send a <span className="text-[color:var(--ink)] font-semibold">join request</span> — approve or decline from the <span className="text-[color:var(--ink)] font-semibold">My Team</span> tab on the Teams page.
                     </p>
                     <div className="flex flex-wrap gap-2 mt-3">
                       {['Publish', 'Requests', 'Approve'].map((step, i) => (
@@ -8254,8 +8297,8 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
       return matchQ && matchSkill && matchRole;
     });
 
-  const teamsActiveFilters = (searchQ ? 1 : 0) + (filter !== 'all' ? 1 : 0) + skillF.length + roleF.length;
-  const ideasActiveFilters = (searchQ ? 1 : 0) + (filter !== 'all' ? 1 : 0);
+  const teamsActiveFilters = (filter !== 'all' ? 1 : 0) + skillF.length + roleF.length;
+  const ideasActiveFilters = filter !== 'all' ? 1 : 0;
 
   return (
     <div className="mkt-page space-y-3 md:space-y-5">
@@ -8313,30 +8356,40 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
       {/* ── TAB 1: PARTNERS (merged) ── */}
       {tab==='partners' && (
         <div className="mkt-page-layout fade-up mt-2 md:mt-4">
-          
-          {/* Left Sidebar — browse filters only */}
-          {teamsPanel === 'browse' && <aside className="mkt-page-sidebar">
-            <button
-              type="button"
-              className={`mkt-filters-toggle btn ${teamsFiltersOpen ? 'mkt-filters-toggle--open' : ''}`}
-              onClick={() => setTeamsFiltersOpen(o => !o)}
-              aria-expanded={teamsFiltersOpen}
-            >
-              <span className="flex items-center gap-2">
+
+          {teamsPanel === 'browse' && (
+            <div className="mkt-mobile-search-row lg:hidden">
+              <div className="mkt-mobile-search-row__input">
+                <AnimatedSearchInput
+                  value={searchQ}
+                  onChange={e=>{setSearchQ(e.target.value);setMktPage(1);}}
+                  onClear={()=>setSearchQ('')}
+                  type="teams"
+                />
+              </div>
+              <button
+                type="button"
+                className={`mkt-filters-btn-secondary btn ${teamsFiltersOpen ? 'mkt-filters-btn-secondary--active' : ''}`}
+                onClick={() => setTeamsFiltersOpen(o => !o)}
+                aria-expanded={teamsFiltersOpen}
+                aria-controls="teams-filters-panel"
+              >
                 Filters
                 {teamsActiveFilters > 0 && <span className="mkt-filters-toggle__badge">{teamsActiveFilters}</span>}
-              </span>
-              <span className="mkt-filters-toggle__chevron" aria-hidden="true">▼</span>
-            </button>
+              </button>
+            </div>
+          )}
 
-            <div className={`mkt-filters-panel space-y-6 ${teamsFiltersOpen ? 'block' : 'hidden'} lg:block`}>
-            <div>
+          {/* Left Sidebar — browse filters only */}
+          {teamsPanel === 'browse' && <aside className="mkt-page-sidebar">
+            <div id="teams-filters-panel" className={`mkt-filters-panel space-y-6 ${teamsFiltersOpen ? 'block' : 'hidden'} lg:block`}>
+            <div className="hidden lg:block">
               <p className="text-[11px] font-[900] uppercase tracking-[0.14em] text-[color:var(--mute-3)]">Browse Controls</p>
               <p className="text-[12px] text-[color:var(--mute-2)] mt-2 leading-relaxed">Filter by status, skill need, or team keywords.</p>
             </div>
 
-            {/* Search Bar - minimalized on the left */}
-            <div className="space-y-1.5 pt-2">
+            {/* Search — desktop sidebar only; mobile uses top search row */}
+            <div className="mkt-sidebar-search space-y-1.5 pt-2">
               <p className="text-[10px] font-[800] uppercase tracking-[0.14em] text-[color:var(--mute-3)] mb-3 ml-2">Search Teams</p>
               <AnimatedSearchInput 
                 value={searchQ} 
@@ -8942,34 +8995,44 @@ function MarketplaceView({ user, teams, setTeams, joinRequests, setJoinRequests,
       {/* ── TAB 4: IDEA BOARD ── */}
       {tab==='ideas' && (
         <div className="mkt-page-layout fade-up mt-2 md:mt-4">
-          
-          {/* Left Sidebar — browse filters only */}
-          {ideasPanel === 'browse' && <aside className="mkt-page-sidebar">
-            <button
-              type="button"
-              className={`mkt-filters-toggle btn ${ideasFiltersOpen ? 'mkt-filters-toggle--open' : ''}`}
-              onClick={() => setIdeasFiltersOpen(o => !o)}
-              aria-expanded={ideasFiltersOpen}
-            >
-              <span className="flex items-center gap-2">
+
+          {ideasPanel === 'browse' && (
+            <div className="mkt-mobile-search-row lg:hidden">
+              <div className="mkt-mobile-search-row__input">
+                <AnimatedSearchInput
+                  value={searchQ}
+                  onChange={e=>{setSearchQ(e.target.value);setIdeaPage(1);}}
+                  onClear={()=>setSearchQ('')}
+                  type="ideas"
+                />
+              </div>
+              <button
+                type="button"
+                className={`mkt-filters-btn-secondary btn ${ideasFiltersOpen ? 'mkt-filters-btn-secondary--active' : ''}`}
+                onClick={() => setIdeasFiltersOpen(o => !o)}
+                aria-expanded={ideasFiltersOpen}
+                aria-controls="ideas-filters-panel"
+              >
                 Filters
                 {ideasActiveFilters > 0 && <span className="mkt-filters-toggle__badge">{ideasActiveFilters}</span>}
-              </span>
-              <span className="mkt-filters-toggle__chevron" aria-hidden="true">▼</span>
-            </button>
+              </button>
+            </div>
+          )}
 
-            <div className={`mkt-filters-panel space-y-6 ${ideasFiltersOpen ? 'block' : 'hidden'} lg:block`}>
-            <div>
+          {/* Left Sidebar — browse filters only */}
+          {ideasPanel === 'browse' && <aside className="mkt-page-sidebar">
+            <div id="ideas-filters-panel" className={`mkt-filters-panel space-y-6 ${ideasFiltersOpen ? 'block' : 'hidden'} lg:block`}>
+            <div className="hidden lg:block">
               <p className="text-[11px] font-[900] uppercase tracking-[0.14em] text-[color:var(--mute-3)]">Browse Controls</p>
               <p className="text-[12px] text-[color:var(--mute-2)] mt-2 leading-relaxed">{approvedIdeas.length} approved ideas. Filter by theme to scan faster.</p>
             </div>
             
-            {/* Search */}
-            <div className="space-y-1.5 pt-2">
+            {/* Search — desktop sidebar only; mobile uses top search row */}
+            <div className="mkt-sidebar-search space-y-1.5 pt-2">
               <p className="text-[10px] font-[800] uppercase tracking-[0.14em] text-[color:var(--mute-3)] mb-3 ml-2">Search Ideas</p>
               <AnimatedSearchInput 
                 value={searchQ} 
-                onChange={e=>{setSearchQ(e.target.value);setMktPage(1);}} 
+                onChange={e=>{setSearchQ(e.target.value);setIdeaPage(1);}} 
                 onClear={()=>setSearchQ('')}
                 type="ideas"
               />
@@ -10367,16 +10430,18 @@ function CalendarView() {
   const livePhase = SCHEDULE.find(s => s.status === 'live');
 
   return (
-    <div className="space-y-8 fade-up">
+    <div className="mkt-page space-y-3 md:space-y-8 fade-up">
       <PageIntro
+        className="w-full"
+        compactOnMobile
         eyebrow="Agenda"
         title={<>31 Days of <em className="gradient-text font-serif italic normal-case tracking-normal">hustle.</em></>}
         description="From registration through HackerRamp finale to Women in Tech — every key session, deadline, and milestone on one timeline."
       />
 
-      <div className="max-w-[900px] mx-auto space-y-10">
-        <div className="border border-white/10 rounded-[20px] overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.25)]" style={{background:'#14122E'}}>
-          <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between" style={{background:'rgba(255,255,255,0.04)'}}>
+      <div className="max-w-[900px] mx-auto space-y-6 md:space-y-10 min-w-0">
+        <div className="border border-white/10 rounded-[16px] md:rounded-[20px] overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.25)]" style={{background:'#14122E'}}>
+          <div className="agenda-page-phase__header px-6 py-4 border-b border-white/10 flex items-center justify-between" style={{background:'rgba(255,255,255,0.04)'}}>
             <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.16em] font-[900]">Phase Timeline</p>
             {livePhase && (
               <span className="inline-flex items-center gap-1.5 text-[10px] font-[800] text-[#6ee7b7] uppercase tracking-wide">
@@ -10388,7 +10453,7 @@ function CalendarView() {
               </span>
             )}
           </div>
-          <div className="flex overflow-x-auto hide-scrollbar rounded-b-[20px]">
+          <div className="agenda-page-phase__strip flex overflow-x-auto hide-scrollbar rounded-b-[16px] md:rounded-b-[20px] -mx-px">
             {SCHEDULE.map((s) => {
               const isLive = s.status === 'live';
               return (
@@ -10417,7 +10482,7 @@ function CalendarView() {
           </div>
         </div>
 
-        <div className="agenda-timeline ml-4 md:ml-[140px] space-y-8">
+        <div className="agenda-page-timeline agenda-timeline ml-4 md:ml-[140px] space-y-6 md:space-y-8">
           {TIMELINE.map((item, i) => {
             const style = typeStyles[item.type] || typeStyles['Session'];
 
@@ -13978,16 +14043,16 @@ function Gate({ title, msg, warn=false, ctaLabel, onCta }) {
 ══════════════════════════════ */
 
 function LoadingScreen({ onComplete }) {
-  const IMAGES = Array.from({length:15}, (_,i) => `images/IMAGE ${i+1}.png`);
+  const IMAGES = HERO_WAVE_TILES.map(tile => `images/IMAGE ${tile.image}.png`);
   const TILES = [
     {left:   0, top:  90},{left:  90, top: 130},{left: 180, top:  80},
     {left: 270, top:  30},{left: 360, top: -10},{left: 450, top: -60},
-    {left: 540, top:-110},{left: 630, top: -60},{left: 720, top: -10},
-    {left: 810, top:  40},{left: 900, top: 100},{left: 990, top:  50},
-    {left:1080, top:   0},{left:1170, top: -50},{left:1260, top:-110},
+    {left: 540, top: -60},{left: 630, top: -10},{left: 720, top:  40},
+    {left: 810, top: 100},{left: 900, top:  50},{left: 990, top:   0},
+    {left:1080, top: -50},{left:1170, top:-110},
   ];
-  const Z      = [1,2,3,4,5,6,7,8,7,6,5,4,3,2,1];
-  const ANCHOR = TILES[7];
+  const Z      = [1,2,3,4,5,6,8,7,6,5,4,3,2,1];
+  const ANCHOR = TILES[6];
   const [isMobileLoad] = React.useState(() => window.matchMedia('(max-width: 1023px)').matches);
 
   // phases: matchcut → slide → logo-in → logo-out
@@ -14009,7 +14074,7 @@ function LoadingScreen({ onComplete }) {
         setCurrentIndex(idx);
       } else {
         clearInterval(mc);
-        setCurrentIndex(7);
+        setCurrentIndex(6);
         setPhase('slide');
         // Trigger slide + tile fade at the same frame
         requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -14087,8 +14152,8 @@ function LoadingScreen({ onComplete }) {
         }}>
           {IMAGES.map((src, i) => {
             const dx    = ((TILES[i].left - ANCHOR.left) / 1920 * 100).toFixed(4) + 'vw';
-            const dyVh  = (i - 7) * 5.2;
-            const dist  = Math.abs(i - 7);
+            const dyVh  = (i - 6) * 5.2;
+            const dist  = Math.abs(i - 6);
             const delay = dist === 0 ? 0 : dist * dist * (isMobileLoad ? 8 : 10);
             const cardStyle = isMobileLoad ? {
               position:'absolute',
@@ -14409,8 +14474,10 @@ function FaqView({ setView }) {
 
 function DemoBoothView({ setView }) {
   return (
-    <div className="space-y-8 fade-up">
+    <div className="mkt-page space-y-3 md:space-y-8 fade-up">
       <PageIntro
+        className="w-full"
+        compactOnMobile
         eyebrow="Live Demos"
         title={<>Visit the <em className="gradient-text">Demo Booth.</em></>}
         description="Walk through live product demos from Myntra pods — Jul 16, 10 AM to 4 PM on Demo & Media day."
@@ -14421,19 +14488,19 @@ function DemoBoothView({ setView }) {
         ]}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 min-w-0">
         {DEMO_BOOTHS.map((booth, idx) => (
-          <div key={booth.id} className={`rounded-[16px] border overflow-hidden flex min-h-[220px] hover:-translate-y-1.5 transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.35)] ${gc(idx)}`}>
-            <div className="w-[150px] sm:w-[180px] flex-shrink-0 relative overflow-hidden learn-card-photo-panel bg-[#0E0C1A]">
+          <div key={booth.id} className={`demo-booth-card rounded-[16px] border overflow-hidden flex flex-col sm:flex-row min-h-0 sm:min-h-[220px] hover:-translate-y-1.5 transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.35)] ${gc(idx)}`}>
+            <div className="demo-booth-card__photo w-full sm:w-[150px] md:w-[180px] sm:flex-shrink-0 relative overflow-hidden learn-card-photo-panel bg-[#0E0C1A] h-[168px] sm:h-auto">
               <img src={booth.image} alt={booth.speaker} className="absolute inset-0 w-full h-full object-cover object-top" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
             </div>
-            <div className="flex-1 p-5 flex flex-col gap-2 min-w-0">
+            <div className="demo-booth-card__body flex-1 p-4 sm:p-5 flex flex-col gap-2 min-w-0">
               <div className="flex items-start justify-between gap-2">
                 <p className="text-[10px] font-mono font-[900] uppercase tracking-wider text-[color:var(--mute-3)]">{booth.id}</p>
                 <span className="text-[9px] font-[800] uppercase tracking-wider px-2 py-0.5 rounded-full bg-[color:var(--accent)]/12 text-[color:var(--accent)] border border-[color:var(--accent)]/25">{booth.org}</span>
               </div>
-              <h3 className="text-[17px] font-[900] text-[color:var(--ink)] leading-snug">{booth.title}</h3>
+              <h3 className="text-[16px] sm:text-[17px] font-[900] text-[color:var(--ink)] leading-snug">{booth.title}</h3>
               <p className="text-[12px] text-[color:var(--mute-2)] leading-relaxed flex-1">{booth.desc}</p>
               <div className="learn-card-footer-rule pt-3 mt-auto space-y-1">
                 <p className="text-[11px] text-[color:var(--mute-3)]"><span className="font-bold uppercase tracking-wider">Pod:</span> {booth.speaker}</p>

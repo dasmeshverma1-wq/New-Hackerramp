@@ -6,9 +6,11 @@
  */
 import React from 'react';
 import { cn } from '../../lib/utils';
+import { openLumaRegister } from './open-luma-register';
 
 export type ShinyButtonProps = {
   href?: string;
+  lumaOverlay?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement> &
   React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
@@ -24,13 +26,34 @@ export default function ShinyButton({
   className,
   children = 'Register to Apply',
   href,
+  lumaOverlay = false,
   target,
   rel,
   id,
   type = 'button',
+  onClick,
   ...props
 }: ShinyButtonProps) {
   const classes = cn(shinyStyles, className);
+
+  if (href && lumaOverlay) {
+    return (
+      <button
+        id={id}
+        type="button"
+        data-luma-overlay="true"
+        className={classes}
+        onClick={(event) => {
+          event.preventDefault();
+          onClick?.(event as unknown as React.MouseEvent<HTMLButtonElement>);
+          openLumaRegister(href);
+        }}
+        {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+      >
+        {children}
+      </button>
+    );
+  }
 
   if (href) {
     return (

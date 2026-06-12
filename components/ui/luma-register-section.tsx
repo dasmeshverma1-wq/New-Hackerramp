@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type ComponentPropsWithoutRef } from 'react';
+import { useState, type ComponentPropsWithoutRef } from 'react';
 import { GradientBarsBackground } from './gradient-bars-background';
 import { revealProps } from './reveal-props';
 import ShinyButton from './shiny-button';
@@ -58,7 +58,7 @@ function LumaRegisterTitle({
 }
 
 export function LumaRegisterSection({
-  applyHref = '#',
+  applyHref = 'https://luma.com/9ztehhkj',
   lumaEventId = '',
   eyebrow = 'Women in Tech · The Leadership Circle',
   titleLead = 'Join ',
@@ -69,25 +69,6 @@ export function LumaRegisterSection({
     'If your application is accepted, you\'ll join an intimate evening on campus — with time to meet the speakers and leadership circle featured above.',
   applyLabel = 'Register to Apply',
 }: LumaRegisterSectionProps) {
-  useEffect(() => {
-    const initCheckout = () => {
-      if (window.luma?.initCheckout) {
-        window.luma.initCheckout();
-      }
-    };
-
-    if (window.luma?.initCheckout) {
-      initCheckout();
-      return;
-    }
-
-    const script = document.getElementById('luma-checkout');
-    if (script) {
-      script.addEventListener('load', initCheckout);
-      return () => script.removeEventListener('load', initCheckout);
-    }
-  }, []);
-
   return (
     <GradientBarsBackground
       id="luma-register"
@@ -139,10 +120,7 @@ export function LumaRegisterSection({
           <ShinyButton
             id="luma-tab-btn"
             href={applyHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-luma-action="checkout"
-            {...(lumaEventId ? { 'data-luma-event-id': lumaEventId } : {})}
+            lumaOverlay
             className="luma-checkout--button h-14 w-full rounded-xl text-[length:var(--wit-body-sm,1rem)]"
           >
             {applyLabel}
@@ -163,12 +141,6 @@ export function LumaRegisterSection({
       </div>
     </GradientBarsBackground>
   );
-}
-
-declare global {
-  interface Window {
-    luma?: { initCheckout: () => void };
-  }
 }
 
 export default LumaRegisterSection;

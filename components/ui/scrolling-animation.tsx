@@ -587,8 +587,8 @@ export function LeadershipCircleScroll({
             )}
           </div>
 
-          <div className="relative mx-auto flex w-full max-w-full flex-col items-center justify-center max-sm:min-h-[calc(100svh-4.5rem)] max-sm:gap-4 sm:max-w-[min(100%,78svh)]">
-          <div className="relative mx-auto aspect-square shrink-0 overflow-visible p-0 max-sm:size-[min(100vw,56svh)] sm:w-full sm:p-[clamp(0.35rem,2.5vw,1.75rem)]">
+          <div className="relative mx-auto flex w-full max-w-full flex-col items-center justify-center max-sm:min-h-[calc(100svh-4.5rem)] max-sm:gap-5 sm:max-w-[min(100%,78svh)]">
+          <div className="relative mx-auto aspect-square shrink-0 overflow-visible p-0 max-sm:size-[min(92vw,52svh)] sm:w-full sm:p-[clamp(0.35rem,2.5vw,1.75rem)]">
           <div
             className="pointer-events-none absolute inset-0 z-30 hidden flex-col items-center justify-center px-3 sm:flex"
             style={{
@@ -615,7 +615,7 @@ export function LeadershipCircleScroll({
 
           <ScrollHint
             visible={postIntroScrollHintVisible}
-            className="pointer-events-none absolute bottom-2 left-1/2 z-40 -translate-x-1/2 sm:bottom-4"
+            className="pointer-events-none absolute bottom-2 left-1/2 z-40 hidden -translate-x-1/2 sm:bottom-4 sm:block"
           />
 
           <div
@@ -696,11 +696,16 @@ export function LeadershipCircleScroll({
             titleAccent={titleAccent}
             tagline={tagline}
             opacity={centerCopyOpacity}
-            className={`pointer-events-none z-20 w-full max-w-2xl px-4 text-center md:hidden ${
+            className={`pointer-events-none z-20 w-full max-w-[min(100%,20rem)] px-5 text-center md:hidden ${
               centerCopyOpacity > 0.04
-                ? 'relative mt-1 shrink-0 sm:mt-6'
+                ? 'relative mt-4 shrink-0 sm:mt-6'
                 : 'absolute h-0 w-0 overflow-hidden opacity-0'
             }`}
+          />
+
+          <ScrollHint
+            visible={postIntroScrollHintVisible}
+            className="pointer-events-none relative z-20 mt-4 shrink-0 pb-2 text-center sm:hidden"
           />
           </div>
         </div>

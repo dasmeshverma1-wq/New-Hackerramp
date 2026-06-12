@@ -112,8 +112,7 @@ export function HeroWithLogos({
           <ShinyButton
             id="hero-register-btn"
             href={applyHref}
-            target="_blank"
-            rel="noopener noreferrer"
+            lumaOverlay
             className="h-12 w-full rounded-xl text-[length:var(--wit-body-sm,1rem)]"
           >
             {applyLabel}
@@ -157,8 +156,7 @@ export function HeroWithLogos({
             <ShinyButton
               id="hero-register-btn-desktop"
               href={applyHref}
-              target="_blank"
-              rel="noopener noreferrer"
+              lumaOverlay
               className="h-14 w-full rounded-xl text-base"
             >
               {applyLabel}

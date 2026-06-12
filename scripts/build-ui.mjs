@@ -64,6 +64,13 @@ await esbuild.build({
 
 await esbuild.build({
   ...shared,
+  entryPoints: ['components/ui/luma-overlay-mount.tsx'],
+  outfile: 'assets/luma-overlay.bundle.js',
+  globalName: 'WITLumaOverlayBundle',
+});
+
+await esbuild.build({
+  ...shared,
   entryPoints: ['components/ui/mini-navbar-mount.tsx'],
   outfile: 'assets/mini-navbar.bundle.js',
   globalName: 'WITMiniNavbarBundle',
@@ -82,5 +89,6 @@ console.log('Built assets/hero-with-logos.bundle.js');
 console.log('Built assets/leadership-circle-scroll.bundle.js');
 console.log('Built assets/gradient-bars-footer.bundle.js');
 console.log('Built assets/luma-register.bundle.js');
+console.log('Built assets/luma-overlay.bundle.js');
 console.log('Built assets/mini-navbar.bundle.js');
 console.log('Built assets/not-found-page.bundle.js');

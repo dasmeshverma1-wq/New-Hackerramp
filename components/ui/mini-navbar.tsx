@@ -80,8 +80,7 @@ export function MiniNavbar({
           <ShinyButton
             id={applyId}
             href={applyHref}
-            target="_blank"
-            rel="noopener noreferrer"
+            lumaOverlay
             className="wit-mini-nav__apply h-9 rounded-xl px-4 text-xs sm:text-sm"
           >
             {applyLabel}
@@ -118,8 +117,7 @@ export function MiniNavbar({
         <div className="wit-mini-nav__mobile-actions">
           <ShinyButton
             href={applyHref}
-            target="_blank"
-            rel="noopener noreferrer"
+            lumaOverlay
             className="wit-mini-nav__apply wit-mini-nav__apply--block h-11 w-full rounded-xl text-sm"
             onClick={() => setIsOpen(false)}
           >

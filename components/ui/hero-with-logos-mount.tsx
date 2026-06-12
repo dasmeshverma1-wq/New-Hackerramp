@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { HeroWithLogos } from './herowith-logos';
 
-const LUMA_DEFAULT = 'https://lu.ma/beyond-the-algorithm-myntra';
+const LUMA_DEFAULT = 'https://luma.com/9ztehhkj';
 
 export function mountHeroWithLogos() {
   const rootEl = document.getElementById('wit-hero-root');

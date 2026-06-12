@@ -592,6 +592,11 @@
     #luma-register-root .luma-tab__title {
       text-shadow: 0 4px 32px rgba(0,0,0,0.55);
     }
+    .luma-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+    }
     #luma-register-root .luma-checkout--button {
       border-radius: var(--btn-radius, 12px) !important;
       overflow: hidden;
@@ -657,6 +662,15 @@
     #leadership-circle-scroll-root {
       --lc-title: clamp(1.5rem, 4.5vw, 2.125rem);
       --lc-body: clamp(0.8125rem, 2.4vw, 0.9375rem);
+    }
+    @media (max-width: 767px) {
+      #leadership-circle-scroll-root {
+        --lc-title: clamp(1.875rem, 6.8vw, 2.5rem);
+        --lc-body: clamp(0.875rem, 3.4vw, 1.0625rem);
+      }
+      #leadership-circle-scroll-root .lc-section-body {
+        margin-top: 0.75rem;
+      }
     }
     @media (min-width: 768px) {
       #leadership-circle-scroll-root {
@@ -729,10 +743,12 @@
   <div class="page-bg" aria-hidden="true"></div>
   <div class="page-grid" aria-hidden="true"></div>
 
-  <div id="wit-mini-nav-root" data-apply-url="https://lu.ma/beyond-the-algorithm-myntra" aria-label="Primary navigation"></div>
+  <div id="luma-overlay-root" data-apply-url="https://luma.com/9ztehhkj" aria-hidden="true"></div>
+
+  <div id="wit-mini-nav-root" data-apply-url="https://luma.com/9ztehhkj" aria-label="Primary navigation"></div>
 
   <div class="hero-fold">
-  <div id="wit-hero-root" data-apply-url="https://lu.ma/beyond-the-algorithm-myntra"></div>
+  <div id="wit-hero-root" data-apply-url="https://luma.com/9ztehhkj"></div>
 
   <div class="details-banner" aria-label="Event details">
     <div class="section-ui-shell">
@@ -858,21 +874,14 @@
   <div
     id="luma-register-root"
     class="wit-reveal"
-    data-apply-url="https://lu.ma/beyond-the-algorithm-myntra"
+    data-apply-url="https://luma.com/9ztehhkj"
     aria-label="Register for the event"
   ></div>
-
-  <script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script>
 
   <div id="gradient-bars-footer-root" class="wit-reveal" aria-label="Site footer"></div>
 
   <script>
-    const LUMA_EVENT_URL = 'https://lu.ma/beyond-the-algorithm-myntra';
-    // Paste evt-… from Luma Manage → More → Embed Event Page
-    const LUMA_EVENT_ID = '';
-    const LUMA_EMBED_URL = LUMA_EVENT_ID
-      ? 'https://luma.com/embed/event/' + LUMA_EVENT_ID + '/simple'
-      : '';
+    const LUMA_EVENT_URL = 'https://luma.com/9ztehhkj';
 
     const MYNTRA_LOGO = 'images/speakers/myntra-logo.jpeg';
 
@@ -978,39 +987,24 @@
     }
 
     function initLuma() {
-      var rootEl = document.getElementById('wit-hero-root');
-      var navRoot = document.getElementById('wit-mini-nav-root');
-      if (rootEl && LUMA_EVENT_URL) {
-        rootEl.setAttribute('data-apply-url', LUMA_EVENT_URL);
-      }
-      if (navRoot && LUMA_EVENT_URL) {
-        navRoot.setAttribute('data-apply-url', LUMA_EVENT_URL);
-      }
-
-      const ids = ['hero-register-btn', 'hero-register-btn-desktop', 'nav-register-btn'];
-      ids.forEach(function(id) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (LUMA_EVENT_URL) el.href = LUMA_EVENT_URL;
-        if (LUMA_EVENT_ID) el.setAttribute('data-luma-event-id', LUMA_EVENT_ID);
+      ['wit-hero-root', 'wit-mini-nav-root', 'luma-register-root', 'luma-overlay-root'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && LUMA_EVENT_URL) el.setAttribute('data-apply-url', LUMA_EVENT_URL);
       });
 
-      if (window.luma && window.luma.initCheckout) {
-        window.luma.initCheckout();
-      } else {
-        var lumaScript = document.getElementById('luma-checkout');
-        if (lumaScript) {
-          lumaScript.addEventListener('load', function() {
-            if (window.luma && window.luma.initCheckout) window.luma.initCheckout();
-          });
-        }
-      }
+      document.querySelectorAll('[data-luma-overlay]').forEach(function(el) {
+        el.addEventListener('click', function(event) {
+          event.preventDefault();
+          if (window.WITOpenLumaOverlay) window.WITOpenLumaOverlay(LUMA_EVENT_URL);
+        });
+      });
     }
 
     renderSpeakers();
     initSpeakerSlider();
     initLuma();
   </script>
+  <script src="assets/luma-overlay.bundle.js" defer></script>
   <script src="assets/viewport-reveal.bundle.js" defer></script>
   <script src="assets/mini-navbar.bundle.js" defer></script>
   <script src="assets/leadership-circle-scroll.bundle.js" defer></script>
@@ -1020,6 +1014,9 @@
   <script src="assets/gradient-bars-footer.bundle.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      if (window.WITLumaOverlayBundle && window.WITLumaOverlayBundle.mountLumaOverlay) {
+        window.WITLumaOverlayBundle.mountLumaOverlay();
+      }
       if (window.WITViewportRevealBundle && window.WITViewportRevealBundle.mountViewportReveals) {
         window.WITViewportRevealBundle.mountViewportReveals();
       }

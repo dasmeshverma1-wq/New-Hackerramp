@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { LumaRegisterSection } from './luma-register-section';
 
-const LUMA_DEFAULT = 'https://lu.ma/beyond-the-algorithm-myntra';
+const LUMA_DEFAULT = 'https://luma.com/9ztehhkj';
 
 export function mountLumaRegisterSection() {
   const rootEl = document.getElementById('luma-register-root');

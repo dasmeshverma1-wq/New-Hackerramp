@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { MiniNavbar } from './mini-navbar';
 
-const LUMA_DEFAULT = 'https://lu.ma/beyond-the-algorithm-myntra';
+const LUMA_DEFAULT = 'https://luma.com/9ztehhkj';
 
 export function mountMiniNavbar() {
   const rootEl = document.getElementById('wit-mini-nav-root');

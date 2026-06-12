@@ -107,7 +107,8 @@ export function LumaIframeOverlay({
           className="h-full w-full flex-1 border-0 bg-white"
           loading="lazy"
           referrerPolicy="strict-origin-when-cross-origin"
-          allow="payment *; clipboard-write; fullscreen"
+          allow="fullscreen; payment"
+          tabIndex={0}
         />
       </div>
     </div>,

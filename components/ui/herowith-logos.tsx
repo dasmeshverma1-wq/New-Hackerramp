@@ -13,6 +13,7 @@ export type HeroWithLogosProps = {
   subtitle?: string;
   applyHref?: string;
   applyLabel?: string;
+  lumaEventId?: string;
 };
 
 function HeroTitleHeadline({
@@ -72,9 +73,10 @@ export function HeroWithLogos({
   titleLine1 = 'Women',
   titleLine2 = 'in',
   titleLine3 = 'Tech',
-  subtitle = 'The Leadership Circle — a curated, invite-only forum for women breaking barriers in technology.',
+  subtitle = 'An exclusive, invite-only forum for women in tech. Apply today to connect with executive leaders and keynote speakers.',
   applyHref = '#',
   applyLabel = 'Register to Apply',
+  lumaEventId,
 }: HeroWithLogosProps) {
 
   return (
@@ -112,6 +114,7 @@ export function HeroWithLogos({
           <ShinyButton
             id="hero-register-btn"
             href={applyHref}
+            lumaEventId={lumaEventId}
             lumaOverlay
             className="h-12 w-full rounded-xl text-[length:var(--wit-body-sm,1rem)]"
           >
@@ -156,6 +159,7 @@ export function HeroWithLogos({
             <ShinyButton
               id="hero-register-btn-desktop"
               href={applyHref}
+              lumaEventId={lumaEventId}
               lumaOverlay
               className="h-14 w-full rounded-xl text-base"
             >

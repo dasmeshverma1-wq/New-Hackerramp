@@ -58,8 +58,8 @@ function LumaRegisterTitle({
 }
 
 export function LumaRegisterSection({
-  applyHref = 'https://luma.com/9ztehhkj',
-  lumaEventId = '',
+  applyHref = 'https://luma.com/event/evt-b2lMCTHMM9aJqbI',
+  lumaEventId = 'evt-b2lMCTHMM9aJqbI',
   eyebrow = 'Women in Tech · The Leadership Circle',
   titleLead = 'Join ',
   titleAccent = 'Women in Tech',
@@ -120,8 +120,9 @@ export function LumaRegisterSection({
           <ShinyButton
             id="luma-tab-btn"
             href={applyHref}
+            lumaEventId={lumaEventId}
             lumaOverlay
-            className="luma-checkout--button h-14 w-full rounded-xl text-[length:var(--wit-body-sm,1rem)]"
+            className="h-14 w-full rounded-xl text-[length:var(--wit-body-sm,1rem)]"
           >
             {applyLabel}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

@@ -15,6 +15,7 @@ export type MiniNavbarProps = {
   applyHref?: string;
   applyLabel?: string;
   applyId?: string;
+  lumaEventId?: string;
 };
 
 function AnimatedNavLink({ href, children }: { href: string; children: React.ReactNode }) {
@@ -40,6 +41,7 @@ export function MiniNavbar({
   applyHref = '#',
   applyLabel = 'Register to Apply',
   applyId = 'nav-register-btn',
+  lumaEventId,
 }: MiniNavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [headerShapeClass, setHeaderShapeClass] = useState('wit-mini-nav--pill');
@@ -80,6 +82,7 @@ export function MiniNavbar({
           <ShinyButton
             id={applyId}
             href={applyHref}
+            lumaEventId={lumaEventId}
             lumaOverlay
             className="wit-mini-nav__apply h-9 rounded-xl px-4 text-xs sm:text-sm"
           >
@@ -117,6 +120,7 @@ export function MiniNavbar({
         <div className="wit-mini-nav__mobile-actions">
           <ShinyButton
             href={applyHref}
+            lumaEventId={lumaEventId}
             lumaOverlay
             className="wit-mini-nav__apply wit-mini-nav__apply--block h-11 w-full rounded-xl text-sm"
             onClick={() => setIsOpen(false)}

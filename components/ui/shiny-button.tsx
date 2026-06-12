@@ -6,11 +6,16 @@
  */
 import React from 'react';
 import { cn } from '../../lib/utils';
-import { openLumaRegister } from './open-luma-register';
+import {
+  LUMA_EVENT_ID,
+  LUMA_EVENT_PAGE_URL,
+  getLumaCheckoutLinkProps,
+} from './open-luma-register';
 
 export type ShinyButtonProps = {
   href?: string;
   lumaOverlay?: boolean;
+  lumaEventId?: string;
 } & React.ButtonHTMLAttributes<HTMLButtonElement> &
   React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
@@ -27,6 +32,7 @@ export default function ShinyButton({
   children = 'Register to Apply',
   href,
   lumaOverlay = false,
+  lumaEventId = LUMA_EVENT_ID,
   target,
   rel,
   id,
@@ -37,21 +43,20 @@ export default function ShinyButton({
   const classes = cn(shinyStyles, className);
 
   if (href && lumaOverlay) {
+    const checkout = getLumaCheckoutLinkProps(lumaEventId, href || LUMA_EVENT_PAGE_URL);
+
     return (
-      <button
+      <a
         id={id}
-        type="button"
-        data-luma-overlay="true"
-        className={classes}
-        onClick={(event) => {
-          event.preventDefault();
-          onClick?.(event as unknown as React.MouseEvent<HTMLButtonElement>);
-          openLumaRegister(href);
-        }}
-        {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+        href={checkout.href}
+        className={cn(classes, checkout.className)}
+        data-luma-action={checkout['data-luma-action']}
+        data-luma-event-id={checkout['data-luma-event-id']}
+        onClick={onClick as React.MouseEventHandler<HTMLAnchorElement> | undefined}
+        {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {children}
-      </button>
+      </a>
     );
   }
 
@@ -63,6 +68,7 @@ export default function ShinyButton({
         target={target}
         rel={rel}
         className={classes}
+        onClick={onClick as React.MouseEventHandler<HTMLAnchorElement> | undefined}
         {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {children}
@@ -75,6 +81,7 @@ export default function ShinyButton({
       id={id}
       type={type}
       className={classes}
+      onClick={onClick}
       {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}
     >
       {children}

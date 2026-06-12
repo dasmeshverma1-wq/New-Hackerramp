@@ -168,7 +168,7 @@ function Only100SeatsIntro({
   ] as const;
 
   const wordClassName =
-    'font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--wit-title-hero,clamp(3.25rem,14vw,5.25rem))] font-bold uppercase leading-[0.95] tracking-[-0.04em] text-white';
+    'font-[Parafina_Trial,Inter_Tight,sans-serif] text-[length:var(--lc-intro-title,var(--wit-title-hero,clamp(3.25rem,14vw,5.25rem)))] font-bold uppercase leading-[0.95] tracking-[-0.04em] text-white';
 
   return (
     <div
@@ -509,14 +509,10 @@ export function LeadershipCircleScroll({
   const portraitBlurPx = (1 - portraitUnblur) * 20;
 
   const scrollIdleReady = showScrollHint && sectionPinned && releaseProgress < 0.22;
-  const introScrollHintVisible =
-    scrollIdleReady && stickyProgress < timeline.logoFadeEnd && logoOpacity > 0.12;
   const postIntroScrollHintVisible =
     scrollIdleReady &&
-    stickyProgress >= timeline.introSeatsEnd &&
-    stickyProgress < timeline.speakerExpandEnd - 0.04 &&
-    !introScrollHintVisible &&
-    logoOpacity <= 0.12;
+    stickyProgress >= timeline.logoFadeEnd &&
+    stickyProgress < timeline.speakerExpandEnd - 0.04;
 
   const speakerSizeClassName =
     'w-[38%] min-w-[108px] max-w-[168px] sm:w-[28%] sm:min-w-[84px] sm:max-w-[132px] lg:min-w-[100px] lg:max-w-[156px] lg:w-[32%] xl:max-w-[168px] xl:w-[33%]';
@@ -589,7 +585,6 @@ export function LeadershipCircleScroll({
                 loading="eager"
               />
             )}
-            <ScrollHint visible={introScrollHintVisible} className="mt-6" />
           </div>
 
           <div className="relative mx-auto flex w-full max-w-full flex-col items-center justify-center max-sm:min-h-[calc(100svh-4.5rem)] max-sm:gap-4 sm:max-w-[min(100%,78svh)]">
@@ -616,7 +611,6 @@ export function LeadershipCircleScroll({
                 loading="eager"
               />
             )}
-            <ScrollHint visible={introScrollHintVisible} className="mt-5 sm:mt-6" />
           </div>
 
           <ScrollHint
@@ -632,7 +626,7 @@ export function LeadershipCircleScroll({
             }}
           >
             {hasOuterRing ? (
-              <div className="pointer-events-none absolute -inset-[2px] z-[6]">
+              <div className="pointer-events-none absolute -inset-[2px] z-[1]">
                 <MiniRingOrbit
                   profiles={outerRingProfiles}
                   popProgress={extraRingPop}
@@ -647,14 +641,14 @@ export function LeadershipCircleScroll({
             ) : null}
 
             <div
-              className="relative flex h-[83%] w-[83%] items-center justify-center rounded-full border-2 transition-[border-color,transform] duration-300"
+              className="relative z-10 flex h-[83%] w-[83%] items-center justify-center rounded-full border-2 transition-[border-color,transform] duration-300"
               style={{
                 borderColor: `rgba(123,92,255,${innerRingPeak.opacity * 0.35})`,
                 transform: `scale(${innerRingPeak.scale})`,
               }}
             >
               {hasMiddleRing ? (
-                <div className="pointer-events-none absolute -inset-[2px] z-[6]">
+                <div className="pointer-events-none absolute -inset-[2px] z-[1]">
                   <MiniRingOrbit
                     profiles={middleRingProfiles}
                     popProgress={extraRingPop}
@@ -669,7 +663,7 @@ export function LeadershipCircleScroll({
               ) : null}
 
               <div
-                className="relative flex h-[80%] w-[80%] items-center justify-center transition-transform duration-300"
+                className="relative z-10 flex h-[80%] w-[80%] items-center justify-center transition-transform duration-300"
                 style={{ transform: `scale(${coreRingPeak.scale})` }}
               >
                 <GradientRingStroke opacity={gradientRingPeak.opacity} />
@@ -682,7 +676,7 @@ export function LeadershipCircleScroll({
                   className="pointer-events-none absolute left-1/2 top-1/2 z-0 hidden w-[min(86%,19.5rem)] -translate-x-1/2 -translate-y-[calc(50%-0.625rem)] px-3 md:block"
                 />
 
-                <div className="pointer-events-none absolute -inset-[2px] z-10 overflow-visible">
+                <div className="pointer-events-none absolute -inset-[2px] z-20 overflow-visible">
                   <RingPortraits
                     profiles={profiles}
                     ringTopPct={portraitRingTopPct}

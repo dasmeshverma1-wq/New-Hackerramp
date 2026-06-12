@@ -3,16 +3,24 @@ import { LeadershipCircleScroll, type ScrollProfile } from './scrolling-animatio
 
 const WIT_SPEAKER_PROFILES: ScrollProfile[] = [
   {
-    name: 'Sharon Pais',
-    image: 'images/speakers/announced-soon-female-2.jpeg',
+    name: 'Vindhya',
+    image: 'images/speakers/vindhya-shanmugam.jpeg',
   },
   {
-    name: 'Vindhya',
-    image: 'images/speakers/announced-soon-female.jpeg',
+    name: 'Sharon Pais',
+    image: 'images/speakers/sharon-pais.jpeg',
   },
   {
     name: 'Pramod Adiddam',
-    image: 'images/On_this_man_standing_straight_202606081703 (1).jpeg',
+    image: 'images/speakers/pramod-adiddam.jpeg',
+  },
+  {
+    name: 'To be decided',
+    image: 'images/speakers/announced-soon-1.jpeg',
+  },
+  {
+    name: 'To be decided',
+    image: 'images/speakers/announced-soon-2.jpeg',
   },
 ];
 
@@ -21,8 +29,9 @@ const STOCK_PEOPLE_IMAGES = [
   'images/speakers/announced-soon-female-2.jpeg',
   'images/speakers/announced-soon-1.jpeg',
   'images/speakers/announced-soon-2.jpeg',
-  'images/have_the_female_hairs_on_202606081700.jpeg',
-  'images/On_this_man_standing_straight_202606081703 (1).jpeg',
+  'images/speakers/sharon-pais.jpeg',
+  'images/speakers/vindhya-shanmugam.jpeg',
+  'images/speakers/pramod-adiddam.jpeg',
 ];
 
 function randomRingAngles(count: number, seed: number): number[] {
@@ -54,8 +63,14 @@ function buildRingProfiles(
 
 const speakerProfiles: ScrollProfile[] = WIT_SPEAKER_PROFILES;
 
-const middleRingProfiles = buildRingProfiles(7, 0, 42017, 'Guest');
-const outerRingProfiles = buildRingProfiles(8, 3, 91033, 'Attendee');
+const middleRingProfiles = [
+  ...buildRingProfiles(7, 0, 42017, 'Guest'),
+  ...buildRingProfiles(1, 7, 52017, 'Coming soon'),
+];
+const outerRingProfiles = [
+  ...buildRingProfiles(8, 3, 91033, 'Attendee'),
+  ...buildRingProfiles(1, 11, 102033, 'Coming soon'),
+];
 
 export function mountLeadershipCircleScroll() {
   const rootEl = document.getElementById('leadership-circle-scroll-root');

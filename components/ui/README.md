@@ -78,6 +78,9 @@ shadcn places primitives (`button`, `card`, etc.) and shared UI in **`components
 | `mini-navbar-demo.tsx` | Demo for Next/shadcn apps |
 | `avatar.tsx` | shadcn Avatar primitive (`@radix-ui/react-avatar`) |
 | `button.tsx` | shadcn Button primitive (`@radix-ui/react-slot`, CVA) |
+| `breadcramb.tsx` | shadcn Breadcrumb primitives (`lucide-react`, `@radix-ui/react-slot`) |
+| `page-breadcrumb.tsx` | App-level breadcrumb with Home + trail items |
+| `breadcramb-demo.tsx` | Demo for Next/shadcn apps |
 | `empty.tsx` | shadcn Empty state layout primitives |
 | `not-found-page.tsx` | 404 page with avatar stack + Empty + Button |
 | `not-found-page-demo.tsx` | Demo for Next/shadcn apps |

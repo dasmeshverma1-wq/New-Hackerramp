@@ -658,6 +658,11 @@
       --lc-title: clamp(1.5rem, 4.5vw, 2.125rem);
       --lc-body: clamp(0.8125rem, 2.4vw, 0.9375rem);
     }
+    @media (min-width: 768px) {
+      #leadership-circle-scroll-root {
+        --lc-intro-title: clamp(5.25rem, 21vw, 7.875rem);
+      }
+    }
     #leadership-circle-scroll-root .lc-eyebrow { font-size: var(--wit-eyebrow); }
     #leadership-circle-scroll-root .lc-section-title {
       font-size: var(--lc-title);
@@ -802,7 +807,7 @@
       <div class="home-speaker-slider-wrap">
         <div class="home-speaker-slider" id="speaker-slider" role="list"></div>
       </div>
-      <p class="speakers-note wit-reveal" style="--wit-reveal-delay: 120ms">More speakers to be announced soon</p>
+      <p class="speakers-note wit-reveal" style="--wit-reveal-delay: 120ms">Featured leaders from Myntra · two more speakers to be decided</p>
     </div>
   </section>
 
@@ -869,6 +874,8 @@
       ? 'https://luma.com/embed/event/' + LUMA_EVENT_ID + '/simple'
       : '';
 
+    const MYNTRA_LOGO = 'images/speakers/myntra-logo.jpeg';
+
     const WIT_SPEAKERS = [
       {
         id: 'WIT1',
@@ -876,8 +883,9 @@
         role: 'Head',
         org: 'Myntra',
         g: ['#FF1FC0', '#AE33FF'],
-        image: 'images/speakers/announced-soon-female-2.jpeg',
-        imagePosition: '50% 12%',
+        image: 'images/speakers/sharon-pais.jpeg',
+        companyLogo: MYNTRA_LOGO,
+        imagePosition: '50% 20%',
       },
       {
         id: 'WIT2',
@@ -885,8 +893,9 @@
         role: 'Sr. Dir Engineering',
         org: 'Myntra',
         g: ['#AE33FF', '#FF1FC0'],
-        image: 'images/speakers/announced-soon-female.jpeg',
-        imagePosition: '50% 18%',
+        image: 'images/speakers/vindhya-shanmugam.jpeg',
+        companyLogo: MYNTRA_LOGO,
+        imagePosition: '50% 20%',
       },
       {
         id: 'WIT3',
@@ -894,8 +903,31 @@
         role: 'Executive Leader · CTO',
         org: 'Myntra',
         g: ['#4A2FD4', '#00E5FF'],
-        image: 'images/On_this_man_standing_straight_202606081703 (1).jpeg',
-        imagePosition: '50% 8%',
+        image: 'images/speakers/pramod-adiddam.jpeg',
+        companyLogo: MYNTRA_LOGO,
+        imagePosition: '50% 15%',
+      },
+      {
+        id: 'WIT4',
+        name: 'To be decided',
+        role: 'Speaker',
+        org: 'Myntra',
+        tbd: true,
+        g: ['#00E5FF', '#AE33FF'],
+        image: 'images/speakers/announced-soon-1.jpeg',
+        companyLogo: MYNTRA_LOGO,
+        imagePosition: '50% 15%',
+      },
+      {
+        id: 'WIT5',
+        name: 'To be decided',
+        role: 'Speaker',
+        org: 'Myntra',
+        tbd: true,
+        g: ['#AE33FF', '#4A2FD4'],
+        image: 'images/speakers/announced-soon-2.jpeg',
+        companyLogo: MYNTRA_LOGO,
+        imagePosition: '50% 15%',
       },
     ];
 
@@ -917,11 +949,11 @@
               '<div class="home-speaker-card__scrim" aria-hidden="true"></div>' +
               '<div class="home-speaker-card__tint" aria-hidden="true" style="background:linear-gradient(to top,' + sp.g[0] + (sp.tintAlpha || '99') + ' 0%,transparent 100%)"></div>' +
               '<div class="home-speaker-card__content">' +
-                '<p class="home-speaker-card__label">' + (sp.tbd ? 'Coming soon' : 'Speaker') + '</p>' +
+                '<p class="home-speaker-card__label">' + (sp.tbd ? 'To be decided' : 'Speaker') + '</p>' +
                 '<h3 class="home-speaker-card__name">' + sp.name + '</h3>' +
                 '<div class="home-speaker-card__org-row">' +
                   logoBlock +
-                  '<p class="home-speaker-card__role">' + (sp.tbd ? 'Speaker · Coming soon' : sp.role + ' · ' + sp.org) + '</p>' +
+                  '<p class="home-speaker-card__role">' + (sp.tbd ? 'Myntra' : sp.role + ' · ' + sp.org) + '</p>' +
                 '</div>' +
               '</div>' +
             '</div>' +
